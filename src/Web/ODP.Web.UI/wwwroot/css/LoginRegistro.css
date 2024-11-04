@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
@@ -21,7 +21,7 @@ body {
 .register-image,
 .login-image {
     flex: 1;
-    background: url('https://via.placeholder.com/450x600?text=Data+Mining+Image') center center / cover no-repeat;
+    background: url('../imagens/data-login.jpg') center center / cover no-repeat;
 }
 
 
@@ -62,10 +62,14 @@ body {
     border-radius: 5px 0 0 5px;
 }
 
+.input-group-text i{
+    width:60px;
+    height: 20px;
+    font-size: 20px;
+}
+
 .footer-link {
     font-size: 0.9rem;
     text-align: center;
     margin-top: 20px;
 }
-
-
