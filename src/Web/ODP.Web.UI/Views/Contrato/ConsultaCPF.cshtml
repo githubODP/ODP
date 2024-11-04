@@ -1,0 +1,75 @@
+﻿<h1>ConsultaCPF</h1>
+
+@model ODP.Web.UI.Models.ViewModels.Compras.ContratoViewModel
+
+@{
+    ViewData["Title"] = "Consulta de Contrato por CPf";
+}
+
+@if (Model != null && Model.Id != Guid.Empty)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.AnoContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.OrgaoGestor)</th>
+                <th>@Html.DisplayNameFor(model => model.OrgaoGMS)</th>
+                <th>@Html.DisplayNameFor(model => model.StatusContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.Fornecedor)</th>
+                <th>@Html.DisplayNameFor(model => model.CNPJCPF)</th>
+                <th>@Html.DisplayNameFor(model => model.Protocolo)</th>
+                <th>@Html.DisplayNameFor(model => model.NumeroContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.TipoContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.Fiscal)</th>
+                <th>@Html.DisplayNameFor(model => model.TermoAditivo)</th>
+                <th>@Html.DisplayNameFor(model => model.Empenho)</th>
+                <th>@Html.DisplayNameFor(model => model.AnoEmpenho)</th>
+                <th>@Html.DisplayNameFor(model => model.Liquidacao)</th>
+                <th>@Html.DisplayNameFor(model => model.DTLiquidacao)</th>
+                <th>@Html.DisplayNameFor(model => model.DTPagamento)</th>
+                <th>@Html.DisplayNameFor(model => model.QtdeAditivo)</th>
+                <th>@Html.DisplayNameFor(model => model.VlrTotalOriginal)</th>
+                <th>@Html.DisplayNameFor(model => model.VlrTotalAtual)</th>
+                <th>@Html.DisplayNameFor(model => model.ObjetoContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.Justificativa)</th>
+                <th>@Html.DisplayNameFor(model => model.DTInicioVigencia)</th>
+                <th>@Html.DisplayNameFor(model => model.DTFimVigencia)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.Id)</td>
+                <td>@Html.DisplayFor(model => model.AnoContrato)</td>
+                <td>@Html.DisplayFor(model => model.OrgaoGestor)</td>
+                <td>@Html.DisplayFor(model => model.OrgaoGMS)</td>
+                <td>@Html.DisplayFor(model => model.StatusContrato)</td>
+                <td>@Html.DisplayFor(model => model.Fornecedor)</td>
+                <td>@Html.DisplayFor(model => model.CNPJCPF)</td>
+                <td>@Html.DisplayFor(model => model.Protocolo)</td>
+                <td>@Html.DisplayFor(model => model.NumeroContrato)</td>
+                <td>@Html.DisplayFor(model => model.TipoContrato)</td>
+                <td>@Html.DisplayFor(model => model.Fiscal)</td>
+                <td>@Html.DisplayFor(model => model.TermoAditivo)</td>
+                <td>@Html.DisplayFor(model => model.Empenho)</td>
+                <td>@Html.DisplayFor(model => model.AnoEmpenho)</td>
+                <td>@Html.DisplayFor(model => model.Liquidacao)</td>
+                <td>@Html.DisplayFor(model => model.DTLiquidacao)</td>
+                <td>@Html.DisplayFor(model => model.DTPagamento)</td>
+                <td>@Html.DisplayFor(model => model.QtdeAditivo)</td>
+                <td>@Html.DisplayFor(model => model.VlrTotalOriginal)</td>
+                <td>@Html.DisplayFor(model => model.VlrTotalAtual)</td>
+                <td>@Html.DisplayFor(model => model.ObjetoContrato)</td>
+                <td>@Html.DisplayFor(model => model.Justificativa)</td>
+                <td>@Html.DisplayFor(model => model.DTInicioVigencia)</td>
+                <td>@Html.DisplayFor(model => model.DTFimVigencia)</td>
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger">
+        Nenhum contrato foi encontrado com o CPF fornecido.
+    </div>
+}

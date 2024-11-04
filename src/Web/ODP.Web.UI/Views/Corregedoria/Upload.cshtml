@@ -1,0 +1,32 @@
+﻿@using Newtonsoft.Json
+@using ODP.Web.UI.Extensions
+@model IEnumerable<ODP.Web.UI.Models.Corregedoria.InstauracaoDTO>
+
+@{
+    ViewData["Title"] = "Upload";
+}
+
+
+
+
+<div class="card text-center">
+    <form asp-controller="Corregedoria" asp-action="UploadCsv" method="post" enctype="multipart/form-data">
+        <div class="card-header">
+            <label for="file">Escolha um arquivo CSV:</label>
+        </div>
+        <div class="card-body">
+            <input type="file" id="file" name="file" accept=".csv" />
+            <button type="submit">Enviar</button>
+        </div>
+
+        @if (ViewData.ModelState != null && ViewData.ModelState.Count > 0)
+        {
+            <div class="validation-summary-errors">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+    </form>
+</div>

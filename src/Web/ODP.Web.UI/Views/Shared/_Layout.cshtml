@@ -1,0 +1,205 @@
+﻿@using ODP.Web.UI.Extensions
+@inject IUser AppUser
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - ODP.Web.UI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="~/css/layout.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/Shared/Layout.css" />
+    <link href="~/css/due/due.css" rel="stylesheet" />
+    <a href="~/css/styles.css.map"></a>
+
+
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <header>
+            <a asp-controller="Home" asp-action="Index">
+                <img src="~/imagens/logo_cge_155x95.png" class="img-fluid" />
+            </a>
+        </header>
+        <nav class="sidebar-nav">
+            <ul>
+                <li>
+                    <a href="#"><i class="ion-ios-search-strong"></i> <span>Observatório</span></a>
+                    <ul class="nav-flyout">
+                        <li>
+                            <a asp-controller="DueDiligence" asp-action="Index"><i class="ion-ios-color-filter-outline"></i>Due Diligence</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Consulta" asp-action="Index"><i class="ion-ios-color-filter-outline"></i>Consulta CNPJ/CPF</a></a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-color-filter-outline"></i>Demandas</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-clock-outline"></i>Sentenças</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-android-star-outline"></i>Nomeados</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-heart-broken"></i>Exonerados</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="ion-ios-paper-outline"></i> <span class="">Corregedoria</span></a>
+                    <ul class="nav-flyout">
+                        <li>
+                            <a asp-controller="Corregedoria" asp-action="Index"><i class="ion-ios-alarm-outline"></i>Instaurações</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-camera-outline"></i>Graficos</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-chatboxes-outline"></i>Relatórios</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Corregedoria" asp-action="upload"><i class="ion-ios-alarm-outline"></i>Upload Arquivos</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="ion-ios-briefcase-outline"></i> <span class="">Gabinete</span></a>
+                    <ul class="nav-flyout">
+                        <li>
+                            <a href="#"><i class="ion-ios-flame-outline"></i>DueDiligence</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-lightbulb-outline"></i>Analise Técnica</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-location-outline"></i>Listar Nomeados/Riscos</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-locked-outline"></i>Teste</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-navigate-outline"></i>Ghostface</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="ion-ios-speedometer-outline"></i> <span class="">Graficos</span></a>
+                    <ul class="nav-flyout">
+                        <li>
+                            <a href="#"><i class="ion-ios-timer-outline"></i>Graficos Folha</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-arrow-graph-down-left"></i>Graficos Compras</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-partlysunny-outline"></i>Graficos Viagens</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-timer-outline"></i>Outros Graficos</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-game-controller-a-outline"></i>Outros Graficos</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="ion-ios-box-outline"></i> <span class="">Auditoria</span></a>
+                    <ul class="nav-flyout">
+                        <li>
+                            <a href="#"><i class="ion-ios-filing-outline"></i>Analise Folha Pagamento</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-information-outline"></i>Analise Compras</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-paperplane-outline"></i>Analise Viagens Servidores</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-android-star-outline"></i>Outras Analises</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="ion-ios-cloud-download-outline"></i> <span class="">Arquivos</span></a>
+                    <ul class="nav-flyout">
+                        <li>
+                            <a href="#"><i class="ion-ios-flame-outline"></i>Oficios</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-lightbulb-outline"></i>Memorandos</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-location-outline"></i>Resultados Demandas</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-locked-outline"></i>Leis e Decretos</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-navigate-outline"></i>Outros</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="ion-ios-medical-outline"></i> <span class="">Em Teste</span></a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a class="navbar-brand" href="#">ODP</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                @* <li class="nav-item">
+                    <a class="nav-link" href="#">Disabled</a>
+                </li> *@
+            </ul>
+
+
+            <partial name="_LoginPartial" />
+          
+        </div>
+    </nav>
+
+
+    <main>
+        <div class="container main">
+            <div class="main-content align-items-center">
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+
+
+
+    <footer class="text-center text-white">
+        © 2024 Copyright
+        <a class="text-white" href="https://www.cge.pr.gov.br/Pagina/Observatorio-da-Despesa-Publica">:Observatório da Despesa Pública - ODP</a>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

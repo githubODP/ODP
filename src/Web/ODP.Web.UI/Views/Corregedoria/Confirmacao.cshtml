@@ -1,0 +1,80 @@
+﻿@using Newtonsoft.Json
+@using ODP.Web.UI.Extensions
+@model IEnumerable<ODP.Web.UI.Models.Corregedoria.InstauracaoDTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid">
+    <div class="table-responsive shadow">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Instaurações CSV</b></h2>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Ano)</th>
+                        <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                        <th>@Html.DisplayNameFor(model => model.CNPJCPF)</th>
+                        <th>@Html.DisplayNameFor(model => model.Orgao)</th>
+                        <th>@Html.DisplayNameFor(model => model.Protocolo)</th>
+                        <th>@Html.DisplayNameFor(model => model.Procedimento)</th>
+                        <th>@Html.DisplayNameFor(model => model.AtoNormativo)</th>
+                        <th>@Html.DisplayNameFor(model => model.Decisao)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Ano)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CNPJCPF)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Procedimento)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AtoNormativo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Decisao)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+            <div class="row justify-content-center pb-3">
+                <div class="col-md-6 text-center">
+                    <button type="submit" class="btn btn-success" id="salvarButton">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('salvarButton').onclick = function () {
+        // Serializar o modelo para JSON
+        var modelJson = @Html.Raw(JsonConvert.SerializeObject(Model));
+
+        $.ajax({
+            url: '/Corregedoria/ConfirmarInstauracoes',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(modelJson),
+            success: function (response) {
+                // Redirecionar ou atualizar a página após o sucesso
+                window.location.href = '/Corregedoria/Index';
+            },
+            error: function (xhr, status, error) {
+
+                alert("Erro no arquivo de dados!");
+                window.location.href = '/Corregedoria/Upload';
+            }
+        });
+
+    };
+</script>

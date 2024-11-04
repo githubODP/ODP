@@ -1,0 +1,178 @@
+﻿@using ODP.Web.UI.Extensions
+@model PagedResult<ODP.Web.UI.Models.ViewModels.Compras.ContratoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+
+
+
+<html>
+
+<head>
+
+    @* Tabela de Teste- Edudardo Inserir seu modelo  *@
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .pagination {
+            display: inline-block;
+            padding: 10px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .pagination a {
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+        }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .pagination a.disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Results.First().AnoContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().OrgaoGestor)</th>
+                @* <th>@Html.DisplayNameFor(model => model.Results.First().OrgaoGMS)</th> *@
+                <th>@Html.DisplayNameFor(model => model.Results.First().StatusContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().Fornecedor)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().CNPJCPF)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().Protocolo)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().NumeroContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().TipoContrato)</th>
+                @* <th>@Html.DisplayNameFor(model => model.Results.First().Fiscal)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().TermoAditivo)</th> *@
+                <th>@Html.DisplayNameFor(model => model.Results.First().Empenho)</th>
+                @* <th>@Html.DisplayNameFor(model => model.Results.First().AnoEmpenho)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().Liquidacao)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().DTLiquidacao)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().DTPagamento)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().QtdeAditivo)</th> *@
+                <th>@Html.DisplayNameFor(model => model.Results.First().VlrTotalOriginal)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().VlrTotalAtual)</th>
+                @* <th>@Html.DisplayNameFor(model => model.Results.First().ObjetoContrato)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().Justificativa)</th> *@
+                <th>@Html.DisplayNameFor(model => model.Results.First().DTInicioVigencia)</th>
+                <th>@Html.DisplayNameFor(model => model.Results.First().DTFimVigencia)</th>
+
+
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Results)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.AnoContrato)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OrgaoGestor)</td>
+                   @*  <td>@Html.DisplayFor(modelItem => item.OrgaoGMS)</td> *@
+                    <td>@Html.DisplayFor(modelItem => item.StatusContrato)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Fornecedor)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CNPJCPF)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NumeroContrato)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TipoContrato)</td>
+                   @*  <td>@Html.DisplayFor(modelItem => item.Fiscal)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TermoAditivo)</td> *@
+                    <td>@Html.DisplayFor(modelItem => item.Empenho)</td>
+                   @*  <td>@Html.DisplayFor(modelItem => item.AnoEmpenho)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Liquidacao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DTLiquidacao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DTPagamento)</td>
+                    <td>@Html.DisplayFor(modelItem => item.QtdeAditivo)</td> *@
+                    <td>@Html.DisplayFor(modelItem => item.VlrTotalOriginal)</td>
+                    <td>@Html.DisplayFor(modelItem => item.VlrTotalAtual)</td>
+                   @*  <td>@Html.DisplayFor(modelItem => item.ObjetoContrato)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Justificativa)</td> *@
+                    <td>@Html.DisplayFor(modelItem => item.DTInicioVigencia)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DTFimVigencia)</td>
+                   
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <div class="pagination">
+        <a asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize"
+           class="@(Model.PageNumber == 1 ? "disabled" : "")">Anterior</a>
+
+        @* Definir o intervalo para mostrar ao redor da página atual *@
+        @{
+            var startPage = Model.PageNumber - 5;  // 5 páginas antes da página atual
+            var endPage = Model.PageNumber + 4;    // 4 páginas após a página atual
+
+            if (startPage < 1)
+            {
+                endPage += 1 - startPage;  // Ajusta o final se o começo for menor que 1
+                startPage = 1;
+            }
+
+            if (endPage > Model.TotalPages)
+            {
+                endPage = Model.TotalPages;
+            }
+        }
+
+        @for (var i = startPage; i <= endPage; i++)
+        {
+            <a asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@Model.PageSize"
+               class="@(i == Model.PageNumber ? "active" : "")">@i</a>
+        }
+
+        <a asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize"
+           class="@(Model.PageNumber == Model.TotalPages ? "disabled" : "")">Próximo</a>
+    </div>
+
+
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,49 @@
+﻿@* @model ODP.Web.UI.Models.ViewModels.Compras.ContratoViewModel *@
+
+
+<html>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-top">
+                <div class="card-body">
+                    <h3>Consultar CPNJ na Base de Contrato</h3>
+                    <form asp-action="ConsultaCNPJ" method="get">
+                        <div class="form-group">
+                            <label for="cnpj">CNPJ:</label>
+                            <input id="cnpj" name="cnpj" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Buscar" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<html>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-top">
+                <div class="card-body">
+                    <h3>Consultar CPF na Base de Contrato</h3>
+                    <form asp-action="ConsultaCPF" method="get">
+                        <div class="form-group">
+                            <label for="cpf">CPF:</label>
+                            <input id="cpf" name="cpf" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Buscar" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

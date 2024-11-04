@@ -1,0 +1,90 @@
+﻿@model ODP.Web.UI.Models.Consultas.ResultadoConsulta.ResultadoDTO
+@{
+    Layout = null;
+}
+
+<h1>Resultado da Consulta Individual</h1>
+
+@if (Model != null)
+{
+    @if (Model.BuscaCompras != null && Model.BuscaCompras.Contrato.Any())
+    {
+        <fieldset>
+            <h2>Compras</h2>
+
+            <fieldset>
+                <legend>Contratos</legend>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Orgao</td>
+                            <td>Status</td>
+                            <td>Protocolo</td>
+                            <td>Valor Atual</td>
+                            <td>Valor Original</td>
+                            <td>CNPJCPF</td>
+                            <td>Data Inicio</td>
+                            <td>Data Fim</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var contrato in Model.BuscaCompras.Contrato)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(m => contrato.OrgaoGestor)</td>
+                                <td>@Html.DisplayFor(m => contrato.StatusContrato)</td>
+                                <td>@Html.DisplayFor(m => contrato.Protocolo)</td>
+                                <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalAtual)</td>
+                                <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalOriginal)</td>
+                                <td>@Html.DisplayFor(m => contrato.CNPJCPF)</td>
+                                <td>@(contrato.DTInicioVigencia.HasValue ? contrato.DTInicioVigencia.Value.ToString("dd/MM/yyyy") : "-")</td>
+                                <td>@(contrato.DTFimVigencia.HasValue ? contrato.DTFimVigencia.Value.ToString("dd/MM/yyyy") : "-")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>Dispensas</legend>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Orgao</td>
+                            <td>CNPJ</td>
+                            <td>Protocolo</td>
+                            <td>Valor Dispensa</td>
+                            <td>Valor Item</td>
+                            <td>Qtde Item</td>
+                            <td>Modalidade</td>
+                            <td>Data Dispensa</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var dispensa in Model.BuscaCompras.Dispensa)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
+                                <td>@Html.DisplayFor(m => dispensa.CNPJCPF)</td>
+                                <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
+                                <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorDispensa)</td>
+                                <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorItem)</td>
+                                <td>@Html.DisplayFor(m => dispensa.QtdItem)</td>
+                                <td>@Html.DisplayFor(m => dispensa.Modalidade)</td>
+                                <td>@(dispensa.DataDispensa.HasValue ? dispensa.DataDispensa.Value.ToString("dd/MM/yyyy") : "-")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </fieldset>
+        </fieldset>
+    }
+}
+else
+{
+    <p>Nenhum dado encontrado para exibição.</p>
+}
+
+<a href="@Url.Action("Index", "Consulta")">Voltar para a consulta</a>

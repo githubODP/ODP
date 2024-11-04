@@ -1,0 +1,237 @@
+﻿@model ODP.Web.UI.Models.DueDiligence.DueDiligenceViewModel
+
+@{
+    ViewData["Title"] = "Criar";
+}
+
+@* <div class=" mb-lg-5"> </div> *@
+
+<div class="container shadow-lg border-1">
+    <form asp-action="Criar">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Adicionar <b>Due</b></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row  p-2">
+            <div class="form-group col-6">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="Orgao" class="control-label"></label>
+                <input asp-for="Orgao" class="form-control" />
+                <span asp-validation-for="Orgao" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="Decreto" class="control-label"></label>
+                <input asp-for="Decreto" class="form-control" />
+                <span asp-validation-for="Decreto" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row   p-2">
+
+            <div class="form-group col-sm-2">
+                <label asp-for="DataSolicitacao" class="control-label"></label>
+                <input asp-for="DataSolicitacao" class="form-control" />
+                <span asp-validation-for="DataSolicitacao" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-2">
+                <label asp-for="DataResposta" class="control-label"></label>
+                <input asp-for="DataResposta" class="form-control" />
+                <span asp-validation-for="DataResposta" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-2">
+                <label asp-for="ClassificacaoRisco" class="control-label"></label>
+                <input asp-for="ClassificacaoRisco" class="form-control" readonly />
+                <span asp-validation-for="ClassificacaoRisco" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-2">
+                <label asp-for="NroProtocolo" class="control-label"></label>
+                <input asp-for="NroProtocolo" class="form-control" />
+                <span asp-validation-for="NroProtocolo" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-2">
+                <label asp-for="CPF" class="control-label"></label>
+                <input asp-for="CPF" class="form-control" />
+                <span asp-validation-for="CPF" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-2">
+                <label asp-for="Indicacao" class="control-label"></label>
+                <input asp-for="Indicacao" class="form-control" />
+                <span asp-validation-for="Indicacao" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row   p-2">
+            <!-- Coluna 1 -->
+            <div class="col-sm-3 mx-auto">
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadEmpresario" /> @Html.DisplayNameFor(model => model.CadEmpresario)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadMEI" /> @Html.DisplayNameFor(model => model.CadMEI)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadPPE" /> @Html.DisplayNameFor(model => model.CadPPE)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadPEP" /> @Html.DisplayNameFor(model => model.CadPEP)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadViculoPEP" /> @Html.DisplayNameFor(model => model.CadViculoPEP)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadEmpresaContrato" /> @Html.DisplayNameFor(model => model.CadEmpresaContrato)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Coluna 2 -->
+            <div class="col-sm-3 mx-auto">
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadFornecedorPartido" /> @Html.DisplayNameFor(model => model.CadFornecedorPartido)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadFornecedorCandidato" /> @Html.DisplayNameFor(model => model.CadFornecedorCandidato)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadFiliacaoPartido" /> @Html.DisplayNameFor(model => model.CadFiliacaoPartido)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadEmpresaInidoneos" /> @Html.DisplayNameFor(model => model.CadEmpresaInidoneos)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadFuncionarioPublico" /> @Html.DisplayNameFor(model => model.CadFuncionarioPublico)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadTrabalhoEscravo" /> @Html.DisplayNameFor(model => model.CadTrabalhoEscravo)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Coluna 3 -->
+            <div class="col-sm-3 mx-auto">
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadDoacaoEleitoralCandidato" /> @Html.DisplayNameFor(model => model.CadDoacaoEleitoralCandidato)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadDoacaoEleitoralPartido" /> @Html.DisplayNameFor(model => model.CadDoacaoEleitoralPartido)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadFornecedorPartido" /> @Html.DisplayNameFor(model => model.CadFornecedorPartido)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadAposentado" /> @Html.DisplayNameFor(model => model.CadAposentado)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadOFAC" />@Html.DisplayNameFor(model => model.CadOFAC)
+                    </label>
+
+                </div>
+                <div class="form-group form-check">
+
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadPrisao" />@Html.DisplayNameFor(model => model.CadPrisao)
+                    </label>
+
+                </div>
+            </div>
+
+            <!-- Coluna 4 -->
+            <div class="col-sm-3 mx-auto">
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadInelegivel" /> @Html.DisplayNameFor(model => model.CadInelegivel)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadInabilitado" /> @Html.DisplayNameFor(model => model.CadInabilitado)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadInidoneo" /> @Html.DisplayNameFor(model => model.CadInidoneo)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadRestricoesTCE" /> @Html.DisplayNameFor(model => model.CadRestricoesTCE)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadInadimplentesTCE" /> @Html.DisplayNameFor(model => model.CadInadimplentesTCE)
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="CadIrregularidadesTCE" /> @Html.DisplayNameFor(model => model.CadIrregularidadesTCE)
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row   p-2">
+            <div class="form-group col-md-6">
+                <label asp-for="Observacao" class="control-label"></label>
+                <textarea asp-for="Observacao" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Observacao" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Evidencias" class="control-label"></label>
+                <textarea asp-for="Evidencias" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Evidencias" class="text-danger"></span>
+            </div>
+        </div>
+        <!-- Botão de submit -->
+        <div class="row justify-content-center pb-2">
+            <div class="col-md-6 text-center">
+                <button class="btn btn-danger" onclick="location.href='@Url.Action("Index", "DueDiligence")'">Cancelar</button>
+                <button type="submit" class="btn btn-primary ml-3">Salvar</button>
+            </div>
+        </div>
+    </form>
+</div>
+﻿

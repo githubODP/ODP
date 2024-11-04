@@ -1,0 +1,133 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using ODP.Web.UI.Extensions
+@model PagedResult<ODP.Web.UI.Models.Corregedoria.InstauracaoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid">
+    <div class="table-responsive shadow">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2><b>Instaurações</b></h2>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <a asp-controller="Corregedoria" asp-action="Create"
+                           class="btn btn-success">
+                            <img src="~/svg/adicionar.svg" width="20" height="20"
+                                 class="d-inline-block align-top" alt="Adicionar">
+                            <span class="m-1">Novo</span>
+                        </a>
+                     </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Editar</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Ano)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Nome)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().CNPJCPF)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Protocolo)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Procedimento)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().AtoNormativo)</th>
+                        <th>@Html.DisplayNameFor(model =>model.Results.FirstOrDefault().Decisao)</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Results)
+                    {
+                        <tr>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-info btn-editar"
+                                        data-toggle="modal"
+                                        data-target="#EditModal"
+                                        onclick="location.href='@Url.Action("Editar", new { id = item.Id })'">
+                                    <img src="~/svg/editar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                </button>
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.Ano)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CNPJCPF)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Procedimento)</td>
+                            <td>@Html.DisplayFor(modelItem => item.AtoNormativo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Decisao)</td>
+                            <td>
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#deleteModal" data-id="@item.Id">
+                                        <img src="~/svg/excluir.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-duplicar" onclick="location.href='@Url.Action("Detalhes", new { id = item.Id })'">
+                                        <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                    </button>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    }
+                </tbody>
+
+            </table>
+           
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document" style="max-width:300px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+            </div>
+            <div class="modal-body">
+                Tem certeza de que deseja excluir este item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger btn-confirm-delete">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<vc:create-instauracao></vc:create-instauracao>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data('id');
+
+                $('#deleteModal .btn-confirm-delete').click(function () {
+                    // Make AJAX request to your Delete action
+                    $.ajax({
+                        url: '@Url.Action("Deletar")/' + id,
+                        type: 'DELETE',
+                        success: function (result) {
+                            // Handle success (e.g., remove row from table)
+                            button.closest('tr').remove();
+                            $('#deleteModal').modal('hide');
+                        },
+                        error: function () {
+                            location.reload();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+}

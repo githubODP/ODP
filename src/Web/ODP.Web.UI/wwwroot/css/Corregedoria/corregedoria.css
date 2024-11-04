@@ -1,0 +1,15 @@
+﻿.card {
+        width: 600px; 
+        height: 400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+    }
+
+
+    .card-body input[type="file"],
+    .card-body button {
+        width: 100%;
+        box-sizing: border-box; 
+    }

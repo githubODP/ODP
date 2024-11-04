@@ -1,0 +1,126 @@
+﻿
+
+ @model List<ODP.Web.UI.Models.Consultas.ResultadoConsulta.ResultadoDTO>
+
+<h2>Resultados da Consulta em Lote</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Compras</th>
+            <th>Dívidas</th>
+            <th>Fazenda</th>
+            <th>Governo Estadual</th>
+            <th>Governo Federal</th>
+            <th>TCU</th>
+            <th>TCE</th>
+            <th>TSE</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var resultado in Model)
+        {
+            <tr>
+                <td>
+                    @if (resultado.BuscaCompras != null)
+                    {
+                        @if (resultado.BuscaCompras.Contrato != null && resultado.BuscaCompras.Contrato.Any())
+                        {
+                            <h4>Contratos</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Orgão Gestor</th>
+                                        <th>Status</th>
+                                        <th>Protocolo</th>
+                                        <th>Valor Total Atual</th>
+                                        <th>Valor Total Original</th>
+                                        <th>CNPJ/CPF</th>
+                                        <th>Data Início Vigência</th>
+                                        <th>Data Fim Vigência</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in resultado.BuscaCompras.Contrato)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => item.OrgaoGestor)</td>
+                                            <td>@Html.DisplayFor(m => item.StatusContrato)</td>
+                                            <td>@Html.DisplayFor(m => item.Protocolo)</td>
+                                            <td>@Html.DisplayFor(m => item.VlrTotalAtual)</td>
+                                            <td>@Html.DisplayFor(m => item.VlrTotalOriginal)</td>
+                                            <td>@Html.DisplayFor(m => item.CNPJCPF)</td>
+                                            <td>@Html.DisplayFor(m => item.DTInicioVigencia)</td>
+                                            <td>@Html.DisplayFor(m => item.DTFimVigencia)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
+                        @if (resultado.BuscaCompras.Dispensa != null && resultado.BuscaCompras.Dispensa.Any())
+                        {
+                            <h4>Dispensas</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Ano</th>
+                                        <th>Mês</th>
+                                        <th>Solicitação</th>
+                                        <th>Data Dispensa</th>
+                                        <th>Fornecedor</th>
+                                        <th>CNPJ/CPF</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in resultado.BuscaCompras.Dispensa)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.Ano)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Mes)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Solicitacao)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.DataDispensa)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Fornecedor)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CNPJCPF)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+
+                        @if (resultado.BuscaCompras.Licitacao != null && resultado.BuscaCompras.Licitacao.Any())
+                        {
+                            <h4>Licitações</h4>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Protocolo</th>
+                                        <th>Orgão</th>
+                                        <th>Ano</th>
+                                        <th>Mês</th>
+                                        <th>Fornecedor</th>
+                                        <th>CNPJ/CPF</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in resultado.BuscaCompras.Licitacao)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Ano)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Mes)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Fornecedor)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CNPJCPF)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </td>
+               
+            </tr>
+        }
+    </tbody>
+</table>

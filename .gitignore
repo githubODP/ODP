@@ -1,0 +1,80 @@
+# Logs
+logs
+*.log
+*.log.*
+
+# Arquivos temporários do sistema operacional
+[Tt]humbs.db
+.DS_Store
+
+# Arquivos temporários do Visual Studio
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Pastas e arquivos de build
+bin/
+obj/
+
+# Diretórios de pacotes e dependências
+**/node_modules/
+**/bower_components/
+
+# Pacotes NuGet
+*.nupkg
+# Diretório de pacotes locais e cache do NuGet
+packages/
+.vscode/
+.nuget/
+
+# Cache do .NET
+.project
+*.csproj.user
+*.psess
+*.coverage
+**/*.dll
+**/*.exe
+
+# Banco de dados local
+*.mdf
+*.ldf
+*.sdf
+*.db
+
+# Arquivos de publicação e deploy
+*.publish/
+**/*.publishsettings
+# Configurações locais de usuário para deploy
+*.pubxml
+*.pubxml.user
+
+# Arquivos de configuração gerados para Entity Framework
+Migrations/
+
+# Configuração de IDEs
+.idea/
+.resharper/
+.idea/workspace.xml
+.idea/libraries
+.idea/modules.xml
+
+# Arquivos de cache do Rider
+.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/modules.xml
+
+# Arquivos temporários gerais
+*.tmp
+*.temp
+*.bak
+*.old
+
+# Configurações de debugging
+launchSettings.json
+
+# Arquivos de cache do JetBrains
+_ReSharper*

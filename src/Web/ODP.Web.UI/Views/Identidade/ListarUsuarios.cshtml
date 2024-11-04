@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ODP.Web.UI.Models.Identidade.UsuarioTokenViewModel>
+
+
+<h1>Lista de Usuários</h1>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr id="usuario-@usuario.Id">
+                <td>@usuario.Email</td>
+                <td>@string.Join(", ", usuario.Roles)</td>
+                <td class="status">
+                    @if (usuario.IsLockedOut)
+                    {
+                        <span class="text-danger">Inativo</span>
+                    }
+                    else
+                    {
+                        <span class="text-success">Ativo</span>
+                    }
+                </td>
+                <td>
+
+                    <div class="d-flex align-items-center">
+                        <form class="toggle-status-form mr-2" asp-action="@(!usuario.IsLockedOut ? "DesabilitarUsuario" : "HabilitarUsuario")" asp-route-userId="@usuario.Id" method="post">
+                            <input type="hidden" name="userId" value="@usuario.Id" />
+                            <button type="submit" class="btn @(!usuario.IsLockedOut ? "btn-danger" : "btn-success")">@(!usuario.IsLockedOut ? "Desabilitar" : "Habilitar")</button>
+                        </form>
+                        <form class="mr-2" asp-controller="Identidade" asp-action="RedefinirSenha">
+                            <input type="hidden" name="email" value="@usuario.Email" />
+                            <button type="submit" class="btn btn-warning">Alterar Senha</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.toggle-status-form').submit(function (e) {
+                e.preventDefault();
+                var form = $(this);
+                var url = form.attr('action');
+                var userId = form.find('input[name="userId"]').val();
+                var button = form.find('button[type="submit"]');
+
+                console.log('Sending request to: ', url); // Debug log
+                console.log('User ID: ', userId); // Debug log
+
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: form.serialize(),
+                    beforeSend: function () {
+                        button.prop('disabled', true);
+                    },
+                    success: function (response) {
+                        console.log('Response: ', response); // Debug log
+                        if (response.success) {
+                            var row = $('#usuario-' + userId);
+                            var status = row.find('.status span');
+                            if (button.hasClass('btn-danger')) {
+                                status.text('Inativo').removeClass('text-success').addClass('text-danger');
+                                form.attr('action', '@Url.Action("HabilitarUsuario", "Identidade")');
+                                button.removeClass('btn-danger').addClass('btn-success').text('Habilitar');
+                            } else {
+                                status.text('Ativo').removeClass('text-danger').addClass('text-success');
+                                form.attr('action', '@Url.Action("DesabilitarUsuario", "Identidade")');
+                                button.removeClass('btn-success').addClass('btn-danger').text('Desabilitar');
+                            }
+                        } else {
+                            alert('Ocorreu um erro ao processar a requisição: ' + response.error);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error: ', textStatus, errorThrown); // Debug log
+                        alert('Ocorreu um erro ao processar a requisição: ' + textStatus + ' - ' + errorThrown);
+                    },
+                    complete: function () {
+                        button.prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+}

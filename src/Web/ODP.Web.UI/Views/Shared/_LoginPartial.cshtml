@@ -1,0 +1,40 @@
+﻿@using ODP.Web.UI.Extensions
+@inject IUser AppUser
+
+<div class="navbar-nav">
+    @if (AppUser.EstaAutenticado())
+    {
+        <!-- Verifica se o usuário é um administrador -->
+        @if (AppUser.PossuiRole("Administrador"))
+        {
+            <!-- Botão de Dropdown para Administração -->
+            <div class="nav-item dropdown" style="margin-left: 10px;">
+                <button class="btn btn-success dropdown-toggle" type="button" id="adminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administração
+                </button>
+                <div class="dropdown-menu" aria-labelledby="adminDropdown">
+                    <a class="dropdown-item" asp-controller="Identidade" asp-action="ListarUsuarios">Listar Usuários</a>
+                    <a class="dropdown-item" asp-controller="Identidade" asp-action="ListarUsuariosLogados">Usuários Logados</a>
+                    <a class="dropdown-item" asp-controller="Identidade" asp-action="Registro">Crie sua conta</a>
+                </div>
+            </div>
+        }
+
+        <!-- Menu de usuário com logout -->
+        <div class="nav-item dropdown" style="margin-left: 10px;">
+            <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @AppUser.ObterUserEmail()
+            </button>
+            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                <a class="dropdown-item" asp-controller="Identidade" asp-action="Logout">Sair</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Botão de Login -->
+        <div class="nav-item" style="margin-left: 10px;">
+            <a class="btn btn-primary" asp-controller="Identidade" asp-action="Login">Login</a>
+        </div>
+    }
+</div>

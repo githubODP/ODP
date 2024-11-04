@@ -1,0 +1,99 @@
+﻿/*Códigos de uso geral */
+:root {
+    --cinza-cge: #3f4e55;
+    --azul-cge: #0072bb;
+    --azul-claro-cge: #02b0e3;
+    --verde-cge: #00984b;
+}
+
+/* Estilos gerais do corpo */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Estilos do Aside (Sidebar) */
+.sidebar {
+    position: fixed;
+    top: 24px;
+    left: 0;
+    height: 100vh;
+    width: 13vw;
+}
+
+.sidebar header {
+    background-color: white;
+}
+
+.sidebar-nav {
+    background-color: var(--azul-cge);
+}
+
+.nav-flyout {
+    background-color: var(--azul-cge);
+}
+
+
+.main {
+  min-height: 80vh; /* Define a altura como 80% da viewport */
+  min-width: 75vw; /* Define a largura como 87% da viewport (100% - 13% do aside) */
+}
+/* Estilos do Conteúdo Principal */
+.main-content {
+    display: flex;
+    min-height: 100vh; /* Garante que o conteúdo ocupe pelo menos a altura da tela */
+    margin-left: 13vw; /* Afasta o conteúdo principal do aside */
+}
+
+.container {
+    width: 100%; 
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 13vw; /* Alinha o rodapé com o final do aside */
+    width: 87vw; /* Ajusta a largura do rodapé */
+    background-color: #0a4275;
+
+}
+nav.navbar {
+    position: fixed;
+    top: 0;
+    left: 13vw; /* Define o início do navbar após o aside */
+    width: calc(100vw - 13vw); /* Ocupar o restante da largura da tela */
+    z-index: 100; /* Garantir que o navbar fique sobre o conteúdo */
+}
+
+
+
+
+@media (max-width: 768px) {
+    .img-logo img {
+        width: 70%;
+    }
+
+    .sidebar-nav span {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0; 
+        flex-direction: column; 
+    }
+
+    footer {
+        left: 13vw;
+        width: 100%;
+    }
+
+    nav.navbar {
+        left: 13vw;
+        width: 100%;
+  }
+
+     footer a {
+        display: none; 
+    }
+
+}

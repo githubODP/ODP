@@ -1,0 +1,192 @@
+﻿@using Domain.Corregedoria.Enum
+@model ODP.Web.UI.Models.Corregedoria.InstauracaoViewModel
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<div class=" mb-lg-5"> </div>
+
+<div class="container-xxl shadow-lg border-1">
+    <form asp-action="Editar">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Editar <b>Instauração</b></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row  p-lg-3">
+            <input asp-for="Ano" class="form-control" value="@DateTime.Now.Year" type="hidden" />
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="Nome" class="control-label"></label>
+                    <input asp-for="Nome" class="form-control" readonly />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <!-- CNPJ/CPF -->
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label asp-for="CNPJCPF" class="control-label"></label>
+                    <input asp-for="CNPJCPF" class="form-control" readonly />
+                    <span asp-validation-for="CNPJCPF" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- RG -->
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label asp-for="RG" class="control-label"></label>
+                    <input asp-for="RG" class="form-control" readonly />
+                    <span asp-validation-for="RG" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Protocolo -->
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label asp-for="Protocolo" class="control-label"></label>
+                    <input asp-for="Protocolo" class="form-control" readonly />
+                    <span asp-validation-for="Protocolo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Orgão -->
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="Orgao" class="control-label"></label>
+                    <div class="col-mb">
+                        @Html.DropDownListFor(m => m.Orgao, new SelectList(Enum.GetValues(typeof(ETipoOrgao))), new { @class = "custom-dropdown col-checkbox" })
+                        <span asp-validation-for="Orgao" class="text-danger" readonly></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row   p-lg-3">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="AtoNormativo" class="control-label"></label>
+                    <input asp-for="AtoNormativo" class="form-control" readonly />
+                    <span asp-validation-for="AtoNormativo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="DataPublicacao" class="control-label"></label>
+                    <input type="date" class="form-control" asp-for="DataPublicacao" readonly />
+                    <span asp-validation-for="DataPublicacao" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="NumeroDIOE" class="control-label"></label>
+                    <input asp-for="NumeroDIOE" class="form-control" readonly />
+                    <span asp-validation-for="NumeroDIOE" class="text-danger"></span>
+                </div>
+            </div>
+            <!-- Procedimento -->
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="Procedimento" class="control-label"></label>
+                    <div class="col-mb" readonly>
+                        @Html.DropDownListFor(m => m.Procedimento, new SelectList(Enum.GetValues(typeof(ETipoProcedimento))), new { @class = "custom-dropdown col-checkbox" })
+                        @*     @Html.DropDownListFor(
+                        m => m.Procedimento,
+                        new SelectList(
+                        Enum.GetValues(typeof(ETipoDecisao)).Cast<ETipoDecisao>()
+                        .Select(e => new SelectListItem
+                        {
+                        Text = EnumHelper.GetDisplayName(e),
+                        Value = ((int)e).ToString()
+                        }),
+                        "Value",
+                        "Text"
+                        ),
+                        new { @class = "custom-dropdown col-checkbox" }
+                        ) *@
+
+                        <span asp-validation-for="Procedimento" class="text-danger" ></span>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="row   p-lg-3">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="AtoNormativoDecisao" class="control-label" type="text"></label>
+                    <input asp-for="AtoNormativoDecisao" class="form-control" readonly />
+                    <span asp-validation-for="AtoNormativoDecisao" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="DataPublicacaoDecisao" class="control-label" type="text"></label>
+                    <input type="date" class="form-control" asp-for="DataPublicacaoDecisao" readonly />
+                    <span asp-validation-for="DataPublicacaoDecisao" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="NumeroDIOEDecisao" class="control-label"></label>
+                    <input asp-for="NumeroDIOEDecisao" class="form-control" readonly />
+                    <span asp-validation-for="NumeroDIOEDecisao" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <!-- Decisão -->
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="Decisao" class="control-label"></label>
+                    <div class="col-mb">
+                        @Html.DropDownListFor(m => m.Decisao, new SelectList(Enum.GetValues(typeof(ETipoDecisao))), new { @class = "custom-dropdown col-checkbox" })
+                        <span asp-validation-for="Decisao" class="text-danger" readonly></span>
+                       
+                    </div >
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row   p-lg-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="InfoAdd" class="control-label"></label>
+                    <textarea style="text-align:justify" rows="8" cols="90" asp-for="InfoAdd" class="form-control" readonly></textarea>
+                    <span asp-validation-for="InfoAdd" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Objeto" class="control-label"></label>
+                    <textarea style="text-align:justify" rows="8" cols="90" asp-for="Objeto" class="form-control" readonly></textarea>
+                    <span asp-validation-for="Objeto" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <!-- Botão de submit -->
+        <div class="row justify-content-center   p-lg-3">
+            <div class="col-md-6 text-center">
+                <button class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Corregedoria")'">Cancelar</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+﻿

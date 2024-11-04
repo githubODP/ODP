@@ -1,0 +1,81 @@
+﻿@using ODP.Web.UI.Extensions
+@model PagedResult<ODP.Web.UI.Models.ViewModels.Compras.LicitacaoViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<html>
+
+    <head>
+
+    </head>
+
+
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().Protocolo)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().Orgao)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().Ano)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().Mes)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().Fornecedor)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().CNPJCPF)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().Modalidade)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().Situacao)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().Objeto)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().ValorEstimado)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().ValorLicitado)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.First().ValorHomologado)</th>
+
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+            @foreach (var item in Model.Results)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Ano)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Mes)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Fornecedor)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CNPJCPF)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Modalidade)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Situacao)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Objeto)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValorEstimado)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValorLicitado)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ValorHomologado)</td>
+                </tr>
+            }
+
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </body>
+
+</html>
+
+<div class="pagination">
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@Model.PageSize"
+       class="@(Model.PageNumber == 1 ? "disabled" : "")">Anterior</a>
+
+    @for (var i = 1; i <= Model.TotalPages; i++)
+    {
+        <a asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@Model.PageSize"
+           class="@(i == Model.PageNumber ? "active" : "")">@i</a>
+    }
+
+    <a asp-action="Index" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@Model.PageSize"
+       class="@(Model.PageNumber == Model.TotalPages ? "disabled" : "")">Próximo</a>
+</div>

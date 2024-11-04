@@ -1,0 +1,52 @@
+﻿<h1>ConsultaCNPJ</h1>
+
+@model ODP.Web.UI.Models.ViewModels.GovernoFederal.AcordoLenienciaViewModel
+
+@{
+    ViewData["Title"] = "Consulta de Acordo por CNPJ";
+}
+
+
+@if (Model != null && Model.Id != Guid.Empty)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.CNPJ)</th>
+                <th>@Html.DisplayNameFor(model => model.RazaoSocial)</th>
+                <th>@Html.DisplayNameFor(model => model.DataInicioAcordo)</th>
+                <th>@Html.DisplayNameFor(model => model.DataFimAcordo)</th>
+                <th>@Html.DisplayNameFor(model => model.Situacao)</th>
+                <th>@Html.DisplayNameFor(model => model.NumeroProcesso)</th>
+                <th>@Html.DisplayNameFor(model => model.TermosAcordo)</th>
+                <th>@Html.DisplayNameFor(model => model.OrgaoSancionador)</th>
+                <th>@Html.DisplayNameFor(model => model.Efeitos)</th>
+                <th>@Html.DisplayNameFor(model => model.Complementos)</th>
+          
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Html.DisplayFor(model => model.Id)</td>
+                <td>@Html.DisplayFor(model => model.CNPJ)</td>
+                <td>@Html.DisplayFor(model => model.RazaoSocial)</td>
+                <td>@Html.DisplayFor(model => model.DataInicioAcordo)</td>
+                <td>@Html.DisplayFor(model => model.DataFimAcordo)</td>
+                <td>@Html.DisplayFor(model => model.Situacao)</td>
+                <td>@Html.DisplayFor(model => model.NumeroProcesso)</td>
+                <td>@Html.DisplayFor(model => model.TermosAcordo)</td>
+                <td>@Html.DisplayFor(model => model.OrgaoSancionador)</td>
+                <td>@Html.DisplayFor(model => model.Efeitos)</td>
+                <td>@Html.DisplayFor(model => model.Complementos)</td>
+                
+            </tr>
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-danger">
+        Nenhum contrato foi encontrado com o CNPJ fornecido.
+    </div>
+}

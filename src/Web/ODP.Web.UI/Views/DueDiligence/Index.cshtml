@@ -1,0 +1,148 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using ODP.Web.UI.Extensions
+@model PagedResult<ODP.Web.UI.Models.DueDiligence.DueDiligenceViewModel>
+
+<div class="container-fluid">
+    <div class="table-responsive shadow">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Due <b>Diligence</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a asp-controller="DueDiligence" asp-action="Criar"
+                          
+                           class="btn btn-success">
+                            <img src="~/svg/adicionar.svg" width="20" height="20"
+                                 class="d-inline-block align-top" alt="Adicionar">
+                            <span class="m-1">Novo</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Editar</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().NroProtocolo)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Nome)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().CPF)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Indicacao)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Decreto)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().DataSolicitacao)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().DataResposta)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().ClassificacaoRisco)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Observacao)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Evidencias)</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Results)
+                    {
+                        <tr>
+                            <td>
+                                <button type="button"
+                                        class="btn btn-info btn-editar"
+                                        data-toggle="modal"
+                                        data-target="#EditModal"
+                                        onclick="location.href='@Url.Action("Editar", new { id = item.Id })'">
+                                    <img src="~/svg/editar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                </button>
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.NroProtocolo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CPF)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Indicacao)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Decreto)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DataSolicitacao)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DataResposta)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ClassificacaoRisco)</td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#observacaoModal-@item.Id">
+                                    <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#evidenciasModal-@item.Id">
+                                    <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                </button>
+                            </td>
+                            <td>
+                                <div class="d-flex">
+                                    <a href="@Url.Action("GerarPdf", new { id = item.Id })" class="btn btn-primary btn-print " target="_blank">
+                                        <img src="~/svg/imprimir.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                    </a>
+                                    <button type="button" class="btn btn-info btn-duplicar" onclick="location.href='@Url.Action("Duplicar", new { id = item.Id })'">
+                                        <img src="~/svg/duplicar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Modal Observacao -->
+                        <div class="modal fade" id="observacaoModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="observacaoModalLabel-@item.Id" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="observacaoModalLabel-@item.Id">Observação</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        @Html.DisplayFor(modelItem => item.Observacao)
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal Evidencias -->
+                        <div class="modal fade" id="evidenciasModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="evidenciasModalLabel-@item.Id" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="evidenciasModalLabel-@item.Id">Evidências</h5>
+                                    </div>
+                                    <div class="modal-body" style="white-space: pre-wrap;overflow-wrap: break-word;">
+                                        @Html.DisplayFor(modelItem => item.Evidencias)
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+
+            </table>
+            
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function gerarEVisualizarPdf(url) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ocorreu um erro ao gerar o PDF.');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const pdfUrl = URL.createObjectURL(blob);
+                    window.open(pdfUrl, '_blank');
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        }
+    </script>
+}
