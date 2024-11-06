@@ -9,16 +9,16 @@
 
 
 
-<div class="card text-center" style="margin-left:20em;">
+<div class="card text-center " style="margin-left:20em; ">
     <form asp-controller="Corregedoria" asp-action="UploadCsv" method="post" enctype="multipart/form-data">
-        <div class="card-header">
+        <div class="card-header" style="background:var(--azul-cge); color:white; ">
             <label for="file">Escolha um arquivo CSV:</label>
         </div>
-        <div class="card-body">
-            <input type="file" id="file" name="file" accept=".csv" />
-            <button type="submit">Enviar</button>
+        <div class="card-body p-4">
+            <input type="file" id="file" name="file" accept=".csv" class="form-control" />
+            
         </div>
-
+        <button type="submit" class="btn btn-info mb-2">Enviar</button>
         @if (ViewData.ModelState != null && ViewData.ModelState.Count > 0)
         {
             <div class="validation-summary-errors">
@@ -29,4 +29,8 @@
             </div>
         }
     </form>
+
+
+
+
 </div>
