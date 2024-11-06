@@ -14,9 +14,9 @@ namespace Domain.Compras.Entidades
         public string Modalidade { get; set; }
         public string Situacao { get; set; }
         public string Objeto { get; set; }
-        public float ValorEstimado { get; set; }
+        public float? ValorEstimado { get; set; }
         public float? ValorLicitado { get; set; }
-        public float ValorHomologado { get; set; }
+        public float? ValorHomologado { get; set; }
 
     }
 }
