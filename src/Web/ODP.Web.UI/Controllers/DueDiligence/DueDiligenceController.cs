@@ -31,6 +31,13 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             return View(due);
         }
 
+        [HttpGet]
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(DueDiligenceViewModel dueViewModel)
         {
