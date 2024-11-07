@@ -53,12 +53,12 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         public async Task<IActionResult> Create(InstauracaoViewModel instauracaoViewModel)
         {
 
-            if (ModelState.IsValid)
+           
             {
                 await _instauracaoService.Adicionar(instauracaoViewModel);
                 return RedirectToAction(nameof(Index));
             }
-            return View(instauracaoViewModel);
+          
 
         }
 
