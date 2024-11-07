@@ -12,27 +12,27 @@ namespace Infra.Tribunal.Mapping.TCE
 
             builder.Property(c => c.Devedor)
               .IsRequired()
-              .HasColumnType("nvarchar(max)");
+              .HasColumnType("varchar(300)");
 
             builder.Property(c => c.CNPJCPF)
             .IsRequired()
-            .HasColumnType("varchar(15)");
+            .HasColumnType("varchar(18)");
 
             builder.Property(c => c.Credor)
               .IsRequired()
-              .HasColumnType("nvarchar(max)");
+              .HasColumnType("varchar(100)");
 
             builder.Property(c => c.Processo)
               .IsRequired()
-              .HasColumnType("nvarchar(max)");
+              .HasColumnType("varchar(10)");
 
             builder.Property(c => c.Decisao)
              .IsRequired()
-             .HasColumnType("nvarchar(max)");
+             .HasColumnType("varchar(30)");
 
             builder.Property(c => c.TipoSancao)
              .IsRequired()
-             .HasColumnType("nvarchar(max)");
+             .HasColumnType("varchar(30)");
 
             builder.Property(c => c.Referencia)
              .IsRequired()
@@ -40,15 +40,15 @@ namespace Infra.Tribunal.Mapping.TCE
 
             builder.Property(c => c.Valor)
              .IsRequired()
-             .HasColumnType("varchar(20)");
+             .HasColumnType("float");
 
             builder.Property(c => c.ValorRecolhido)
              .IsRequired()
-             .HasColumnType("varchar(20)");
+             .HasColumnType("float");
 
             builder.Property(c => c.SaldoDevedor)
              .IsRequired()
-             .HasColumnType("varchar(20)");
+             .HasColumnType("float");
 
             builder.Property(c => c.Execução)
            .IsRequired()
