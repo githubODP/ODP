@@ -26,7 +26,7 @@ namespace ODP.Web.UI.Controllers.Corregedoria
 
         [HttpGet]
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 8)
         {
             var instauracao = await _instauracaoService.Listar(pageNumber, pageSize);
             return View(instauracao);
