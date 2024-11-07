@@ -6,8 +6,7 @@ namespace Domain.Corregedoria.Entidade
 {
     public class Instauracao : Entity, IAggregateRoot
     {
-        public int Ano { get; set; }
-        public string? Nome { get; set; }
+        public int Ano { get; set; }        
         public string? CNPJCPF { get; set; }
         public string? RG { get; set; }
         public ETipoOrgao Orgao { get; set; }
