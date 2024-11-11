@@ -1,958 +1,184 @@
 @model ODP.Web.UI.Models.Consultas.ResultadoConsulta.ResultadoDTO
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Resultado da Consulta Individual</title>
-</head>
-<body>
-    <h1>Resultado da Consulta Individual</h1>
-    
-    @if (Model != null)
-    {
-        <fieldset>
-            <legend>COMPRAS</legend>
-            @if (Model.BuscaCompras != null && Model.BuscaCompras.Contrato.Any())
-            {
-                <fieldset>
-                    <legend>Contratos</legend>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Órgão</th>
-                                <th>Status</th>
-                                <th>Protocolo</th>
-                                <th>Valor Atual</th>
-                                <th>Valor Original</th>
-                                <th>CNPJ/CPF</th>
-                                <th>Data Início</th>
-                                <th>Data Fim</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var contrato in Model.BuscaCompras.Contrato)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => contrato.OrgaoGestor)</td>
-                                    <td>@Html.DisplayFor(m => contrato.StatusContrato)</td>
-                                    <td>@Html.DisplayFor(m => contrato.Protocolo)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalAtual)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalOriginal)</td>
-                                    <td>@Html.DisplayFor(m => contrato.CNPJCPF)</td>
-                                    <td>@(contrato.DTInicioVigencia?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@(contrato.DTFimVigencia?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </fieldset>
-            }
 
-            @if (Model.BuscaCompras != null && Model.BuscaCompras.Dispensa.Any())
-            {
-                <fieldset>
-                    <legend>Dispensas</legend>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Órgão</th>
-                                <th>CNPJ</th>
-                                <th>Protocolo</th>
-                                <th>Valor Dispensa</th>
-                                <th>Valor Item</th>
-                                <th>Qtde Item</th>
-                                <th>Modalidade</th>
-                                <th>Data Dispensa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var dispensa in Model.BuscaCompras.Dispensa)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
-                                    <td>@Html.DisplayFor(m => dispensa.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorDispensa)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorItem)</td>
-                                    <td>@Html.DisplayFor(m => dispensa.QtdItem)</td>
-                                    <td>@Html.DisplayFor(m => dispensa.Modalidade)</td>
-                                    <td>@(dispensa.DataDispensa?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </fieldset>
-            }
 
-
-            @if (Model.BuscaCompras != null && Model.BuscaCompras.Licitacao.Any())
-            {
-                <fieldset>
-                    <legend>Licitações</legend>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ano</th>
-                                <th>Órgão</th>
-                                <th>CNPJCPF</th>
-                                <th>Protocolo</th>
-                                <th>Valor Homologado</th>
-                               
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var dispensa in Model.BuscaCompras.Licitacao)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => dispensa.Ano)</td>
-                                    <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
-                                    <td>@Html.DisplayFor(m => dispensa.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorHomologado)</td>                                   
-                                   
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </fieldset>
-            }
-
-
-        </fieldset>
-
-       
-        <fieldset>
-            <legend>Dividas União</legend>
-
-            @if (Model.BuscaDividas != null && Model.BuscaDividas.DividaFGTS.Any())
-            {
-                <fieldset>
-                    <legend>Dividas FGTS</legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tipo Pessoa</th>
-                                <th>Devedor</th>
-                                <th>CNPJCPF</th>
-                                <th>UF</th>
-                                <th>Valor</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var dividas in Model.BuscaDividas.DividaFGTS)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => dividas.TipoPessoa)</td>
-                                    <td>@Html.DisplayFor(m => dividas.NomeDevedor)</td>
-                                    <td>@Html.DisplayFor(m => dividas.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => dividas.UFUnidadeResponsavel)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dividas.ValorConsolidado)</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaDividas != null && Model.BuscaDividas.DividaPrevidenciaria.Any())
-            {
-                <fieldset>
-                    <legend>Dividas Previdênciaria</legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tipo Pessoa</th>
-                                <th>Devedor</th>
-                                <th>CNPJCPF</th>
-                                <th>Data Inscrição/th>
-                                <th>Valor</th>
-
-                            </tr>
-                        </thead>                      
-
-                        <tbody>
-                            @foreach (var dividas in Model.BuscaDividas.DividaPrevidenciaria)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => dividas.TipoPessoa)</td>
-                                    <td>@Html.DisplayFor(m => dividas.NomeDevedor)</td>
-                                    <td>@Html.DisplayFor(m => dividas.CNPJCPF)</td>
-                                    <td>@(dividas.DataInscricao.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dividas.ValorConsolidado)</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </fieldset>
-            }
-
-            @if (Model.BuscaDividas != null && Model.BuscaDividas.DividaPrevidenciaria.Any())
-            {
-                <fieldset>
-                    <legend>Dividas Previdênciaria</legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Tipo Pessoa</th>
-                                <th>Devedor</th>
-                                <th>CNPJCPF</th>
-                                <th>Data Inscrição/th>
-                                <th>Valor</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var dividas in Model.BuscaDividas.DividaPrevidenciaria)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => dividas.TipoPessoa)</td>
-                                    <td>@Html.DisplayFor(m => dividas.NomeDevedor)</td>
-                                    <td>@Html.DisplayFor(m => dividas.CNPJCPF)</td>
-                                    <td>@(dividas.DataInscricao.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dividas.ValorConsolidado)</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </fieldset>
-            }
-
-
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Informações Fiscais</legend>
-
-            @if (Model.BuscaFazenda != null && Model.BuscaFazenda.Jucepar.Any())
-            {
-                <fieldset>
-                    <legend>Junta Comercial do Estado do Paraná</legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Razão Social</th>
-                                <th>CNPJ</th>
-                                <th>Nomes Sócios</th>
-                                <th>CPF</th>
-                                <th>Situação</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var fazenda in Model.BuscaFazenda.Jucepar)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => fazenda.RazaoSocial)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.CNPJ)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.NomesSocio)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.CPF)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.Situacao)</td>
-                                    
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaFazenda != null && Model.BuscaFazenda.NFEletronica.Any())
-            {
-                <fieldset>
-                    <legend>Notas Fiscais Eletrônicas Estaduais - Venda Estado</legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Emitente</th>
-                                <th>CNPJ</th>
-                                <th>Número NF</th>
-                                <th>Destinatário</th>
-                                <th>CNPJ Destinatário</th>
-                                <th>Valor NF</th>
-                                <th>Data Emissão</th>
-                                <th>Ano</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var fazenda in Model.BuscaFazenda.NFEletronica)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => fazenda.Emitente)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.CNPJ)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.NumeroNF)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.Destinatario)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.CNPJDestinatario)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", fazenda.ValorNotaFiscal)</td>
-                                    <td>@(fazenda.DataEmissao.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@Html.DisplayFor(m => fazenda.Ano)</td>
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-
-            }
-
-
-            @if (Model.BuscaFazenda != null && Model.BuscaFazenda.NFEletronicaFederal.Any())
-            {
-                <fieldset>
-                    <legend>Notas Fiscais Eletrônicas Federais - Venda União</legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Emitente</th>
-                                <th>CNPJ</th>
-                                <th>Número NF</th>
-                                <th>Destinatário</th>
-                                <th>CNPJ Destinatário</th>
-                                <th>Valor NF</th>
-                                <th>Chave Acesso</th>
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var fazenda in Model.BuscaFazenda.NFEletronicaFederal)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => fazenda.Emitente)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.CNPJ)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.NumeroNF)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.Destinatario)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.CNPJDestinatario)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", fazenda.ValorTotal)</td>
-                                    <td>@Html.DisplayFor(m => fazenda.ChaveAcesso)</td>
-                                    
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-                </fieldset>
-            }
-
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Bases Estaduais</legend>
-
-            @if (Model.BuscaEstadual != null && Model.BuscaEstadual.Ambiental.Any())
-            {
-                <fieldset>
-                    <legend>Infrações Ambientais </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Infrator</th>
-                                <th>CNPJ/CPF</th>
-                                <th>Situação</th>
-                                <th>Ano Infração</th>
-                               
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var estadual in Model.BuscaEstadual.Ambiental)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => estadual.Infrator)</td>
-                                    <td>@Html.DisplayFor(m => estadual.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => estadual.Situacao)</td>
-                                    <td>@Html.DisplayFor(m => estadual.AnoInfracao)</td>
-                                   
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaEstadual != null && Model.BuscaEstadual.PADV.Any())
-            {
-                <fieldset>
-                    <legend>Pedido de Autorização para Divulgação e Veiculação - PADV</legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Razão Social</th>
-                                <th>Agência</th>
-                                <th>CNPJ</th>
-                                <th>Nº PADV</th>
-                                <th>Órgão</th>
-                                <th>Valor</th>                               
-                                <th>Ano</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var estadual in Model.BuscaEstadual.PADV)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => estadual.RazaoSocial)</td>
-                                    <td>@Html.DisplayFor(m => estadual.Agencia)</td>
-                                    <td>@Html.DisplayFor(m => estadual.CNPJExecutor)</td>
-                                    <td>@Html.DisplayFor(m => estadual.NumeroPADV)</td>
-                                    <td>@Html.DisplayFor(m => estadual.OrgaoPagador)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", estadual.ValorPago)</td>
-                                    <td>@Html.DisplayFor(m => estadual.Ano)</td>
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-                </fieldset>
-
-            }
-
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Bases Federais</legend>
-
-            @if (Model.BuscaFederal != null && Model.BuscaFederal.AcordosLeniencia.Any())
-            {
-                <fieldset>
-                    <legend>Acordos de Leniência </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Id. Acordo</th>
-                                <th>Nº Processo</th>
-                                <th>CNPJ</th>
-                                <th>Razão Social</th>
-                                <th>Data Inicio</th>
-                                <th>Data Fim</th>
-                                <th>Situação</th>
-                                <th>Efeitos</th>
-                                <th>Termos Acordo</th>
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var federal in Model.BuscaFederal.AcordosLeniencia)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => federal.IdentificacaoAcordo)</td>
-                                    <td>@Html.DisplayFor(m => federal.NumeroProcesso)</td>
-                                    <td>@Html.DisplayFor(m => federal.CNPJ)</td>
-                                    <td>@Html.DisplayFor(m => federal.RazaoSocial)</td>
-                                    <td>@(federal.DataInicioAcordo.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@(federal.DataFimAcordo?.ToString("dd/MM/yyyy") ?? "-")</td>                                    
-                                    <td>@Html.DisplayFor(m => federal.Situacao)</td>
-                                    <td>@Html.DisplayFor(m => federal.Efeitos)</td>
-                                    <td>@Html.DisplayFor(m => federal.TermosAcordo)</td>    
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaFederal != null && Model.BuscaFederal.Aeronave.Any())
-            {
-                <fieldset>
-                    <legend>Aeronaves </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Proprietário</th>                               
-                                <th>CNPJ/CPF</th>
-                                <th>Marca</th>
-                                <th>Operador</th>
-                                <th>CPFCGC</th>
-                               
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var federal in Model.BuscaFederal.Aeronave)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => federal.Proprietario)</td>                                   
-                                    <td>@Html.DisplayFor(m => federal.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => federal.Marca)</td>                                   
-                                    <td>@Html.DisplayFor(m => federal.Operador)</td>
-                                    <td>@Html.DisplayFor(m => federal.CPFCGC)</td>
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaFederal != null && Model.BuscaFederal.Ceis.Any())
-            {
-                <fieldset>
-                    <legend>Cadastro Nacional de Empresas Inidôneas e Suspensas </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Razão Social</th>
-                                <th>CNPJ/CPF</th>
-                                <th>Tipo Pessoa</th>
-                                <th>Tipo Sanção</th>
-                                <th>Data Inicio</th>
-                                <th>Data Fim</th>
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var federal in Model.BuscaFederal.Ceis)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => federal.RazaoSocialReceita)</td>
-                                    <td>@Html.DisplayFor(m => federal.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => federal.TipoPessoa)</td>
-                                    <td>@Html.DisplayFor(m => federal.TipoSancao)</td>
-                                    <td>@(federal.DTInicioSancao?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@(federal.DTFimSancao?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaFederal != null && Model.BuscaFederal.Cepim.Any())
-            {
-                <fieldset>
-                    <legend>Cadastro de Entidades Privadas Sem Fins Lucrativos </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CNPJ</th>
-                                <th>Nº Convênio</th>
-                                <th>Órgão</th>
-                                <th>Impedimento</th>
-                              
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var federal in Model.BuscaFederal.Cepim)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => federal.Nome)</td>
-                                    <td>@Html.DisplayFor(m => federal.CNPJ)</td>
-                                    <td>@Html.DisplayFor(m => federal.NroConvenio)</td>
-                                    <td>@Html.DisplayFor(m => federal.Orgao)</td>
-                                    <td>@Html.DisplayFor(m => federal.Impedimento)</td>
-                                   
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaFederal != null && Model.BuscaFederal.Cnep.Any())
-            {
-                <fieldset>
-                    <legend>Aeronaves </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Razão Social</th>
-                                <th>CNPJ</th>
-                                <th>Nº Processo</th>
-                                <th>Data Inicio</th>
-                                <th>Data Fim</th>
-                                <th>Valor Multa</th>
-                                <th>Fundamentação Legal</th>
-
-
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var federal in Model.BuscaFederal.Cnep)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => federal.RazaoSocial)</td>
-                                    <td>@Html.DisplayFor(m => federal.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => federal.NroProcesso)</td>
-                                    <td>@(federal.DataInicioSancao.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@(federal.DataFimSancao?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", federal.ValorMulta)</td>
-                                    <td>@Html.DisplayFor(m => federal.FundamentacaoLegal)</td>
-
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaFederal != null && Model.BuscaFederal.TrabalhoEscravo.Any())
-            {
-                <fieldset>
-                    <legend>Cadastro de Empregadores que tenham submetido trabalhadores a condições análogas à de escravo  </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Empregador</th>
-                                <th>CNPJ/CPF</th>
-                                <th>Estabelecimento</th>
-                                <th>Ano</th>
-                                <th>UF</th>
-                                
-
-
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var federal in Model.BuscaFederal.TrabalhoEscravo)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => federal.Empregador)</td>
-                                    <td>@Html.DisplayFor(m => federal.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => federal.Estabelecimento)</td>                                   
-                                    <td>@Html.DisplayFor(m => federal.Ano)</td>
-                                    <td>@Html.DisplayFor(m => federal.UF)</td>
-
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
-                </fieldset>
-            }
-
-
-        </fieldset>
-
-
-        <fieldset>
-            <legend>Tribunal de Contas do Estado do Paraná</legend>
-
-            @if (Model.BuscaTCE != null && Model.BuscaTCE.CNPJRestrito.Any())
-            {
-                <fieldset>
-                    <legend>CNPJ's Com Restriçoes (Declaração Inidoneidade, Contratação com Poder Público, Suspensão do Direito de Licitar)' </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Razão Social</th>
-                                <th>CNPJ</th>
-                                <th>Data Inicio</th>
-                                <th>Data Fim</th>
-                                <th>Tipo Sançao</th>
-                                <th>Situação</th>
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var tce in Model.BuscaTCE.CNPJRestrito)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => tce.NomeRazaoSocial)</td>
-                                    <td>@Html.DisplayFor(m => tce.CNPJCPF)</td>
-                                    <td>@(tce.DataInicio.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@(tce.DataFim.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    <td>@Html.DisplayFor(m => tce.TipoSancao)</td>
-                                    <td>@Html.DisplayFor(m => tce.Situacao)</td>
-
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaTCE != null && Model.BuscaTCE.Inadimplente.Any())
-            {
-                <fieldset>
-                    <legend>CNPJ's Com Restriçoes (Declaração Inidoneidade, Contratação com Poder Público, Suspensão do Direito de Licitar)' </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Devedor</th>
-                                <th>CNPJ</th>
-                                <th>Credor</th>
-                                <th>Processo</th>
-                                <th>Tipo Sançao</th>
-                                <th>Referência</th>
-                                <th>Valor</th>
-                                <th>Valor Recolhido</th>
-                                <th>Saldo Devedor</th>
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var tce in Model.BuscaTCE.Inadimplente)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => tce.Devedor)</td>
-                                    <td>@Html.DisplayFor(m => tce.CNPJCPF)</td>                                    
-                                    <td>@Html.DisplayFor(m => tce.Credor)</td>
-                                    <td>@Html.DisplayFor(m => tce.Processo)</td>
-                                    <td>@Html.DisplayFor(m => tce.TipoSancao)</td>
-                                    <td>@Html.DisplayFor(m => tce.Referencia)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", tce.Valor)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", tce.ValorRecolhido)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", tce.SaldoDevedor)</td>
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-            }
-
-        </fieldset>
-
-        <fieldset>
-            <legend>Tribunal de Contas da União</legend>
-
-            @if (Model.BuscaTCU != null && Model.BuscaTCU.Inidoneo.Any())
-            {
-                <fieldset>
-                    <legend>Contas Eleitorais Irregulares </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CNPJ</th>
-                                <th>Processo</th>
-                                <th>Deliberação</th>
-                                <th>Data Final</th>
-                                
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var tcu in Model.BuscaTCU.Inidoneo)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => tcu.Nome)</td>
-                                    <td>@Html.DisplayFor(m => tcu.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => tcu.Processo)</td>
-                                    <td>@Html.DisplayFor(m => tcu.Deliberacao)</td>
-                                    <td>@(tcu.DataFinal.ToString("dd/MM/yyyy") ?? "-")</td>
-
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-            }
-
-        </fieldset>
-
-        <fieldset>
-            <legend>Tribunal Superior Eleitoral</legend>
-
-            @if (Model.BuscaTSE != null && Model.BuscaTSE.FornecedorCandidato.Any())
-            {
-                <fieldset>
-                    <legend>Fornecedores à Candidatos </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ano Eleição</th>
-                                <th>Município</th>
-                                <th>Candidato</th>
-                                <th>CPF Candidato</th>
-                                <th>Descrição Cargo</th>
-                                <th>Partido</th>
-                                <th>CNPJCPF</th>
-                                <th>Fornecedor</th>
-                                <th>Valor Despesas</th>
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var tse in Model.BuscaTSE.FornecedorCandidato)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => tse.AnoEleicao)</td>
-                                    <td>@Html.DisplayFor(m => tse.Municipio)</td>
-                                    <td>@Html.DisplayFor(m => tse.Candidato)</td>
-                                    <td>@Html.DisplayFor(m => tse.CPFCandidato)</td>
-                                    <td>@Html.DisplayFor(m => tse.DescricaoCargo)</td>
-                                    <td>@Html.DisplayFor(m => tse.Partido)</td>
-                                    <td>@Html.DisplayFor(m => tse.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => tse.Fornecedor)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", tse.ValorDespesas)</td>
-
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-            }
-
-            @if (Model.BuscaTSE != null && Model.BuscaTSE.FornecedorPartido.Any())
-            {
-                <fieldset>
-                    <legend>Fornecedores à Partidos </legend>
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ano Eleição</th>
-                                <th>Município</th>
-                                <th>UF</th>
-                                <th>Partido</th>
-                                <th>Fornecedor</th>                               
-                                <th>CNPJCPF</th>
-                                <th>Descrição Despesas</th>
-                                <th>Partido Fornecedor</th>
-                                <th>Valor Despesas</th>
-
-
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var tse in Model.BuscaTSE.FornecedorPartido)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(m => tse.AnoEleicao)</td>
-                                    <td>@Html.DisplayFor(m => tse.Municipio)</td>
-                                    <td>@Html.DisplayFor(m => tse.UF)</td>
-                                    <td>@Html.DisplayFor(m => tse.Partido)</td>
-                                    <td>@Html.DisplayFor(m => tse.Fornecedor)</td>
-                                    <td>@Html.DisplayFor(m => tse.CNPJCPF)</td>
-                                    <td>@Html.DisplayFor(m => tse.DescricaoDespesas)</td>
-                                    <td>@Html.DisplayFor(m => tse.PartidoFornecedor)</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", tse.ValorDespesas)</td>
-
-
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-
-
-                </fieldset>
-            }
-
-        </fieldset>
-
-    }
-    else
-    {
-            <p>Nenhum dado encontrado para exibição.</p>
-    }
-
-    <a href="@Url.Action("Index", "Consulta")">Voltar para a consulta</a>
-</body>
-</html>
-
-
-<script>
-
-    var resultado = @Html.Raw(Json.Serialize(Model));
-    
-
-    // Função para verificar se uma lista tem elementos
-    function temElementos(lista) {
-        return lista && lista.length > 0;
-    }
-
-    // Verificando e exibindo no console
-    console.log("BuscaCompras.Dispensa tem elementos:", temElementos(resultado.BuscaCompras.Dispensa));
-
-    function verificarListas(objeto) {
-        for (var prop in objeto) {
-            if (typeof objeto[prop] === 'object') {
-                if (Array.isArray(objeto[prop])) {
-                    console.log(prop + " tem elementos:", temElementos(objeto[prop]));
-                } else {
-                    verificarListas(objeto[prop]);
-                }
-            }
+<style>
+    @@media (min-width: 576px) {
+        .rounded-nav {
+            border-radius: 50rem !important;
         }
     }
 
-    // Chamando a função recursiva para verificar todas as listas
-    verificarListas(resultado);
-</script>
+    @@media (min-width: 576px) {
+        .rounded-nav .nav-link {
+            border-radius: 50rem !important;
+        }
+    }
+
+    /* With arrow tabs */
+
+    .with-arrow .nav-link.active {
+        position: relative;
+    }
+
+        .with-arrow .nav-link.active::after {
+            content: '';
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #2b90d9;
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: block;
+        }
+
+        @@media (min-width:1200px){
+            .container{
+                max-width:95% !important;
+            }
+        }
+    
+</style>
+
+@{
+    ViewData["Title"] = "Consulta CNPJ";
+}
+<div class="container">
+    <div class="row ">
+        <div class="col-lg-12">
+            <div class="p-5 bg-white rounded shadow mb-5">
+                <h3 class="text-black">Compras</h3>
+                <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#home" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Contratos</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#profile" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Licitações</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#contact" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Dispensas</a>
+                    </li>
+                </ul>
+                <div id="myTabContent" class="tab-content">
+                    <div id="home" class="tab-pane fade px-4 py-5 show active">
+                        @if (Model.BuscaCompras.Contrato.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Órgão</th>
+                                        <th>Status</th>
+                                        <th>Protocolo</th>
+                                        <th>Valor Atual</th>
+                                        <th>Valor Original</th>
+                                        <th>CNPJ/CPF</th>
+                                        <th>Data Início</th>
+                                        <th>Data Fim</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var contrato in Model.BuscaCompras.Contrato)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => contrato.OrgaoGestor)</td>
+                                            <td>@Html.DisplayFor(m => contrato.StatusContrato)</td>
+                                            <td>@Html.DisplayFor(m => contrato.Protocolo)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalAtual)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalOriginal)</td>
+                                            <td>@Html.DisplayFor(m => contrato.CNPJCPF)</td>
+                                            <td>@(contrato.DTInicioVigencia?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                            <td>@(contrato.DTFimVigencia?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhum contrato encontrado.</p>
+                        }
+                    </div>
+                    <div id="profile" class="tab-pane fade px-4 py-5">
+                        @if (@Model.BuscaCompras.Licitacao.Count() !=0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ano</th>
+                                        <th>Órgão</th>
+                                        <th>CNPJCPF</th>
+                                        <th>Protocolo</th>
+                                        <th>Valor Homologado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var dispensa in Model.BuscaCompras.Licitacao)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => dispensa.Ano)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.CNPJCPF)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorHomologado)</td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhuma licitação encontrada.</p>
+                        }
+
+                    </div>
+                    <div id="contact" class="tab-pane fade px-4 py-5">
+                        @if (Model.BuscaCompras.Dispensa.Count() !=0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Órgão</th>
+                                        <th>CNPJ</th>
+                                        <th>Protocolo</th>
+                                        <th>Valor Dispensa</th>
+                                        <th>Valor Item</th>
+                                        <th>Qtde Item</th>
+                                        <th>Modalidade</th>
+                                        <th>Data Dispensa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var dispensa in Model.BuscaCompras.Dispensa)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.CNPJCPF)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorDispensa)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorItem)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.QtdItem)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.Modalidade)</td>
+                                            <td>@(dispensa.DataDispensa?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhuma dispensa encontrada.</p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
