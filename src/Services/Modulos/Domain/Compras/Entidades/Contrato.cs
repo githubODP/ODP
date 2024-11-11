@@ -16,7 +16,9 @@ namespace Domain.Compras.Entidades
         public string StatusContrato { get; set; }
         public string Fornecedor { get; set; }
         [Display(Name = "CNPJ/CPF Fornecedor")]
-        public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+
+        public string CPF { get; set; }
         public string Protocolo { get; set; }
         [Display(Name = "Número Contrato")]
         public string NumeroContrato { get; set; }

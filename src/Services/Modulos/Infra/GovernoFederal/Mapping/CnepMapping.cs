@@ -15,8 +15,7 @@ namespace Infra.GovernoFederal.Mapping
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(c => c.RazaoSocial)
-               .IsRequired()
+            builder.Property(c => c.RazaoSocial)              
                .HasColumnType("varchar(200)");
 
             builder.Property(c => c.CNPJCPF)
@@ -27,8 +26,7 @@ namespace Infra.GovernoFederal.Mapping
                .IsRequired()
                .HasColumnType("varchar(10)");
 
-            builder.Property(c => c.NomeFantasia)
-               .IsRequired()
+            builder.Property(c => c.NomeFantasia)            
                .HasColumnType("varchar(200)");
 
             builder.Property(c => c.NroProcesso)
@@ -47,12 +45,10 @@ namespace Infra.GovernoFederal.Mapping
                .IsRequired()
                .HasColumnType("DateTime");
 
-            builder.Property(c => c.DataFimSancao)
-               .IsRequired()
+            builder.Property(c => c.DataFimSancao)             
                .HasColumnType("DateTime");
 
-            builder.Property(c => c.DataPublicacao)
-               .IsRequired()
+            builder.Property(c => c.DataPublicacao)              
                .HasColumnType("DateTime");
 
             builder.Property(c => c.Detalhamento)

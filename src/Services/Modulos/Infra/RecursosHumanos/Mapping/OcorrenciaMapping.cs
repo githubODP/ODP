@@ -21,7 +21,7 @@ namespace Infra.RecursosHumanos.Mapping
 
             builder.Property(c => c.DescricaoOcorrencia)
              .IsRequired()
-             .HasColumnType("varchar(120)");
+             .HasColumnType("varchar(200)");
 
             builder.Property(c => c.InicioLicenca)
              .IsRequired()

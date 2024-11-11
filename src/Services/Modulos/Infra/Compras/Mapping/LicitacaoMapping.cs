@@ -31,9 +31,11 @@ namespace Infra.Compras.Mapping
                 .IsRequired(false)
                 .HasColumnType("varchar(300)");
 
-            builder.Property(c => c.CNPJCPF)
-                .IsRequired(false)
+            builder.Property(c => c.CNPJ)              
                 .HasColumnType("varchar(18)");
+
+            builder.Property(c => c.CPF)
+              .HasColumnType("varchar(14)");
 
             builder.Property(c => c.Modalidade)
                 .IsRequired()

@@ -35,12 +35,10 @@ namespace Infra.RecursosHumanos.Mapping
              .IsRequired()
              .HasColumnType("varchar(8)");
 
-            builder.Property(c => c.CPFDependente)
-             .IsRequired(false)
+            builder.Property(c => c.CPFDependente)             
              .HasColumnType("varchar(15)");
 
-            builder.Property(c => c.RGDependente)
-             .IsRequired()
+            builder.Property(c => c.RGDependente)           
              .HasColumnType("varchar(15)");
 
             builder.Property(c => c.NomeDependente)
