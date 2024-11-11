@@ -52,11 +52,7 @@ namespace Infra.Compras.Mapping
 
             builder.Property(c => c.TipoContrato)
                .IsRequired()
-               .HasColumnType("varchar(55)");
-
-            builder.Property(c => c.Fiscal)
-                .IsRequired()
-                .HasColumnType("varchar(200)");
+               .HasColumnType("varchar(55)");         
 
 
             builder.Property(c => c.TermoAditivo)
@@ -66,22 +62,7 @@ namespace Infra.Compras.Mapping
             builder.Property(c => c.Empenho)
               .IsRequired(false)
               .HasColumnType("varchar(20)");
-
-            builder.Property(c => c.AnoEmpenho)
-                .IsRequired(false)
-                .HasColumnType("int");
-
-            builder.Property(c => c.Liquidacao)
-                .IsRequired(false)
-             .HasColumnType("varchar(20)");
-
-            builder.Property(c => c.DTLiquidacao)
-                .IsRequired(false)
-             .HasColumnType("Datetime");
-
-            builder.Property(c => c.DTPagamento)
-               .IsRequired(false)
-            .HasColumnType("Datetime");
+           
 
             builder.Property(c => c.QtdeAditivo)
                .IsRequired()
