@@ -19,12 +19,12 @@ namespace Infra.Compras.RepositoriesRead
 
             return await _context.Set<Licitacao>()
             .AsNoTracking()
-            .Where(c => c.CNPJCPF == cnpj)
+            .Where(c => c.CNPJ == cnpj)
             .Select ( c => new Licitacao
             {
                 Ano = c.Ano,
                 Orgao = c.Orgao,
-                CNPJCPF = c.CNPJCPF,
+                CNPJ = c.CNPJ,
                 Protocolo = c.Protocolo,
                 ValorHomologado = c.ValorHomologado,    
             })

@@ -18,7 +18,7 @@ namespace Infra.Compras.RepositoriesRead
             Console.WriteLine($"Buscando contratos com CNPJ: {cnpj}"); // Log para verificar o valor
             return await _context.Set<Contrato>()
             .AsNoTracking()
-            .Where(c => c.CNPJCPF == cnpj)
+            .Where(c => c.CNPJ == cnpj)
             .Select(c => new Contrato
             {
 
@@ -26,7 +26,7 @@ namespace Infra.Compras.RepositoriesRead
                 StatusContrato = c.StatusContrato,
                 Protocolo = c.Protocolo,
                 Fornecedor = c.Fornecedor,
-                CNPJCPF = c.CNPJCPF,
+                CNPJ = c.CNPJ,
                 VlrTotalAtual = c.VlrTotalAtual,
                 VlrTotalOriginal = c.VlrTotalOriginal,               
                 DTInicioVigencia = c.DTInicioVigencia,
@@ -40,7 +40,7 @@ namespace Infra.Compras.RepositoriesRead
         {
             return await _context.Set<Contrato>()
             .AsNoTracking()
-            .Where(c => c.CNPJCPF == cpf)
+            .Where(c => c.CPF == cpf)
             .Select(c => new Contrato
             {
 
@@ -49,7 +49,7 @@ namespace Infra.Compras.RepositoriesRead
                 Protocolo = c.Protocolo,
                 VlrTotalAtual = c.VlrTotalAtual,
                 VlrTotalOriginal = c.VlrTotalOriginal,
-                CNPJCPF = c.CNPJCPF,
+                CPF = c.CPF,
                 DTInicioVigencia = c.DTInicioVigencia,
                 DTFimVigencia = c.DTFimVigencia,
                 // Outros campos que você realmente precisa

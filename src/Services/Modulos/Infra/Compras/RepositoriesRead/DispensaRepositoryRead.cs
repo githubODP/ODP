@@ -20,12 +20,12 @@ namespace Infra.Compras.RepositoriesRead
 
             return await _context.Set<Dispensa>()
             .AsNoTracking()
-            .Where(c => c.CNPJCPF == cnpj)
+            .Where(c => c.CNPJ == cnpj)
             .Select(c => new Dispensa
             {
                 Orgao = c.Orgao,
                 Fornecedor = c.Fornecedor,
-                CNPJCPF = c.CNPJCPF,
+                CNPJ = c.CNPJ,
                 Protocolo = c.Protocolo,
                 Modalidade = c.Modalidade,
                 ValorItem = c.ValorItem,
