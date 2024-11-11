@@ -39,7 +39,7 @@ namespace API.Controllers
 
 
         [HttpGet("listar")]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 8)
         {
             var pagedResult = await _instauracaoRepositoryRead.Listar(pageNumber, pageSize);
             return Ok(pagedResult);

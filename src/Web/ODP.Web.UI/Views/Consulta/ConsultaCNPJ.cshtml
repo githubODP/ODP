@@ -1,4 +1,4 @@
-﻿@model ODP.Web.UI.Models.Consultas.ResultadoConsulta.ResultadoDTO
+@model ODP.Web.UI.Models.Consultas.ResultadoConsulta.ResultadoDTO
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -926,3 +926,33 @@
     <a href="@Url.Action("Index", "Consulta")">Voltar para a consulta</a>
 </body>
 </html>
+
+
+<script>
+
+    var resultado = @Html.Raw(Json.Serialize(Model));
+    
+
+    // Função para verificar se uma lista tem elementos
+    function temElementos(lista) {
+        return lista && lista.length > 0;
+    }
+
+    // Verificando e exibindo no console
+    console.log("BuscaCompras.Dispensa tem elementos:", temElementos(resultado.BuscaCompras.Dispensa));
+
+    function verificarListas(objeto) {
+        for (var prop in objeto) {
+            if (typeof objeto[prop] === 'object') {
+                if (Array.isArray(objeto[prop])) {
+                    console.log(prop + " tem elementos:", temElementos(objeto[prop]));
+                } else {
+                    verificarListas(objeto[prop]);
+                }
+            }
+        }
+    }
+
+    // Chamando a função recursiva para verificar todas as listas
+    verificarListas(resultado);
+</script>
