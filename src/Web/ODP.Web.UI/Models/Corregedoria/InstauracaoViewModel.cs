@@ -12,9 +12,9 @@ namespace ODP.Web.UI.Models.Corregedoria
         [Required]
         public int Ano { get; set; }
         [Display(Name = "Nome Investigado e/ou Empresa")]
-        [Required]
+       
         public string Nome { get; set; }
-        [Required]
+       
         public string CNPJCPF { get; set; }
         public string RG { get; set; }
 

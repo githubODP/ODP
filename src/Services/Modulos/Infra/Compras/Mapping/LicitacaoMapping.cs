@@ -50,7 +50,6 @@ namespace Infra.Compras.Mapping
                 .HasColumnType("nvarchar(max)");
 
             builder.Property(c => c.ValorEstimado)
-
                 .HasColumnType("float");
 
             builder.Property(c => c.ValorLicitado)

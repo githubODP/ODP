@@ -11,9 +11,15 @@ namespace Dividas.Infra.Mapping
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(c => c.CNPJCPF)
+            builder.Property(c => c.CNPJ)
                 .IsRequired()
                 .HasColumnType("varchar(18)");
+
+
+            builder.Property(c => c.CPF)
+               .IsRequired()
+               .HasColumnType("varchar(14)");
+
             builder.HasKey(x => x.Id);
 
             builder.Property(c => c.TipoPessoa)

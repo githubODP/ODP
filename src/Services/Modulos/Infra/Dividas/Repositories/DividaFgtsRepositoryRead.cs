@@ -22,12 +22,12 @@ namespace Dividas.Infra.Repositories
 
             return await _context.Set<DividaFGTS>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cnpj)
+                .Where(c => c.CNPJ == cnpj)
                 .Select (c => new DividaFGTS
                 {
                     TipoPessoa = c.TipoPessoa,
                     NomeDevedor = c.NomeDevedor,
-                    CNPJCPF = c.CNPJCPF,
+                    CNPJ = c.CNPJ,
                     UFUnidadeResponsavel = c.UFUnidadeResponsavel,  
                     ValorConsolidado = c.ValorConsolidado,  
                 })
@@ -40,12 +40,12 @@ namespace Dividas.Infra.Repositories
 
             return await _context.Set<DividaFGTS>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cpf)
+                .Where(c => c.CPF == cpf)
                  .Select(c => new DividaFGTS
                  {
                      TipoPessoa = c.TipoPessoa,
                      NomeDevedor = c.NomeDevedor,
-                     CNPJCPF = c.CNPJCPF,
+                     CPF = c.CPF,
                      UFUnidadeResponsavel = c.UFUnidadeResponsavel,
                      ValorConsolidado = c.ValorConsolidado,
                  })

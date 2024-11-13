@@ -21,12 +21,12 @@ namespace Dividas.Infra.Repositories
 
             return await _context.Set<DividaPrevidenciaria>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cnpj)
+                .Where(c => c.CNPJ == cnpj)
                  .Select(c => new DividaPrevidenciaria
                  {
                      TipoPessoa = c.TipoPessoa,
                      NomeDevedor = c.NomeDevedor,
-                     CNPJCPF = c.CNPJCPF,
+                     CNPJ = c.CNPJ,
                      DataInscricao = c.DataInscricao,
                      ValorConsolidado = c.ValorConsolidado,
                  })
@@ -39,12 +39,12 @@ namespace Dividas.Infra.Repositories
 
             return await _context.Set<DividaPrevidenciaria>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cpf)
+                .Where(c => c.CPF == cpf)
                  .Select(c => new DividaPrevidenciaria
                  {
                      TipoPessoa = c.TipoPessoa,
                      NomeDevedor = c.NomeDevedor,
-                     CNPJCPF = c.CNPJCPF,
+                     CPF = c.CPF,
                      DataInscricao = c.DataInscricao,
                      ValorConsolidado = c.ValorConsolidado,
                  })

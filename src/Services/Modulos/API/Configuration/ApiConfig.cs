@@ -16,7 +16,8 @@ namespace API.Configuration
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ObservatorioContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                 sqlOptions => sqlOptions.CommandTimeout(180))); // Timeout set to 180 seconds));
             services.AddControllers();
 
             services.AddCors(options =>
