@@ -1,4 +1,4 @@
-﻿using CGEODP.Core.DomainObjects;
+using CGEODP.Core.DomainObjects;
 using Domain.Compras.Entidades;
 using Domain.Compras.Interfaces;
 using Infra.Data;

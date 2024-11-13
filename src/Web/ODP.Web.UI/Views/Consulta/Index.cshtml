@@ -7,108 +7,116 @@
    
 
 
-<div class="container">
+<div class="container-xxl shadow-lg border-1 mt-4 px-4" style="min-height: 60%; min-width:80%;">
 
-
-    <h1>Consulta Geral</h1>
-    <div class="row">
-        <div class="col-6">
-            <div class="card mt-3 tab-card">
-                <div class="card-header tab-card-header">
-                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">CNPJ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">CPF</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="Three" aria-selected="false">Lote</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
-                        <form method="get" action="/Consulta/ConsultaCNPJ">
-                            <label for="cnpj">CNPJ:</label>
-                            <input type="text" id="cnpj" name="cnpj" />
-
-                            <div class="section-title">Tabelas Selecionadas:</div>
-                            <div class="checkbox-group">
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="compras" /> Compras</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="dividas" /> Dívidas</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="fazenda" /> Fazenda</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="estadual" /> Estadual</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="federal" /> Federal</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="interno" /> DueDiligence</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tce" /> TCE</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tcu" /> TCU</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tse" /> TSE</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="todas" /> Todas</label>
-                            </div>
-
-                            <button type="submit">Consultar CNPJ</button>
-                        </form>
-                    </div>
-                    <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
-
-                        <form method="get" action="/Consulta/ConsultaCPF">
-                            <label for="cpf">CPF:</label>
-                            <input type="text" id="cpf" name="cpf" />
-
-                            <div class="section-title">Tabelas Selecionadas:</div>
-                            <div class="checkbox-group">
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="compras" /> Compras</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="dividas" /> Dívidas</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="estadual" /> Estadual</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="federal" /> Federal</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="interno" /> DueDiligence</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tce" /> TCE</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tcu" /> TCU</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tse" /> TSE</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="todas" /> Todas</label>
-                            </div>
-
-                            <button type="submit">Consultar CPF</button>
-                        </form>
-                    </div>
-                    <div class="tab-pane fade p-3" id="three" role="tabpanel" aria-labelledby="three-tab">
-
-
-
-                        <form method="post" enctype="multipart/form-data" action="/Consulta/ConsultaLote">
-                            <label for="arquivo">Arquivo:</label>
-                            <input type="file" id="arquivo" name="arquivo" />
-
-                            <label for="tipoDeBusca">Tipo de Busca:</label>
-                            <select id="tipoDeBusca" name="tipoDeBusca">
-                                <option value="CNPJ">CNPJ</option>
-                                <option value="CPF">CPF</option>
-                            </select>
-
-                            <div class="section-title">Tabelas Selecionadas:</div>
-                            <div class="checkbox-group">
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="compras" /> Compras</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="dividas" /> Dívidas</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="estadual" /> Estadual</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="federal" /> Federal</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="interno" /> DueDiligence</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tce" /> TCE</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tcu" /> TCU</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="tse" /> TSE</label>
-                                <label><input type="checkbox" name="tabelasSelecionadas" value="todas" /> Todas</label>
-                            </div>
-
-                            <button type="submit">Consultar em Lote</button>
-                        </form>
-
-                    </div>
-
-                </div>
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Consulta <b>Geral</b></h2>
             </div>
         </div>
     </div>
+    <div class="card mt-3 tab-card">
+        <div class="card-header tab-card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">CNPJ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">CPF</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="Three" aria-selected="false">Lote</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
+                <form method="get" action="/Consulta/ConsultaCNPJ">
+                   
+
+
+                    <div class="row   p-lg-3">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label for="cnpj">CNPJ:</label>
+                                <input type="text" id="cnpj" name="cnpj" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Tabelas Selecionadas:</div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="compras" /> Compras</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="dividas" /> Dívidas</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="fazenda" /> Fazenda</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="estadual" /> Estadual</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="federal" /> Federal</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="interno" /> DueDiligence</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tce" /> TCE</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tcu" /> TCU</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tse" /> TSE</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="todas" /> Todas</label>
+                    </div>
+
+                    <button type="submit">Consultar CNPJ</button>
+                </form>
+            </div>
+            <div class="tab-pane fade p-3" id="two" role="tabpanel" aria-labelledby="two-tab">
+
+                <form method="get" action="/Consulta/ConsultaCPF">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" />
+
+                    <div class="section-title">Tabelas Selecionadas:</div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="compras" /> Compras</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="dividas" /> Dívidas</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="estadual" /> Estadual</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="federal" /> Federal</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="interno" /> DueDiligence</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tce" /> TCE</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tcu" /> TCU</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tse" /> TSE</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="todas" /> Todas</label>
+                    </div>
+
+                    <button type="submit">Consultar CPF</button>
+                </form>
+            </div>
+            <div class="tab-pane fade p-3" id="three" role="tabpanel" aria-labelledby="three-tab">
+                <form method="post" enctype="multipart/form-data" action="/Consulta/ConsultaLote">
+                    <label for="arquivo">Arquivo:</label>
+                    <input type="file" id="arquivo" name="arquivo" />
+
+                    <label for="tipoDeBusca">Tipo de Busca:</label>
+                    <select id="tipoDeBusca" name="tipoDeBusca">
+                        <option value="CNPJ">CNPJ</option>
+                        <option value="CPF">CPF</option>
+                    </select>
+
+                    <div class="section-title">Tabelas Selecionadas:</div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="compras" /> Compras</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="dividas" /> Dívidas</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="estadual" /> Estadual</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="federal" /> Federal</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="interno" /> DueDiligence</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tce" /> TCE</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tcu" /> TCU</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="tse" /> TSE</label>
+                        <label><input type="checkbox" name="tabelasSelecionadas" value="todas" /> Todas</label>
+                    </div>
+
+                    <button type="submit">Consultar em Lote</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
  
