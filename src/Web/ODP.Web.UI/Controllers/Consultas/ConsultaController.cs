@@ -177,7 +177,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 3].Value = "Status";
                     worksheet.Cells[row, 4].Value = "Protocolo";
                     worksheet.Cells[row, 7].Value = "Fornecedor";
-                    worksheet.Cells[row, 8].Value = "CNPJ/CPF";
+                    worksheet.Cells[row, 8].Value = "CNPJ";
                     worksheet.Cells[row, 5].Value = "Valor Total Atual";
                     worksheet.Cells[row, 6].Value = "Valor Total Original";                    
                     worksheet.Cells[row, 9].Value = "Data Início Vigência";
@@ -195,7 +195,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 3].Value = contrato.StatusContrato;
                                 worksheet.Cells[row, 4].Value = contrato.Protocolo;
                                 worksheet.Cells[row, 7].Value = contrato.Fornecedor;
-                                worksheet.Cells[row, 8].Value = contrato.CNPJCPF;
+                                worksheet.Cells[row, 8].Value = contrato.CNPJ;
                                 worksheet.Cells[row, 5].Value = contrato.VlrTotalAtual;
                                 worksheet.Cells[row, 6].Value = contrato.VlrTotalOriginal;                               
                                 worksheet.Cells[row, 9].Value = contrato.DTInicioVigencia?.ToString("dd/MM/yyyy") ?? "N/A";
@@ -221,7 +221,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
                     worksheet.Cells[row, 2].Value = "Orgão";
                     worksheet.Cells[row, 3].Value = "Fornecedor";
-                    worksheet.Cells[row, 4].Value = "CNPJCPF";
+                    worksheet.Cells[row, 4].Value = "CNPJ";
                     worksheet.Cells[row, 5].Value = "Protocolo";
                     worksheet.Cells[row, 6].Value = "Modalidade";
                     worksheet.Cells[row, 7].Value = "Valor Item";
@@ -239,7 +239,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 1].Value = "Dispensa";
                                 worksheet.Cells[row, 2].Value = contrato.Orgao;
                                 worksheet.Cells[row, 3].Value = contrato.Fornecedor;
-                                worksheet.Cells[row, 4].Value = contrato.CNPJCPF;
+                                worksheet.Cells[row, 4].Value = contrato.CNPJ;
                                 worksheet.Cells[row, 5].Value = contrato.Protocolo;
                                 worksheet.Cells[row, 6].Value = contrato.Modalidade;
                                 worksheet.Cells[row, 7].Value = contrato.ValorItem;
@@ -267,7 +267,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 2].Value = "Ano";
                     worksheet.Cells[row, 3].Value = "Orgão";
                     worksheet.Cells[row, 4].Value = "Fornecedor";
-                    worksheet.Cells[row, 5].Value = "CNPJCPF";
+                    worksheet.Cells[row, 5].Value = "CNPJ";
                     worksheet.Cells[row, 6].Value = "Protocolo";                   
                     worksheet.Cells[row, 7].Value = "Valor Homologado";
                    
@@ -284,7 +284,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 2].Value = contrato.Ano;                               
                                 worksheet.Cells[row, 3].Value = contrato.Orgao;
                                 worksheet.Cells[row, 4].Value = contrato.Fornecedor;
-                                worksheet.Cells[row, 5].Value = contrato.CNPJCPF;
+                                worksheet.Cells[row, 5].Value = contrato.CNPJ;
                                 worksheet.Cells[row, 6].Value = contrato.Protocolo;
                                 worksheet.Cells[row, 7].Value = contrato.ValorHomologado;
 
@@ -309,7 +309,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
                     worksheet.Cells[row, 2].Value = "Tipo de Pessoa";
                     worksheet.Cells[row, 3].Value = "Nome Devedor";                    
-                    worksheet.Cells[row, 4].Value = "CNPJCPF";
+                    worksheet.Cells[row, 4].Value = "CNPJ";
                     worksheet.Cells[row, 5].Value = "UFUnidadeResponsavel";
                     worksheet.Cells[row, 6].Value = "Valor Consolidado";
 
@@ -325,7 +325,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 1].Value = "DividasFGTS";
                                 worksheet.Cells[row, 2].Value = divida.TipoPessoa;
                                 worksheet.Cells[row, 3].Value = divida.NomeDevedor;                                
-                                worksheet.Cells[row, 4].Value = divida.CNPJCPF;
+                                worksheet.Cells[row, 4].Value = divida.CNPJ;
                                 worksheet.Cells[row, 5].Value = divida.UFUnidadeResponsavel;
                                 worksheet.Cells[row, 7].Value = divida.ValorConsolidado;
 
@@ -350,7 +350,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
                     worksheet.Cells[row, 2].Value = "Tipo de Pessoa";
                     worksheet.Cells[row, 3].Value = "Nome Devedor";
-                    worksheet.Cells[row, 4].Value = "CNPJCPF";
+                    worksheet.Cells[row, 4].Value = "CNPJ";
                     worksheet.Cells[row, 5].Value = "Data Inscrição";
                     worksheet.Cells[row, 6].Value = "Valor Consolidado";
 
@@ -366,7 +366,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 1].Value = "DividasPrevidenciaria";
                                 worksheet.Cells[row, 2].Value = divida.TipoPessoa;
                                 worksheet.Cells[row, 3].Value = divida.NomeDevedor;
-                                worksheet.Cells[row, 4].Value = divida.CNPJCPF;
+                                worksheet.Cells[row, 4].Value = divida.CNPJ;
                                 worksheet.Cells[row, 5].Value = divida.DataInscricao;
                                 worksheet.Cells[row, 6].Value = divida.ValorConsolidado;
 
@@ -391,7 +391,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
                     worksheet.Cells[row, 2].Value = "Tipo de Pessoa";
                     worksheet.Cells[row, 3].Value = "Nome Devedor";
-                    worksheet.Cells[row, 4].Value = "CNPJCPF";
+                    worksheet.Cells[row, 4].Value = "CNPJ";
                     worksheet.Cells[row, 5].Value = "Data Inscrição";
                     worksheet.Cells[row, 6].Value = "Valor Consolidado";
 
@@ -407,7 +407,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 1].Value = "DividasNaoPrevidenciaria";
                                 worksheet.Cells[row, 2].Value = divida.TipoPessoa;
                                 worksheet.Cells[row, 3].Value = divida.NomeDevedor;
-                                worksheet.Cells[row, 4].Value = divida.CNPJCPF;
+                                worksheet.Cells[row, 4].Value = divida.CNPJ;
                                 worksheet.Cells[row, 5].Value = divida.DataInscricao;
                                 worksheet.Cells[row, 6].Value = divida.ValorConsolidado;
 
@@ -1731,7 +1731,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 3].Value = "Status";
                     worksheet.Cells[row, 4].Value = "Protocolo";
                     worksheet.Cells[row, 7].Value = "Fornecedor";
-                    worksheet.Cells[row, 8].Value = "CNPJ/CPF";
+                    worksheet.Cells[row, 8].Value = "CPF";
                     worksheet.Cells[row, 5].Value = "Valor Total Atual";
                     worksheet.Cells[row, 6].Value = "Valor Total Original";
                     worksheet.Cells[row, 9].Value = "Data Início Vigência";
@@ -1749,7 +1749,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 3].Value = contrato.StatusContrato;
                                 worksheet.Cells[row, 4].Value = contrato.Protocolo;
                                 worksheet.Cells[row, 7].Value = contrato.Fornecedor;
-                                worksheet.Cells[row, 8].Value = contrato.CNPJCPF;
+                                worksheet.Cells[row, 8].Value = contrato.CPF;
                                 worksheet.Cells[row, 5].Value = contrato.VlrTotalAtual;
                                 worksheet.Cells[row, 6].Value = contrato.VlrTotalOriginal;
                                 worksheet.Cells[row, 9].Value = contrato.DTInicioVigencia?.ToString("dd/MM/yyyy") ?? "N/A";
@@ -1775,7 +1775,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
                     worksheet.Cells[row, 2].Value = "Orgão";
                     worksheet.Cells[row, 3].Value = "Fornecedor";
-                    worksheet.Cells[row, 4].Value = "CNPJCPF";
+                    worksheet.Cells[row, 4].Value = "CPF";
                     worksheet.Cells[row, 5].Value = "Protocolo";
                     worksheet.Cells[row, 6].Value = "Modalidade";
                     worksheet.Cells[row, 7].Value = "Valor Item";
@@ -1793,7 +1793,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 1].Value = "Dispensa";
                                 worksheet.Cells[row, 2].Value = contrato.Orgao;
                                 worksheet.Cells[row, 3].Value = contrato.Fornecedor;
-                                worksheet.Cells[row, 4].Value = contrato.CNPJCPF;
+                                worksheet.Cells[row, 4].Value = contrato.CPF;
                                 worksheet.Cells[row, 5].Value = contrato.Protocolo;
                                 worksheet.Cells[row, 6].Value = contrato.Modalidade;
                                 worksheet.Cells[row, 7].Value = contrato.ValorItem;
@@ -1821,7 +1821,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 2].Value = "Ano";
                     worksheet.Cells[row, 3].Value = "Orgão";
                     worksheet.Cells[row, 4].Value = "Fornecedor";
-                    worksheet.Cells[row, 5].Value = "CNPJCPF";
+                    worksheet.Cells[row, 5].Value = "CPF";
                     worksheet.Cells[row, 6].Value = "Protocolo";
                     worksheet.Cells[row, 7].Value = "Valor Homologado";
 
@@ -1837,7 +1837,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 2].Value = contrato.Ano;
                                 worksheet.Cells[row, 3].Value = contrato.Orgao;
                                 worksheet.Cells[row, 4].Value = contrato.Fornecedor;
-                                worksheet.Cells[row, 5].Value = contrato.CNPJCPF;
+                                worksheet.Cells[row, 5].Value = contrato.CPF;
                                 worksheet.Cells[row, 6].Value = contrato.Protocolo;
                                 worksheet.Cells[row, 7].Value = contrato.ValorHomologado;
 

@@ -37,7 +37,7 @@
                                 <td>@Html.DisplayFor(m => contrato.Protocolo)</td>
                                 <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalAtual)</td>
                                 <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalOriginal)</td>
-                                <td>@Html.DisplayFor(m => contrato.CNPJCPF)</td>
+                                <td>@Html.DisplayFor(m => contrato.CPF)</td>
                                 <td>@(contrato.DTInicioVigencia.HasValue ? contrato.DTInicioVigencia.Value.ToString("dd/MM/yyyy") : "-")</td>
                                 <td>@(contrato.DTFimVigencia.HasValue ? contrato.DTFimVigencia.Value.ToString("dd/MM/yyyy") : "-")</td>
                             </tr>
@@ -67,7 +67,7 @@
                         {
                             <tr>
                                 <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
-                                <td>@Html.DisplayFor(m => dispensa.CNPJCPF)</td>
+                                <td>@Html.DisplayFor(m => dispensa.CPF)</td>
                                 <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
                                 <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorDispensa)</td>
                                 <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorItem)</td>

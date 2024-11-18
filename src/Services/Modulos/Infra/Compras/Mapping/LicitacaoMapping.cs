@@ -27,8 +27,7 @@ namespace Infra.Compras.Mapping
                 .IsRequired()
                 .HasColumnType("int");
 
-            builder.Property(c => c.Fornecedor)
-                .IsRequired(false)
+            builder.Property(c => c.Fornecedor)                
                 .HasColumnType("varchar(300)");
 
             builder.Property(c => c.CNPJ)              
@@ -45,8 +44,7 @@ namespace Infra.Compras.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(40)");
 
-            builder.Property(c => c.Objeto)
-                .IsRequired(false)
+            builder.Property(c => c.Objeto)                
                 .HasColumnType("nvarchar(max)");
 
             builder.Property(c => c.ValorEstimado)

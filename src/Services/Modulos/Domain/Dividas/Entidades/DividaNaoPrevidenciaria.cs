@@ -4,7 +4,6 @@ namespace Dividas.Domain.Entidades
     public class DividaNaoPrevidenciaria : Entity, IAggregateRoot
     {
         public string CNPJ { get; set; }
-
         public string CPF { get; set; }
         public string TipoPessoa { get; set; }
         public string TipoDevedor { get; set; }

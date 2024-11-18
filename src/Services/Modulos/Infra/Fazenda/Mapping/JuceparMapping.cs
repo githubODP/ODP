@@ -81,8 +81,7 @@ namespace ODP.Parana.API.Models.Mapping
                 .HasColumnType("DateTime");
 
             builder.Property(c => c.CapitalSocial)
-                .IsRequired(false)
-                .HasColumnType("varchar(25)");
+                 .HasColumnType("float(20)");
 
             builder.Property(c => c.Constituicao)
                 .IsRequired(false)

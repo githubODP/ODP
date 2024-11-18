@@ -29,21 +29,16 @@ namespace Infra.Compras.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(25)");
 
-            builder.Property(c => c.Fornecedor)
-               .IsRequired()
+            builder.Property(c => c.Fornecedor)               
                .HasColumnType("varchar(200)");
 
-
-            builder.Property(c => c.CNPJ)
-              .IsRequired(false)
+            builder.Property(c => c.CNPJ)              
               .HasColumnType("varchar(18)");
 
             builder.Property(c => c.CPF)
-              .IsRequired(false)
-              .HasColumnType("varchar(18)");
+              .HasColumnType("varchar(14)");
 
-            builder.Property(c => c.Protocolo)
-               .IsRequired()
+            builder.Property(c => c.Protocolo)               
                .HasColumnType("varchar(15)");
 
             builder.Property(c => c.NumeroContrato)
@@ -55,41 +50,34 @@ namespace Infra.Compras.Mapping
                .HasColumnType("varchar(55)");         
 
 
-            builder.Property(c => c.TermoAditivo)
-               .IsRequired()
+            builder.Property(c => c.TermoAditivo)               
                .HasColumnType("varchar(15)");
 
-            builder.Property(c => c.Empenho)
-              .IsRequired(false)
-              .HasColumnType("varchar(20)");
-           
+            builder.Property(c => c.Empenho)              
+              .HasColumnType("varchar(20)");           
 
             builder.Property(c => c.QtdeAditivo)
                .IsRequired()
                .HasColumnType("int");
 
             builder.Property(c => c.VlrTotalOriginal)
-               .IsRequired()
-               .HasColumnType("float(20)");
+               
+               .HasColumnType("float(30)");
 
             builder.Property(c => c.VlrTotalAtual)
-               .IsRequired()
-               .HasColumnType("float(20)");
+               
+               .HasColumnType("float(30)");
 
-            builder.Property(c => c.ObjetoContrato)
-              .IsRequired()
+            builder.Property(c => c.ObjetoContrato)         
               .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.Justificativa)
-              .IsRequired(false)
+            builder.Property(c => c.Justificativa)             
               .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.DTInicioVigencia)
-              .IsRequired(false)
+            builder.Property(c => c.DTInicioVigencia)            
               .HasColumnType("Datetime");
 
-            builder.Property(c => c.DTFimVigencia)
-              .IsRequired(false)
+            builder.Property(c => c.DTFimVigencia)             
               .HasColumnType("Datetime");
 
             builder.ToTable("Contratos");

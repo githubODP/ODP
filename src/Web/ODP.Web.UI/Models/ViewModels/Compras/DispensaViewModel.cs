@@ -11,7 +11,8 @@ namespace ODP.Web.UI.Models.ViewModels.Compras
         public string Solicitacao { get; set; }
         public DateTime? DataDispensa { get; set; }
         public string Fornecedor { get; set; }
-        public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+        public string CPF { get; set; }
         public string Item { get; set; }
         public float ValorDispensa { get; set; }
         public float ValorItem { get; set; }

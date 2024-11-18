@@ -10,7 +10,8 @@ namespace ODP.Web.UI.Models.ViewModels.Compras
         public string OrgaoGMS { get; set; }
         public string StatusContrato { get; set; }
         public string Fornecedor { get; set; }
-        public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+        public string CPF { get; set; }
         public string Protocolo { get; set; }
         public string NumeroContrato { get; set; }
         public string TipoContrato { get; set; }

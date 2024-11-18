@@ -5,7 +5,8 @@ namespace ODP.Web.UI.Models.ViewModels.Dividas
     public class DividaPrevidenciariaViewModel
     {
         public Guid Id { get; set; }
-        public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+        public string CPF { get; set; }
         public string TipoPessoa { get; set; }
         public string TipoDevedor { get; set; }
         public string NomeDevedor { get; set; }

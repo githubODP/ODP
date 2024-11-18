@@ -18,17 +18,18 @@ namespace Infra.Compras.RepositoriesRead
             cnpj = HttpUtility.UrlDecode(cnpj);
 
             return await _context.Set<Licitacao>()
-            .AsNoTracking()
-            .Where(c => c.CNPJ == cnpj)
-            .Select ( c => new Licitacao
-            {
-                Ano = c.Ano,
-                Orgao = c.Orgao,
-                CNPJ = c.CNPJ,
-                Protocolo = c.Protocolo,
-                ValorHomologado = c.ValorHomologado,    
-            })
-            .ToListAsync();
+                .AsNoTracking()
+                .Where(c => c.CNPJ == cnpj)
+                .Select(c => new Licitacao
+                {
+                    Ano = c.Ano,
+                    Orgao = c.Orgao ?? string.Empty,
+                    Fornecedor = c.Fornecedor ?? string.Empty,
+                    CNPJ = c.CNPJ ?? string.Empty,
+                    Protocolo = c.Protocolo ?? string.Empty,
+                    ValorHomologado = c.ValorHomologado ?? 0, // Substitui valores nulos por 0
+                })
+                .ToListAsync(); ;
         }
 
         public Task<List<Licitacao>> BuscarCPF(string cpf)

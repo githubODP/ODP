@@ -17,7 +17,7 @@ namespace Domain.Fazenda.Entidades
         public DateTime? SaidaSociedade { get; set; }
         public DateTime? InicioMandato { get; set; }
         public DateTime? TerminoMandato { get; set; }
-        public string CapitalSocial { get; set; }
+        public float CapitalSocial { get; set; }
         public DateTime? Constituicao { get; set; }
         public DateTime? InicioAtividade { get; set; }
         public DateTime? TerminoAtividade { get; set; }

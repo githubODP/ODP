@@ -49,6 +49,7 @@ namespace Infra.Compras.RepositoriesRead
                 Protocolo = c.Protocolo,
                 VlrTotalAtual = c.VlrTotalAtual,
                 VlrTotalOriginal = c.VlrTotalOriginal,
+                Fornecedor  = c.Fornecedor,
                 CPF = c.CPF,
                 DTInicioVigencia = c.DTInicioVigencia,
                 DTFimVigencia = c.DTFimVigencia,
