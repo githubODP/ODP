@@ -16,6 +16,7 @@ namespace Infra.Compras.RepositoriesRead
         {
             cnpj = HttpUtility.UrlDecode(cnpj);
             Console.WriteLine($"Buscando contratos com CNPJ: {cnpj}"); // Log para verificar o valor
+            
             return await _context.Set<Contrato>()
             .AsNoTracking()
             .Where(c => c.CNPJ == cnpj)
@@ -28,12 +29,13 @@ namespace Infra.Compras.RepositoriesRead
                 Fornecedor = c.Fornecedor,
                 CNPJ = c.CNPJ,
                 VlrTotalAtual = c.VlrTotalAtual,
-                VlrTotalOriginal = c.VlrTotalOriginal,               
+                VlrTotalOriginal = c.VlrTotalOriginal,
                 DTInicioVigencia = c.DTInicioVigencia,
                 DTFimVigencia = c.DTFimVigencia,
                 // Outros campos que você realmente precisa
             })
             .ToListAsync();
+            
         }
 
         public async Task<List<Contrato>> BuscarCPF(string cpf)

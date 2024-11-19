@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Models.ViewModels.Compras;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 
@@ -80,6 +82,39 @@ namespace ODP.Web.UI.Services.DueDiligence
 
 
 
+        public async Task<FileStreamResult> GerarPdf(DueDiligenceViewModel due)
+        {
+
+            var jsonContent = JsonConvert.SerializeObject(due);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+
+            var response = await _httpClient.PostAsync("/api/duediligence/gerarpdf", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+
+                var pdfContent = await response.Content.ReadAsByteArrayAsync();
+                var memoryStream = new MemoryStream(pdfContent);
+
+
+                return new FileStreamResult(memoryStream, "application/pdf")
+                {
+                    FileDownloadName = "elemento.pdf"
+                };
+            }
+            else
+            {
+
+                return null;
+            }
+        }
+
+
+
+
+
+
         public async Task<DueDiligenceViewModel> Deletar(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/duediligence/deletar/{id}");
@@ -121,8 +156,8 @@ namespace ODP.Web.UI.Services.DueDiligence
             }
         }
 
-       
-        public async  Task<List<DueDiligenceViewModel>> BuscarPorCPF(string cpf)
+
+        public async Task<List<DueDiligenceViewModel>> BuscarPorCPF(string cpf)
         {
 
             try
@@ -145,6 +180,8 @@ namespace ODP.Web.UI.Services.DueDiligence
                 return new List<DueDiligenceViewModel>();
             }
         }
-    }
 
+
+
+    }
 }

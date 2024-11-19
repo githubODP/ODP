@@ -20,5 +20,6 @@ namespace ODP.Web.UI.Services.DueDiligence
         Task<List<DueDiligenceViewModel>>BuscarPorCPF (string cpf);
 
         Task<FileStreamResult> GerarPdf(Guid id);
+        Task<FileStreamResult> GerarPdf(DueDiligenceViewModel due);
     }
 }

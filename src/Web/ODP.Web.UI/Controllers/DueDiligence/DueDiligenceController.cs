@@ -2,6 +2,8 @@
 using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Services.DueDiligence;
 using System;
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.DueDiligence
@@ -155,6 +157,21 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             var due = await _dueService.BuscarPorCPF(cpf);
             return View(due);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAndGeneratePdf(DueDiligenceViewModel dueViewModel)
+        {
+            // Salvar o Due Diligence
+            await _dueService.Adicionar(CalculoRisco(dueViewModel));
+
+            // Gerar o PDF e retornar o resultado para download
+            var pdfFile = await _dueService.GerarPdf(dueViewModel);
+
+            return pdfFile;
+        }
+
+
+
     }
 
 }

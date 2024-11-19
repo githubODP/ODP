@@ -229,8 +229,37 @@
             <div class="col-md-6 text-center">
                 <a class="btn btn-danger" href="@Url.Action("Index", "DueDiligence")">Cancelar</a>
                 <button type="submit" class="btn btn-primary ml-3">Salvar</button>
+                <button type="button" class="btn btn-secondary ml-3" onclick="submitFormAndGeneratePdf()">Salvar e Gerar PDF</button>
             </div>
+
         </div>
     </form>
 </div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function submitFormAndGeneratePdf() {
+            const form = $('form');
+            const url = '@Url.Action("CreateAndGeneratePdf", "DueDiligence")';
+
+            // Enviar o formulário via AJAX
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: form.serialize(),
+                success: function (data) {
+                    // Gerar e visualizar o PDF
+                    const pdfUrl = URL.createObjectURL(data);
+                    window.open(pdfUrl, '_blank');
+                },
+                error: function () {
+                    alert('Erro ao salvar e gerar o PDF.');
+                }
+            });
+        }
+
+    </script>
+}
 ﻿
