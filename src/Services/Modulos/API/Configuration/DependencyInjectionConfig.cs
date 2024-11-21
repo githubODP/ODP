@@ -38,15 +38,12 @@ using Infra.GovernoEstadual.Repositories;
 using Infra.GovernoFederal.Repositories;
 using Infra.Internos.RepositoriesRead;
 using Infra.RecursosHumanos.RepositoriesRead;
-using Infra.RepositoryExterno;
 using Infra.Tribunal.Repository.TCE;
 using Infra.Tribunal.Repository.TCU;
 using Infra.Tribunal.Repository.TSE;
 using Library.Infra.Repositories;
 using Library.Infra.RepositoriesRead;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.IO;
 
 namespace API.Configuration
 {
@@ -58,7 +55,7 @@ namespace API.Configuration
             //Corregedoria
             services.AddScoped<IInstauracaoRepository, InstauracaoRepository>();
             services.AddScoped<IInstauracaoRepositoryRead, InstauracaoRepositoryRead>();
-            services.AddScoped<IVideoTranscricaoRepositoryRead, VideoTranscricaoRepositoryRead>();  
+            services.AddScoped<IVideoTranscricaoRepositoryRead, VideoTranscricaoRepositoryRead>();
 
             ///Due Diligence             
             services.AddScoped<IDueRepository, DueRepository>();
@@ -107,7 +104,7 @@ namespace API.Configuration
 
             services.AddScoped<IDocumentoInternoRepository, DocumentoInternoRepository>();
             services.AddScoped<IDocumentoInternoRepositoryRead, DocumentoInternoRepositoryRead>();
-            services.AddScoped<IDemandaRepositoryRead, DemandaRepositoryRead>();    
+            services.AddScoped<IDemandaRepositoryRead, DemandaRepositoryRead>();
 
             ////Recursos Humanos    
 
@@ -166,14 +163,14 @@ namespace API.Configuration
             //Resultado 
             services.AddScoped<IBuscaService, BuscaService>();
 
-            
+
 
 
             //Contexto
             services.AddScoped<ObservatorioContext>();
 
 
-          
+
 
         }
     }

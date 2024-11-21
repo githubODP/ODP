@@ -2,11 +2,10 @@
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Interfaces.GovernoFederal;
 using ODP.Web.UI.Models.ViewModels.GovernoFederal;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
-using System;
 
 namespace ODP.Web.UI.Services.GovernoFederal
 {
@@ -44,10 +43,10 @@ namespace ODP.Web.UI.Services.GovernoFederal
 
 
 
-       
 
-        public async  Task<List<BolsaFamiliaViewModel>> BuscarCPF(string cpf)
-        {           
+
+        public async Task<List<BolsaFamiliaViewModel>> BuscarCPF(string cpf)
+        {
             try
             {
                 var response = await _httpClient.GetAsync($"api/bolsa/consultacnpj/{cpf}");

@@ -23,16 +23,16 @@ namespace Infra.Tribunal.Repository.TCE
                                  .AsNoTracking()
                                  .Where(c => c.CNPJ == cnpj)
             .Select(c => new CNPJRestrito
-             {
-                 NomeRazaoSocial = c.NomeRazaoSocial,
-                 CNPJ = c.CNPJ,
-                 DataInicio = c.DataInicio, 
-                 DataFim = c.DataFim,
-                 TipoSancao = c.TipoSancao,
-                 Situacao = c.Situacao, 
-                 
+            {
+                NomeRazaoSocial = c.NomeRazaoSocial,
+                CNPJ = c.CNPJ,
+                DataInicio = c.DataInicio,
+                DataFim = c.DataFim,
+                TipoSancao = c.TipoSancao,
+                Situacao = c.Situacao,
 
-             })
+
+            })
             .ToListAsync();
         }
 

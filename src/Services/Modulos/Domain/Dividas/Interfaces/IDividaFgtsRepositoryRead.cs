@@ -5,7 +5,7 @@ namespace Dividas.Domain.Interfaces
 {
     public interface IDividaFgtsRepositoryRead : IRepositoryRead<DividaFGTS>, IBuscaInfo<DividaFGTS>
     {
-        
+
 
     }
 }

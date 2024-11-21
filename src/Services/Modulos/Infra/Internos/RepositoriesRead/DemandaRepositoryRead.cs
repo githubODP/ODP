@@ -1,17 +1,10 @@
 ﻿using CGEODP.Core.DomainObjects;
-using Domain.Corregedoria.Entidade;
-using Domain.Corregedoria.Interfaces;
 using Domain.Internos.Entidade;
 using Domain.Internos.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Infra.Internos.RepositoriesRead
@@ -31,7 +24,7 @@ namespace Infra.Internos.RepositoriesRead
             return await _context.Set<DemandasInternas>()
                                  .AsNoTracking()
                                  .Where(d => RemoverCaracteresEspeciais(d.Observacao).Contains(consultacnpj))
-                                 .Select (d => new DemandasInternas
+                                 .Select(d => new DemandasInternas
                                  {
                                      Ano = d.Ano,
                                      Mes = d.Mes,
@@ -49,7 +42,7 @@ namespace Infra.Internos.RepositoriesRead
 
         public async Task<List<DemandasInternas>> BuscarCPF(string cpf)
         {
-            
+
 
             // Normaliza o documento de busca, removendo pontos, traços e barras
             var consultacpf = RemoverCaracteresEspeciais(cpf);
@@ -81,7 +74,7 @@ namespace Infra.Internos.RepositoriesRead
             return Regex.Replace(valor, "[^0-9]", ""); // Mantém apenas números
         }
 
-        
+
 
 
 

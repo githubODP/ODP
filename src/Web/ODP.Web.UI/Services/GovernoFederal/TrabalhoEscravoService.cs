@@ -58,7 +58,7 @@ namespace ODP.Web.UI.Services.GovernoFederal
                     return new List<TrabalhoEscravoViewModel>();
                 }
 
-                var federal = await DeserializarObjetoResponse< List<TrabalhoEscravoViewModel>>(response);
+                var federal = await DeserializarObjetoResponse<List<TrabalhoEscravoViewModel>>(response);
                 return federal;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -82,7 +82,7 @@ namespace ODP.Web.UI.Services.GovernoFederal
                     return new List<TrabalhoEscravoViewModel>();
                 }
 
-                var federal = await DeserializarObjetoResponse< List<TrabalhoEscravoViewModel>>(response);
+                var federal = await DeserializarObjetoResponse<List<TrabalhoEscravoViewModel>>(response);
                 return federal;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

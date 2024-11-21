@@ -21,12 +21,12 @@ namespace Infra.GovernoEstadual.Repositories
             return await _context.Set<Ambiental>()
                 .AsNoTracking()
                 .Where(c => c.CNPJCPF == cnpj)
-                .Select (c => new Ambiental
+                .Select(c => new Ambiental
                 {
                     Infrator = c.Infrator,
                     CNPJCPF = c.CNPJCPF,
                     Situacao = c.Situacao,
-                    AnoInfracao = c.AnoInfracao,    
+                    AnoInfracao = c.AnoInfracao,
                 })
                 .ToListAsync();
 
@@ -45,7 +45,7 @@ namespace Infra.GovernoEstadual.Repositories
                     Situacao = c.Situacao,
                     AnoInfracao = c.AnoInfracao,
                 })
-                .ToListAsync(); 
+                .ToListAsync();
 
         }
 

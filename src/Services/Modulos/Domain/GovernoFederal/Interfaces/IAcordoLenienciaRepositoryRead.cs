@@ -5,6 +5,6 @@ namespace Domain.GovernoFederal.Interfaces
 {
     public interface IAcordoLenienciaRepositoryRead : IRepositoryRead<AcordoLeniencia>, IBuscaInfo<AcordoLeniencia>
     {
-       
+
     }
 }

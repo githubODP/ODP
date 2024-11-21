@@ -1,10 +1,10 @@
 ﻿using Domain.GovernoFederal.Entidades;
 using Domain.GovernoFederal.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using System;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
 
 namespace API.Controllers.GovernoFederal
 {

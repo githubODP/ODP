@@ -5,7 +5,7 @@ namespace Domain.Tribunal.Interfaces.TCE
 {
     public interface IInadimplenteRepositoryRead : IRepositoryRead<Inadimplente>, IBuscaInfo<Inadimplente>
     {
-       
+
 
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.DueDiligence;
-using ODP.Web.UI.Models.ViewModels.Compras;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ODP.Web.UI.Models.DueDiligence;
-using ODP.Web.UI.Services.Demanda;
-using System.Threading.Tasks;
-using System;
 using ODP.Web.UI.Models.Demandas;
-using ODP.Web.UI.Models.Corregedoria;
+using ODP.Web.UI.Services.Demanda;
+using System;
+using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Demanda
 {
     public class DemandaController : MainController
     {
         private readonly IDemandaService _demandaService;
-        
-        public DemandaController (IDemandaService demandaService)
+
+        public DemandaController(IDemandaService demandaService)
         {
             _demandaService = demandaService;
         }

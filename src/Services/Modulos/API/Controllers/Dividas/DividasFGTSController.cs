@@ -1,7 +1,6 @@
 ﻿
 using Dividas.Domain.Entidades;
 using Dividas.Domain.Interfaces;
-using Domain.Compras.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

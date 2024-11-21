@@ -18,7 +18,7 @@ namespace Infra.Tribunal.Mapping.TCU
             .IsRequired()
             .HasColumnType("varchar(18)");
 
-            builder.Property(c => c.UF)            
+            builder.Property(c => c.UF)
             .HasColumnType("varchar(2)");
 
             builder.Property(c => c.Processo)
@@ -29,13 +29,13 @@ namespace Infra.Tribunal.Mapping.TCU
             .IsRequired()
             .HasColumnType("varchar(20)");
 
-            builder.Property(c => c.TransitoJulgado)            
+            builder.Property(c => c.TransitoJulgado)
             .HasColumnType("DateTime");
 
-            builder.Property(c => c.DataFinal)        
+            builder.Property(c => c.DataFinal)
             .HasColumnType("DateTime");
 
-            builder.Property(c => c.DataAcordao)         
+            builder.Property(c => c.DataAcordao)
             .HasColumnType("DateTime");
 
             builder.ToTable("Inidoneos");

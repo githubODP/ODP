@@ -60,7 +60,7 @@ namespace ODP.Web.UI.Services.Fazenda
                     return new List<JuceparViewModel>();
                 }
 
-                var fazenda = await DeserializarObjetoResponse< List<JuceparViewModel>>(response);
+                var fazenda = await DeserializarObjetoResponse<List<JuceparViewModel>>(response);
                 return fazenda;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

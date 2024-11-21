@@ -21,13 +21,13 @@ namespace Infra.Tribunal.Repository.TCU
                                  .AsNoTracking()
                                  .Where(c => c.CNPJ == cnpj)
             .Select(c => new Inidoneo
-             {
-                 Nome = c.Nome,
-                 CNPJ = c.CNPJ,
-                 Processo = c.Processo,
-                 Deliberacao = c.Deliberacao,
-                 DataFinal = c.DataFinal,   
-             })
+            {
+                Nome = c.Nome,
+                CNPJ = c.CNPJ,
+                Processo = c.Processo,
+                Deliberacao = c.Deliberacao,
+                DataFinal = c.DataFinal,
+            })
             .ToListAsync();
         }
 

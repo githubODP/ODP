@@ -25,7 +25,7 @@ namespace Domain.ConsultaCNPJCPF.ResultadoConsulta
         public BuscaTCUDTO BuscaTCU { get; set; }
         public BuscaTCEDTO BuscaTCE { get; set; }
         public BuscaTSEDTO BuscaTSE { get; set; }
-        
+
 
     }
 }

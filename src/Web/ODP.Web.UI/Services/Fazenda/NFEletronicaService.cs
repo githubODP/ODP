@@ -58,7 +58,7 @@ namespace ODP.Web.UI.Services.Fazenda
                     return new List<NFEletronicaViewModel>();
                 }
 
-                var fazenda = await DeserializarObjetoResponse< List<NFEletronicaViewModel>>(response);
+                var fazenda = await DeserializarObjetoResponse<List<NFEletronicaViewModel>>(response);
                 return fazenda;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

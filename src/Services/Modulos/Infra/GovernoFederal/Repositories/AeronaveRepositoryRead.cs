@@ -22,7 +22,7 @@ namespace Infra.GovernoFederal.Repositories
             return await _context.Set<Aeronave>()
                 .AsNoTracking()
                 .Where(c => c.CNPJCPF == cnpj)
-                .Select( c => new Aeronave
+                .Select(c => new Aeronave
                 {
                     Proprietario = c.Proprietario,
                     CNPJCPF = c.CNPJCPF,

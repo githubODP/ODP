@@ -29,7 +29,7 @@ namespace Infra.Compras.RepositoriesRead
                 Protocolo = c.Protocolo,
                 Modalidade = c.Modalidade,
                 ValorItem = c.ValorItem,
-                ValorDispensa = c.ValorDispensa,    
+                ValorDispensa = c.ValorDispensa,
                 DataDispensa = c.DataDispensa,
 
             })

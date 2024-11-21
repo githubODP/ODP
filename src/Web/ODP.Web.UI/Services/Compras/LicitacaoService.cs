@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
-using ODP.Web.UI.Models.Interfaces;
 using ODP.Web.UI.Models.Interfaces.Compras;
 using ODP.Web.UI.Models.ViewModels.Compras;
 using System;
@@ -74,7 +73,7 @@ namespace ODP.Web.UI.Services.Compras
             }
         }
 
-        
+
 
         public Task<List<LicitacaoViewModel>> BuscarCPF(string cpf)
         {

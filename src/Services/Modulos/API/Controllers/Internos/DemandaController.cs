@@ -1,11 +1,10 @@
-﻿using Domain.Corregedoria.Entidade;
+﻿using Domain.Internos.Entidade;
 using Domain.Internos.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using System;
-using Domain.Internos.Entidade;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace API.Controllers.Internos
 {
@@ -20,7 +19,7 @@ namespace API.Controllers.Internos
         public DemandaController(IDemandaRepositoryRead demandaRepositoryRead, IDemandaRepository demandaRepository)
         {
             _demandaRepositoryRead = demandaRepositoryRead;
-            _demandaRepository = demandaRepository; 
+            _demandaRepository = demandaRepository;
         }
 
         [HttpGet("listar")]

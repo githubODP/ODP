@@ -58,7 +58,7 @@ namespace ODP.Web.UI.Services.Dividas
                     return new List<DividaNaoPrevidenciariaViewModel>();
                 }
 
-                var divida = await DeserializarObjetoResponse< List<DividaNaoPrevidenciariaViewModel>>(response);
+                var divida = await DeserializarObjetoResponse<List<DividaNaoPrevidenciariaViewModel>>(response);
                 return divida;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

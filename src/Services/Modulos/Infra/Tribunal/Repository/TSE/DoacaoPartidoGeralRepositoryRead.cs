@@ -24,7 +24,7 @@ namespace Infra.Tribunal.Repository.TSE
                                 .Where(c => c.CPF == cpf)
             .Select(c => new DoacaoPartidoGeral
             {
-                AnoEleicao = c.AnoEleicao, 
+                AnoEleicao = c.AnoEleicao,
                 UF = c.UF,
                 Nome = c.Nome,
                 CPF = c.CPF,

@@ -18,15 +18,15 @@ namespace Infra.GovernoFederal.Repositories
             return await _context.Set<BeneficioContinuo>()
                 .AsNoTracking()
                 .Where(c => c.CPF == cpf)
-                .Select ( c => new BeneficioContinuo
+                .Select(c => new BeneficioContinuo
                 {
                     NomeBeneficiario = c.NomeBeneficiario,
                     CPF = c.CPF,
                     NomeMunicipio = c.NomeMunicipio,
                     UFMunicipio = c.UFMunicipio,
                     NumeroBeneficio = c.NumeroBeneficio,
-                    Ano = c.Ano,    
-                    MesCompetencia = c.MesCompetencia,  
+                    Ano = c.Ano,
+                    MesCompetencia = c.MesCompetencia,
                     ValorParcela = c.ValorParcela,
                 })
                 .ToListAsync();

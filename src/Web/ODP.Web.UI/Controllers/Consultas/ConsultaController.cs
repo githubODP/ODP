@@ -6,7 +6,6 @@ using OfficeOpenXml;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Consultas
@@ -179,7 +178,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 7].Value = "Fornecedor";
                     worksheet.Cells[row, 8].Value = "CNPJ";
                     worksheet.Cells[row, 5].Value = "Valor Total Atual";
-                    worksheet.Cells[row, 6].Value = "Valor Total Original";                    
+                    worksheet.Cells[row, 6].Value = "Valor Total Original";
                     worksheet.Cells[row, 9].Value = "Data Início Vigência";
                     worksheet.Cells[row, 10].Value = "Data Fim Vigência";
                     row++;
@@ -197,7 +196,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 7].Value = contrato.Fornecedor;
                                 worksheet.Cells[row, 8].Value = contrato.CNPJ;
                                 worksheet.Cells[row, 5].Value = contrato.VlrTotalAtual;
-                                worksheet.Cells[row, 6].Value = contrato.VlrTotalOriginal;                               
+                                worksheet.Cells[row, 6].Value = contrato.VlrTotalOriginal;
                                 worksheet.Cells[row, 9].Value = contrato.DTInicioVigencia?.ToString("dd/MM/yyyy") ?? "N/A";
                                 worksheet.Cells[row, 10].Value = contrato.DTFimVigencia?.ToString("dd/MM/yyyy") ?? "N/A";
 
@@ -227,7 +226,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 7].Value = "Valor Item";
                     worksheet.Cells[row, 8].Value = "Valor Dispensa";
                     worksheet.Cells[row, 9].Value = "Data Dispensa";
-                   
+
                     row++;
 
                     foreach (var resultado in resultados)
@@ -245,7 +244,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 7].Value = contrato.ValorItem;
                                 worksheet.Cells[row, 8].Value = contrato.ValorDispensa;
                                 worksheet.Cells[row, 9].Value = contrato.DataDispensa?.ToString("dd/MM/yyyy") ?? "N/A";
-                                
+
 
                                 row++;
                             }
@@ -268,9 +267,9 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 3].Value = "Orgão";
                     worksheet.Cells[row, 4].Value = "Fornecedor";
                     worksheet.Cells[row, 5].Value = "CNPJ";
-                    worksheet.Cells[row, 6].Value = "Protocolo";                   
+                    worksheet.Cells[row, 6].Value = "Protocolo";
                     worksheet.Cells[row, 7].Value = "Valor Homologado";
-                   
+
 
                     row++;
 
@@ -281,7 +280,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                             foreach (var contrato in resultado.BuscaCompras.Licitacao)
                             {
                                 worksheet.Cells[row, 1].Value = "Licitação";
-                                worksheet.Cells[row, 2].Value = contrato.Ano;                               
+                                worksheet.Cells[row, 2].Value = contrato.Ano;
                                 worksheet.Cells[row, 3].Value = contrato.Orgao;
                                 worksheet.Cells[row, 4].Value = contrato.Fornecedor;
                                 worksheet.Cells[row, 5].Value = contrato.CNPJ;
@@ -308,7 +307,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     // Cabeçalho de DividasFGTS
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
                     worksheet.Cells[row, 2].Value = "Tipo de Pessoa";
-                    worksheet.Cells[row, 3].Value = "Nome Devedor";                    
+                    worksheet.Cells[row, 3].Value = "Nome Devedor";
                     worksheet.Cells[row, 4].Value = "CNPJ";
                     worksheet.Cells[row, 5].Value = "UFUnidadeResponsavel";
                     worksheet.Cells[row, 6].Value = "Valor Consolidado";
@@ -324,7 +323,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                             {
                                 worksheet.Cells[row, 1].Value = "DividasFGTS";
                                 worksheet.Cells[row, 2].Value = divida.TipoPessoa;
-                                worksheet.Cells[row, 3].Value = divida.NomeDevedor;                                
+                                worksheet.Cells[row, 3].Value = divida.NomeDevedor;
                                 worksheet.Cells[row, 4].Value = divida.CNPJ;
                                 worksheet.Cells[row, 5].Value = divida.UFUnidadeResponsavel;
                                 worksheet.Cells[row, 7].Value = divida.ValorConsolidado;
@@ -430,7 +429,7 @@ namespace ODP.Web.UI.Controllers.Consultas
 
                     // Cabeçalho de Junta Comercial
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
-                    worksheet.Cells[row, 2].Value = "Razao Social";                  
+                    worksheet.Cells[row, 2].Value = "Razao Social";
                     worksheet.Cells[row, 3].Value = "CNPJCPF";
                     worksheet.Cells[row, 4].Value = "Nomes Sócios";
                     worksheet.Cells[row, 5].Value = "CPF";
@@ -524,7 +523,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 6].Value = "CNPJ Destinatario";
                     worksheet.Cells[row, 7].Value = "Valor Nota Fiscal";
                     worksheet.Cells[row, 8].Value = "Chave de Acesso";
-                    
+
 
 
                     row++;
@@ -543,7 +542,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 6].Value = fazenda.CNPJDestinatario;
                                 worksheet.Cells[row, 7].Value = fazenda.ValorNF;
                                 worksheet.Cells[row, 8].Value = fazenda.ChaveAcesso;
-                                
+
 
                                 row++;
                             }
@@ -590,7 +589,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 5].Value = estadual.AnoInfracao;
                                 worksheet.Cells[row, 6].Value = estadual.ValorAutuacao;
                                 worksheet.Cells[row, 7].Value = estadual.ValorOficioPago;
-                               
+
 
 
                                 row++;
@@ -656,7 +655,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     row++;
 
                     // Cabeçalho de Infração Ambiental
-                    worksheet.Cells[row, 1].Value = "Tipo de Registro";                    
+                    worksheet.Cells[row, 1].Value = "Tipo de Registro";
                     worksheet.Cells[row, 2].Value = "Razão Social";
                     worksheet.Cells[row, 3].Value = "CNPJ";
                     worksheet.Cells[row, 4].Value = "Numero Processo";
@@ -705,12 +704,12 @@ namespace ODP.Web.UI.Controllers.Consultas
 
                     // Cabeçalho de Aeronaves
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
-                    worksheet.Cells[row, 2].Value = "Proprietário";                   
+                    worksheet.Cells[row, 2].Value = "Proprietário";
                     worksheet.Cells[row, 3].Value = "CNPJCPF";
                     worksheet.Cells[row, 4].Value = "Marca";
                     worksheet.Cells[row, 5].Value = "Operador";
                     worksheet.Cells[row, 6].Value = "CPFCGC";
-                    
+
 
 
 
@@ -729,7 +728,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 4].Value = federal.Marca;
                                 worksheet.Cells[row, 5].Value = federal.Operador;
                                 worksheet.Cells[row, 6].Value = federal.CPFCGC;
-                                
+
 
                                 row++;
                             }
@@ -795,7 +794,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 2].Value = "Nome";
                     worksheet.Cells[row, 3].Value = "CPF";
                     worksheet.Cells[row, 4].Value = "Municipio";
-                    worksheet.Cells[row, 5].Value = "UF";                   
+                    worksheet.Cells[row, 5].Value = "UF";
                     worksheet.Cells[row, 6].Value = "Ano";
                     worksheet.Cells[row, 7].Value = "Mes";
                     worksheet.Cells[row, 8].Value = "Valor Parcela";
@@ -816,7 +815,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 6].Value = federal.AnoReferencia;
                                 worksheet.Cells[row, 7].Value = federal.MesReferencia;
                                 worksheet.Cells[row, 8].Value = federal.Valor;
-                               
+
                                 row++;
                             }
                         }
@@ -839,7 +838,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 5].Value = "Tipo Sanção";
                     worksheet.Cells[row, 6].Value = "Data Inicio Sanção";
                     worksheet.Cells[row, 7].Value = "Data Fim Sanção";
-                    
+
 
                     row++;
 
@@ -877,7 +876,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                     worksheet.Cells[row, 4].Value = "Numero Convênio";
                     worksheet.Cells[row, 5].Value = "Orgão";
                     worksheet.Cells[row, 6].Value = "Impedimento";
-                    
+
 
 
                     row++;
@@ -894,7 +893,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 4].Value = federal.NroConvenio;
                                 worksheet.Cells[row, 5].Value = federal.Orgao;
                                 worksheet.Cells[row, 6].Value = federal.Impedimento;
-                              
+
                                 row++;
                             }
                         }
@@ -973,7 +972,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 4].Value = federal.Punicao;
                                 worksheet.Cells[row, 5].Value = federal.NumeroProcesso;
                                 worksheet.Cells[row, 6].Value = federal.DataPublicacao;
-                                
+
 
                                 row++;
                             }
@@ -1013,7 +1012,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                                 worksheet.Cells[row, 5].Value = federal.Orgao;
                                 worksheet.Cells[row, 6].Value = federal.DataInicio;
                                 worksheet.Cells[row, 7].Value = federal.DataFim;
-                                worksheet.Cells[row, 8].Value = federal.DataFimCarencia;   
+                                worksheet.Cells[row, 8].Value = federal.DataFimCarencia;
 
                                 row++;
                             }
@@ -1854,7 +1853,7 @@ namespace ODP.Web.UI.Controllers.Consultas
                 return package.GetAsByteArray();
             }
 
-           
+
         }
 
 

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ODP.Web.UI.Models.Interfaces.GovernoFederal;
-using System.Threading.Tasks;
 using System;
-using Domain.GovernoFederal.Entidades;
+using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.GovernoFederal
 {

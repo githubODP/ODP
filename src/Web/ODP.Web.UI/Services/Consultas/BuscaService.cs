@@ -126,7 +126,7 @@ namespace ODP.Web.UI.Services.Consultas
             if (tabelasSelecionadas.Contains("tse"))
                 resultado.BuscaTSE = await _tseServicos.BuscarCNPJ(cnpj);
 
-            
+
 
             return resultado;
         }

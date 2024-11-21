@@ -22,7 +22,7 @@ namespace Infra.GovernoFederal.Repositories
             return await _context.Set<AcordoLeniencia>()
                 .AsNoTracking()
                 .Where(c => c.CNPJ == cnpj)
-                .Select ( c => new AcordoLeniencia
+                .Select(c => new AcordoLeniencia
                 {
                     IdentificacaoAcordo = c.IdentificacaoAcordo,
                     NumeroProcesso = c.NumeroProcesso,

@@ -18,7 +18,7 @@ namespace ODP.Web.UI.Models.Interfaces
         Task<List<T>> BuscarCPF(string cpf);
     }
 
-   
+
 
 
 }

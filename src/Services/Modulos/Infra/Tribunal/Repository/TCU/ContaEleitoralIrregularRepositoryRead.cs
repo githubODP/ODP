@@ -23,17 +23,17 @@ namespace Infra.Tribunal.Repository.TCU
                                 .AsNoTracking()
                                 .Where(c => c.CPF == cpf)
             .Select(c => new ContaEleitoralIrregular
-             {
-                 Nome = c.Nome, 
-                 CPF = c.CPF,  
-                 CargoFuncao = c.CargoFuncao,
-                 Municipio = c.Municipio,
-                 UF = c.UF,
-                 Deliberacao = c.Deliberacao,
-                 DataJulgado = c.DataJulgado,
-                 DataFinal = c.DataFinal,
-                 Processo = c.Processo,
-             })
+            {
+                Nome = c.Nome,
+                CPF = c.CPF,
+                CargoFuncao = c.CargoFuncao,
+                Municipio = c.Municipio,
+                UF = c.UF,
+                Deliberacao = c.Deliberacao,
+                DataJulgado = c.DataJulgado,
+                DataFinal = c.DataFinal,
+                Processo = c.Processo,
+            })
             .ToListAsync();
         }
 

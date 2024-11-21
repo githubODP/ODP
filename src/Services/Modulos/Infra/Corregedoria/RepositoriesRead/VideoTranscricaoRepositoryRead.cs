@@ -1,14 +1,6 @@
-﻿using CGEODP.Core.DomainObjects;
-using Domain.Corregedoria.Entidade;
+﻿using Domain.Corregedoria.Entidade;
 using Domain.Corregedoria.Interfaces;
 using Infra.Data;
-using Infra.RepositoryExterno;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infra.Corregedoria.RepositoriesRead
 {

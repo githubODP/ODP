@@ -1,5 +1,4 @@
-﻿using CGEODP.Core.Data;
-using Domain.GovernoFederal.Entidades;
+﻿using Domain.GovernoFederal.Entidades;
 using Domain.GovernoFederal.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
@@ -24,11 +23,11 @@ namespace Infra.GovernoFederal.Repositories
             return await _context.Set<SeguroDefeso>()
                 .AsNoTracking()
                 .Where(c => c.CPF == cpf)
-                .Select (c => new SeguroDefeso
+                .Select(c => new SeguroDefeso
                 {
                     NomeFavorecido = c.NomeFavorecido,
                     CPF = c.CPF,
-                    NomeMunicipio = c.NomeMunicipio,    
+                    NomeMunicipio = c.NomeMunicipio,
                     UF = c.UF,
                     Ano = c.Ano,
                     Mes = c.Mes,
@@ -38,6 +37,6 @@ namespace Infra.GovernoFederal.Repositories
 
         }
 
-        
+
     }
 }

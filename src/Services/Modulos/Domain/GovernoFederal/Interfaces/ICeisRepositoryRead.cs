@@ -4,9 +4,9 @@ using Domain.GovernoFederal.Entidades;
 
 namespace Domain.GovernoFederal.Interfaces
 {
-    public interface ICeisRepositoryRead : IRepositoryRead<Ceis>,  IBuscaInfo<Ceis>
+    public interface ICeisRepositoryRead : IRepositoryRead<Ceis>, IBuscaInfo<Ceis>
     {
-       
+
 
     }
 }

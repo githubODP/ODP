@@ -22,18 +22,18 @@ namespace Infra.Tribunal.Repository.TSE
                                  .AsNoTracking()
                                  .Where(c => c.CNPJCPF == cnpj)
             .Select(c => new FornecedorCandidato
-             {
-                 AnoEleicao = c.AnoEleicao,
-                 Municipio = c.Municipio,                 
-                 Candidato = c.Candidato,
-                 CPFCandidato = c.CPFCandidato, 
-                 DescricaoCargo = c.DescricaoCargo,
-                 Partido = c.Partido,
-                 CNPJCPF = c.CNPJCPF,
-                 Fornecedor = c.Fornecedor,
-                 ValorDespesas = c.ValorDespesas,   
+            {
+                AnoEleicao = c.AnoEleicao,
+                Municipio = c.Municipio,
+                Candidato = c.Candidato,
+                CPFCandidato = c.CPFCandidato,
+                DescricaoCargo = c.DescricaoCargo,
+                Partido = c.Partido,
+                CNPJCPF = c.CNPJCPF,
+                Fornecedor = c.Fornecedor,
+                ValorDespesas = c.ValorDespesas,
 
-             })
+            })
             .ToListAsync();
         }
 

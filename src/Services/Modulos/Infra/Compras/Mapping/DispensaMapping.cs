@@ -23,16 +23,16 @@ namespace Infra.Compras.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(7)");
 
-            builder.Property(c => c.DataDispensa)               
+            builder.Property(c => c.DataDispensa)
                .HasColumnType("Datetime");
 
-            builder.Property(c => c.Fornecedor)            
+            builder.Property(c => c.Fornecedor)
                 .HasColumnType("varchar(170)");
 
-            builder.Property(c => c.CNPJ)                
+            builder.Property(c => c.CNPJ)
                 .HasColumnType("varchar(18)");
 
-            builder.Property(c => c.CPF)               
+            builder.Property(c => c.CPF)
                .HasColumnType("varchar(14)");
 
 
@@ -40,10 +40,10 @@ namespace Infra.Compras.Mapping
                 .IsRequired()
                 .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.ValorDispensa)              
+            builder.Property(c => c.ValorDispensa)
                 .HasColumnType("float(30)");
 
-            builder.Property(c => c.ValorItem)            
+            builder.Property(c => c.ValorItem)
                 .HasColumnType("float(30)");
 
             builder.Property(c => c.QtdItem)
@@ -62,13 +62,13 @@ namespace Infra.Compras.Mapping
                .IsRequired()
                .HasColumnType("varchar(150)");
 
-            builder.Property(c => c.Objeto)               
+            builder.Property(c => c.Objeto)
                .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.Protocolo)              
+            builder.Property(c => c.Protocolo)
               .HasColumnType("varchar(15)");
 
-            builder.Property(c => c.QuantidadeXValor)               
+            builder.Property(c => c.QuantidadeXValor)
                .HasColumnType("float(30)");
 
             builder.ToTable("Dispensas");

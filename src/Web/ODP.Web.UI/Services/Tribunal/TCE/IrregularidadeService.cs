@@ -55,7 +55,7 @@ namespace ODP.Web.UI.Services.Tribunal.TCE
                     return new List<IrregularidadeViewModel>();
                 }
 
-                var tce = await DeserializarObjetoResponse< List<IrregularidadeViewModel>>(response);
+                var tce = await DeserializarObjetoResponse<List<IrregularidadeViewModel>>(response);
                 return tce;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

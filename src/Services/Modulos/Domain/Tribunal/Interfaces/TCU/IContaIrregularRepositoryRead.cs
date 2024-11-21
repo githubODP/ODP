@@ -5,6 +5,6 @@ namespace Domain.Tribunal.Interfaces.TCU
 {
     public interface IContaIrregularRepositoryRead : IRepositoryRead<ContaIrregular>, IBuscaInfo<ContaIrregular>
     {
-       
+
     }
 }

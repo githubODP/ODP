@@ -40,7 +40,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
 
 
 
-        public async Task<List<DoacaoPartidoGeralViewModel>>BuscarCPF(string cpf)
+        public async Task<List<DoacaoPartidoGeralViewModel>> BuscarCPF(string cpf)
         {
             cpf = HttpUtility.UrlEncode(cpf);
             try
@@ -53,7 +53,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
                     return new List<DoacaoPartidoGeralViewModel>();
                 }
 
-                var tse = await DeserializarObjetoResponse< List<DoacaoPartidoGeralViewModel>>(response);
+                var tse = await DeserializarObjetoResponse<List<DoacaoPartidoGeralViewModel>>(response);
                 return tse;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

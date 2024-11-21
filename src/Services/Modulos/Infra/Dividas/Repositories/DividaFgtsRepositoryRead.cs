@@ -23,13 +23,13 @@ namespace Dividas.Infra.Repositories
             return await _context.Set<DividaFGTS>()
                 .AsNoTracking()
                 .Where(c => c.CNPJ == cnpj)
-                .Select (c => new DividaFGTS
+                .Select(c => new DividaFGTS
                 {
                     TipoPessoa = c.TipoPessoa,
                     NomeDevedor = c.NomeDevedor,
                     CNPJ = c.CNPJ,
-                    UFUnidadeResponsavel = c.UFUnidadeResponsavel,  
-                    ValorConsolidado = c.ValorConsolidado,  
+                    UFUnidadeResponsavel = c.UFUnidadeResponsavel,
+                    ValorConsolidado = c.ValorConsolidado,
                 })
                 .ToListAsync();
 

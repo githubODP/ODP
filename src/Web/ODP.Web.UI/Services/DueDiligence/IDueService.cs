@@ -15,9 +15,9 @@ namespace ODP.Web.UI.Services.DueDiligence
         Task<DueDiligenceViewModel> ObterId(Guid id);
         Task<DueDiligenceViewModel> Adicionar(DueDiligenceViewModel dueViewModel);
         Task<DueDiligenceViewModel> Alterar(DueDiligenceViewModel dueViewModel, Guid id);
-        Task<DueDiligenceViewModel> Deletar(Guid id);  
-        
-        Task<List<DueDiligenceViewModel>>BuscarPorCPF (string cpf);
+        Task<DueDiligenceViewModel> Deletar(Guid id);
+
+        Task<List<DueDiligenceViewModel>> BuscarPorCPF(string cpf);
 
         Task<FileStreamResult> GerarPdf(Guid id);
         Task<FileStreamResult> GerarPdf(DueDiligenceViewModel due);

@@ -17,7 +17,7 @@ namespace Infra.GovernoFederal.Repositories
             throw new NotImplementedException();
         }
 
-       
+
 
         public async Task<List<PEP>> BuscarCPF(string cpf)
         {
@@ -25,13 +25,13 @@ namespace Infra.GovernoFederal.Repositories
             return await _context.Set<PEP>()
                 .AsNoTracking()
                 .Where(c => c.CPF == cpf)
-                .Select ( c => new PEP
+                .Select(c => new PEP
                 {
                     Nome = c.Nome,
                     CPF = c.CPF,
                     Funcao = c.Funcao,
                     Orgao = c.Orgao,
-                    DataInicio = c.DataInicio,  
+                    DataInicio = c.DataInicio,
                     DataFim = c.DataFim,
                     DataFimCarencia = c.DataFimCarencia,
                 })

@@ -1,6 +1,4 @@
-﻿
-using Domain.ConsultaCNPJCPF.DTO.DueDiligence;
-using ODP.Web.UI.Models.Consultas.DTOViewModels.Internos;
+﻿using ODP.Web.UI.Models.Consultas.DTOViewModels.Internos;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Models.Consultas.InterfaceDTO
