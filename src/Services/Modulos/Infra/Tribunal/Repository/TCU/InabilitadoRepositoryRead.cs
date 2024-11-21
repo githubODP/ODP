@@ -23,13 +23,13 @@ namespace Infra.Tribunal.Repository.TCU
                                   .AsNoTracking()
                                   .Where(c => c.CPF == cpf)
             .Select(c => new Inabilitado
-             {
-                 Nome = c.Nome,
-                 CPF = c.CPF,
-                 Processo = c.Processo,
-                 Deliberacao = c.Deliberacao,
-                 DataFinal = c.DataFinal,
-             })
+            {
+                Nome = c.Nome,
+                CPF = c.CPF,
+                Processo = c.Processo,
+                Deliberacao = c.Deliberacao,
+                DataFinal = c.DataFinal,
+            })
             .ToListAsync();
         }
 

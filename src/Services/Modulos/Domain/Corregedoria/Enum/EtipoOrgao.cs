@@ -35,7 +35,7 @@
         DER = 30,
         DETRAN = 31,
         IAT = 32,
-        IAPAR_EMATER = 33,
+        IDR = 33,
         IPEM = 34,
         PARANAESPORTE = 35,
         IPARDES = 36,

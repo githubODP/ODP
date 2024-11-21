@@ -1,36 +1,31 @@
-﻿@using Newtonsoft.Json
-@using ODP.Web.UI.Extensions
-@model IEnumerable<ODP.Web.UI.Models.Corregedoria.InstauracaoDTO>
+﻿
 
 @{
-    ViewData["Title"] = "Upload";
+    ViewData["Title"] = "Upload de Arquivo CSV";
 }
 
+<div class="container mt-4">
+    <h1 class="text-center">@ViewData["Title"]</h1>
 
-
-
-<div class="card text-center " style="margin-left:20em; ">
-    <form asp-controller="Corregedoria" asp-action="UploadCsv" method="post" enctype="multipart/form-data">
-        <div class="card-header" style="background:var(--azul-cge); color:white; ">
-            <label for="file">Escolha um arquivo CSV:</label>
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["MensagemSucesso"]
         </div>
-        <div class="card-body p-4">
-            <input type="file" id="file" name="file" accept=".csv" class="form-control" />
-            
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["MensagemErro"]
         </div>
-        <button type="submit" class="btn btn-info mb-2">Enviar</button>
-        @if (ViewData.ModelState != null && ViewData.ModelState.Count > 0)
-        {
-            <div class="validation-summary-errors">
-                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    <p>@error.ErrorMessage</p>
-                }
-            </div>
-        }
+    }
+
+    <form asp-action="UploadCsv" asp-controller="Corregedoria" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Escolha o arquivo CSV:</label>
+            <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
-
-
-
-
 </div>

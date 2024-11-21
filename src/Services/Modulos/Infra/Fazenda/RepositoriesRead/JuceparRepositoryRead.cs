@@ -22,11 +22,11 @@ namespace Infra.Fazenda.RepositoriesRead
             return await _context.Set<Jucepar>()
                 .AsNoTracking()
                 .Where(c => c.CNPJ == cnpj)
-                .Select ( c => new Jucepar
+                .Select(c => new Jucepar
                 {
                     RazaoSocial = c.RazaoSocial,
                     CNPJ = c.CNPJ,
-                    NomesSocio = c.NomesSocio,  
+                    NomesSocio = c.NomesSocio,
                     CPF = c.CPF,
                     Situacao = c.Situacao,
                 })

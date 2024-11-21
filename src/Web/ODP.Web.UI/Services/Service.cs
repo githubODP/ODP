@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services
@@ -21,7 +20,7 @@ namespace ODP.Web.UI.Services
         {
             var options = new JsonSerializerOptions
             {
-                
+
                 PropertyNameCaseInsensitive = true
             };
             return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options);

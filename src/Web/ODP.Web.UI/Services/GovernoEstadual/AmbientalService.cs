@@ -58,7 +58,7 @@ namespace ODP.Web.UI.Services.GovernoEstadual
                     return new List<AmbientalViewModel>();
                 }
 
-                var estadual = await DeserializarObjetoResponse< List<AmbientalViewModel>>(response);
+                var estadual = await DeserializarObjetoResponse<List<AmbientalViewModel>>(response);
                 return estadual;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -82,7 +82,7 @@ namespace ODP.Web.UI.Services.GovernoEstadual
                     return new List<AmbientalViewModel>();
                 }
 
-                var estadual = await DeserializarObjetoResponse< List<AmbientalViewModel>>(response);
+                var estadual = await DeserializarObjetoResponse<List<AmbientalViewModel>>(response);
                 return estadual;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

@@ -59,7 +59,7 @@ namespace ODP.Web.UI.Services.GovernoFederal
                     return new List<PEPViewModel>();
                 }
 
-                var federal = await DeserializarObjetoResponse< List<PEPViewModel>>(response);
+                var federal = await DeserializarObjetoResponse<List<PEPViewModel>>(response);
                 return federal;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

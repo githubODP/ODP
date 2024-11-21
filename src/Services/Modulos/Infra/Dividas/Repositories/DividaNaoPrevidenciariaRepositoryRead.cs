@@ -24,12 +24,12 @@ namespace Dividas.Infra.Repositories
                 .Where(c => c.CNPJ == cnpj)
                 .Select(c => new DividaNaoPrevidenciaria
                 {
-                     TipoPessoa = c.TipoPessoa,
-                     NomeDevedor = c.NomeDevedor,
+                    TipoPessoa = c.TipoPessoa,
+                    NomeDevedor = c.NomeDevedor,
                     CNPJ = c.CNPJ,
-                     DataInscricao = c.DataInscricao    ,
-                     ValorConsolidado = c.ValorConsolidado,
-                 })
+                    DataInscricao = c.DataInscricao,
+                    ValorConsolidado = c.ValorConsolidado,
+                })
                 .ToListAsync();
 
         }

@@ -1,8 +1,6 @@
-﻿using Domain.Fazenda.Entidades;
-using Domain.Fazenda.Interfaces;
+﻿using Domain.Fazenda.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 

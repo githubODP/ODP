@@ -26,7 +26,7 @@ namespace Infra.Data
 
         /// Documentos Internos
         public DbSet<DocumentoInterno> DocumentosInternos { get; set; }
-        public DbSet<DemandasInternas> Demandas {  get; set; }  
+        public DbSet<DemandasInternas> Demandas { get; set; }
 
 
         ////Corregedoria

@@ -58,7 +58,7 @@ namespace ODP.Web.UI.Services.GovernoEstadual
                     return new List<PADvViewModel>();
                 }
 
-                var estadual = await DeserializarObjetoResponse< List<PADvViewModel>>(response);
+                var estadual = await DeserializarObjetoResponse<List<PADvViewModel>>(response);
                 return estadual;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

@@ -20,18 +20,18 @@ namespace Infra.Tribunal.Repository.TCE
                                  .AsNoTracking()
                                  .Where(c => c.CNPJCPF == cnpj)
             .Select(c => new Inadimplente
-             {
-                 Devedor = c.Devedor,   
-                 CNPJCPF = c.CNPJCPF,
-                 Credor = c.Credor,
-                 Processo = c.Processo,
-                 TipoSancao = c.TipoSancao,
-                 Referencia = c.Referencia,
-                 Valor = c.Valor,
-                 ValorRecolhido = c.ValorRecolhido,
-                 SaldoDevedor = c.SaldoDevedor,
+            {
+                Devedor = c.Devedor,
+                CNPJCPF = c.CNPJCPF,
+                Credor = c.Credor,
+                Processo = c.Processo,
+                TipoSancao = c.TipoSancao,
+                Referencia = c.Referencia,
+                Valor = c.Valor,
+                ValorRecolhido = c.ValorRecolhido,
+                SaldoDevedor = c.SaldoDevedor,
 
-             })
+            })
             .ToListAsync();
         }
 

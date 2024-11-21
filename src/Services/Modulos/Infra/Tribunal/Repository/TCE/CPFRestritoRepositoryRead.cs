@@ -18,7 +18,7 @@ namespace Infra.Tribunal.Repository.TCE
             throw new NotImplementedException();
         }
 
-       
+
 
         public async Task<List<CPFRestrito>> BuscarCPF(string cpf)
         {
@@ -26,15 +26,15 @@ namespace Infra.Tribunal.Repository.TCE
                                  .AsNoTracking()
                                  .Where(c => c.CPF == cpf)
             .Select(c => new CPFRestrito
-             {
-                 CPF = c.CPF,
-                 NomeRazaoSocial = c.NomeRazaoSocial,
-                 TipoSancao = c.TipoSancao,
-                 DataInicio = c.DataInicio,
-                 DataFim = c.DataFim,
-                 Situacao = c.Situacao,
-                 Municipio = c.Municipio,
-             })
+            {
+                CPF = c.CPF,
+                NomeRazaoSocial = c.NomeRazaoSocial,
+                TipoSancao = c.TipoSancao,
+                DataInicio = c.DataInicio,
+                DataFim = c.DataFim,
+                Situacao = c.Situacao,
+                Municipio = c.Municipio,
+            })
             .ToListAsync();
         }
 

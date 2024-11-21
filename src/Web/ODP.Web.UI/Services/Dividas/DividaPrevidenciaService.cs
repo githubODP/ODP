@@ -60,7 +60,7 @@ namespace ODP.Web.UI.Services.Dividas
                     return new List<DividaPrevidenciariaViewModel>();
                 }
 
-                var divida = await DeserializarObjetoResponse< List<DividaPrevidenciariaViewModel>>(response);
+                var divida = await DeserializarObjetoResponse<List<DividaPrevidenciariaViewModel>>(response);
                 return divida;
             }
 
@@ -86,7 +86,7 @@ namespace ODP.Web.UI.Services.Dividas
                     return new List<DividaPrevidenciariaViewModel>();
                 }
 
-                var divida = await DeserializarObjetoResponse< List<DividaPrevidenciariaViewModel>>(response);
+                var divida = await DeserializarObjetoResponse<List<DividaPrevidenciariaViewModel>>(response);
                 return divida;
             }
 

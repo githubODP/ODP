@@ -17,7 +17,8 @@ namespace ODP.Web.UI.Services.Corregedoria
         Task<InstauracaoViewModel> Adicionar(InstauracaoViewModel instauracaoViewModel);
         Task<InstauracaoViewModel> Alterar(InstauracaoViewModel instauracaoViewModel, Guid id);
         Task<InstauracaoViewModel> Deletar(Guid id);
-        Task<IEnumerable<InstauracaoDTO>> UploadCsv(IFormFile file, int pageSize, int pageIndex);
+        Task<bool> UploadCsv(IFormFile file);
+
 
 
 

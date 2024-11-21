@@ -23,21 +23,21 @@ namespace Infra.Tribunal.Repository.TCE
                                  .AsNoTracking()
                                  .Where(c => c.CPF == cpf)
             .Select(c => new Irregularidade
-             {
-                 Nome = c.Nome,
-                 CPF = c.CPF,
-                 Cargo = c.Cargo,
-                 InicioVigencia = c.InicioVigencia,
-                 TerminoVigencia = c.TerminoVigencia,
-                 DataPublicacao = c.DataPublicacao,
-                 Descricao = c.Descricao,
-                 CNPJ = c.CNPJ,
-                 Entidade = c.Entidade,
-                 Processo = c.Processo,
-                 Decisao = c.Decisao,
-                 Tipo = c.Tipo,
+            {
+                Nome = c.Nome,
+                CPF = c.CPF,
+                Cargo = c.Cargo,
+                InicioVigencia = c.InicioVigencia,
+                TerminoVigencia = c.TerminoVigencia,
+                DataPublicacao = c.DataPublicacao,
+                Descricao = c.Descricao,
+                CNPJ = c.CNPJ,
+                Entidade = c.Entidade,
+                Processo = c.Processo,
+                Decisao = c.Decisao,
+                Tipo = c.Tipo,
 
-             })
+            })
             .ToListAsync();
         }
 

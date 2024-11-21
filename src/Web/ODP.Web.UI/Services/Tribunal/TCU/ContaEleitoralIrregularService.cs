@@ -55,7 +55,7 @@ namespace ODP.Web.UI.Services.Tribunal.TCU
                     return new List<ContaEleitoralIrregularViewModel>();
                 }
 
-                var tcu = await DeserializarObjetoResponse< List<ContaEleitoralIrregularViewModel>>(response);
+                var tcu = await DeserializarObjetoResponse<List<ContaEleitoralIrregularViewModel>>(response);
                 return tcu;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -65,7 +65,7 @@ namespace ODP.Web.UI.Services.Tribunal.TCU
             }
         }
 
-        public async Task<List<ContaEleitoralIrregularViewModel>>BuscarCPF(string cpf)
+        public async Task<List<ContaEleitoralIrregularViewModel>> BuscarCPF(string cpf)
         {
             cpf = HttpUtility.UrlEncode(cpf);
             try

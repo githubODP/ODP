@@ -7,7 +7,7 @@ namespace Domain.Compras.Interfaces
 {
     public interface IContratoRepositoryRead : IRepositoryRead<Contrato>, IBuscaInfo<Contrato>
     {
-        
+
 
     }
 

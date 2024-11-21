@@ -55,7 +55,7 @@ namespace ODP.Web.UI.Services.Tribunal.TCE
                     return new List<InadimplenteViewModel>();
                 }
 
-                var tce = await DeserializarObjetoResponse< List<InadimplenteViewModel>>(response);
+                var tce = await DeserializarObjetoResponse<List<InadimplenteViewModel>>(response);
                 return tce;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -78,7 +78,7 @@ namespace ODP.Web.UI.Services.Tribunal.TCE
                     return new List<InadimplenteViewModel>();
                 }
 
-                var tce = await DeserializarObjetoResponse< List<InadimplenteViewModel>>(response);
+                var tce = await DeserializarObjetoResponse<List<InadimplenteViewModel>>(response);
                 return tce;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -88,6 +88,6 @@ namespace ODP.Web.UI.Services.Tribunal.TCE
             }
         }
 
-       
+
     }
 }

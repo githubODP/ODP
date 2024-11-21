@@ -1,6 +1,5 @@
 ﻿using Domain.Tribunal.Entidades.TSE;
 using Domain.Tribunal.Interfaces.TSE;
-using Infra.Tribunal.Repository.TSE;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

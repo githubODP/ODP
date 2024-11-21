@@ -42,12 +42,12 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         public async Task<IActionResult> Create(DueDiligenceViewModel dueViewModel)
         {
 
-            
-            
-                await _dueService.Adicionar(CalculoRisco(dueViewModel));
-                return RedirectToAction(nameof(Index));
-            
-            
+
+
+            await _dueService.Adicionar(CalculoRisco(dueViewModel));
+            return RedirectToAction(nameof(Index));
+
+
         }
 
 

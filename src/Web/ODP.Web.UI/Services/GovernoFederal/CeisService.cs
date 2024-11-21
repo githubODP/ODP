@@ -44,7 +44,7 @@ namespace ODP.Web.UI.Services.GovernoFederal
 
 
 
-        public async Task<List<CeisViewModel>>BuscarCNPJ(string cnpj)
+        public async Task<List<CeisViewModel>> BuscarCNPJ(string cnpj)
         {
             cnpj = HttpUtility.UrlEncode(cnpj);
             try

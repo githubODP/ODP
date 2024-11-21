@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.DueDiligence;
-using ODP.Web.UI.Models.ViewModels.Compras;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -121,8 +120,8 @@ namespace ODP.Web.UI.Services.DueDiligence
             }
         }
 
-       
-        public async  Task<List<DueDiligenceViewModel>> BuscarPorCPF(string cpf)
+
+        public async Task<List<DueDiligenceViewModel>> BuscarPorCPF(string cpf)
         {
 
             try

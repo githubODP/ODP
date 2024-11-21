@@ -10,10 +10,10 @@ namespace Dividas.Infra.Mapping
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(c => c.CNPJ)         
+            builder.Property(c => c.CNPJ)
                 .HasColumnType("varchar(18)");
 
-            builder.Property(c => c.CPF)      
+            builder.Property(c => c.CPF)
                .HasColumnType("varchar(14)");
 
             builder.Property(c => c.TipoPessoa)

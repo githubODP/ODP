@@ -53,7 +53,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
                     return new List<FornecedorCandidatoViewModel>();
                 }
 
-                var tse = await DeserializarObjetoResponse< List<FornecedorCandidatoViewModel>>(response);
+                var tse = await DeserializarObjetoResponse<List<FornecedorCandidatoViewModel>>(response);
                 return tse;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -76,7 +76,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
                     return new List<FornecedorCandidatoViewModel>();
                 }
 
-                var tse = await DeserializarObjetoResponse< List<FornecedorCandidatoViewModel>>(response);
+                var tse = await DeserializarObjetoResponse<List<FornecedorCandidatoViewModel>>(response);
                 return tse;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

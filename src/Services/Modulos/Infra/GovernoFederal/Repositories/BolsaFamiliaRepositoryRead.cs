@@ -3,12 +3,6 @@ using Domain.GovernoFederal.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace Infra.GovernoFederal.Repositories
 {
@@ -23,7 +17,7 @@ namespace Infra.GovernoFederal.Repositories
             throw new NotImplementedException();
         }
 
-        public async  Task<List<BolsaFamilia>> BuscarCPF(string cpf)
+        public async Task<List<BolsaFamilia>> BuscarCPF(string cpf)
         {
             return await _context.Set<BolsaFamilia>()
                .AsNoTracking()
@@ -36,8 +30,8 @@ namespace Infra.GovernoFederal.Repositories
                    UF = c.UF,
                    AnoReferencia = c.AnoReferencia,
                    MesReferencia = c.MesReferencia,
-                   Valor = c.Valor, 
-                   
+                   Valor = c.Valor,
+
                })
                .ToListAsync();
         }

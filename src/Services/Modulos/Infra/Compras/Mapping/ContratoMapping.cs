@@ -29,16 +29,16 @@ namespace Infra.Compras.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(25)");
 
-            builder.Property(c => c.Fornecedor)               
+            builder.Property(c => c.Fornecedor)
                .HasColumnType("varchar(200)");
 
-            builder.Property(c => c.CNPJ)              
+            builder.Property(c => c.CNPJ)
               .HasColumnType("varchar(18)");
 
             builder.Property(c => c.CPF)
               .HasColumnType("varchar(14)");
 
-            builder.Property(c => c.Protocolo)               
+            builder.Property(c => c.Protocolo)
                .HasColumnType("varchar(15)");
 
             builder.Property(c => c.NumeroContrato)
@@ -47,37 +47,37 @@ namespace Infra.Compras.Mapping
 
             builder.Property(c => c.TipoContrato)
                .IsRequired()
-               .HasColumnType("varchar(55)");         
+               .HasColumnType("varchar(55)");
 
 
-            builder.Property(c => c.TermoAditivo)               
+            builder.Property(c => c.TermoAditivo)
                .HasColumnType("varchar(15)");
 
-            builder.Property(c => c.Empenho)              
-              .HasColumnType("varchar(20)");           
+            builder.Property(c => c.Empenho)
+              .HasColumnType("varchar(20)");
 
             builder.Property(c => c.QtdeAditivo)
                .IsRequired()
                .HasColumnType("int");
 
             builder.Property(c => c.VlrTotalOriginal)
-               
+
                .HasColumnType("float(30)");
 
             builder.Property(c => c.VlrTotalAtual)
-               
+
                .HasColumnType("float(30)");
 
-            builder.Property(c => c.ObjetoContrato)         
+            builder.Property(c => c.ObjetoContrato)
               .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.Justificativa)             
+            builder.Property(c => c.Justificativa)
               .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.DTInicioVigencia)            
+            builder.Property(c => c.DTInicioVigencia)
               .HasColumnType("Datetime");
 
-            builder.Property(c => c.DTFimVigencia)             
+            builder.Property(c => c.DTFimVigencia)
               .HasColumnType("Datetime");
 
             builder.ToTable("Contratos");

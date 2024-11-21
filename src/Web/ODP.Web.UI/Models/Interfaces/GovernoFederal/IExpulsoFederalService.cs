@@ -1,7 +1,4 @@
-﻿
-
-using ODP.Web.UI.Models.ViewModels.Dividas;
-using ODP.Web.UI.Models.ViewModels.GovernoFederal;
+﻿using ODP.Web.UI.Models.ViewModels.GovernoFederal;
 
 namespace ODP.Web.UI.Models.Interfaces.GovernoFederal
 {

@@ -25,12 +25,25 @@ namespace ODP.Web.UI.Controllers.Corregedoria
 
 
         [HttpGet]
-
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 8)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
         {
+            // Obtém os dados paginados
             var instauracao = await _instauracaoService.Listar(pageNumber, pageSize);
+
+            // Calcula o número total de páginas usando TotalRecords
+            int totalPages = (int)Math.Ceiling((double)instauracao.TotalRecords / pageSize);
+
+            // Redireciona para a última página caso o usuário esteja na primeira e existam itens
+            if (pageNumber == 1 && instauracao.TotalRecords > 0)
+            {
+                pageNumber = totalPages;
+                return RedirectToAction(nameof(Index), new { pageNumber, pageSize });
+            }
+
+            // Retorna a view com os dados
             return View(instauracao);
         }
+
 
 
         [HttpGet]
@@ -53,21 +66,16 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         public async Task<IActionResult> Create(InstauracaoViewModel instauracaoViewModel)
         {
 
-           
+
             {
                 await _instauracaoService.Adicionar(instauracaoViewModel);
                 return RedirectToAction(nameof(Index));
             }
-          
+
 
         }
 
-        //[HttpGet]
-        //public IActionResult Criar()
-        //{
-        //    return View();
-        //}
-
+      
         public async Task<IActionResult> Editar(Guid id)
         {
             var instauracao = await _instauracaoService.ObterId(id);
@@ -117,10 +125,28 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         [HttpPost]
         public async Task<IActionResult> UploadCsv(IFormFile file)
         {
-            var paginatedResult = await _instauracaoService.UploadCsv(file, 10, 1);
+            try
+            {
+                bool sucesso = await _instauracaoService.UploadCsv(file);
 
-            return View("Confirmacao", paginatedResult);
+                if (sucesso)
+                {
+                    TempData["MensagemSucesso"] = "Arquivo processado com sucesso!";
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Falha ao processar o arquivo.";
+                    return RedirectToAction(nameof(Upload));
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["MensagemErro"] = $"Erro: {ex.Message}";
+                return RedirectToAction(nameof(Upload));
+            }
         }
+
 
     }
 

@@ -40,7 +40,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
         }
 
 
-        public async Task<List<FornecedorPartidoViewModel>>BuscarCNPJ(string cnpj)
+        public async Task<List<FornecedorPartidoViewModel>> BuscarCNPJ(string cnpj)
         {
             cnpj = HttpUtility.UrlEncode(cnpj);
             try
@@ -53,7 +53,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
                     return new List<FornecedorPartidoViewModel>();
                 }
 
-                var tse = await DeserializarObjetoResponse< List<FornecedorPartidoViewModel>>(response);
+                var tse = await DeserializarObjetoResponse<List<FornecedorPartidoViewModel>>(response);
                 return tse;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -63,7 +63,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
             }
         }
 
-        public async Task<List<FornecedorPartidoViewModel>>BuscarCPF(string cpf)
+        public async Task<List<FornecedorPartidoViewModel>> BuscarCPF(string cpf)
         {
             cpf = HttpUtility.UrlEncode(cpf);
             try

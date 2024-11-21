@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using CGEODP.Core.DomainObjects;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CGEODP.Core.DomainObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Internos.Entidade
 {
@@ -22,7 +17,7 @@ namespace Domain.Internos.Entidade
 
         [Display(Name = "Nome do Documento")]
         [Column("NomeDocto")]
-        public string NomeDocto { get; set; }        
+        public string NomeDocto { get; set; }
 
         [Display(Name = "Protocolo")]
         [Column("Protocolo")]
@@ -59,7 +54,7 @@ namespace Domain.Internos.Entidade
         [Display(Name = "Nome do Solicitante")]
         [Column("NomeSolicita")]
         public string NomeSolicita { get; set; }
-        
+
 
         [Display(Name = "Observacao")]
         [Column("Observacao")]
@@ -69,6 +64,6 @@ namespace Domain.Internos.Entidade
 
 
 
-        
+
     }
 }

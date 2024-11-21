@@ -23,15 +23,15 @@ namespace Infra.Tribunal.Repository.TSE
                                  .Where(c => c.CNPJCPF == cnpj)
             .Select(c => new FornecedorPartido
             {
-               AnoEleicao = c.AnoEleicao,
-               Municipio = c.Municipio,
-               UF = c.UF,
-               Partido = c.Partido,
-               Fornecedor = c.Fornecedor,
-               CNPJCPF = c.CNPJCPF,
-               DescricaoDespesas = c.DescricaoDespesas, 
-               PartidoFornecedor = c.PartidoFornecedor, 
-               ValorDespesas = c.ValorDespesas,
+                AnoEleicao = c.AnoEleicao,
+                Municipio = c.Municipio,
+                UF = c.UF,
+                Partido = c.Partido,
+                Fornecedor = c.Fornecedor,
+                CNPJCPF = c.CNPJCPF,
+                DescricaoDespesas = c.DescricaoDespesas,
+                PartidoFornecedor = c.PartidoFornecedor,
+                ValorDespesas = c.ValorDespesas,
             })
             .ToListAsync();
         }

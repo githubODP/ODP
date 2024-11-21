@@ -1,5 +1,4 @@
-﻿using CGEODP.Core.Data;
-using CGEODP.Core.DomainObjects;
+﻿using CGEODP.Core.DomainObjects;
 using Domain.GovernoEstadual.Entidades;
 using Domain.GovernoEstadual.Interfaces;
 using Infra.Data;
@@ -22,14 +21,14 @@ namespace Infra.GovernoEstadual.Repositories
             return await _context.Set<PADV>()
                 .AsNoTracking()
                 .Where(c => c.CNPJExecutor == cnpj)
-                .Select ( c => new PADV
+                .Select(c => new PADV
                 {
                     RazaoSocial = c.RazaoSocial,
                     Agencia = c.Agencia,
                     CNPJExecutor = c.CNPJExecutor,
                     NumeroPADV = c.NumeroPADV,
                     OrgaoPagador = c.OrgaoPagador,
-                    ValorPago = c.ValorPago,    
+                    ValorPago = c.ValorPago,
                     Ano = c.Ano,
                 })
                 .ToListAsync();
@@ -41,6 +40,6 @@ namespace Infra.GovernoEstadual.Repositories
             throw new NotImplementedException();
         }
 
-       
+
     }
 }

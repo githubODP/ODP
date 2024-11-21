@@ -6,6 +6,6 @@ namespace Domain.Tribunal.Interfaces.TSE
 {
     public interface IDoacaoPartidoRepositoryRead : IRepositoryRead<DoacaoPartido>, IBuscaInfo<DoacaoPartido>
     {
-       
+
     }
 }

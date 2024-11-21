@@ -24,7 +24,7 @@ namespace ODP.Web.UI.Models.Consultas.ResultadoConsulta
         public BuscaTCUDTO BuscaTCU { get; set; }
         public BuscaTCEDTO BuscaTCE { get; set; }
         public BuscaTSEDTO BuscaTSE { get; set; }
-        public BuscaInternoDTO BuscaInterno  { get; set; }
+        public BuscaInternoDTO BuscaInterno { get; set; }
 
 
 

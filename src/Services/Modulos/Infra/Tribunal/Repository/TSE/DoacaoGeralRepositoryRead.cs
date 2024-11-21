@@ -1,5 +1,4 @@
-﻿using CGEODP.Core.Data;
-using Domain.Tribunal.Entidades.TSE;
+﻿using Domain.Tribunal.Entidades.TSE;
 using Domain.Tribunal.Interfaces.TSE;
 using Infra.Data;
 using Infra.RepositoryExterno;
@@ -26,18 +25,18 @@ namespace Infra.Tribunal.Repository.TSE
             .Select(c => new DoacaoGeral
             {
                 AnoEleicao = c.AnoEleicao,
-                UF =  c.UF,
+                UF = c.UF,
                 Nome = c.Nome,
-                CPF = c.CPF,                
+                CPF = c.CPF,
                 NomePartido = c.NomePartido,
                 SiglaPartido = c.SiglaPartido,
-                DescricaoReceita = c.DescricaoReceita,  
+                DescricaoReceita = c.DescricaoReceita,
                 ValorDoacao = c.ValorDoacao,
 
             })
             .ToListAsync();
         }
 
-       
+
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 
@@ -113,26 +114,38 @@ namespace ODP.Web.UI.Services.Corregedoria
             }
         }
 
-
-        public async Task<IEnumerable<InstauracaoDTO>> UploadCsv(IFormFile file, int pageSize, int pageIndex)
+        public async Task<bool> UploadCsv(IFormFile file)
         {
             if (file == null || file.Length == 0)
                 throw new ArgumentException("Arquivo CSV inválido.", nameof(file));
 
-            using (var content = new MultipartFormDataContent())
+            try
             {
-                var streamContent = new StreamContent(file.OpenReadStream());
-                streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+                using (var content = new MultipartFormDataContent())
+                {
+                    var streamContent = new StreamContent(file.OpenReadStream());
+                    streamContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
 
-                content.Add(streamContent, "file", file.FileName);
+                    content.Add(streamContent, "file", file.FileName);
 
-                var response = await _httpClient.PostAsync($"/api/corregedoria/uploadcsv?ps={pageSize}&page={pageIndex}", content);
+                    var response = await _httpClient.PostAsync("/api/corregedoria/uploadcsv", content);
 
-                TratarErrosResponse(response);
+                    TratarErrosResponse(response); // Verifica erros na resposta.
 
-                return await DeserializarObjetoResponse<IEnumerable<InstauracaoDTO>>(response);
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new InvalidOperationException("Erro ao enviar o arquivo CSV. Verifique a conexão com o backend.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Ocorreu um erro inesperado durante o upload do arquivo CSV.", ex);
             }
         }
+
+
 
 
     }

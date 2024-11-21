@@ -1,11 +1,6 @@
 ﻿using Domain.GovernoFederal.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infra.GovernoFederal.Mapping
 {
@@ -15,7 +10,7 @@ namespace Infra.GovernoFederal.Mapping
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(c => c.RazaoSocial)              
+            builder.Property(c => c.RazaoSocial)
                .HasColumnType("varchar(200)");
 
             builder.Property(c => c.CNPJCPF)
@@ -26,7 +21,7 @@ namespace Infra.GovernoFederal.Mapping
                .IsRequired()
                .HasColumnType("varchar(10)");
 
-            builder.Property(c => c.NomeFantasia)            
+            builder.Property(c => c.NomeFantasia)
                .HasColumnType("varchar(200)");
 
             builder.Property(c => c.NroProcesso)
@@ -45,10 +40,10 @@ namespace Infra.GovernoFederal.Mapping
                .IsRequired()
                .HasColumnType("DateTime");
 
-            builder.Property(c => c.DataFimSancao)             
+            builder.Property(c => c.DataFimSancao)
                .HasColumnType("DateTime");
 
-            builder.Property(c => c.DataPublicacao)              
+            builder.Property(c => c.DataPublicacao)
                .HasColumnType("DateTime");
 
             builder.Property(c => c.Detalhamento)
@@ -80,8 +75,8 @@ namespace Infra.GovernoFederal.Mapping
             builder.ToTable("CNEP");
 
         }
-    
-        
+
+
     }
 }
 

@@ -27,7 +27,7 @@ namespace Infra.RepositoryExterno
         public async Task<PagedResult<T>> Listar(int pageNumber, int pageSize)
         {
             IQueryable<T> query = _context.Set<T>();
-            
+
 
             var totalRecords = await query.CountAsync();
             var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);

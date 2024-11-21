@@ -1,5 +1,4 @@
-﻿using ODP.Web.UI.Models.ViewModels.Dividas;
-using ODP.Web.UI.Models.ViewModels.Fazenda;
+﻿using ODP.Web.UI.Models.ViewModels.Fazenda;
 
 namespace ODP.Web.UI.Models.Interfaces.Fazenda
 {

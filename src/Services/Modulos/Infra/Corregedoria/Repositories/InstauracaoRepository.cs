@@ -10,5 +10,16 @@ namespace Infra.Corregedoria.Repositories
     {
 
         public InstauracaoRepository(ObservatorioContext context) : base(context) { }
+
+        //public async Task AddRangeAsync(IEnumerable<Instauracao> instauracoes)
+        //{
+        //    await _context.Set<Instauracao>().AddRangeAsync(instauracoes);
+        //}
+
+        //// Método para salvar as alterações no banco
+        //public async Task SaveChangesAsync()
+        //{
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }

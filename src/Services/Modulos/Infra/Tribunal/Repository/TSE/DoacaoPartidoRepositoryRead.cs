@@ -1,10 +1,9 @@
 ﻿
+using Domain.Tribunal.Entidades.TSE;
 using Domain.Tribunal.Interfaces.TSE;
 using Infra.Data;
 using Infra.RepositoryExterno;
 using Microsoft.EntityFrameworkCore;
-using System.Web;
-using Domain.Tribunal.Entidades.TSE;
 
 namespace Infra.Tribunal.Repository.TSE
 {
@@ -35,7 +34,7 @@ namespace Infra.Tribunal.Repository.TSE
             return await _context.Set<DoacaoPartido>()
                      .AsNoTracking()
                      .Where(c => c.CNPJCPFDoador == cpf)
-                     .Select ( c => new DoacaoPartido 
+                     .Select(c => new DoacaoPartido
                      {
                          AnoEleicao = c.AnoEleicao,
                          Municipio = c.Municipio,
@@ -44,8 +43,8 @@ namespace Infra.Tribunal.Repository.TSE
                          NomeDoador = c.NomeDoador,
                          CNPJCPFDoador = c.CNPJCPFDoador,
                          DescricaoReceita = c.DescricaoReceita,
-                         DescricaoEspecieReceita =  c.DescricaoEspecieReceita,
-                         ValorReceita = c.ValorReceita, 
+                         DescricaoEspecieReceita = c.DescricaoEspecieReceita,
+                         ValorReceita = c.ValorReceita,
                      })
                      .ToListAsync();
         }

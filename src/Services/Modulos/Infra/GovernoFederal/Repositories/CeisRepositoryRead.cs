@@ -23,7 +23,7 @@ namespace Infra.GovernoFederal.Repositories
             return await _context.Set<Ceis>()
                 .AsNoTracking()
                 .Where(c => c.CNPJCPF == cnpj)
-                .Select (c => new Ceis
+                .Select(c => new Ceis
                 {
                     RazaoSocialReceita = c.RazaoSocialReceita,
                     CNPJCPF = c.CNPJCPF,
@@ -32,7 +32,7 @@ namespace Infra.GovernoFederal.Repositories
                     DTInicioSancao = c.DTInicioSancao,
                     DTFimSancao = c.DTFimSancao,
                 })
-                .ToListAsync();  
+                .ToListAsync();
 
 
         }

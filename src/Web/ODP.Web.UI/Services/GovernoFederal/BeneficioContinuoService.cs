@@ -59,7 +59,7 @@ namespace ODP.Web.UI.Services.GovernoFederal
                     return new List<BeneficioContinuoViewModel>();
                 }
 
-                var federal = await DeserializarObjetoResponse< List<BeneficioContinuoViewModel>>(response);
+                var federal = await DeserializarObjetoResponse<List<BeneficioContinuoViewModel>>(response);
                 return federal;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

@@ -53,7 +53,7 @@ namespace ODP.Web.UI.Services.Tribunal.TCU
                     return new List<ContaIrregularViewModel>();
                 }
 
-                var tcu = await DeserializarObjetoResponse< List<ContaIrregularViewModel>>(response);
+                var tcu = await DeserializarObjetoResponse<List<ContaIrregularViewModel>>(response);
                 return tcu;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

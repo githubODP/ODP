@@ -1,7 +1,5 @@
 ﻿using Domain.ConsultaCNPJCPF;
-using Domain.ConsultaCNPJCPF.ResultadoConsulta;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -22,7 +20,7 @@ namespace API.Controllers.ConsultaCNPJCPF
             _buscaService = buscaService;
         }
 
-        
+
         [HttpPost("consultacnpj")]
         public async Task<IActionResult> ConsultaCNPJ([FromQuery] string cnpj, [FromQuery] List<string> tabelasSelecionadas)
         {

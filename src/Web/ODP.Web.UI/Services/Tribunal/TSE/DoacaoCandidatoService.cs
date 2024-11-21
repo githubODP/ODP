@@ -39,7 +39,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
             return await DeserializarObjetoResponse<DoacaoCandidatoViewModel>(response);
         }
 
-        public async Task<List<DoacaoCandidatoViewModel>>BuscarCNPJ(string cnpj)
+        public async Task<List<DoacaoCandidatoViewModel>> BuscarCNPJ(string cnpj)
         {
             cnpj = HttpUtility.UrlEncode(cnpj);
             try
@@ -53,7 +53,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
                     return new List<DoacaoCandidatoViewModel>();
                 }
 
-                var tse = await DeserializarObjetoResponse< List<DoacaoCandidatoViewModel>>(response);
+                var tse = await DeserializarObjetoResponse<List<DoacaoCandidatoViewModel>>(response);
                 return tse;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -63,7 +63,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
             }
         }
 
-        public async Task<List<DoacaoCandidatoViewModel>>BuscarCPF(string cpf)
+        public async Task<List<DoacaoCandidatoViewModel>> BuscarCPF(string cpf)
         {
             cpf = HttpUtility.UrlEncode(cpf);
             try
@@ -76,7 +76,7 @@ namespace ODP.Web.UI.Services.Tribunal.TSE
                     return new List<DoacaoCandidatoViewModel>();
                 }
 
-                var tse = await DeserializarObjetoResponse< List<DoacaoCandidatoViewModel>>(response);
+                var tse = await DeserializarObjetoResponse<List<DoacaoCandidatoViewModel>>(response);
                 return tse;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

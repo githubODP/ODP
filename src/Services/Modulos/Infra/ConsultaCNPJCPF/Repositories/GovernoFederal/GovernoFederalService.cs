@@ -74,7 +74,7 @@ namespace Infra.ConsultaCNPJCPF.Repositories.GovernoFederal
             var segurodefeso = await _segurodefesoRepository.BuscarCPF(cpf);
             var trabalhoescravo = await _trabalhoescravoRepository.BuscarCPF(cpf);
             var pep = await _pepRepository.BuscarCPF(cpf);
-            var bolsa = await _bolsaFamiliaRepository.BuscarCPF(cpf);   
+            var bolsa = await _bolsaFamiliaRepository.BuscarCPF(cpf);
             var cnep = await _cnepRepository.BuscarCPF(cpf);
 
 

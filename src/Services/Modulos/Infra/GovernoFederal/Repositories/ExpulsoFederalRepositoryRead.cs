@@ -17,7 +17,7 @@ namespace Infra.GovernoFederal.Repositories
             throw new NotImplementedException();
         }
 
-       
+
 
         public async Task<List<ExpulsoFederal>> BuscarCPF(string cpf)
         {
@@ -25,12 +25,12 @@ namespace Infra.GovernoFederal.Repositories
             return await _context.Set<ExpulsoFederal>()
                 .AsNoTracking()
                 .Where(c => c.CPF == cpf)
-                .Select (c => new ExpulsoFederal
+                .Select(c => new ExpulsoFederal
                 {
                     Nome = c.Nome,
                     CPF = c.CPF,
                     Punicao = c.Punicao,
-                    NumeroProcesso = c.NumeroProcesso,  
+                    NumeroProcesso = c.NumeroProcesso,
                     DataPublicacao = c.DataPublicacao,
                 })
                 .ToListAsync();

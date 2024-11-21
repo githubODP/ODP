@@ -58,7 +58,7 @@ namespace ODP.Web.UI.Services.Dividas
                     return new List<DividaFGTSViewModel>();
                 }
 
-                var divida = await DeserializarObjetoResponse< List<DividaFGTSViewModel>>(response);
+                var divida = await DeserializarObjetoResponse<List<DividaFGTSViewModel>>(response);
                 return divida;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -82,7 +82,7 @@ namespace ODP.Web.UI.Services.Dividas
                     return new List<DividaFGTSViewModel>();
                 }
 
-                var divida = await DeserializarObjetoResponse< List<DividaFGTSViewModel>>(response);
+                var divida = await DeserializarObjetoResponse<List<DividaFGTSViewModel>>(response);
                 return divida;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)

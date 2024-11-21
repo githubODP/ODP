@@ -31,8 +31,7 @@
                 <thead>
                     <tr>
                         <th>Editar</th>
-                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Ano)</th>
-                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Nome)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Ano)</th>                       
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().CNPJCPF)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Protocolo)</th>
@@ -55,8 +54,7 @@
                                     <img src="~/svg/editar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
                                 </button>
                             </td>
-                            <td>@Html.DisplayFor(modelItem => item.Ano)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Ano)</td>                           
                             <td>@Html.DisplayFor(modelItem => item.CNPJCPF)</td>
                             <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
                             <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
@@ -86,6 +84,62 @@
                    
                 </tbody>
                 <tfoot>
+                    <tr>
+                        <ul class="pagination justify-content-center">
+                            <!-- Botão Anterior -->
+                            @if (Model.PageNumber > 1)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link bg-info text-white"
+                                       asp-action="Index"
+                                       asp-route-pageSize="@Model.PageSize"
+                                       asp-route-pageNumber="@(Model.PageNumber - 1)">
+                                        Anterior
+                                    </a>
+                                </li>
+                            }
+
+                            <!-- Numeração de Páginas -->
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                if (i == 1 || i == Model.TotalPages || (i >= Model.PageNumber - 2 && i <= Model.PageNumber + 2))
+                                {
+                                    <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                                        <a class="page-link @(Model.PageNumber == i ? "text-white bg-primary" : "")"
+                                           asp-action="Index"
+                                           asp-route-pageSize="@Model.PageSize"
+                                           asp-route-pageNumber="@i">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+                                else if (i == 2 || i == Model.TotalPages - 1) // Adiciona reticências
+                                {
+                                    <li class="page-item disabled">
+                                        <span class="page-link">...</span>
+                                    </li>
+                                }
+                            }
+
+                            <!-- Botão Próxima -->
+                            @if (Model.PageNumber < Model.TotalPages)
+                            {
+                                <li class="page-item">
+                                    <a class="page-link bg-info text-white"
+                                       asp-action="Index"
+                                       asp-route-pageSize="@Model.PageSize"
+                                       asp-route-pageNumber="@(Model.PageNumber + 1)">
+                                        Próxima
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </tr>
+                </tfoot>
+
+
+
+               @*  <tfoot>
 
                     <tr>
                         <ul class="pagination justify-content-center">
@@ -110,7 +164,7 @@
                         </ul>
                     </tr>
 
-                </tfoot>
+                </tfoot> *@
             </table>
            
         </div>

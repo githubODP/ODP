@@ -22,14 +22,14 @@ namespace Infra.Fazenda.RepositoriesRead
             return await _context.Set<NFEletronica>()
                 .AsNoTracking()
                 .Where(c => c.CNPJ == cnpj)
-                .Select ( c => new NFEletronica
+                .Select(c => new NFEletronica
                 {
                     Emitente = c.Emitente,
                     CNPJ = c.CNPJ,
                     NumeroNF = c.NumeroNF,
                     Destinatario = c.Destinatario,
                     CNPJDestinatario = c.CNPJDestinatario,
-                    ValorNotaFiscal = c.ValorNotaFiscal,    
+                    ValorNotaFiscal = c.ValorNotaFiscal,
                     DataEmissao = c.DataEmissao,
                     Ano = c.Ano,
                 })

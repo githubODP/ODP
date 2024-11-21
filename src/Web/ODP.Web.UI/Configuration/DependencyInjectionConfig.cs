@@ -251,7 +251,7 @@ namespace ODP.Web.UI.Configuration
                   .AddTransientHttpErrorPolicy(
                   p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-            services.AddHttpClient<ITrabalhoEscravoService, TrabalhoEscravoService>()           
+            services.AddHttpClient<ITrabalhoEscravoService, TrabalhoEscravoService>()
                    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                    .AddPolicyHandler(PollyExtensions.EsperarTentar())
                    .AddTransientHttpErrorPolicy(

@@ -46,7 +46,7 @@ namespace API.Controllers
         }
 
         [HttpGet("consultacpf/{cpf}")]
-        public async Task<IActionResult>BuscaPorCPF(string cpf)
+        public async Task<IActionResult> BuscaPorCPF(string cpf)
         {
             var due = await _dueRepositoryRead.BuscarPorCPF(cpf);
 

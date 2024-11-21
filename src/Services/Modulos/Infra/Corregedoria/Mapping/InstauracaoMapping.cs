@@ -19,11 +19,11 @@ namespace Infra.Corregedoria.Mapping
 
             builder.Property(c => c.CNPJCPF)
 
-                .HasColumnType("varchar(20)");
+                .HasColumnType("varchar(18)");
 
             builder.Property(c => c.RG)
 
-                .HasColumnType("varchar(100)");
+                .HasColumnType("varchar(15)");
 
             builder.Property(c => c.Orgao)
 
