@@ -1,5 +1,6 @@
 ﻿
 using CsvHelper;
+using CsvHelper.Configuration;
 using Domain.Corregedoria.Entidade;
 using Domain.Corregedoria.Enum;
 using Domain.Corregedoria.Interfaces;
@@ -13,6 +14,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -91,9 +94,6 @@ namespace API.Controllers
         }
 
 
-
-
-
         [HttpPost("uploadcsv")]
         public async Task<IActionResult> UploadCsv(IFormFile file)
         {
@@ -101,6 +101,9 @@ namespace API.Controllers
             {
                 return BadRequest("Por favor, selecione um arquivo CSV válido.");
             }
+
+            var instauracoes = new List<Instauracao>();
+            var linhasComErro = new List<string>();
 
             try
             {
@@ -111,8 +114,44 @@ namespace API.Controllers
                     await file.CopyToAsync(stream);
                 }
 
-                // Lê o CSV e converte para a lista de Instauracao
-                var instauracoes = await LerCsvParaInstauracoesAsync(filePath);
+                // Configuração do CsvReader
+                var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+                {
+                    HasHeaderRecord = true, // Considera a linha de cabeçalho
+                    Delimiter = ";", // Delimitador do arquivo CSV
+                    TrimOptions = TrimOptions.Trim, // Remove espaços desnecessários
+                    BadDataFound = args =>
+                    {
+                        // Captura dados ruins (linhas mal formatadas)
+                        linhasComErro.Add($"Linha {args.Context.Parser.RawRow}: Dado ruim encontrado: {args.Field}");
+                    },
+                    MissingFieldFound = null, // Ignora campos ausentes
+                    Encoding = Encoding.UTF8 // Garante a leitura correta de caracteres especiais
+                };
+
+                // Lê o arquivo CSV com encoding UTF-8
+                using (var reader = new StreamReader(filePath, Encoding.UTF8))
+                using (var csv = new CsvReader(reader, config))
+                {
+                    int rowNumber = 1; // Para rastrear o número da linha
+                    csv.Context.RegisterClassMap<InstauracaoMap>(); // Mapeamento da classe
+
+                    while (await csv.ReadAsync())
+                    {
+                        try
+                        {
+                            var instauracao = csv.GetRecord<Instauracao>();
+                            instauracoes.Add(instauracao);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Adiciona detalhes do erro
+                            linhasComErro.Add($"Erro na linha {rowNumber}: {ex.Message}");
+                        }
+
+                        rowNumber++;
+                    }
+                }
 
                 // Insere os registros no banco de dados
                 foreach (var instauracao in instauracoes)
@@ -120,11 +159,12 @@ namespace API.Controllers
                     await _instauracaoRepository.Adicionar(instauracao);
                 }
 
-                // Retorna sucesso com o número de registros processados
+                // Retorna sucesso com o número de registros processados e erros encontrados
                 return Ok(new
                 {
                     Message = "Arquivo processado com sucesso.",
-                    TotalRegistros = instauracoes.Count
+                    TotalRegistros = instauracoes.Count,
+                    LinhasComErro = linhasComErro
                 });
             }
             catch (Exception ex)
@@ -133,55 +173,28 @@ namespace API.Controllers
             }
         }
 
-        private async Task<List<Instauracao>> LerCsvParaInstauracoesAsync(string filePath)
+        // Classe de mapeamento para corrigir problemas de tipo
+        public sealed class InstauracaoMap : ClassMap<Instauracao>
         {
-            var instauracoes = new List<Instauracao>();
-
-            using (var reader = new StreamReader(filePath))
+            public InstauracaoMap()
             {
-                // Lê a primeira linha para obter os cabeçalhos
-                var header = await reader.ReadLineAsync();
-                if (header == null)
-                {
-                    throw new Exception("O arquivo CSV está vazio ou corrompido.");
-                }
-
-                // Lê as linhas seguintes e converte para Instauracao
-                while (!reader.EndOfStream)
-                {
-                    var line = await reader.ReadLineAsync();
-                    if (!string.IsNullOrWhiteSpace(line))
-                    {
-                        var values = line.Split(';');
-                        var instauracao = new Instauracao
-                        {
-                            Ano = int.Parse(values[0]),
-                            CNPJCPF = values[1],
-                            RG = values[2],
-                            Orgao = Enum.TryParse<ETipoOrgao>(values[3], out var orgao) ? orgao : throw new Exception($"Valor inválido para Orgao: {values[3]}"),
-                            Procedimento = Enum.TryParse<ETipoProcedimento>(values[4], out var procedimento) ? procedimento : throw new Exception($"Valor inválido para Procedimento: {values[4]}"),
-                            Protocolo = values[5],
-                            Objeto = values[6],
-                            AtoNormativo = values[7],
-                            DataPublicacao = DateTime.TryParse(values[8], out var dataPub) ? dataPub : (DateTime?)null,
-                            NumeroDIOE = int.TryParse(values[9], out var numeroDIOE) ? numeroDIOE : (int?)null,
-                            AtoNormativoDecisao = values[10],
-                            NumeroDIOEDecisao = int.TryParse(values[11], out var numeroDIOEDecisao) ? numeroDIOEDecisao : (int?)null,
-                            DataPublicacaoDecisao = DateTime.TryParse(values[12], out var dataPubDec) ? dataPubDec : (DateTime?)null,
-                            Decisao = Enum.TryParse<ETipoDecisao>(values[13], out var decisao) ? decisao : throw new Exception($"Valor inválido para Decisao: {values[13]}"),
-                            InfoAdd = values[14]
-                        };
-                        instauracoes.Add(instauracao);
-                    }
-                }
+                Map(m => m.Ano).Index(0).TypeConverterOption.NullValues("0");
+                Map(m => m.CNPJCPF).Index(1);
+                Map(m => m.RG).Index(2);
+                Map(m => m.Orgao).Index(3);
+                Map(m => m.Procedimento).Index(4);
+                Map(m => m.Protocolo).Index(5);
+                Map(m => m.Objeto).Index(6);
+                Map(m => m.AtoNormativo).Index(7);
+                Map(m => m.DataPublicacao).Index(8).TypeConverterOption.Format("dd/MM/yyyy");
+                Map(m => m.NumeroDIOE).Index(9);
+                Map(m => m.AtoNormativoDecisao).Index(10);
+                Map(m => m.DataPublicacaoDecisao).Index(11).TypeConverterOption.Format("dd/MM/yyyy");
+                Map(m => m.NumeroDIOEDecisao).Index(12);
+                Map(m => m.Decisao).Index(13);
+                Map(m => m.InfoAdd).Index(14);
             }
-
-            return instauracoes;
         }
-
-
-
-
 
 
 

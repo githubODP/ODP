@@ -148,10 +148,7 @@ namespace ODP.Fazenda.API.Models.Mapping
             builder.Property(c => c.ValorNotaFiscal)
               .IsRequired()
               .HasColumnType("float");
-
-            builder.Property(c => c.DetalhamentoProduto)
-              .IsRequired(false)
-              .HasColumnType("nvarchar(max)");
+            
 
             builder.Property(c => c.InformacoesAdicionais)
               .IsRequired(false)
