@@ -34,6 +34,8 @@ namespace Infra.Compras.RepositoriesRead
                 DTFimVigencia = c.DTFimVigencia,
                 // Outros campos que você realmente precisa
             })
+            .OrderByDescending(c=>c.DTInicioVigencia)
+            .Take(5)
             .ToListAsync();
             
         }

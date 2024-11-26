@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Corregedoria;
+using Polly;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -146,6 +147,7 @@ namespace ODP.Web.UI.Services.Corregedoria
         }
 
 
+        
 
 
     }

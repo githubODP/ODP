@@ -33,7 +33,8 @@ namespace Infra.Compras.RepositoriesRead
                 DataDispensa = c.DataDispensa,
 
             })
-
+            .OrderByDescending(c => c.DataDispensa)
+            .Take(5)
             .ToListAsync();
         }
 

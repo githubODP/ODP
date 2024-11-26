@@ -6,6 +6,7 @@ using OfficeOpenXml;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Consultas
@@ -21,10 +22,12 @@ namespace ODP.Web.UI.Controllers.Consultas
 
         // Exibe o formulário para o usuário inserir o CNPJ/CPF e carregar arquivos
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
+            ViewBag.CurrentPage = page;
             return View();
         }
+
 
 
         [HttpGet]

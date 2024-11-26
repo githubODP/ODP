@@ -1,5 +1,4 @@
-﻿
-using ODP.Web.UI.Models.ViewModels.Compras;
+﻿using ODP.Web.UI.Models.ViewModels.Compras;
 using System.Collections.Generic;
 
 namespace ODP.Web.UI.Models.Consultas.DTOViewModels.Compras
