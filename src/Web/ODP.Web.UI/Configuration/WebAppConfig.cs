@@ -21,7 +21,7 @@ namespace ODP.Web.UI.Configuration
 
         public static void UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsProduction())   ///alterei pra isproduction, sendo o correto em isdevelopment
             {
                 app.UseDeveloperExceptionPage();
             }

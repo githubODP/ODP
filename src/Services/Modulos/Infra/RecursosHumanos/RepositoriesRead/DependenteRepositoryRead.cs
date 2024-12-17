@@ -17,11 +17,24 @@ namespace Infra.RecursosHumanos.RepositoriesRead
         public async Task<Dependente> BuscarPorCPF(string cpf)
         {
             return await _context.Set<Dependente>()
-                 .Include(f => f.FuncionarioDependentes)
-                 .AsNoTracking()
-                 .FirstOrDefaultAsync(c => c.CPF == cpf);
+                .AsNoTracking()
+                .Where(c => c.CPFDependente == cpf)
+                .Select(c => new Dependente
+                {
+                    NomeDependente = c.NomeDependente,
+                    CPFDependente = c.CPFDependente,
+                    TipoDependente = c.TipoDependente,
+                    InicioDependente = c.InicioDependente,
+                    FimDependente = c.FimDependente,
+                    Funcionario = new Funcionario // Aqui você cria o objeto Funcionario
+                    {
+                        Nome = c.Funcionario.Nome,
+                        CPF = c.Funcionario.CPF,
+                        Orgao = c.Funcionario.Orgao
+                    }
+                })
+                .FirstOrDefaultAsync(); // Retorna o primeiro ou null
         }
-
-
     }
 }
+

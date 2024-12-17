@@ -11,7 +11,8 @@ namespace Domain.GovernoFederal.Entidades
         public string Proprietario { get; set; }
         public string OutrosProprietarios { get; set; }
         public string SGUF { get; set; }
-        public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+        public string CPF { get; set; }
         public string Operador { get; set; }
         public string OutrosOperadores { get; set; }
         public string UFOperador { get; set; }

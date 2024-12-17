@@ -55,7 +55,7 @@ namespace API.Configuration
             //Corregedoria
             services.AddScoped<IInstauracaoRepository, InstauracaoRepository>();
             services.AddScoped<IInstauracaoRepositoryRead, InstauracaoRepositoryRead>();
-            services.AddScoped<IVideoTranscricaoRepositoryRead, VideoTranscricaoRepositoryRead>();
+
 
             ///Due Diligence             
             services.AddScoped<IDueRepository, DueRepository>();
@@ -112,6 +112,7 @@ namespace API.Configuration
             services.AddScoped<IFuncionarioRepositoryRead, FuncionarioRepositoryRead>();
             services.AddScoped<IOcorrenciaRepositoryRead, OcorrenciaRepositoryRead>();
             services.AddScoped<IRubricaRepositoryRead, RubricaRepositoryRead>();
+
 
 
             ///Detran

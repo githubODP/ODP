@@ -2,8 +2,6 @@
 using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Services.DueDiligence;
 using System;
-using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.DueDiligence

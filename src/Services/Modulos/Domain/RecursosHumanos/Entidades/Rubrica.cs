@@ -21,12 +21,6 @@ namespace Domain.RecursosHumanos.Entidades
         public string IDUnico { get; set; }
 
 
-        //// Relacionamento com Funcionario
-        //public Funcionario Funcionario { get; set; }
 
-
-
-        // Relacionamento muitos-para-muitos com Funcionario
-        public ICollection<FuncionarioRubrica> FuncionarioRubricas { get; set; }
     }
 }

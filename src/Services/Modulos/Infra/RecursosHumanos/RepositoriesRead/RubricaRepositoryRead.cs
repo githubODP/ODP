@@ -15,7 +15,7 @@ namespace Infra.RecursosHumanos.RepositoriesRead
         public async Task<Rubrica> BuscarPorCPF(string cpf)
         {
             return await _context.Set<Rubrica>()
-                 .Include(f => f.FuncionarioRubricas)
+
                  .AsNoTracking()
                  .FirstOrDefaultAsync(c => c.CPF == cpf);
         }

@@ -1,8 +1,10 @@
-﻿@using Domain.Corregedoria.Enum
-@model ODP.Web.UI.Models.Corregedoria.InstauracaoViewModel
+﻿@model ODP.Web.UI.Models.Corregedoria.InstauracaoViewModel
+@using Domain.Corregedoria.Enum
+
 @{
     ViewData["Title"] = "Editar";
 }
+
 
 <div class=" mb-lg-5"> </div>
 
@@ -99,20 +101,7 @@
                     <label asp-for="Procedimento" class="control-label"></label>
                     <div class="col-mb">
                         @Html.DropDownListFor(m => m.Procedimento, new SelectList(Enum.GetValues(typeof(ETipoProcedimento))), new { @class = "custom-dropdown col-checkbox" })
-                        @*     @Html.DropDownListFor(
-                        m => m.Procedimento,
-                        new SelectList(
-                        Enum.GetValues(typeof(ETipoDecisao)).Cast<ETipoDecisao>()
-                        .Select(e => new SelectListItem
-                        {
-                        Text = EnumHelper.GetDisplayName(e),
-                        Value = ((int)e).ToString()
-                        }),
-                        "Value",
-                        "Text"
-                        ),
-                        new { @class = "custom-dropdown col-checkbox" }
-                        ) *@
+                       
 
                         <span asp-validation-for="Procedimento" class="text-danger"></span>
                     </div>
@@ -154,14 +143,116 @@
                 <div class="form-group">
                     <label asp-for="Decisao" class="control-label"></label>
                     <div class="col-mb">
-                        @Html.DropDownListFor(m => m.Decisao, new SelectList(Enum.GetValues(typeof(ETipoDecisao))), new { @class = "custom-dropdown col-checkbox" })
+                        @Html.DropDownListFor(m => m.Decisao,
+                                 new SelectList(Enum.GetValues(typeof(ETipoDecisao))),
+                                 "-- Selecione uma opção --",
+                                 new { @class = "form-control", id = "Decisao" }) <!-- Define o ID corretamente -->
                         <span asp-validation-for="Decisao" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Campos Dinâmicos TAC -->
+        <div id="tacFields" style="display: none;">
+            <!-- Linha 4 -->
+            <div class="row p-lg-3">
+                <!-- Data Início TAC -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="DataInicioTac" class="control-label"></label>
+                        <input type="date" asp-for="DataInicioTac" class="form-control" />
+                        <span asp-validation-for="DataInicioTac" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Data Fim TAC -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="DataFimTac" class="control-label"></label>
+                        <input type="date" asp-for="DataFimTac" class="form-control" />
+                        <span asp-validation-for="DataFimTac" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Prazo Encerra -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="PrazoEncerra" class="control-label"></label>
+                        <input asp-for="PrazoEncerra" class="form-control" />
+                        <span asp-validation-for="PrazoEncerra" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linha 5 -->
+
+            <div class="row p-lg-3">
+                <!-- Campo PGE -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>PGE</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="PGE_Yes" name="PGE" value="true"
+                                @(Model.PGE == true ? "checked" : "") />
+                                <label for="PGE_Yes" style="margin-bottom: 0;">Sim</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="PGE_No" name="PGE" value="false"
+                                @(Model.PGE == false ? "checked" : "") />
+                                <label for="PGE_No" style="margin-bottom: 0;">Não</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo Cumpriu -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Cumpriu</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="Cumpriu_Yes" name="Cumpriu" value="true"
+                                @(Model.Cumpriu == true ? "checked" : "") />
+                                <label for="Cumpriu_Yes" style="margin-bottom: 0;">Sim</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="Cumpriu_No" name="Cumpriu" value="false"
+                                @(Model.Cumpriu == false ? "checked" : "") />
+                                <label for="Cumpriu_No" style="margin-bottom: 0;">Não</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
 
-        </div>
+            <!-- Linha 6 -->
+            <div class="row p-lg-3">
+                <!-- Obrigação -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Obrigacao" class="control-label"></label>
+                        <textarea asp-for="Obrigacao" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Obrigacao" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Observação Ajuste TAC -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ObservacaoAjusteTAC" class="control-label"></label>
+                        <textarea asp-for="ObservacaoAjusteTAC" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="ObservacaoAjusteTAC" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+         </div>
+      
+ 
 
         <div class="row   p-lg-3">
             <div class="col-md-6">
@@ -187,6 +278,43 @@
             </div>
         </div>
 
+        <!-- Botão de submit -->
+        <div class="row justify-content-center p-lg-3">
+            <a asp-action="Index" class="btn btn-success">Voltar</a>
+        </div>
+
     </form>
 </div>
-﻿
+
+<div>
+   
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const decisaoSelect = document.getElementById("Decisao");
+            const tacFields = document.getElementById("tacFields");
+
+            // Enum valores que habilitam os campos TAC
+            const valoresPermitidos = ["TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL"];
+
+            function verificarExibicaoCampos() {
+                const valorSelecionado = decisaoSelect.options[decisaoSelect.selectedIndex].text.trim();
+                if (valoresPermitidos.includes(valorSelecionado)) {
+                    tacFields.style.display = "block";
+                } else {
+                    tacFields.style.display = "none";
+                }
+            }
+
+            // Executa ao carregar a página
+            verificarExibicaoCampos();
+
+            // Executa sempre que houver mudança no select
+            decisaoSelect.addEventListener("change", verificarExibicaoCampos);
+        });
+    </script>
+
+
+}

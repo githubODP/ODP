@@ -71,10 +71,7 @@ namespace Infra.RecursosHumanos.Mapping
              .IsRequired()
              .HasColumnType("varchar(10)");
 
-            // Relacionamento muitos-para-muitos com Funcionario
-            builder.HasMany(r => r.FuncionarioOcorrencias)
-                   .WithOne(fr => fr.Ocorrencia)
-                   .HasForeignKey(fr => fr.OcorrenciaId);
+
 
             builder.ToTable("Ocorrencias");
         }

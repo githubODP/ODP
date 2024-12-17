@@ -42,7 +42,7 @@ namespace Infra.GovernoFederal.Mapping
 
             builder.Property(c => c.CPF)
                .IsRequired(false)
-               .HasColumnType("varchar(15)");
+               .HasColumnType("varchar(14)");
 
             builder.Property(c => c.NomeBeneficiario)
                .IsRequired()
@@ -54,7 +54,7 @@ namespace Infra.GovernoFederal.Mapping
 
             builder.Property(c => c.CPFRepresentanteLegal)
                .IsRequired(false)
-               .HasColumnType("varchar(15)");
+               .HasColumnType("varchar(14)");
 
             builder.Property(c => c.NomeRepresentanteLegal)
                .IsRequired(false)

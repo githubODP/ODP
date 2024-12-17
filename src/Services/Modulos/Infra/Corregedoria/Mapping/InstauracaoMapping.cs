@@ -70,6 +70,29 @@ namespace Infra.Corregedoria.Mapping
 
               .HasColumnType("nvarchar(max)");
 
+            builder.Property(c => c.Obrigacao)
+              .HasColumnType("nvarchar(max)");
+
+            builder.Property(c => c.DataInicioTac)
+                .HasColumnType("DateTime");
+
+            builder.Property(c => c.DataFimTac)
+              .HasColumnType("DateTime");
+
+            builder.Property(c => c.PrazoEncerra)
+                 .HasColumnType("int");
+
+            builder.Property(m => m.PGE)
+               .HasColumnType("bit");
+
+            builder.Property(m => m.Cumpriu)
+               .HasColumnType("bit");
+
+            builder.Property(m => m.ObservacaoAjusteTAC)
+                .HasColumnType("nvarchar(max)");
+
+
+
             builder.ToTable("Instauracoes");
         }
 

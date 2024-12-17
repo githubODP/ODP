@@ -461,7 +461,7 @@ namespace API.Controllers
             stream.Position = 0;
 
 
-            return  new FileStreamResult(stream, "application/pdf") { FileDownloadName = "elemento.pdf" };
+            return new FileStreamResult(stream, "application/pdf") { FileDownloadName = "elemento.pdf" };
         }
     }
 

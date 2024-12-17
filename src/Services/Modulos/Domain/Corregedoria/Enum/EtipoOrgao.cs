@@ -21,7 +21,7 @@
         SEIC = 16,
         SEJU = 17,
         SETI = 18,
-        SEMI = 19,
+        SEMIPI = 19,
         SEDEF = 20,
         SEEC = 21,
         SETR = 22,
@@ -41,7 +41,7 @@
         IPARDES = 36,
         FUNDEPAR = 37,
         JUCEPAR = 38,
-        LOTEPAR = 39,
+        LOTTOPAR = 39,
         UEL = 40,
         UEM = 41,
         UEPG = 42,
@@ -71,6 +71,13 @@
         SGDES = 66,
         SDBH = 67,
         DEPPEN = 68,
+        PC = 69,
+        PCP = 70,
+        PARANA_EDIFICACOES = 71,
+        SEI = 72,
+        
+     
+        
 
 
     }

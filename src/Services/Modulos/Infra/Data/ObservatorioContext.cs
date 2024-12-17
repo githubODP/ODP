@@ -1,5 +1,6 @@
 ﻿using CGEODP.Core.Data;
 using Dividas.Domain.Entidades;
+using Dividas.Infra.Mapping;
 using Domain.Compras.Entidades;
 using Domain.Corregedoria.Entidade;
 using Domain.Detran.Entidades;
@@ -13,8 +14,20 @@ using Domain.RecursosHumanos.Entidades;
 using Domain.Tribunal.Entidades.TCE;
 using Domain.Tribunal.Entidades.TCU;
 using Domain.Tribunal.Entidades.TSE;
+using Infra.Compras.Mapping;
+using Infra.Corregedoria.Mapping;
+using Infra.Detran.Mapping;
+using Infra.DueDiligence.Mapping;
+using Infra.Fazenda.Mapping;
+using Infra.GovernoEstadual.Mapping;
+using Infra.GovernoFederal.Mapping;
 using Infra.RecursosHumanos.Mapping;
+using Infra.Tribunal.Mapping.TCE;
+using Infra.Tribunal.Mapping.TCU;
+using Infra.Tribunal.Mapping.TSE;
 using Microsoft.EntityFrameworkCore;
+using ODP.Fazenda.API.Models.Mapping;
+using ODP.Parana.API.Models.Mapping;
 
 
 namespace Infra.Data
@@ -31,7 +44,7 @@ namespace Infra.Data
 
         ////Corregedoria
         public DbSet<Instauracao> Instauracoes { get; set; }
-        public DbSet<VideoExtracao> VideoExtracao { get; set; }
+
 
 
         /// Due Diligence      
@@ -108,9 +121,7 @@ namespace Infra.Data
         public DbSet<Dependente> Dependentes { get; set; }
         public DbSet<Ocorrencia> Ocorrencias { get; set; }
         public DbSet<Rubrica> Rubricas { get; set; }
-        public DbSet<FuncionarioRubrica> FuncionarioRubricas { get; set; }
-        public DbSet<FuncionarioRubrica> FuncionarioDependentes { get; set; }
-        public DbSet<FuncionarioRubrica> FuncionarioOcorrencias { get; set; }
+
 
 
         //TSE
@@ -127,17 +138,88 @@ namespace Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Due
+            modelBuilder.ApplyConfiguration(new ComissionadoMapping());
+
+            //Corregedoria
+            modelBuilder.ApplyConfiguration(new InstauracaoMapping());
+
+            ///Compras            
+            modelBuilder.ApplyConfiguration(new ContratoMapping());
+            modelBuilder.ApplyConfiguration(new DispensaMapping());
+            modelBuilder.ApplyConfiguration(new LicitacaoMapping());
+
+
+            /// Detran
+
+            modelBuilder.ApplyConfiguration(new VeiculoBaixadoMapping());
+            modelBuilder.ApplyConfiguration(new VeiculoBloqueioRouboMapping());
+            modelBuilder.ApplyConfiguration(new VeiculoCirculacaoMapping());
+            modelBuilder.ApplyConfiguration(new VeiculoIndispAdminMapping());
+            modelBuilder.ApplyConfiguration(new VeiculoOrdemJudicialMapping());
+            modelBuilder.ApplyConfiguration(new VeiculoProntuarioMapping());
+            modelBuilder.ApplyConfiguration(new VeiculoRegistroForaMapping());
+
+
+
+            /// Dividas 
+            modelBuilder.ApplyConfiguration(new DividaFGTSMapping());
+            modelBuilder.ApplyConfiguration(new DividaPrevidenciariaMapping());
+            modelBuilder.ApplyConfiguration(new DividaNaoPrevidenciaMapping());
+
+            ///Fazenda
+
+            modelBuilder.ApplyConfiguration(new JuceparMapping());
+            modelBuilder.ApplyConfiguration(new NFEletronicaMapping());
+            modelBuilder.ApplyConfiguration(new NFEletronicaFederalMapping());
+
+            //Estadual
+            modelBuilder.ApplyConfiguration(new AmbientalMapping());
+            modelBuilder.ApplyConfiguration(new PADVMapping());
+
+            //Federal
+            modelBuilder.ApplyConfiguration(new AcordoLenienciaMapping());
+            modelBuilder.ApplyConfiguration(new AeronaveMapping());
+            modelBuilder.ApplyConfiguration(new BeneficioContinuoMapping());
+            modelBuilder.ApplyConfiguration(new BolsaFamiliaMapping());
+            modelBuilder.ApplyConfiguration(new CEISMapping());
+            modelBuilder.ApplyConfiguration(new CepimMapping());
+            modelBuilder.ApplyConfiguration(new CnepMapping());
+            modelBuilder.ApplyConfiguration(new ExpulsoFederalMapping());
+            modelBuilder.ApplyConfiguration(new PEPMapping());
+            modelBuilder.ApplyConfiguration(new SeguroDefesoMapping());
+            modelBuilder.ApplyConfiguration(new TrabalhoEscravoMapping());
+
+            //TCE
+            modelBuilder.ApplyConfiguration(new CNPJRestritoMapping());
+            modelBuilder.ApplyConfiguration(new CPFRestritoMapping());
+            modelBuilder.ApplyConfiguration(new InadimplenteMapping());
+            modelBuilder.ApplyConfiguration(new IrregularidadeMapping());
+
+
+            // TCU
+            modelBuilder.ApplyConfiguration(new ContaEleitoralIrregularMapping());
+            modelBuilder.ApplyConfiguration(new ContaIrregularMapping());
+            modelBuilder.ApplyConfiguration(new InabilitadoMapping());
+            modelBuilder.ApplyConfiguration(new InidoneoMapping());
+
+
+            //TSE
+            modelBuilder.ApplyConfiguration(new DoacaoCandidatoMapping());
+            modelBuilder.ApplyConfiguration(new DoacaoGeralMapping());
+            modelBuilder.ApplyConfiguration(new DoacaoPartidoMapping());
+            modelBuilder.ApplyConfiguration(new DoacaoPartidoGeralMapping());
+            modelBuilder.ApplyConfiguration(new FornecedorCandidatoMapping());
+            modelBuilder.ApplyConfiguration(new FornecedorPartidoMapping());
+
+            //Recursos Humanos
             modelBuilder.ApplyConfiguration(new FuncionarioMapping());
             modelBuilder.ApplyConfiguration(new RubricaMapping());
-            modelBuilder.ApplyConfiguration(new FuncionarioRubricaMapping());
-
-            modelBuilder.ApplyConfiguration(new FuncionarioMapping());
             modelBuilder.ApplyConfiguration(new OcorrenciaMapping());
-            modelBuilder.ApplyConfiguration(new FuncionarioOcorrenciaMapping());
-
-            modelBuilder.ApplyConfiguration(new FuncionarioMapping());
             modelBuilder.ApplyConfiguration(new DependenteMapping());
-            modelBuilder.ApplyConfiguration(new FuncionarioDependenteMapping());
+
+
+
 
             base.OnModelCreating(modelBuilder);
 

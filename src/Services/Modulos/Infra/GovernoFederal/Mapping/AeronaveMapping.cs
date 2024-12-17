@@ -28,9 +28,13 @@ namespace Infra.GovernoFederal.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(10)");
 
-            builder.Property(c => c.CNPJCPF)
+            builder.Property(c => c.CNPJ)
                 .IsRequired()
                 .HasColumnType("varchar(18)");
+
+            builder.Property(c => c.CPF)
+                .IsRequired()
+                .HasColumnType("varchar(14)");
 
             builder.Property(c => c.Operador)
                 .IsRequired()

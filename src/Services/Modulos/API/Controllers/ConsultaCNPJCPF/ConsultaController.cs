@@ -37,7 +37,10 @@ namespace API.Controllers.ConsultaCNPJCPF
 
             await foreach (var item in _buscaService.BuscarCNPJ(cnpj, tabelasSelecionadas))
             {
-                resultados.Add(item);
+                if (item != null) // Verifique se o item não é nulo
+                {
+                    resultados.Add(item);
+                }
             }
 
             return Ok(resultados);

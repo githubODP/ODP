@@ -13,9 +13,13 @@ namespace Infra.GovernoFederal.Mapping
             builder.Property(c => c.RazaoSocial)
                .HasColumnType("varchar(200)");
 
-            builder.Property(c => c.CNPJCPF)
+            builder.Property(c => c.CNPJ)
                .IsRequired()
                .HasColumnType("varchar(18)");
+
+            builder.Property(c => c.CPF)
+               .IsRequired()
+               .HasColumnType("varchar(14)");
 
             builder.Property(c => c.CodigoSancao)
                .IsRequired()

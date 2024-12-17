@@ -74,9 +74,9 @@ namespace Infra.RecursosHumanos.Mapping
              .HasColumnType("DateTime");
 
             // Relacionamento muitos-para-muitos com Funcionario
-            builder.HasMany(r => r.FuncionarioDependentes)
-                   .WithOne(fr => fr.Dependente)
-                   .HasForeignKey(fr => fr.DependenteId);
+            builder.HasOne(d => d.Funcionario)
+           .WithMany(f => f.Dependentes) // Funcionario tem muitos dependentes
+           .HasForeignKey(d => d.FuncionarioId);
 
             builder.ToTable("Dependentes");
         }

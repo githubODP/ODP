@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ODP.Web.UI.Models.Corregedoria;
 using ODP.Web.UI.Services.Corregedoria;
 using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Corregedoria
@@ -17,43 +20,61 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         }
 
 
-        [HttpGet]
-        public IActionResult Menu()
-        {
-            return View();
-        }
 
 
         [HttpGet]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 8)
+        public async Task<IActionResult> Index(
+            int pageNumber = 1,
+            int pageSize = 5,
+            int? ano = null,
+            string orgao = null,
+            string procedimento = null,
+            string decisao = null,
+            string protocolo = null) // Adiciona o parâmetro protocolo
         {
-            // Obtém os dados paginados
-            var instauracao = await _instauracaoService.Listar(pageNumber, pageSize);
+            // Chama o serviço com os filtros ou protocolo
+            var instauracao = await _instauracaoService.ListarComFiltros(
+                pageNumber,
+                pageSize,
+                ano,
+                orgao,
+                procedimento,
+                decisao,
+                protocolo); // Inclui protocolo na chamada
 
-            // Calcula o número total de páginas usando TotalRecords
-            int totalPages = (int)Math.Ceiling((double)instauracao.TotalRecords / pageSize);
+            // Armazena os valores atuais dos filtros para reutilizar na view
+            ViewBag.AnoAtual = ano;
+            ViewBag.OrgaoAtual = orgao;
+            ViewBag.ProcedimentoAtual = procedimento;
+            ViewBag.DecisaoAtual = decisao;
+            ViewBag.ProtocoloAtual = protocolo; // Armazena o protocolo na ViewBag
 
-            // Redireciona para a última página caso o usuário esteja na primeira e existam itens
-            if (pageNumber == 1 && instauracao.TotalRecords > 0)
-            {
-                pageNumber = totalPages;
-                return RedirectToAction(nameof(Index), new { pageNumber, pageSize });
-            }
-
-            // Retorna a view com os dados
             return View(instauracao);
         }
 
 
 
-        [HttpGet]
 
+
+        [HttpGet]
         public async Task<IActionResult> Detalhes(Guid id)
         {
+            // Chama o serviço para obter o registro pelo ID
             var instauracao = await _instauracaoService.ObterId(id);
 
+            // Verifica se o registro foi encontrado
+            if (instauracao == null)
+            {
+                // Retorna um erro 404 caso não encontre o registro
+                return NotFound("Registro não encontrado.");
+            }
+
+            // Retorna a View com o objeto encontrado
             return View(instauracao);
         }
+
+
+
 
         [HttpGet]
 
@@ -65,39 +86,153 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         [HttpPost]
         public async Task<IActionResult> Create(InstauracaoViewModel instauracaoViewModel)
         {
+            if (!ModelState.IsValid)
+                return View(instauracaoViewModel);
 
-
+            // Valida o tipo de decisão
+            var tiposPermitidos = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
+            if (tiposPermitidos.Contains(instauracaoViewModel.Decisao.ToString()))
             {
-                await _instauracaoService.Adicionar(instauracaoViewModel);
-                return RedirectToAction(nameof(Index));
+                // Calcula o prazo de encerramento
+                if (instauracaoViewModel.DataInicioTac.HasValue && instauracaoViewModel.DataFimTac.HasValue)
+                {
+                    instauracaoViewModel.PrazoEncerra =
+                        (instauracaoViewModel.DataFimTac.Value - instauracaoViewModel.DataInicioTac.Value).Days;
+                }
+            }
+            else
+            {
+                // Zera os campos TAC
+                instauracaoViewModel.DataInicioTac = null;
+                instauracaoViewModel.DataFimTac = null;
+                instauracaoViewModel.PrazoEncerra = null;
+                instauracaoViewModel.PGE = null;
+                instauracaoViewModel.Cumpriu = null;
+                instauracaoViewModel.ObservacaoAjusteTAC = null;
             }
 
+            await _instauracaoService.Adicionar(instauracaoViewModel);
 
+            return RedirectToAction(nameof(Index));
         }
 
-      
+
+
+        [HttpGet]
         public async Task<IActionResult> Editar(Guid id)
         {
             var instauracao = await _instauracaoService.ObterId(id);
+            if (instauracao == null)
+            {
+                return NotFound("Registro não encontrado.");
+            }
             return View(instauracao);
         }
 
         [HttpPost]
         public async Task<IActionResult> Editar(Guid id, InstauracaoViewModel instauracaoViewModel)
         {
-            if (id != instauracaoViewModel.Id)
+            try
             {
-                return NotFound();
-            }
+                // Verifica se o ID é válido
+                if (id != instauracaoViewModel.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
+                if (!ModelState.IsValid)
+                {
+                    return View(instauracaoViewModel);
+                }
+
+                // Verifica se os campos TAC devem ser preenchidos
+                var tacDecisions = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
+                if (!tacDecisions.Contains(instauracaoViewModel.Decisao.ToString()))
+                {
+                    instauracaoViewModel.PGE = null;
+                    instauracaoViewModel.Cumpriu = null;
+                    instauracaoViewModel.DataInicioTac = null;
+                    instauracaoViewModel.DataFimTac = null;
+                    instauracaoViewModel.PrazoEncerra = null;
+                    instauracaoViewModel.ObservacaoAjusteTAC = null;
+                }
+
+                // Log para diagnosticar os valores recebidos
+                Console.WriteLine($"ID: {instauracaoViewModel.Id}");
+                Console.WriteLine($"Decisao: {instauracaoViewModel.Decisao}");
+                Console.WriteLine($"PGE: {instauracaoViewModel.PGE}");
+                Console.WriteLine($"Cumpriu: {instauracaoViewModel.Cumpriu}");
+                Console.WriteLine($"DataInicioTac: {instauracaoViewModel.DataInicioTac}");
+                Console.WriteLine($"DataFimTac: {instauracaoViewModel.DataFimTac}");
+
+                // Atualiza a entidade
                 await _instauracaoService.Alterar(instauracaoViewModel, id);
+
+                // Redireciona após edição concluída
                 bool edicaoConcluida = true;
-                return RedirectToAction(nameof(Index), new { edicaoConcluida = edicaoConcluida });
+                return RedirectToAction(nameof(Index), new { edicaoConcluida });
             }
-            return View(instauracaoViewModel);
+            catch (Exception ex)
+            {
+                // Caminho para salvar os logs
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                // Salva o erro no log
+                System.IO.File.AppendAllText(Path.Combine(path, "log.txt"),
+                    $"{DateTime.Now} - Erro: {ex.Message} | StackTrace: {ex.StackTrace}\n");
+
+                // Retorna erro 500
+                return StatusCode(500, "Ocorreu um erro interno no servidor.");
+            }
         }
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> Editar(Guid id, InstauracaoViewModel instauracaoViewModel)
+        //{
+        //    try
+        //    {
+        //        if (id != instauracaoViewModel.Id)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return View(instauracaoViewModel);
+        //        }
+
+        //        // Verifica se os campos TAC devem ser preenchidos
+        //        var tacDecisions = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
+
+        //        if (!tacDecisions.Contains(instauracaoViewModel.Decisao.ToString()))
+        //        {
+        //            instauracaoViewModel.PGE = null;
+        //            instauracaoViewModel.Cumpriu = null;
+        //            instauracaoViewModel.DataInicioTac = null;
+        //            instauracaoViewModel.DataFimTac = null;
+        //            instauracaoViewModel.PrazoEncerra = null;
+        //            instauracaoViewModel.ObservacaoAjusteTAC = null;
+        //        }
+
+        //        await _instauracaoService.Alterar(instauracaoViewModel, id);
+
+        //        bool edicaoConcluida = true;
+        //        return RedirectToAction(nameof(Index), new { edicaoConcluida = edicaoConcluida });
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        //Console.WriteLine(ex.Message);
+        //        return StatusCode(500, "Ocorreu um erro interno no servidor.");
+        //    }
+        //}
+
 
 
 
@@ -107,16 +242,22 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         public async Task<IActionResult> Deletar(Guid id)
         {
 
+            var existente = await _instauracaoService.ObterId(id);
+            if (existente == null)
+            {
+                return NotFound("Registro não encontrado.");
+            }
+
             await _instauracaoService.Deletar(id);
             return RedirectToAction(nameof(Index));
 
 
         }
-        public async Task<IActionResult> GerarPdf(Guid id)
-        {
-            var file = await _instauracaoService.GerarPdf(id);
-            return file;
-        }
+        //public async Task<IActionResult> GerarPdf(Guid id)
+        //{
+        //    var file = await _instauracaoService.GerarPdf(id);
+        //    return file;
+        //}
 
         [HttpGet]
         public IActionResult Upload()
@@ -124,9 +265,16 @@ namespace ODP.Web.UI.Controllers.Corregedoria
             return View();
         }
 
+
         [HttpPost]
         public async Task<IActionResult> UploadCsv(IFormFile file)
         {
+            if (file == null || file.Length == 0)
+            {
+                TempData["MensagemErro"] = "Por favor, selecione um arquivo válido.";
+                return RedirectToAction(nameof(Upload));
+            }
+
             try
             {
                 bool sucesso = await _instauracaoService.UploadCsv(file);
@@ -134,21 +282,28 @@ namespace ODP.Web.UI.Controllers.Corregedoria
                 if (sucesso)
                 {
                     TempData["MensagemSucesso"] = "Arquivo processado com sucesso!";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index)); // Redireciona para a página principal (Index)
                 }
                 else
                 {
                     TempData["MensagemErro"] = "Falha ao processar o arquivo.";
-                    return RedirectToAction(nameof(Upload));
+                    return RedirectToAction(nameof(Upload)); // Retorna para a página de upload
                 }
             }
             catch (Exception ex)
             {
                 TempData["MensagemErro"] = $"Erro: {ex.Message}";
-                return RedirectToAction(nameof(Upload));
+                return RedirectToAction(nameof(Upload)); // Retorna para a página de upload em caso de exceção
             }
         }
 
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Graficos()
+        {
+            return View();
+        }
 
     }
 

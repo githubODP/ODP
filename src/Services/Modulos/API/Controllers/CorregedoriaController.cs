@@ -1,35 +1,31 @@
-﻿
-using CsvHelper;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using Domain.Corregedoria.Entidade;
 using Domain.Corregedoria.Enum;
 using Domain.Corregedoria.Interfaces;
+using Domain.DueDiligence.Entidade;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PdfSharpCore.Drawing;
-using PdfSharpCore.Pdf;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-
-
     [ApiController]
     [Route("api/corregedoria")]
-    [Authorize(Roles = "Administrador, Operador")]
-    public class CorregedoriaController : Controller
+    [Authorize]
+    public class CorregedoriaController : ControllerBase
     {
         private readonly IInstauracaoRepository _instauracaoRepository;
         private readonly IInstauracaoRepositoryRead _instauracaoRepositoryRead;
-
 
         public CorregedoriaController(IInstauracaoRepository instauracaoRepository, IInstauracaoRepositoryRead instauracaoRepositoryRead)
         {
@@ -37,129 +33,288 @@ namespace API.Controllers
             _instauracaoRepositoryRead = instauracaoRepositoryRead;
         }
 
-
-
-
-
         [HttpGet("listar")]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 8)
+            public async Task<IActionResult> Index(
+        int pageNumber = 1,
+        int pageSize = 8,
+        int? ano = null,
+        string orgao = null,
+        string procedimento = null,
+        string decisao = null,
+        string protocolo = null) // Protocolo incluído como parâmetro opcional
         {
-            var pagedResult = await _instauracaoRepositoryRead.Listar(pageNumber, pageSize);
+            // Chama o repositório para listar registros com base nos filtros ou protocolo
+            var pagedResult = await _instauracaoRepositoryRead.ListarComFiltrosAsync(
+                pageNumber,
+                pageSize,
+                ano,
+                orgao,
+                procedimento,
+                decisao,
+                protocolo); // Inclui o protocolo
+
+            // Retorna os resultados no formato correto
             return Ok(pagedResult);
         }
 
 
+       
 
-
+        // Buscar por ID
         [HttpGet("buscaId/{id}")]
-        public async Task<Instauracao> BuscaId(Guid id)
+        public async Task<IActionResult> BuscaId(Guid id)
         {
-            return await _instauracaoRepositoryRead.ObterId(id);
+            var instauracao = await _instauracaoRepositoryRead.ObterId(id);
+            if (instauracao == null)
+                return NotFound("Registro não encontrado.");
+
+            return Ok(instauracao);
         }
 
-
+        // Buscar por CNPJ
         [HttpGet("consultacnpj/{cnpj}")]
-        public async Task<Instauracao> SearchCNPJ(string cnpj)
+        public async Task<IActionResult> SearchCNPJ(string cnpj)
         {
-            return await _instauracaoRepositoryRead.BuscarPorCNPJ(cnpj);
+            var instauracao = await _instauracaoRepositoryRead.BuscarPorCNPJ(cnpj);
+            if (instauracao == null)
+                return NotFound("Nenhum registro encontrado para o CNPJ informado.");
+
+            return Ok(instauracao);
         }
 
+        // Buscar por CPF
         [HttpGet("consultacpf/{cpf}")]
-        public async Task<Instauracao> SearchCPF(string cpf)
+        public async Task<IActionResult> SearchCPF(string cpf)
         {
-            return await _instauracaoRepositoryRead.BuscarPorCPF(cpf);
+            var instauracao = await _instauracaoRepositoryRead.BuscarPorCPF(cpf);
+            if (instauracao == null)
+                return NotFound("Nenhum registro encontrado para o CPF informado.");
+
+            return Ok(instauracao);
         }
 
+        // Adicionar nova instauração
         [HttpPost("adicionar")]
-
-        public async Task Add(Instauracao instauracao)
+        public async Task<IActionResult> Add([FromBody] Instauracao instauracao)
         {
-            await _instauracaoRepository.Adicionar(instauracao);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // Verifica se o Procedimento é válido para TAC
+            var procedimentosValidos = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
+            if (!procedimentosValidos.Contains(instauracao.Decisao.ToString()))
+            {
+                // Zera os campos relacionados ao TAC, caso Decisao não seja válida
+                instauracao.DataInicioTac = null;
+                instauracao.DataFimTac = null;
+                instauracao.PrazoEncerra = null;
+                instauracao.PGE = null;
+                instauracao.Cumpriu = null;
+                instauracao.ObservacaoAjusteTAC = null;
+                instauracao.Obrigacao = null;
+            }
+            else
+            {
+                // Calcula o PrazoEncerra automaticamente, se DataInicioTac e DataFimTac forem fornecidos
+                if (instauracao.DataInicioTac.HasValue && instauracao.DataFimTac.HasValue)
+                {
+                    instauracao.PrazoEncerra = (instauracao.DataFimTac.Value - instauracao.DataInicioTac.Value).Days;
+                }
+            }
+
+            try
+            {
+                await _instauracaoRepository.Adicionar(instauracao);
+                return CreatedAtAction(nameof(BuscaId), new { id = instauracao.Id }, instauracao);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao adicionar registro: {ex.Message}");
+            }
         }
 
 
-        [HttpPut("alterar")]
 
-        public async Task Update(Instauracao instauracao)
+
+
+        [HttpPut("alterar/{id}")]
+        public async Task<IActionResult> Alterar(Guid id, [FromBody] Instauracao instauracao)
         {
-            await _instauracaoRepository.Atualizar(instauracao);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (id != instauracao.Id)
+                return BadRequest("O ID fornecido não corresponde ao registro.");
+
+            // Verifica se a entidade existe no banco
+            var existente = await _instauracaoRepositoryRead.ObterId(id);
+            if (existente == null)
+                return NotFound("Registro não encontrado.");
+
+            // Verifica a regra para ETipoDecisao
+            var decisoesValidas = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
+            if (!decisoesValidas.Contains(instauracao.Decisao.ToString()))
+            {
+                // Zera os campos TAC, se a decisão não estiver na lista
+                instauracao.DataInicioTac = null;
+                instauracao.DataFimTac = null;
+                instauracao.PrazoEncerra = null;
+                instauracao.PGE = null;
+                instauracao.Cumpriu = null;
+                instauracao.ObservacaoAjusteTAC = null;
+            }
+            else
+            {
+                // Recalcula o PrazoEncerra, caso haja alteração nas datas
+                if (instauracao.DataInicioTac.HasValue && instauracao.DataFimTac.HasValue)
+                {
+                    instauracao.PrazoEncerra = (int)(instauracao.DataFimTac.Value - instauracao.DataInicioTac.Value).TotalDays;
+                }
+            }
+
+            try
+            {
+                // Atualiza os valores da entidade existente
+                existente.Ano = instauracao.Ano;
+                existente.CNPJCPF = instauracao.CNPJCPF;
+                existente.RG = instauracao.RG;
+                existente.Orgao = instauracao.Orgao;
+                existente.Procedimento = instauracao.Procedimento;
+                existente.Protocolo = instauracao.Protocolo;
+                existente.Objeto = instauracao.Objeto;
+                existente.AtoNormativo = instauracao.AtoNormativo;
+                existente.DataPublicacao = instauracao.DataPublicacao;
+                existente.NumeroDIOE = instauracao.NumeroDIOE;
+                existente.AtoNormativoDecisao = instauracao.AtoNormativoDecisao;
+                existente.DataPublicacaoDecisao = instauracao.DataPublicacaoDecisao;
+                existente.NumeroDIOEDecisao = instauracao.NumeroDIOEDecisao;
+                existente.Decisao = instauracao.Decisao;
+                existente.InfoAdd = instauracao.InfoAdd;
+
+                // Campos TAC
+                existente.DataInicioTac = instauracao.DataInicioTac;
+                existente.DataFimTac = instauracao.DataFimTac;
+                existente.PrazoEncerra = instauracao.PrazoEncerra;
+                existente.PGE = instauracao.PGE;
+                existente.Cumpriu = instauracao.Cumpriu;
+                existente.Obrigacao = instauracao.Obrigacao;
+                existente.ObservacaoAjusteTAC = instauracao.ObservacaoAjusteTAC;
+
+                await _instauracaoRepository.Atualizar(existente);
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao atualizar o registro: {ex.Message}");
+            }
         }
 
+
+
+
+
+
+
+
+        // Remover uma instauração
         [HttpDelete("deletar/{id}")]
-        public async Task RemoveInstauracao(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var remover = await _instauracaoRepositoryRead.ObterId(id);
-            await _instauracaoRepository.Deletar(remover);
+            // Busca o registro no banco pelo ID
+            var existente = await _instauracaoRepositoryRead.ObterId(id);
+            if (existente == null)
+                return NotFound("Registro não encontrado.");
 
+            try
+            {
+                // Remove o registro encontrado
+                await _instauracaoRepository.Deletar(existente);
+                return NoContent(); // Retorna 204 NoContent
+            }
+            catch (Exception ex)
+            {
+                // Retorna erro 500 com mensagem detalhada
+                return StatusCode(500, $"Erro ao deletar registro: {ex.Message}");
+            }
         }
+
+
 
 
         [HttpPost("uploadcsv")]
         public async Task<IActionResult> UploadCsv(IFormFile file)
         {
             if (file == null || file.Length == 0)
-            {
                 return BadRequest("Por favor, selecione um arquivo CSV válido.");
-            }
 
             var instauracoes = new List<Instauracao>();
             var linhasComErro = new List<string>();
 
             try
             {
-                // Salva o arquivo CSV em um local temporário
+                // 1. Salva o arquivo temporariamente
                 var filePath = Path.GetTempFileName();
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
 
-                // Configuração do CsvReader
+                // 2. Configuração do CsvHelper
                 var config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
-                    HasHeaderRecord = true, // Considera a linha de cabeçalho
-                    Delimiter = ";", // Delimitador do arquivo CSV
-                    TrimOptions = TrimOptions.Trim, // Remove espaços desnecessários
+                    HasHeaderRecord = true,
+                    Delimiter = ";",
+                    TrimOptions = TrimOptions.Trim,
                     BadDataFound = args =>
                     {
-                        // Captura dados ruins (linhas mal formatadas)
                         linhasComErro.Add($"Linha {args.Context.Parser.RawRow}: Dado ruim encontrado: {args.Field}");
                     },
-                    MissingFieldFound = null, // Ignora campos ausentes
-                    Encoding = Encoding.UTF8 // Garante a leitura correta de caracteres especiais
+                    MissingFieldFound = null,
+                    Encoding = Encoding.UTF8
                 };
 
-                // Lê o arquivo CSV com encoding UTF-8
+                // 3. Processa o arquivo CSV
                 using (var reader = new StreamReader(filePath, Encoding.UTF8))
                 using (var csv = new CsvReader(reader, config))
                 {
-                    int rowNumber = 1; // Para rastrear o número da linha
-                    csv.Context.RegisterClassMap<InstauracaoMap>(); // Mapeamento da classe
+                    csv.Context.RegisterClassMap<InstauracaoMap>();
 
                     while (await csv.ReadAsync())
                     {
                         try
                         {
                             var instauracao = csv.GetRecord<Instauracao>();
+
+                            // Validação dos campos TAC
+                            if (instauracao.Decisao == ETipoDecisao.TAC_CELEBRADO ||
+                                instauracao.Decisao == ETipoDecisao.TAC_CONCLUIDO ||
+                                instauracao.Decisao == ETipoDecisao.TAC_DESCUMPRIDO ||
+                                instauracao.Decisao == ETipoDecisao.TAC_INVIAVEL)
+                            {
+                                if (instauracao.DataInicioTac == null || instauracao.DataFimTac == null)
+                                {
+                                    linhasComErro.Add($"Erro na linha {csv.Context.Parser.RawRow}: Campos TAC inválidos.");
+                                    continue;
+                                }
+                            }
+
                             instauracoes.Add(instauracao);
                         }
                         catch (Exception ex)
                         {
-                            // Adiciona detalhes do erro
-                            linhasComErro.Add($"Erro na linha {rowNumber}: {ex.Message}");
+                            linhasComErro.Add($"Erro na linha {csv.Context.Parser.RawRow}: {ex.Message}");
                         }
-
-                        rowNumber++;
                     }
                 }
 
-                // Insere os registros no banco de dados
-                foreach (var instauracao in instauracoes)
+                // 4. Adiciona ao banco em lote
+                if (instauracoes.Any())
                 {
-                    await _instauracaoRepository.Adicionar(instauracao);
+                    await _instauracaoRepository.AdicionarEmLoteAsync(instauracoes);
                 }
 
-                // Retorna sucesso com o número de registros processados e erros encontrados
+                // 5. Retorna a resposta com informações de sucesso e erro
                 return Ok(new
                 {
                     Message = "Arquivo processado com sucesso.",
@@ -173,7 +328,9 @@ namespace API.Controllers
             }
         }
 
-        // Classe de mapeamento para corrigir problemas de tipo
+
+
+
         public sealed class InstauracaoMap : ClassMap<Instauracao>
         {
             public InstauracaoMap()
@@ -181,18 +338,71 @@ namespace API.Controllers
                 Map(m => m.Ano).Index(0).TypeConverterOption.NullValues("0");
                 Map(m => m.CNPJCPF).Index(1);
                 Map(m => m.RG).Index(2);
-                Map(m => m.Orgao).Index(3);
-                Map(m => m.Procedimento).Index(4);
+
+                // Usando o conversor genérico para enums
+                Map(m => m.Orgao).Index(3).TypeConverter<GenericEnumConverter<ETipoOrgao>>();
+                Map(m => m.Procedimento).Index(4).TypeConverter<GenericEnumConverter<ETipoProcedimento>>();
+                Map(m => m.Decisao).Index(13).TypeConverter<GenericEnumConverter<ETipoDecisao>>();
+
                 Map(m => m.Protocolo).Index(5);
                 Map(m => m.Objeto).Index(6);
                 Map(m => m.AtoNormativo).Index(7);
                 Map(m => m.DataPublicacao).Index(8).TypeConverterOption.Format("dd/MM/yyyy");
-                Map(m => m.NumeroDIOE).Index(9);
+                Map(m => m.NumeroDIOE).Index(9).TypeConverterOption.NullValues("0");
                 Map(m => m.AtoNormativoDecisao).Index(10);
                 Map(m => m.DataPublicacaoDecisao).Index(11).TypeConverterOption.Format("dd/MM/yyyy");
-                Map(m => m.NumeroDIOEDecisao).Index(12);
-                Map(m => m.Decisao).Index(13);
-                Map(m => m.InfoAdd).Index(14);
+                Map(m => m.NumeroDIOEDecisao).Index(12).TypeConverterOption.NullValues("0");
+
+                // Campos TAC
+                Map(m => m.Obrigacao).Index(15);
+                Map(m => m.DataInicioTac).Index(16).TypeConverterOption.Format("dd/MM/yyyy");
+                Map(m => m.DataFimTac).Index(17).TypeConverterOption.Format("dd/MM/yyyy");
+                Map(m => m.PrazoEncerra)
+                  .Index(18)
+                  .TypeConverterOption.NullValues(string.Empty) // Trata strings vazias como nulos
+                  .TypeConverterOption.NullValues("0");         // Ou strings com "0"
+
+                // Booleans usando conversor personalizado
+                Map(m => m.PGE).Index(19).TypeConverter<BooleanConverter>();
+                Map(m => m.Cumpriu).Index(20).TypeConverter<BooleanConverter>();
+                Map(m => m.ObservacaoAjusteTAC).Index(21);
+            }
+        }
+
+
+
+
+        public class BooleanConverter : DefaultTypeConverter
+        {
+            public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+            {
+                if (string.IsNullOrWhiteSpace(text))
+                    return false; // Retorna false para valores vazios ou nulos.
+
+                text = text.Trim().ToLower();
+                return text switch
+                {
+                    "1" or "true" or "sim" => true,
+                    "0" or "false" or "nao" or "não" => false,
+                    _ => throw new FormatException($"Valor inválido para booleano: {text}")
+                };
+            }
+        }
+
+
+
+
+        public class GenericEnumConverter<T> : DefaultTypeConverter where T : struct, Enum
+        {
+            public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+            {
+                if (string.IsNullOrWhiteSpace(text))
+                    throw new FormatException($"O valor para o enum '{typeof(T).Name}' está vazio ou nulo.");
+
+                if (Enum.TryParse(typeof(T), text, true, out var result))
+                    return result;
+
+                throw new FormatException($"Valor inválido '{text}' para o enum '{typeof(T).Name}'.");
             }
         }
 
@@ -200,5 +410,7 @@ namespace API.Controllers
 
 
 
+
     }
 }
+

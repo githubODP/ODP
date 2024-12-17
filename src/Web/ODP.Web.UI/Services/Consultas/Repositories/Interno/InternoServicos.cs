@@ -1,5 +1,6 @@
 ﻿using ODP.Web.UI.Models.Consultas.DTOViewModels.Internos;
 using ODP.Web.UI.Models.Consultas.InterfaceDTO;
+using ODP.Web.UI.Models.Interfaces.RecursosHumanos;
 using ODP.Web.UI.Services.Demanda;
 using ODP.Web.UI.Services.DueDiligence;
 using System.Threading.Tasks;
@@ -10,11 +11,15 @@ namespace ODP.Web.UI.Services.Consultas.Repositories.Due
     {
         private readonly IDueService _dueService;
         private readonly IDemandaService _demandaService;
+        private readonly IFuncionarioService _funcionarioService;
+        private readonly IDependenteService _dependenteService;
 
-        public InternoServicos(IDueService dueService, IDemandaService demandaService)
+        public InternoServicos(IDueService dueService, IDemandaService demandaService, IDependenteService dependenteService, IFuncionarioService funcionarioService)
         {
             _dueService = dueService;
             _demandaService = demandaService;
+            _funcionarioService = funcionarioService;
+            _dependenteService = dependenteService;
         }
 
 
@@ -39,6 +44,8 @@ namespace ODP.Web.UI.Services.Consultas.Repositories.Due
         {
             var due = await _dueService.BuscarPorCPF(cpf);
             var demanda = await _demandaService.BuscarCPF(cpf);
+            var dependente = await _dependenteService.BuscarCPF(cpf);
+            var funcionario = await _funcionarioService.BuscarCPF(cpf);
 
 
 
@@ -47,6 +54,8 @@ namespace ODP.Web.UI.Services.Consultas.Repositories.Due
 
                 DueDiligence = due,
                 Demanda = demanda,
+                Dependente = dependente,
+                Funcionario = funcionario
 
             };
         }

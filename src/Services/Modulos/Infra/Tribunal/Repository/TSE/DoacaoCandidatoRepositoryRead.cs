@@ -17,28 +17,7 @@ namespace Infra.Tribunal.Repository.TSE
             throw new NotImplementedException();
         }
 
-        //public async Task<List<DoacaoCandidato>> BuscarCNPJ(string cnpj)
-        //{
-        //    // Decodifica o CNPJ, caso esteja URL-encoded
-        //    cnpj = HttpUtility.UrlDecode(cnpj);
-        //    return await _context.Set<DoacaoCandidato>()
-        //                          .AsNoTracking()
-        //                          .Where(c => c.CNPJPrestadorConta == cnpj)
-        //    .Select(c => new DoacaoCandidato
-        //     {
-        //         NomeCandidato = c.NomeCandidato,
-        //         NomeDoador = c.NomeDoador,
-        //         NomePartido = c.NomePartido,
-        //         CNPJPrestadorConta = c.CNPJPrestadorConta,
-        //         SiglaPartido = c.SiglaPartido,
-        //         ValorDoacao = c.ValorDoacao,
-        //         UF = c.UF,
-        //         CPFDoador = c.CPFDoador,
-        //         AnoEleicao = c.AnoEleicao,
-        //         Cargo = c.Cargo,
-        //     })
-        //    .ToListAsync();
-        //}
+
 
         public async Task<List<DoacaoCandidato>> BuscarCPF(string cpf)
         {

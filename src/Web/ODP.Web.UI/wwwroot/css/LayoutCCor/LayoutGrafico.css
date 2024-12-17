@@ -1,0 +1,25 @@
+﻿body {
+}
+
+.bg-light-blue {
+    background-color: #87CEEB; /* Azul celeste */
+    margin-top: 120px; /* Espaçamento do topo */
+    
+}
+.container {
+    max-width: 100%; /* Garante que o container ocupe toda a largura */
+    display: flex; /* Define como flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: 100%; /* Garante que ocupe toda a altura do pai */
+}
+
+
+h3 {
+    margin-left: 500px; /* Remove margens padrão */
+}
+
+
+
+
+

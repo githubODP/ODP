@@ -21,11 +21,11 @@ namespace Infra.GovernoFederal.Repositories
 
             return await _context.Set<TrabalhoEscravo>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cnpj)
+                .Where(c => c.CNPJ == cnpj)
                 .Select(c => new TrabalhoEscravo
                 {
                     Empregador = c.Empregador,
-                    CNPJCPF = c.CNPJCPF,
+                    CNPJ = c.CNPJ,
                     Estabelecimento = c.Estabelecimento,
                     Ano = c.Ano,
                     UF = c.UF,
@@ -38,11 +38,11 @@ namespace Infra.GovernoFederal.Repositories
 
             return await _context.Set<TrabalhoEscravo>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cpf)
+                .Where(c => c.CPF == cpf)
                 .Select(c => new TrabalhoEscravo
                 {
                     Empregador = c.Empregador,
-                    CNPJCPF = c.CNPJCPF,
+                    CPF = c.CPF,
                     Estabelecimento = c.Estabelecimento,
                     Ano = c.Ano,
                     UF = c.UF,

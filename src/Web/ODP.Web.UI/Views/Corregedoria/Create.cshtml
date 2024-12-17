@@ -4,9 +4,7 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-
-
+<link href="/css/LayoutCCor/ccor.css" rel="stylesheet" />
 <div class="container shadow-lg border-1 mt-5 px-4">
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -18,10 +16,10 @@
             </div>
         </div>
 
-        <div class="row  p-lg-3">
-            <input asp-for="Ano" class="form-control" value="@DateTime.Now.Year" type="hidden" />
-
-            <div class="col-sm-3">
+        <!-- Linha 1 -->
+        <div class="row p-lg-3">
+            <!-- Ano -->
+            <div class="col-sm-2">
                 <div class="form-group">
                     <label asp-for="Ano" class="control-label"></label>
                     <input asp-for="Ano" class="form-control" />
@@ -29,9 +27,8 @@
                 </div>
             </div>
 
-
             <!-- CNPJ/CPF -->
-            <div class="col-sm-2">
+            <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="CNPJCPF" class="control-label"></label>
                     <input asp-for="CNPJCPF" class="form-control" />
@@ -61,16 +58,15 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="Orgao" class="control-label"></label>
-                    <div class="col-mb">
-                        @Html.DropDownListFor(m => m.Orgao, new SelectList(Enum.GetValues(typeof(ETipoOrgao))), new { @class = "custom-dropdown col-checkbox" })
-                        <span asp-validation-for="Orgao" class="text-danger"></span>
-                    </div>
+                    @Html.DropDownListFor(m => m.Orgao, new SelectList(Enum.GetValues(typeof(ETipoOrgao))), new { @class = "form-control" })
+                    <span asp-validation-for="Orgao" class="text-danger"></span>
                 </div>
             </div>
-
         </div>
 
-        <div class="row   p-lg-3">
+        <!-- Linha 2 -->
+        <div class="row p-lg-3">
+            <!-- Ato Normativo -->
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="AtoNormativo" class="control-label"></label>
@@ -79,14 +75,16 @@
                 </div>
             </div>
 
+            <!-- Data Publicação -->
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="DataPublicacao" class="control-label"></label>
-                    <input type="date" class="form-control" asp-for="DataPublicacao" />
+                    <input type="date" asp-for="DataPublicacao" class="form-control" />
                     <span asp-validation-for="DataPublicacao" class="text-danger"></span>
                 </div>
             </div>
 
+            <!-- Número DIOE -->
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="NumeroDIOE" class="control-label"></label>
@@ -94,53 +92,38 @@
                     <span asp-validation-for="NumeroDIOE" class="text-danger"></span>
                 </div>
             </div>
+
             <!-- Procedimento -->
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="Procedimento" class="control-label"></label>
-                    <div class="col-mb">
-                        @Html.DropDownListFor(m => m.Procedimento, new SelectList(Enum.GetValues(typeof(ETipoProcedimento))), new { @class = "custom-dropdown col-checkbox" })
-                        @*     @Html.DropDownListFor(
-                        m => m.Procedimento,
-                        new SelectList(
-                        Enum.GetValues(typeof(ETipoDecisao)).Cast<ETipoDecisao>()
-                        .Select(e => new SelectListItem
-                        {
-                        Text = EnumHelper.GetDisplayName(e),
-                        Value = ((int)e).ToString()
-                        }),
-                        "Value",
-                        "Text"
-                        ),
-                        new { @class = "custom-dropdown col-checkbox" }
-                        ) *@
-
-                        <span asp-validation-for="Procedimento" class="text-danger"></span>
-                    </div>
+                    @Html.DropDownListFor(m => m.Procedimento, new SelectList(Enum.GetValues(typeof(ETipoProcedimento))), new { @class = "form-control" })
+                    <span asp-validation-for="Procedimento" class="text-danger"></span>
                 </div>
             </div>
-
-
-
         </div>
 
-        <div class="row   p-lg-3">
+        <!-- Linha 3 -->
+        <div class="row p-lg-3">
+            <!-- Ato Normativo Decisão -->
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label asp-for="AtoNormativoDecisao" class="control-label" type="text"></label>
+                    <label asp-for="AtoNormativoDecisao" class="control-label"></label>
                     <input asp-for="AtoNormativoDecisao" class="form-control" />
                     <span asp-validation-for="AtoNormativoDecisao" class="text-danger"></span>
                 </div>
             </div>
 
+            <!-- Data Publicação Decisão -->
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label asp-for="DataPublicacaoDecisao" class="control-label" type="text"></label>
-                    <input type="date" class="form-control" asp-for="DataPublicacaoDecisao" />
+                    <label asp-for="DataPublicacaoDecisao" class="control-label"></label>
+                    <input type="date" asp-for="DataPublicacaoDecisao" class="form-control" />
                     <span asp-validation-for="DataPublicacaoDecisao" class="text-danger"></span>
                 </div>
             </div>
 
+            <!-- Número DIOE Decisão -->
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="NumeroDIOEDecisao" class="control-label"></label>
@@ -149,21 +132,113 @@
                 </div>
             </div>
 
-
             <!-- Decisão -->
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="Decisao" class="control-label"></label>
-                    <div class="col-mb">
-                        @Html.DropDownListFor(m => m.Decisao, new SelectList(Enum.GetValues(typeof(ETipoDecisao))), new { @class = "custom-dropdown col-checkbox" })
-                        <span asp-validation-for="Decisao" class="text-danger"></span>
+                    @Html.DropDownListFor(m => m.Decisao,
+                             new SelectList(Enum.GetValues(typeof(ETipoDecisao))),
+                             "Selecione uma decisão", new { @class = "form-control", id = "decisaoDropdown" })
+                    <span asp-validation-for="Decisao" class="text-danger"></span>
+                </div>
+
+            </div>
+        </div>        
+        <!-- Campos Dinâmicos TAC -->
+        <div id="tacFields" style="display: none;">
+            <!-- Linha 4 -->
+            <div class="row p-lg-3">
+                <!-- Data Início TAC -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="DataInicioTac" class="control-label"></label>
+                        <input type="date" asp-for="DataInicioTac" class="form-control" />
+                        <span asp-validation-for="DataInicioTac" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Data Fim TAC -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="DataFimTac" class="control-label"></label>
+                        <input type="date" asp-for="DataFimTac" class="form-control" />
+                        <span asp-validation-for="DataFimTac" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Prazo Encerra -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="PrazoEncerra" class="control-label"></label>
+                        <input asp-for="PrazoEncerra" class="form-control" />
+                        <span asp-validation-for="PrazoEncerra" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linha 5 -->
+
+            <div class="row p-lg-3">
+                <!-- Campo PGE -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>PGE</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="PGE_Yes" name="PGE" value="true" style="margin-top: 0;" />
+                                <label for="PGE_Yes" style="margin-bottom: 0;">Sim</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="PGE_No" name="PGE" value="false" style="margin-top: 0;" />
+                                <label for="PGE_No" style="margin-bottom: 0;">Não</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo Cumpriu -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Cumpriu</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="Cumpriu_Yes" name="Cumpriu" value="true" style="margin-top: 0;" />
+                                <label for="Cumpriu_Yes" style="margin-bottom: 0;">Sim</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="Cumpriu_No" name="Cumpriu" value="false" style="margin-top: 0;" />
+                                <label for="Cumpriu_No" style="margin-bottom: 0;">Não</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
 
-        </div>
+            <!-- Linha 6 -->
+            <div class="row p-lg-3">
+                <!-- Obrigação -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Obrigacao" class="control-label"></label>
+                        <textarea asp-for="Obrigacao" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Obrigacao" class="text-danger"></span>
+                    </div>
+                </div>
 
+                <!-- Observação Ajuste TAC -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ObservacaoAjusteTAC" class="control-label"></label>
+                        <textarea asp-for="ObservacaoAjusteTAC" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="ObservacaoAjusteTAC" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+           
+
+        </div>
         <div class="row   p-lg-3">
             <div class="col-md-6">
                 <div class="form-group">
@@ -180,16 +255,43 @@
                 </div>
             </div>
         </div>
-        <!-- Botão de submit -->
-        <div class="row justify-content-center   p-lg-3">
-            <div class="col-md-6 text-center">
-               
-                <a class="btn btn-danger" href="@Url.Action("Index", "Corregedoria")">Cancelar</a> 
 
+        <!-- Botões -->
+        <div class="row justify-content-center p-lg-3">
+            <div class="col-md-6 text-center">
+                <a class="btn btn-danger" href="@Url.Action("Index", "Corregedoria")">Cancelar</a>
                 <button type="submit" class="btn btn-primary ml-3">Salvar</button>
             </div>
         </div>
-        
     </form>
 </div>
-﻿
+
+@section Scripts {
+    <script>
+        // Mostrar/ocultar campos TAC conforme Decisão selecionada
+        document.getElementById("decisaoDropdown").addEventListener("change", function () {
+            const selectedValue = this.value;
+            const validDecisoes = ["TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL"];
+            const tacFields = document.getElementById("tacFields");
+
+            tacFields.style.display = validDecisoes.includes(selectedValue) ? "block" : "none";
+        });
+
+        // Calcular PrazoEncerra
+        function calcularPrazoEncerra() {
+            const dataInicio = document.getElementById("dataInicioTac").value;
+            const dataFim = document.getElementById("dataFimTac").value;
+
+            if (dataInicio && dataFim) {
+                const inicio = new Date(dataInicio);
+                const fim = new Date(dataFim);
+                const diferencaEmDias = (fim - inicio) / (1000 * 60 * 60 * 24);
+
+                document.getElementById("prazoEncerra").value = diferencaEmDias >= 0 ? diferencaEmDias : 0;
+            }
+        }
+
+        document.getElementById("dataInicioTac").addEventListener("change", calcularPrazoEncerra);
+        document.getElementById("dataFimTac").addEventListener("change", calcularPrazoEncerra);
+    </script>
+}

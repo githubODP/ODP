@@ -34,15 +34,17 @@ namespace Domain.RecursosHumanos.Entidades
         public string? FGP { get; set; }
         public string Funcao { get; set; }
 
+        public ICollection<Dependente> Dependentes { get; set; } = new List<Dependente>();
+
 
         // Relacionamento um-para-muitos com Dependente
-        public ICollection<FuncionarioDependente> FuncionarioDependentes { get; set; }
+        //public ICollection<FuncionarioDependente> FuncionarioDependentes { get; set; }
 
-        // Relacionamento um-para-muitos com Ocorrencia
-        public ICollection<FuncionarioOcorrencia> FuncionarioOcorrencias { get; set; }
+        //Relacionamento um-para-muitos com Ocorrencia
+        //public ICollection<FuncionarioOcorrencia> FuncionarioOcorrencias { get; set; }
 
-        // Relacionamento muitos-para-muitos com Rubrica
-        public ICollection<FuncionarioRubrica> FuncionarioRubricas { get; set; }
+        //Relacionamento muitos-para-muitos com Rubrica
+        //public ICollection<FuncionarioRubrica> FuncionarioRubricas { get; set; }
 
     }
 

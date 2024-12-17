@@ -2,9 +2,17 @@
 @model ODP.Web.UI.Models.Corregedoria.InstauracaoViewModel
 @{
     ViewData["Title"] = "Editar";
+
+    var procedimentosValidos = new[]
+           {
+        ETipoDecisao.TAC_CELEBRADO,
+        ETipoDecisao.TAC_CONCLUIDO,
+        ETipoDecisao.TAC_DESCUMPRIDO,
+        ETipoDecisao.TAC_INVIAVEL
+    };
 }
 
-<div class=" mb-lg-5"> </div>
+
 
 <div class="container-xxl shadow-lg border-1  mt-5 px-3">
     <form asp-action="Editar" class="p-2">
@@ -12,7 +20,7 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Editar <b>Instauração</b></h2>
+                    <h2>Visualizar <b>Instauração</b></h2>
                 </div>
             </div>
         </div>
@@ -99,21 +107,6 @@
                     <label asp-for="Procedimento" class="control-label"></label>
                     <div class="col-mb" readonly>
                         @Html.DropDownListFor(m => m.Procedimento, new SelectList(Enum.GetValues(typeof(ETipoProcedimento))), new { @class = "custom-dropdown col-checkbox" })
-                        @*     @Html.DropDownListFor(
-                        m => m.Procedimento,
-                        new SelectList(
-                        Enum.GetValues(typeof(ETipoDecisao)).Cast<ETipoDecisao>()
-                        .Select(e => new SelectListItem
-                        {
-                        Text = EnumHelper.GetDisplayName(e),
-                        Value = ((int)e).ToString()
-                        }),
-                        "Value",
-                        "Text"
-                        ),
-                        new { @class = "custom-dropdown col-checkbox" }
-                        ) *@
-
                         <span asp-validation-for="Procedimento" class="text-danger" ></span>
                     </div>
                 </div>
@@ -156,13 +149,95 @@
                     <div class="col-mb">
                         @Html.DropDownListFor(m => m.Decisao, new SelectList(Enum.GetValues(typeof(ETipoDecisao))), new { @class = "custom-dropdown col-checkbox" })
                         <span asp-validation-for="Decisao" class="text-danger" readonly></span>
-                       
+
                     </div >
                 </div>
             </div>
 
 
         </div>
+
+        @if (procedimentosValidos.Contains(Model.Decisao))
+        {
+
+            <div class="row   p-lg-3">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label asp-for="DataInicioTac" class="control-label"></label>
+                        <input asp-for="DataInicioTac" class="form-control" />
+                        <span asp-validation-for="DataInicioTac" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label asp-for="DataFimTac" class="control-label"></label>
+                        <input asp-for="DataFimTac" class="form-control" />
+                        <span asp-validation-for="DataFimTac" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+
+                    <div class="form-group">
+                        <label asp-for="PrazoEncerra" class="control-label"></label>
+                        <input asp-for="PrazoEncerra" class="form-control" />
+                        <span asp-validation-for="PrazoEncerra" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+
+                    <div class="form-group">
+                        <label>PGE</label>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="PGE_Yes" name="PGE" value="true" @(Model.PGE == true ? "checked" : "") disabled />
+                                <label for="PGE_Yes" style="margin-bottom: 0;">Sim</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" id="PGE_No" name="PGE" value="false" @(Model.PGE == false ? "checked" : "") disabled />
+                                <label for="PGE_No" style="margin-bottom: 0;">Não</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+
+                    <div class="form-group">
+        <label>Cumpriu</label>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" id="Cumpriu_Yes" name="Cumpriu" value="true" @(Model.Cumpriu == true ? "checked" : "") disabled />
+                <label for="Cumpriu_Yes" style="margin-bottom: 0;">Sim</label>
+            </div>
+            <div style="display: flex; align-items: center; gap: 5px;">
+                <input type="radio" id="Cumpriu_No" name="Cumpriu" value="false" @(Model.Cumpriu == false ? "checked" : "") disabled />
+                <label for="Cumpriu_No" style="margin-bottom: 0;">Não</label>
+            </div>
+        </div>
+    </div>
+                </div>
+
+
+            </div>
+            <div class="row   p-lg-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Obrigacao" class="control-label"></label>
+                        <textarea style="text-align:justify" rows="8" cols="90" asp-for="Obrigacao" class="form-control"></textarea>
+                        <span asp-validation-for="Obrigacao" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ObservacaoAjusteTAC" class="control-label"></label>
+                        <textarea style="text-align:justify" rows="8" cols="90" asp-for="ObservacaoAjusteTAC" class="form-control"></textarea>
+                        <span asp-validation-for="ObservacaoAjusteTAC" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        
+        }
+
+       
 
         <div class="row   p-lg-3">
             <div class="col-md-6">

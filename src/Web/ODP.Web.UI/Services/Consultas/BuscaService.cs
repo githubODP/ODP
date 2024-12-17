@@ -1,17 +1,7 @@
-﻿using ODP.Web.UI.Extensions;
-using ODP.Web.UI.Models.Consultas.InterfaceDTO;
+﻿using ODP.Web.UI.Models.Consultas.InterfaceDTO;
 using ODP.Web.UI.Models.Consultas.ResultadoConsulta;
-using ODP.Web.UI.Models.ViewModels.Compras;
-using ODP.Web.UI.Models.ViewModels.Dividas;
-using ODP.Web.UI.Models.ViewModels.Fazenda;
-using ODP.Web.UI.Models.ViewModels.GovernoEstadual;
-using ODP.Web.UI.Models.ViewModels.GovernoFederal;
-using ODP.Web.UI.Models.ViewModels.Tribunal.TCE;
-using ODP.Web.UI.Models.ViewModels.Tribunal.TCU;
-using ODP.Web.UI.Models.ViewModels.Tribunal.TSE;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services.Consultas
@@ -176,7 +166,7 @@ namespace ODP.Web.UI.Services.Consultas
                 resultado.BuscaInterno = await _internoServicos.BuscarCPF(cpf);
 
 
-          
+
 
 
             return resultado;

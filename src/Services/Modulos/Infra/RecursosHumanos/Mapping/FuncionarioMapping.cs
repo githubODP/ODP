@@ -113,25 +113,25 @@ namespace Infra.RecursosHumanos.Mapping
                 .IsRequired(false)
                 .HasColumnType("varchar(80)");
 
-            // Relacionamento muitos-para-muitos com Rubrica
-            builder.HasMany(f => f.FuncionarioRubricas)
-                   .WithOne(fr => fr.Funcionario)
-                   .HasForeignKey(fr => fr.FuncionarioId);
+            //// Relacionamento muitos-para-muitos com Rubrica
+            //builder.HasMany(f => f.FuncionarioRubricas)
+            //       .WithOne(fr => fr.Funcionario)
+            //       .HasForeignKey(fr => fr.FuncionarioId);
 
 
             // Relacionamento muitos-para-muitos com Ocorrencia
-            builder.HasMany(f => f.FuncionarioDependentes)
-                   .WithOne(fr => fr.Funcionario)
-                   .HasForeignKey(fr => fr.FuncionarioId);
+            builder.HasMany(f => f.Dependentes)
+            .WithOne(d => d.Funcionario)
+            .HasForeignKey(d => d.FuncionarioId);
 
 
 
             // Relacionamento muitos-para-muitos com Rubrica
-            builder.HasMany(f => f.FuncionarioOcorrencias)
-                   .WithOne(fr => fr.Funcionario)
-                   .HasForeignKey(fr => fr.FuncionarioId);
+            //builder.HasMany(f => f.FuncionarioOcorrencias)
+            //       .WithOne(fr => fr.Funcionario)
+            //       .HasForeignKey(fr => fr.FuncionarioId);
 
-            builder.ToTable("Funcionarios");
+            //builder.ToTable("Funcionarios");
         }
     }
 

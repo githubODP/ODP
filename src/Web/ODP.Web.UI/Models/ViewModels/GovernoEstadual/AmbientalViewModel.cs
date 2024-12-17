@@ -7,6 +7,8 @@ namespace ODP.Web.UI.Models.ViewModels.GovernoEstadual
         public Guid Id { get; set; }
         public string Municipio { get; set; }
         public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+        public string CPF { get; set; }
         public string Infrator { get; set; }
         public int QtdeInfracoes { get; set; }
         public string Situacao { get; set; }

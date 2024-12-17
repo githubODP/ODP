@@ -1,6 +1,7 @@
 ﻿using CGEODP.Core.Data;
 using CGEODP.Core.DomainObjects;
 using Infra.Data;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Infra.RepositoryExterno
@@ -21,6 +22,7 @@ namespace Infra.RepositoryExterno
             _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();
         }
+
 
         public async Task Deletar(T entity)
         {

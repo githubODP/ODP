@@ -18,19 +18,23 @@ namespace Infra.DueDiligence.Mapping
 
             builder.Property(c => c.Nome)
                 .IsRequired()
-                .HasColumnType("varchar(100)");
+                .HasColumnType("varchar(200)");
 
             builder.Property(c => c.CPF)
                 .IsRequired()
-                .HasColumnType("varchar(11)");
+                .HasColumnType("varchar(14)");
 
             builder.Property(c => c.Orgao)
                 .IsRequired()
                 .HasColumnType("varchar(15)");
 
             builder.Property(c => c.Indicacao)
+            .IsRequired()
+            .HasColumnType("varchar(30)");
+
+            builder.Property(c => c.Responsavel)
                 .IsRequired()
-                .HasColumnType("varchar(30)");
+                .HasColumnType("varchar(100)");
 
             builder.Property(c => c.DataSolicitacao)
                 .IsRequired()
@@ -39,6 +43,10 @@ namespace Infra.DueDiligence.Mapping
             builder.Property(c => c.DataResposta)
                 .IsRequired()
                 .HasColumnType("DateTime");
+
+            builder.Property(c => c.ClassificacaoRisco)
+            .IsRequired()
+            .HasColumnType("int");
 
             builder.Property(c => c.Observacao)
                 .IsRequired()
@@ -56,11 +64,32 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                 .HasColumnType("bit");
 
+            builder.Property(c => c.CadEmpresaContrato)
+               .IsRequired()
+               .HasColumnType("bit");
+
+            builder.Property(c => c.CadEmpresaInidoneos)
+               .IsRequired()
+               .HasColumnType("bit");
+
+            builder.Property(c => c.CadInelegivel)
+              .IsRequired()
+              .HasColumnType("bit");
+
+            builder.Property(c => c.CadExpulsoFederal)
+              .IsRequired()
+              .HasColumnType("bit");
+
             builder.Property(c => c.CadMEI)
                 .IsRequired()
                .HasColumnType("bit");
 
-            builder.Property(c => c.CadPPE)
+
+            builder.Property(c => c.CadAuxilio)
+                .IsRequired()
+               .HasColumnType("bit");
+
+            builder.Property(c => c.CadPPP)
                 .IsRequired()
                 .HasColumnType("bit");
 
@@ -68,17 +97,33 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                .HasColumnType("bit");
 
-            builder.Property(c => c.CadViculoPEP)
+
+            builder.Property(c => c.CadPPN)
                 .IsRequired()
                 .HasColumnType("bit");
+
+            builder.Property(c => c.CadVinculoDireto)
+                .IsRequired()
+                .HasColumnType("bit");
+
+            builder.Property(c => c.CadPrisao)
+              .IsRequired()
+              .HasColumnType("bit");
+
+            builder.Property(c => c.CadDoacaoEleitoral)
+               .IsRequired()
+               .HasColumnType("bit");
+
+
+            builder.Property(c => c.CadDoacaoEleitoralPartido)
+                .IsRequired()
+                .HasColumnType("bit");
+
 
             builder.Property(c => c.CadDoacaoEleitoralCandidato)
                 .IsRequired()
                 .HasColumnType("bit");
 
-            builder.Property(c => c.CadDoacaoEleitoralPartido)
-                .IsRequired()
-                .HasColumnType("bit");
 
             builder.Property(c => c.CadFornecedorPartido)
                 .IsRequired()
@@ -92,9 +137,29 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                 .HasColumnType("bit");
 
-            builder.Property(c => c.CadEmpresaInidoneos)
+            builder.Property(c => c.CadQuadroInabilitados)
+                 .IsRequired()
+                 .HasColumnType("bit");
+
+            builder.Property(c => c.CadOFAC)
                 .IsRequired()
                 .HasColumnType("bit");
+
+            builder.Property(c => c.CadInterpol)
+                .IsRequired()
+                .HasColumnType("bit");
+
+            builder.Property(c => c.CadCVM)
+                .IsRequired()
+                .HasColumnType("bit");
+
+            builder.Property(c => c.CadInabilitado)
+              .IsRequired()
+             .HasColumnType("bit");
+
+            builder.Property(c => c.CadInidoneo)
+               .IsRequired()
+               .HasColumnType("bit");
 
             builder.Property(c => c.CadFuncionarioPublico)
                 .IsRequired()
@@ -104,37 +169,18 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                .HasColumnType("bit");
 
-            builder.Property(c => c.CadEmpresaContrato)
-                .IsRequired()
-                .HasColumnType("bit");
+            builder.Property(c => c.CadImprobidade)
+               .IsRequired()
+              .HasColumnType("bit");            
 
             builder.Property(c => c.CadTrabalhoEscravo)
                .IsRequired()
                .HasColumnType("bit");
 
-            builder.Property(c => c.CadPrisao)
+            builder.Property(c => c.CadDebitoPGFN)
                .IsRequired()
                .HasColumnType("bit");
 
-            builder.Property(c => c.CadExpulsoFederal)
-               .IsRequired()
-               .HasColumnType("bit");
-
-            builder.Property(c => c.CadOFAC)
-               .IsRequired()
-               .HasColumnType("bit");
-
-            builder.Property(c => c.CadInelegivel)
-               .IsRequired()
-              .HasColumnType("bit");
-
-            builder.Property(c => c.CadInabilitado)
-               .IsRequired()
-              .HasColumnType("bit");
-
-            builder.Property(c => c.CadInidoneo)
-               .IsRequired()
-               .HasColumnType("bit");
 
             builder.Property(c => c.CadRestricoesTCE)
                .IsRequired()
@@ -145,6 +191,32 @@ namespace Infra.DueDiligence.Mapping
                .HasColumnType("bit");
 
             builder.Property(c => c.CadIrregularidadesTCE)
+               .IsRequired()
+               .HasColumnType("bit");
+
+
+            builder.Property(c => c.CadIrregularTCU)
+               .IsRequired()
+               .HasColumnType("bit");
+
+            builder.Property(c => c.CadIrregularEleitoralTCU)
+               .IsRequired()
+               .HasColumnType("bit");
+
+            builder.Property(c => c.CadParentescoGrauServidorPublico)
+               .IsRequired()
+               .HasColumnType("bit");
+
+
+            builder.Property(c => c.CadCepim)
+              .IsRequired()
+              .HasColumnType("bit");
+
+            builder.Property(c => c.CadCnep)
+               .IsRequired()
+               .HasColumnType("bit");
+
+            builder.Property(c => c.CadAcordo)
                .IsRequired()
                .HasColumnType("bit");
 

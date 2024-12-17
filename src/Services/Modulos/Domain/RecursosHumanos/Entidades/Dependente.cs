@@ -21,12 +21,19 @@ namespace Domain.RecursosHumanos.Entidades
         public DateTime FimDependente { get; set; }
         public int IdadeDependente { get; set; }
         public DateTime InicioDependente { get; set; }
-        public Funcionario funcionario { get; set; }
+
+        // Relacionamento com Funcionario
+        public Funcionario Funcionario { get; set; }
 
         // Relacionamento com Funcionario
         //public Funcionario Funcionario { get; set; } 
 
         // Relacionamento muitos-para-muitos com Funcionario
-        public ICollection<FuncionarioDependente> FuncionarioDependentes { get; set; }
+        //public ICollection<FuncionarioDependente> FuncionarioDependentes { get; set; }
+
+        // Chave estrangeira para o Funcionario
+        public Guid FuncionarioId { get; set; }
+
+
     }
 }

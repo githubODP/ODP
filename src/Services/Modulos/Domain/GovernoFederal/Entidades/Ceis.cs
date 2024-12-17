@@ -7,7 +7,8 @@ namespace Domain.GovernoFederal.Entidades
         public string Cadastro { get; set; }
         public int Codigo { get; set; }
         public string? TipoPessoa { get; set; }
-        public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+        public string CPF { get; set; }
         public string NomeInformadoOrgaoSancionador { get; set; }
         public string? RazaoSocialReceita { get; set; }
         public string? NomeFantasiaReceita { get; set; }

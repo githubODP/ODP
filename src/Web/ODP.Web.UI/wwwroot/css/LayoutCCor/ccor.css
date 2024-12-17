@@ -1,0 +1,180 @@
+﻿body {
+    
+}
+
+.bg-light-blue {
+    background-color: #87CEEB; /* Azul celeste */
+    padding: 15px; /* Espaçamento interno */
+    margin-top: 56px; /* Espaçamento do topo */
+}
+
+.navbar form {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+    gap: 15px; /* Espaçamento entre os elementos */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Alinha label e campo verticalmente */
+    min-width: 150px; /* Define largura mínima para os campos */
+}
+
+button, .btn-success {
+    height: 40px; /* Alinha a altura dos botões */
+    display: flex;
+    align-items: center; /* Centraliza conteúdo verticalmente */
+    justify-content: center; /* Centraliza conteúdo horizontalmente */
+}
+
+img {
+    margin-right: 5px; /* Espaço entre o ícone e o texto */
+}
+
+
+/*Aqui começa a paginaçao */
+
+.pagination {
+    display: flex;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+    .pagination a {
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        color: #007bff;
+    }
+
+        .pagination a:hover {
+            background-color: #f0f0f0;
+        }
+
+    .pagination .current-page {
+        padding: 5px 10px;
+        border: 1px solid #007bff;
+        border-radius: 3px;
+        background-color: #007bff;
+        color: white;
+    }
+
+
+    /*aqui começa a Filtro de busca*/
+.filter-container {
+    display: flex;
+    gap: 10px; /* Espaço entre os elementos */
+    align-items: center; /* Alinha verticalmente */
+    flex-wrap: wrap; /* Permite quebrar linha caso necessário */
+}
+
+    .filter-container div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-container button {
+        height: 40px; /* Para alinhar o botão com os campos */
+        align-self: flex-end;
+    }
+
+
+    /*aqui começar config tabela */
+
+    .container {
+        max-width: 100%; /* Garante que o container ocupe toda a largura */
+        padding: 0 15px; /* Espaçamento interno padrão */
+        }
+    /* Estilização geral da tabela */
+    table {
+        width: 100%; /* Faz a tabela ocupar 100% da largura */
+        border-collapse: collapse; /* Remove espaços entre as bordas */
+        border: 2px solid #000; /* Borda externa mais forte */
+        margin-top: 20px; /* Espaço superior da tabela */
+        table-layout: fixed; /* Define layout fixo para as colunas */
+
+    }
+
+    /* Estilização das células */
+    th, td {
+        border: 1px solid #000; /* Bordas internas mais fortes */
+        padding: 10px; /* Espaçamento interno das células */
+        text-align: center; /* Centraliza o texto horizontalmente */
+        vertical-align: middle; /* Centraliza o texto verticalmente */
+    }
+
+    /* Estilização do cabeçalho */
+    thead th {
+        background-color: #87CEEB; /* Fundo azul celeste para o cabeçalho */
+        color: #fff; /* Texto branco */
+        font-weight: bold;
+        border-bottom: 2px solid #000; /* Borda inferior mais forte */
+        text-transform: uppercase; /* Texto do cabeçalho em letras maiúsculas */
+    }
+
+    /* Efeito hover nas linhas */
+    tbody tr:hover {
+        background-color: #f0f8ff; /* Cor de fundo ao passar o mouse */
+        transition: background-color 0.3s ease; /* Suaviza o efeito hover */
+    }
+
+    /* Configuração para a coluna "Ato Normativo" */
+    th:nth-child(6), td:nth-child(6) {
+        max-width: 200px; /* Define largura máxima para a coluna */
+        word-wrap: break-word; /* Permite quebra de palavras longas */
+        white-space: nowrap; /* Impede quebra de linhas */
+        overflow: hidden; /* Esconde o texto que ultrapassar o limite */
+        text-overflow: ellipsis; /* Adiciona reticências para indicar texto cortado */
+    }
+    
+    td:nth-child(6):hover {
+        overflow: visible; /* Mostra todo o texto ao passar o mouse */
+        white-space: normal; /* Permite quebras de linha no hover */
+        position: relative; /* Garante que o texto fique visível no hover */
+    }
+    
+
+
+    /*aqui ajustes botao novo */
+
+    .btn-novo {
+        height: 40px; /* Altura do botão */
+        padding: 8px 10px; /* Espaçamento interno */
+        font-size: 14px; /* Tamanho da fonte */
+        border-radius: 4px; /* Bordas arredondadas */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width:90px; /* Define largura automática baseada no conteúdo */
+        min-width: 80px; /* Define uma largura mínima */
+
+
+
+        
+            
+    }
+
+    .btn-novo img {
+        width: 14px; /* Tamanho do ícone */
+        height: 14px;
+        margin-right: 5px; /* Espaço entre ícone e texto */
+     }
+
+    /*Aqui esta ajuste dos botoes do form-check sim, ou nao */
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .form-check-input {
+        margin-top: 0;
+    }
+
+    .form-check-label {
+        margin-bottom: 0;
+    }
+
+

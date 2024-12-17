@@ -21,10 +21,6 @@ namespace Domain.RecursosHumanos.Entidades
         public string Matricula { get; set; }
         public string IDUnico { get; set; }
 
-        //// Relacionamento com Funcionario
-        //public Funcionario Funcionario { get; set; }
 
-        // Relacionamento muitos-para-muitos com Funcionario
-        public ICollection<FuncionarioOcorrencia> FuncionarioOcorrencias { get; set; }
     }
 }

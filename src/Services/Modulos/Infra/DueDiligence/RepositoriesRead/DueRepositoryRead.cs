@@ -19,6 +19,14 @@ namespace Infra.DueDiligence.RepositoriesRead
             return await _context.Set<Comissionado>()
                 .AsNoTracking()
                 .Where(c => c.CPF == cpf)
+                .Select(c => new Comissionado
+                {
+                    Nome = c.Nome,
+                    CPF = c.CPF,
+                    Orgao = c.Orgao,
+                    DataResposta = c.DataResposta,
+                    Observacao = c.Observacao,
+                })
                 .ToListAsync();
         }
     }

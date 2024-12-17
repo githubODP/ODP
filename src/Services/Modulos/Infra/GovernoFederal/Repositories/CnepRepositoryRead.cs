@@ -21,11 +21,11 @@ namespace Infra.GovernoFederal.Repositories
 
             return await _context.Set<Cnep>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cnpj)
+                .Where(c => c.CNPJ == cnpj)
                 .Select(c => new Cnep
                 {
                     RazaoSocial = c.RazaoSocial,
-                    CNPJCPF = c.CNPJCPF,
+                    CNPJ = c.CNPJ,
                     NroProcesso = c.NroProcesso,
                     DataInicioSancao = c.DataInicioSancao,
                     DataFimSancao = c.DataFimSancao,
@@ -41,11 +41,11 @@ namespace Infra.GovernoFederal.Repositories
         {
             return await _context.Set<Cnep>()
                .AsNoTracking()
-               .Where(c => c.CNPJCPF == cpf)
+               .Where(c => c.CPF == cpf)
                .Select(c => new Cnep
                {
                    RazaoSocial = c.RazaoSocial,
-                   CNPJCPF = c.CNPJCPF,
+                   CPF = c.CPF,
                    NroProcesso = c.NroProcesso,
                    DataInicioSancao = c.DataInicioSancao,
                    DataFimSancao = c.DataFimSancao,

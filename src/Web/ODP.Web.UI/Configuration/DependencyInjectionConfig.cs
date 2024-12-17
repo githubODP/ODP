@@ -10,6 +10,7 @@ using ODP.Web.UI.Models.Interfaces.Dividas;
 using ODP.Web.UI.Models.Interfaces.Fazenda;
 using ODP.Web.UI.Models.Interfaces.GovernoEstadual;
 using ODP.Web.UI.Models.Interfaces.GovernoFederal;
+using ODP.Web.UI.Models.Interfaces.RecursosHumanos;
 using ODP.Web.UI.Models.Interfaces.Tribunal.TCE;
 using ODP.Web.UI.Models.Interfaces.Tribunal.TCU;
 using ODP.Web.UI.Models.Interfaces.Tribunal.TSE;
@@ -34,6 +35,7 @@ using ODP.Web.UI.Services.GovernoEstadual;
 using ODP.Web.UI.Services.GovernoFederal;
 using ODP.Web.UI.Services.Handlers;
 using ODP.Web.UI.Services.Identidade;
+using ODP.Web.UI.Services.RecursosHumanos;
 using ODP.Web.UI.Services.Tribunal.TCE;
 using ODP.Web.UI.Services.Tribunal.TCU;
 using ODP.Web.UI.Services.Tribunal.TSE;
@@ -63,7 +65,7 @@ namespace ODP.Web.UI.Configuration
                    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                    .AddPolicyHandler(PollyExtensions.EsperarTentar())
                    .AddTransientHttpErrorPolicy(
-                   p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+                   p => p.CircuitBreakerAsync(10, TimeSpan.FromSeconds(60)));
 
 
             services.AddHttpClient<IDueService, DueService>()
@@ -78,6 +80,18 @@ namespace ODP.Web.UI.Configuration
                    .AddPolicyHandler(PollyExtensions.EsperarTentar())
                    .AddTransientHttpErrorPolicy(
                    p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+            services.AddHttpClient<IFuncionarioService, FuncionarioService>()
+                  .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                  .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                  .AddTransientHttpErrorPolicy(
+                  p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+            services.AddHttpClient<IDependenteService, DependenteService>()
+                  .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                  .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                  .AddTransientHttpErrorPolicy(
+                  p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
 
 

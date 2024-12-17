@@ -21,11 +21,11 @@ namespace Infra.GovernoFederal.Repositories
 
             return await _context.Set<Aeronave>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cnpj)
+                .Where(c => c.CNPJ == cnpj)
                 .Select(c => new Aeronave
                 {
                     Proprietario = c.Proprietario,
-                    CNPJCPF = c.CNPJCPF,
+                    CNPJ = c.CNPJ,
                     Marca = c.Marca,
                     Operador = c.Operador,
                     CPFCGC = c.CPFCGC,
@@ -39,11 +39,11 @@ namespace Infra.GovernoFederal.Repositories
 
             return await _context.Set<Aeronave>()
                 .AsNoTracking()
-                .Where(c => c.CNPJCPF == cpf)
+                .Where(c => c.CPF == cpf)
                  .Select(c => new Aeronave
                  {
                      Proprietario = c.Proprietario,
-                     CNPJCPF = c.CNPJCPF,
+                     CPF = c.CPF,
                      Marca = c.Marca,
                      Operador = c.Operador,
                      CPFCGC = c.CPFCGC,

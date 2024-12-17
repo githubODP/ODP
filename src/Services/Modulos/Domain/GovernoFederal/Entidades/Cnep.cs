@@ -5,7 +5,8 @@ namespace Domain.GovernoFederal.Entidades
     public class Cnep : Entity, IAggregateRoot
     {
         public string CodigoSancao { get; set; }
-        public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+        public string CPF { get; set; }
         public string RazaoSocial { get; set; }
         public string NomeFantasia { get; set; }
         public string NroProcesso { get; set; }

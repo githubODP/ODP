@@ -27,9 +27,9 @@ namespace Infra.Compras.RepositoriesRead
                     Fornecedor = c.Fornecedor ?? string.Empty,
                     CNPJ = c.CNPJ ?? string.Empty,
                     Protocolo = c.Protocolo ?? string.Empty,
-                    ValorHomologado = c.ValorHomologado ?? 0, 
+                    ValorHomologado = c.ValorHomologado ?? 0,
                 })
-                .OrderByDescending(c=>c.Ano)
+                .OrderByDescending(c => c.Ano)
                 .Take(5)
                 .ToListAsync(); ;
         }

@@ -1,4 +1,5 @@
 ﻿using ODP.Web.UI.Extensions;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -16,33 +17,63 @@ namespace ODP.Web.UI.Services
                 "application/json");
         }
 
+        
+
         protected async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
         {
-            var options = new JsonSerializerOptions
+            try
             {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
 
-                PropertyNameCaseInsensitive = true
-            };
-            return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options);
+                var content = await responseMessage.Content.ReadAsStringAsync();
 
+                // Log do conteúdo recebido para análise
+                Console.WriteLine($"Conteúdo recebido para deserialização: {content}");
+
+                return JsonSerializer.Deserialize<T>(content, options);
+            }
+            catch (Exception ex)
+            {
+                // Log do erro de deserialização
+                Console.WriteLine($"Erro ao deserializar a resposta: {ex.Message}");
+                throw;
+            }
         }
+
+
 
         protected bool TratarErrosResponse(HttpResponseMessage response)
         {
-            switch ((int)response.StatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                case 401:
-                case 403:
-                case 404:
-                case 500:
-                    throw new CustomHttpRequestException(response.StatusCode);
+                // Captura detalhes do erro para diagnóstico
+                var statusCode = (int)response.StatusCode;
+                var errorContent = response.Content.ReadAsStringAsync().Result;
 
-                case 400:
-                    return false;
+                // Log dos detalhes do erro (pode ser substituído por qualquer método de logging da sua aplicação)
+                Console.WriteLine($"Erro HTTP {statusCode}: {response.ReasonPhrase}");
+                Console.WriteLine($"Conteúdo da Resposta: {errorContent}");
+
+                // Trata os erros conforme já implementado
+                switch (statusCode)
+                {
+                    case 401:
+                    case 403:
+                    case 404:
+                    case 500:
+                        throw new CustomHttpRequestException(response.StatusCode);
+
+                    case 400:
+                        return false;
+                }
             }
 
             response.EnsureSuccessStatusCode();
             return true;
         }
+
     }
 }

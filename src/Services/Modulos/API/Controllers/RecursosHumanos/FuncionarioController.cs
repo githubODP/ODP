@@ -16,6 +16,7 @@ namespace RH.API.Controllers
         private readonly IFuncionarioRepositoryRead _funcionarioRepositoryRead;
 
 
+
         public FuncionarioController(IFuncionarioRepositoryRead funcionariorepositoryread)
         {
             _funcionarioRepositoryRead = funcionariorepositoryread;
@@ -38,11 +39,25 @@ namespace RH.API.Controllers
             return await _funcionarioRepositoryRead.ObterId(id);
         }
 
+
         [HttpGet("consultacpf/{cpf}")]
-        public async Task<Funcionario> SearchCPF(string cpf)
+        public async Task<IActionResult> SearchCPF(string cpf)
         {
-            return await _funcionarioRepositoryRead.BuscarPorCPF(cpf);
+            if (string.IsNullOrWhiteSpace(cpf))
+            {
+                return BadRequest("CPF do funcionário é inválido.");
+            }
+
+            var funcionario = await _funcionarioRepositoryRead.BuscarPorCPF(cpf);
+
+            if (funcionario == null)
+            {
+                return NotFound("Funcionário não encontrado.");
+            }
+
+            return Ok(funcionario);
         }
+
 
 
     }

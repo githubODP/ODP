@@ -14,9 +14,13 @@ namespace Infra.GovernoEstadual.Mapping
                .IsRequired()
                .HasColumnType("varchar(30)");
 
-            builder.Property(c => c.CNPJCPF)
+            builder.Property(c => c.CNPJ)
                .IsRequired(false)
                .HasColumnType("varchar(18)");
+
+            builder.Property(c => c.CPF)
+              .IsRequired(false)
+              .HasColumnType("varchar(14)");
 
             builder.Property(c => c.Infrator)
                .IsRequired()
