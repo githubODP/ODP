@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ODP.Web.UI.Extensions;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace ODP.Web.UI.Configuration
 {
@@ -11,7 +13,12 @@ namespace ODP.Web.UI.Configuration
     {
         public static void AddMvcConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+                });
 
 
 
@@ -21,7 +28,7 @@ namespace ODP.Web.UI.Configuration
 
         public static void UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsProduction())   ///alterei pra isproduction, sendo o correto em isdevelopment
+            if (env.IsDevelopment())   
             {
                 app.UseDeveloperExceptionPage();
             }

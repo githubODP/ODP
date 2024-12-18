@@ -3,6 +3,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services
@@ -21,17 +22,23 @@ namespace ODP.Web.UI.Services
 
         protected async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
         {
+            ///teste de log
+            ///
+           
+
             try
             {
                 var options = new JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true
+                    PropertyNameCaseInsensitive = true,
+                    Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: false) }
                 };
 
                 var content = await responseMessage.Content.ReadAsStringAsync();
+                Console.WriteLine($"Conteúdo recebido: {content}"); // Log do JSON completo
 
                 // Log do conteúdo recebido para análise
-                Console.WriteLine($"Conteúdo recebido para deserialização: {content}");
+                //Console.WriteLine($"Conteúdo recebido para deserialização: {content}");
 
                 return JsonSerializer.Deserialize<T>(content, options);
             }

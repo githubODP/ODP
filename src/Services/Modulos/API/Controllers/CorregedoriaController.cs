@@ -4,7 +4,6 @@ using CsvHelper.TypeConversion;
 using Domain.Corregedoria.Entidade;
 using Domain.Corregedoria.Enum;
 using Domain.Corregedoria.Interfaces;
-using Domain.DueDiligence.Entidade;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -137,7 +136,7 @@ namespace API.Controllers
 
 
 
-        [HttpPut("alterar/{id}")]
+        [HttpPost("alterar/{id}")]
         public async Task<IActionResult> Alterar(Guid id, [FromBody] Instauracao instauracao)
         {
             if (!ModelState.IsValid)
@@ -151,30 +150,9 @@ namespace API.Controllers
             if (existente == null)
                 return NotFound("Registro não encontrado.");
 
-            // Verifica a regra para ETipoDecisao
-            var decisoesValidas = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
-            if (!decisoesValidas.Contains(instauracao.Decisao.ToString()))
-            {
-                // Zera os campos TAC, se a decisão não estiver na lista
-                instauracao.DataInicioTac = null;
-                instauracao.DataFimTac = null;
-                instauracao.PrazoEncerra = null;
-                instauracao.PGE = null;
-                instauracao.Cumpriu = null;
-                instauracao.ObservacaoAjusteTAC = null;
-            }
-            else
-            {
-                // Recalcula o PrazoEncerra, caso haja alteração nas datas
-                if (instauracao.DataInicioTac.HasValue && instauracao.DataFimTac.HasValue)
-                {
-                    instauracao.PrazoEncerra = (int)(instauracao.DataFimTac.Value - instauracao.DataInicioTac.Value).TotalDays;
-                }
-            }
-
             try
             {
-                // Atualiza os valores da entidade existente
+                // Atualiza TODOS os campos comuns da entidade existente
                 existente.Ano = instauracao.Ano;
                 existente.CNPJCPF = instauracao.CNPJCPF;
                 existente.RG = instauracao.RG;
@@ -191,15 +169,42 @@ namespace API.Controllers
                 existente.Decisao = instauracao.Decisao;
                 existente.InfoAdd = instauracao.InfoAdd;
 
-                // Campos TAC
-                existente.DataInicioTac = instauracao.DataInicioTac;
-                existente.DataFimTac = instauracao.DataFimTac;
-                existente.PrazoEncerra = instauracao.PrazoEncerra;
-                existente.PGE = instauracao.PGE;
-                existente.Cumpriu = instauracao.Cumpriu;
-                existente.Obrigacao = instauracao.Obrigacao;
-                existente.ObservacaoAjusteTAC = instauracao.ObservacaoAjusteTAC;
+                // Define quais opções do Enum habilitam os campos TAC
+                var decisoesValidas = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
 
+                if (decisoesValidas.Contains(instauracao.Decisao.ToString()))
+                {
+                    // Preenche os campos TAC se a decisão estiver dentro das válidas
+                    existente.DataInicioTac = instauracao.DataInicioTac;
+                    existente.DataFimTac = instauracao.DataFimTac;
+                    existente.PGE = instauracao.PGE;
+                    existente.Cumpriu = instauracao.Cumpriu;
+                    existente.Obrigacao = instauracao.Obrigacao;
+                    existente.ObservacaoAjusteTAC = instauracao.ObservacaoAjusteTAC;
+
+                    // Calcula o PrazoEncerra somente se houver DataInicioTac e DataFimTac
+                    if (instauracao.DataInicioTac.HasValue && instauracao.DataFimTac.HasValue)
+                    {
+                        existente.PrazoEncerra = (int)(instauracao.DataFimTac.Value - instauracao.DataInicioTac.Value).TotalDays;
+                    }
+                    else
+                    {
+                        existente.PrazoEncerra = null;
+                    }
+                }
+                else
+                {
+                    // Zera os campos TAC se a decisão não estiver dentro das válidas
+                    existente.DataInicioTac = null;
+                    existente.DataFimTac = null;
+                    existente.PGE = null;
+                    existente.Cumpriu = null;
+                    existente.PrazoEncerra = null;
+                    existente.Obrigacao = null;
+                    existente.ObservacaoAjusteTAC = null;
+                }
+
+                // Atualiza no banco de dados
                 await _instauracaoRepository.Atualizar(existente);
 
                 return NoContent();
@@ -209,6 +214,7 @@ namespace API.Controllers
                 return StatusCode(500, $"Erro ao atualizar o registro: {ex.Message}");
             }
         }
+
 
 
 

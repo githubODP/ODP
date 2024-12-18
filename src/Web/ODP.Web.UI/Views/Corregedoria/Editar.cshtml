@@ -1,4 +1,4 @@
-﻿@model ODP.Web.UI.Models.Corregedoria.InstauracaoViewModel
+﻿@* @model ODP.Web.UI.Models.Corregedoria.InstauracaoViewModel
 @using Domain.Corregedoria.Enum
 
 @{
@@ -9,7 +9,7 @@
 <div class=" mb-lg-5"> </div>
 
 <div class="container-xxl shadow-lg border-1 mt-4 px-4">
-    <form asp-action="Editar">
+    <form asp-action="Editar" method="post">        
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="table-title">
             <div class="row">
@@ -141,14 +141,10 @@
             <!-- Decisão -->
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label asp-for="Decisao" class="control-label"></label>
-                    <div class="col-mb">
-                        @Html.DropDownListFor(m => m.Decisao,
-                                 new SelectList(Enum.GetValues(typeof(ETipoDecisao))),
-                                 "-- Selecione uma opção --",
-                                 new { @class = "form-control", id = "Decisao" }) <!-- Define o ID corretamente -->
-                        <span asp-validation-for="Decisao" class="text-danger"></span>
-                    </div>
+                   
+                        <label asp-for="Decisao" class="control-label"></label>
+                        @Html.DropDownListFor(m => m.Decisao, new SelectList(Enum.GetValues(typeof(ETipoDecisao))), "-- Selecione --", new { @class = "form-control", id = "Decisao" })
+                   
                 </div>
 
             </div>
@@ -193,18 +189,10 @@
                 <!-- Campo PGE -->
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>PGE</label>
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <input type="radio" id="PGE_Yes" name="PGE" value="true"
-                                @(Model.PGE == true ? "checked" : "") />
-                                <label for="PGE_Yes" style="margin-bottom: 0;">Sim</label>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <input type="radio" id="PGE_No" name="PGE" value="false"
-                                @(Model.PGE == false ? "checked" : "") />
-                                <label for="PGE_No" style="margin-bottom: 0;">Não</label>
-                            </div>
+                        <label asp-for="PGE" class="control-label"></label>
+                        <div>
+                            <label><input type="radio" asp-for="PGE" value="true" /> Sim</label>
+                            <label><input type="radio" asp-for="PGE" value="false" /> Não</label>
                         </div>
                     </div>
                 </div>
@@ -212,18 +200,10 @@
                 <!-- Campo Cumpriu -->
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Cumpriu</label>
-                        <div style="display: flex; align-items: center; gap: 15px;">
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <input type="radio" id="Cumpriu_Yes" name="Cumpriu" value="true"
-                                @(Model.Cumpriu == true ? "checked" : "") />
-                                <label for="Cumpriu_Yes" style="margin-bottom: 0;">Sim</label>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 5px;">
-                                <input type="radio" id="Cumpriu_No" name="Cumpriu" value="false"
-                                @(Model.Cumpriu == false ? "checked" : "") />
-                                <label for="Cumpriu_No" style="margin-bottom: 0;">Não</label>
-                            </div>
+                        <label asp-for="Cumpriu" class="control-label"></label>
+                        <div>
+                            <label><input type="radio" asp-for="Cumpriu" value="true" /> Sim</label>
+                            <label><input type="radio" asp-for="Cumpriu" value="false" /> Não</label>
                         </div>
                     </div>
                 </div>
@@ -273,8 +253,8 @@
         <!-- Botão de submit -->
         <div class="row justify-content-center   p-lg-3">
             <div class="col-md-6 text-center">
-                <button class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Corregedoria")'">Cancelar</button>
-                <button type="submit" class="btn btn-primary ml-3">Salvar</button>
+                <button type="button" class="btn btn-primary" id="salvarBtn">Salvar</button>
+                <a href="@Url.Action("Index", "Corregedoria")" class="btn btn-danger">Cancelar</a>
             </div>
         </div>
 
@@ -295,26 +275,245 @@
         document.addEventListener("DOMContentLoaded", function () {
             const decisaoSelect = document.getElementById("Decisao");
             const tacFields = document.getElementById("tacFields");
-
-            // Enum valores que habilitam os campos TAC
             const valoresPermitidos = ["TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL"];
 
             function verificarExibicaoCampos() {
-                const valorSelecionado = decisaoSelect.options[decisaoSelect.selectedIndex].text.trim();
-                if (valoresPermitidos.includes(valorSelecionado)) {
-                    tacFields.style.display = "block";
-                } else {
-                    tacFields.style.display = "none";
-                }
+                tacFields.style.display = valoresPermitidos.includes(decisaoSelect.value) ? "block" : "none";
             }
 
-            // Executa ao carregar a página
-            verificarExibicaoCampos();
-
-            // Executa sempre que houver mudança no select
             decisaoSelect.addEventListener("change", verificarExibicaoCampos);
+            verificarExibicaoCampos();
         });
     </script>
 
 
+} *@
+
+
+
+@model ODP.Web.UI.Models.Corregedoria.InstauracaoViewModel
+@using Domain.Corregedoria.Enum
+
+@{
+    ViewData["Title"] = "Editar";
 }
+
+    
+<div class="container-xxl shadow-lg border-1 mt-4 px-4">
+    <form asp-action="Editar" method="post" id="editarForm">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Editar <b>Instauração</b></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row p-lg-3">
+            <div class="col-sm-3">
+                <label asp-for="Ano" class="control-label"></label>
+                <input asp-for="Ano" class="form-control" />
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3">
+                <label asp-for="CNPJCPF" class="control-label"></label>
+                <input asp-for="CNPJCPF" class="form-control" />
+                <span asp-validation-for="CNPJCPF" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3">
+                <label asp-for="RG" class="control-label"></label>
+                <input asp-for="RG" class="form-control" />
+                <span asp-validation-for="RG" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3">
+                <label asp-for="Protocolo" class="control-label"></label>
+                <input asp-for="Protocolo" class="form-control" />
+                <span asp-validation-for="Protocolo" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3">
+                <label asp-for="Orgao" class="control-label"></label>
+                @Html.DropDownListFor(m => m.Orgao, new SelectList(Enum.GetValues(typeof(ETipoOrgao))), "-- Selecione --", new { @class = "form-control" })
+                <span asp-validation-for="Orgao" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row p-lg-3">
+            
+            <div class="col-sm-3">
+                <label asp-for="AtoNormativo" class="control-label"></label>
+                <input asp-for="AtoNormativo" class="form-control" />
+                <span asp-validation-for="AtoNormativo" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3">
+                <label asp-for="DataPublicacao" class="control-label"></label>
+                <input type="date" asp-for="DataPublicacao" class="form-control" />
+                <span asp-validation-for="DataPublicacao" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="NumeroDIOE" class="control-label"></label>
+                    <input asp-for="NumeroDIOE" class="form-control" />
+                    <span asp-validation-for="NumeroDIOE" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label asp-for="Procedimento" class="control-label"></label>
+                @Html.DropDownListFor(m => m.Procedimento, new SelectList(Enum.GetValues(typeof(ETipoProcedimento))), "-- Selecione --", new { @class = "form-control" })
+                <span asp-validation-for="Procedimento" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row p-lg-3">
+
+            <div class="col-sm-3">
+                <label asp-for="AtoNormativoDecisao" class="control-label"></label>
+                <input asp-for="AtoNormativoDecisao" class="form-control" />
+                <span asp-validation-for="AtoNormativoDecisao" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3">
+                <label asp-for="DataPublicacaoDecisao" class="control-label"></label>
+                <input type="date" asp-for="DataPublicacaoDecisao" class="form-control" />
+                <span asp-validation-for="DataPublicacaoDecisao" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label asp-for="NumeroDIOEDecisao" class="control-label"></label>
+                    <input asp-for="NumeroDIOEDecisao" class="form-control" />
+                    <span asp-validation-for="NumeroDIOEDecisao" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label asp-for="Decisao" class="control-label"></label>
+                @Html.DropDownListFor(m => m.Decisao, new SelectList(Enum.GetValues(typeof(ETipoDecisao))), "-- Selecione --", new { @class = "form-control", id = "Decisao" })
+                <span asp-validation-for="Procedimento" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Campos Dinâmicos TAC -->
+        <div id="tacFields" style="display: none;">
+            <!-- Linha 4 -->
+            <div class="row p-lg-3">
+                <!-- Data Início TAC -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="DataInicioTac" class="control-label"></label>
+                        <input type="date" asp-for="DataInicioTac" class="form-control" />
+                        <span asp-validation-for="DataInicioTac" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Data Fim TAC -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="DataFimTac" class="control-label"></label>
+                        <input type="date" asp-for="DataFimTac" class="form-control" />
+                        <span asp-validation-for="DataFimTac" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Prazo Encerra -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="PrazoEncerra" class="control-label"></label>
+                        <input asp-for="PrazoEncerra" class="form-control" />
+                        <span asp-validation-for="PrazoEncerra" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linha 5 -->
+
+            <div class="row p-lg-3">
+                <!-- Campo PGE -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="PGE" class="control-label"></label>
+                        <div>
+                            <label><input type="radio" asp-for="PGE" value="true" /> Sim</label>
+                            <label><input type="radio" asp-for="PGE" value="false" /> Não</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Campo Cumpriu -->
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label asp-for="Cumpriu" class="control-label"></label>
+                        <div>
+                            <label><input type="radio" asp-for="Cumpriu" value="true" /> Sim</label>
+                            <label><input type="radio" asp-for="Cumpriu" value="false" /> Não</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Linha 6 -->
+            <div class="row p-lg-3">
+                <!-- Obrigação -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Obrigacao" class="control-label"></label>
+                        <textarea asp-for="Obrigacao" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="Obrigacao" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- Observação Ajuste TAC -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="ObservacaoAjusteTAC" class="control-label"></label>
+                        <textarea asp-for="ObservacaoAjusteTAC" class="form-control" rows="4"></textarea>
+                        <span asp-validation-for="ObservacaoAjusteTAC" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                   <!-- Fim  Campos TAC (Visíveis Condicionalmente) -->
+
+        <div class="row   p-lg-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="InfoAdd" class="control-label"></label>
+                    <textarea style="text-align:justify" rows="8" cols="90" asp-for="InfoAdd" class="form-control"></textarea>
+                    <span asp-validation-for="InfoAdd" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Objeto" class="control-label"></label>
+                    <textarea style="text-align:justify" rows="8" cols="90" asp-for="Objeto" class="form-control"></textarea>
+                    <span asp-validation-for="Objeto" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="text-center p-lg-3">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="@Url.Action("Index", "Corregedoria")" class="btn btn-danger">Cancelar</a>
+        </div>
+
+     </form>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const decisaoSelect = document.getElementById("Decisao");
+            const tacFields = document.getElementById("tacFields");
+            const valoresPermitidos = ["TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL"];
+
+            function verificarExibicaoCampos() {
+                tacFields.style.display = valoresPermitidos.includes(decisaoSelect.value) ? "block" : "none";
+            }
+
+            decisaoSelect.addEventListener("change", verificarExibicaoCampos);
+            verificarExibicaoCampos();
+        });
+    </script>
+}
+
+   
