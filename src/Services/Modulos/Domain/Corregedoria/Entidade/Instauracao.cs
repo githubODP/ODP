@@ -41,23 +41,6 @@ namespace Domain.Corregedoria.Entidade
 
 
 
-        //public List<string> ValidarCamposTac()
-        //{
-        //    var erros = new List<string>();
-
-        //    if (Procedimento == ETipoProcedimento.TAC)
-        //    {
-        //        if (DataInicioTac == null)
-        //            erros.Add("A 'Data de Início do TAC' é obrigatória para o Procedimento TAC.");
-        //        if (DataFimTac == null)
-        //            erros.Add("A 'Data de Fim do TAC' é obrigatória para o Procedimento TAC.");
-        //        if (PrazoEncerra <= 0)
-        //            erros.Add("O 'Prazo para Encerramento' deve ser maior que zero para o Procedimento TAC.");
-        //    }
-
-        //    return erros;
-        //}
-
 
 
         

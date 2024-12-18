@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json.Serialization;
 
 
 namespace API.Configuration
@@ -18,7 +19,13 @@ namespace API.Configuration
             services.AddDbContext<ObservatorioContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
                  sqlOptions => sqlOptions.CommandTimeout(180))); // Timeout set to 180 seconds));
-            services.AddControllers();
+            services.AddControllers()
+
+             .AddJsonOptions(options =>
+              {
+                  options.JsonSerializerOptions.PropertyNamingPolicy = null; // Mantém os nomes das propriedades
+                  options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // Enum como string
+              });
 
             services.AddCors(options =>
             {

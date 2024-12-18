@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ODP.Web.UI.Models.Corregedoria;
 using ODP.Web.UI.Services.Corregedoria;
 using System;
@@ -13,10 +14,12 @@ namespace ODP.Web.UI.Controllers.Corregedoria
     public class CorregedoriaController : MainController
     {
         private readonly IInstauracaoService _instauracaoService;
+        private readonly ILogger<CorregedoriaController> _logger;
 
-        public CorregedoriaController(IInstauracaoService instauracaoService)
+        public CorregedoriaController(IInstauracaoService instauracaoService, ILogger<CorregedoriaController> logger )
         {
             _instauracaoService = instauracaoService;
+            _logger = logger;
         }
 
 
@@ -128,112 +131,65 @@ namespace ODP.Web.UI.Controllers.Corregedoria
             }
             return View(instauracao);
         }
-
         [HttpPost]
         public async Task<IActionResult> Editar(Guid id, InstauracaoViewModel instauracaoViewModel)
         {
             try
             {
-                // Verifica se o ID é válido
+                // Valida se o ID fornecido corresponde ao da ViewModel
                 if (id != instauracaoViewModel.Id)
                 {
-                    return NotFound();
+                    return BadRequest("O ID fornecido não corresponde ao registro.");
                 }
 
+                // Valida o estado do modelo
                 if (!ModelState.IsValid)
                 {
                     return View(instauracaoViewModel);
                 }
 
-                // Verifica se os campos TAC devem ser preenchidos
-                var tacDecisions = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
-                if (!tacDecisions.Contains(instauracaoViewModel.Decisao.ToString()))
-                {
-                    instauracaoViewModel.PGE = null;
-                    instauracaoViewModel.Cumpriu = null;
-                    instauracaoViewModel.DataInicioTac = null;
-                    instauracaoViewModel.DataFimTac = null;
-                    instauracaoViewModel.PrazoEncerra = null;
-                    instauracaoViewModel.ObservacaoAjusteTAC = null;
-                }
+                // Verifica e limpa os campos TAC, se necessário
+                ResetarCamposTacSeNaoSelecionado(instauracaoViewModel);
 
-                // Log para diagnosticar os valores recebidos
-                Console.WriteLine($"ID: {instauracaoViewModel.Id}");
-                Console.WriteLine($"Decisao: {instauracaoViewModel.Decisao}");
-                Console.WriteLine($"PGE: {instauracaoViewModel.PGE}");
-                Console.WriteLine($"Cumpriu: {instauracaoViewModel.Cumpriu}");
-                Console.WriteLine($"DataInicioTac: {instauracaoViewModel.DataInicioTac}");
-                Console.WriteLine($"DataFimTac: {instauracaoViewModel.DataFimTac}");
+                // Log dos dados recebidos
+                _logger.LogInformation($"Iniciando alteração para ID: {id}");
+                _logger.LogInformation($"Decisao: {instauracaoViewModel.Decisao}");
 
-                // Atualiza a entidade
+                // Chama o serviço para atualizar os dados
                 await _instauracaoService.Alterar(instauracaoViewModel, id);
 
-                // Redireciona após edição concluída
-                bool edicaoConcluida = true;
-                return RedirectToAction(nameof(Index), new { edicaoConcluida });
+                _logger.LogInformation("Alteração concluída com sucesso.");
+
+                // Redireciona após edição bem-sucedida
+                return RedirectToAction(nameof(Index), new { edicaoConcluida = true });
             }
             catch (Exception ex)
             {
-                // Caminho para salvar os logs
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Logs");
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
+                // Log do erro
+                _logger.LogError($"Erro ao editar a instauração. ID: {id}. Erro: {ex.Message}");
 
-                // Salva o erro no log
-                System.IO.File.AppendAllText(Path.Combine(path, "log.txt"),
-                    $"{DateTime.Now} - Erro: {ex.Message} | StackTrace: {ex.StackTrace}\n");
-
-                // Retorna erro 500
-                return StatusCode(500, "Ocorreu um erro interno no servidor.");
+                // Retorna status 500 com mensagem amigável
+                return StatusCode(500, "Ocorreu um erro interno ao processar sua solicitação.");
             }
         }
 
+        /// <summary>
+        /// Reseta os campos TAC caso a decisão não seja uma das opções válidas.
+        /// </summary>
+        private void ResetarCamposTacSeNaoSelecionado(InstauracaoViewModel instauracaoViewModel)
+        {
+            var tacDecisions = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
 
-
-        //[HttpPost]
-        //public async Task<IActionResult> Editar(Guid id, InstauracaoViewModel instauracaoViewModel)
-        //{
-        //    try
-        //    {
-        //        if (id != instauracaoViewModel.Id)
-        //        {
-        //            return NotFound();
-        //        }
-
-        //        if (!ModelState.IsValid)
-        //        {
-        //            return View(instauracaoViewModel);
-        //        }
-
-        //        // Verifica se os campos TAC devem ser preenchidos
-        //        var tacDecisions = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
-
-        //        if (!tacDecisions.Contains(instauracaoViewModel.Decisao.ToString()))
-        //        {
-        //            instauracaoViewModel.PGE = null;
-        //            instauracaoViewModel.Cumpriu = null;
-        //            instauracaoViewModel.DataInicioTac = null;
-        //            instauracaoViewModel.DataFimTac = null;
-        //            instauracaoViewModel.PrazoEncerra = null;
-        //            instauracaoViewModel.ObservacaoAjusteTAC = null;
-        //        }
-
-        //        await _instauracaoService.Alterar(instauracaoViewModel, id);
-
-        //        bool edicaoConcluida = true;
-        //        return RedirectToAction(nameof(Index), new { edicaoConcluida = edicaoConcluida });
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        //Console.WriteLine(ex.Message);
-        //        return StatusCode(500, "Ocorreu um erro interno no servidor.");
-        //    }
-        //}
-
-
+            if (!tacDecisions.Contains(instauracaoViewModel.Decisao.ToString()))
+            {
+                instauracaoViewModel.PGE = null;
+                instauracaoViewModel.Cumpriu = null;
+                instauracaoViewModel.DataInicioTac = null;
+                instauracaoViewModel.DataFimTac = null;
+                instauracaoViewModel.PrazoEncerra = null;
+                instauracaoViewModel.ObservacaoAjusteTAC = null;
+            }
+        }
 
 
 
