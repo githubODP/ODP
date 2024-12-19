@@ -12,8 +12,7 @@ namespace Infra.DueDiligence.Mapping
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(c => c.NroProtocolo)
-                .IsRequired()
+            builder.Property(c => c.NroProtocolo)               
                 .HasColumnType("varchar(12)");
 
             builder.Property(c => c.Nome)
@@ -24,16 +23,14 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(14)");
 
-            builder.Property(c => c.Orgao)
-                .IsRequired()
+            builder.Property(c => c.Orgao)              
                 .HasColumnType("varchar(15)");
 
-            builder.Property(c => c.Indicacao)
-            .IsRequired()
+            builder.Property(c => c.Indicacao)           
             .HasColumnType("varchar(30)");
 
             builder.Property(c => c.Responsavel)
-                .IsRequired()
+                
                 .HasColumnType("varchar(100)");
 
             builder.Property(c => c.DataSolicitacao)
@@ -44,20 +41,16 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                 .HasColumnType("DateTime");
 
-            builder.Property(c => c.ClassificacaoRisco)
-            .IsRequired()
-            .HasColumnType("int");
+            builder.Property(c => c.ClassificacaoRisco)            
+                .HasColumnType("int");
 
-            builder.Property(c => c.Observacao)
-                .IsRequired()
+            builder.Property(c => c.Observacao)               
                 .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.Evidencias)
-                .IsRequired()
+            builder.Property(c => c.Evidencias)                
                 .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.Decreto)
-                .IsRequired()
+            builder.Property(c => c.Decreto)                
                 .HasColumnType("varchar(10)");
 
             builder.Property(c => c.CadEmpresario)
@@ -89,7 +82,7 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                .HasColumnType("bit");
 
-            builder.Property(c => c.CadPPP)
+            builder.Property(c => c.CadPPE)
                 .IsRequired()
                 .HasColumnType("bit");
 
@@ -105,6 +98,10 @@ namespace Infra.DueDiligence.Mapping
             builder.Property(c => c.CadVinculoDireto)
                 .IsRequired()
                 .HasColumnType("bit");
+
+            builder.Property(c => c.CadVinculoPEP)
+               .IsRequired()
+               .HasColumnType("bit");
 
             builder.Property(c => c.CadPrisao)
               .IsRequired()
@@ -207,6 +204,9 @@ namespace Infra.DueDiligence.Mapping
                .IsRequired()
                .HasColumnType("bit");
 
+            builder.Property(c => c.CadParentescoGrauSocio)
+              .IsRequired()
+              .HasColumnType("bit");
 
             builder.Property(c => c.CadCepim)
               .IsRequired()
