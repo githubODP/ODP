@@ -8,12 +8,12 @@ namespace Domain.DueDiligence.Entidade
     {
         [Display(Name = "Nº do Protocolo")]
         [Column("NroProtocolo")]
-        public string NroProtocolo { get; set; }
+        public string? NroProtocolo { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
-        public string Orgao { get; set; }
-        public string Responsavel { get; set; }
-        public string Indicacao { get; set; }
+        public string? Orgao { get; set; }
+        public string? Responsavel { get; set; }
+        public string? Indicacao { get; set; }
 
 
         [Display(Name = "Data de Solicitacao")]
@@ -57,8 +57,8 @@ namespace Domain.DueDiligence.Entidade
 
 
         [Display(Name = "Pessoa Publicamente Exposta  - PPE")]
-        [Column("CadPPP")]
-        public bool CadPPP { get; set; }
+        [Column("CadPPE")]
+        public bool CadPPE { get; set; }
 
         [Display(Name = "Pessoa Exposta Politicamente - PEP")]
         [Column("CadPEP")]
@@ -71,6 +71,10 @@ namespace Domain.DueDiligence.Entidade
         [Display(Name = "Vínculo até o 3º Nivel com PEP")]
         [Column("CadVinculoDireto")]
         public bool CadVinculoDireto { get; set; }
+
+        [Display(Name = "Vínculo até o 3º Nivel com PEP")]
+        [Column("CadVinculoPEP")]
+        public bool CadVinculoPEP { get; set; }
 
 
         [Display(Name = "Mandado de Prisão - (CNJ)")]
@@ -164,9 +168,6 @@ namespace Domain.DueDiligence.Entidade
         [Column("CadParentescoGrauSocio")]
         public bool CadParentescoGrauSocio { get; set; }
 
-
-
-
         [Display(Name = "Contas Irregulares TCU")]
         [Column("CadIrregularTCU")]
         public bool CadIrregularTCU { get; set; }
@@ -200,13 +201,13 @@ namespace Domain.DueDiligence.Entidade
         public bool CadAcordo { get; set; }
 
 
-        public int ClassificacaoRisco { get; set; }
-        public string Observacao { get; set; }
-        public string Evidencias { get; set; }
+        public int? ClassificacaoRisco { get; set; }
+        public string? Observacao { get; set; }
+        public string? Evidencias { get; set; }
 
         [Display(Name = "Nº Decreto")]
         [Column("Decreto")]
-        public string Decreto { get; set; }
+        public string? Decreto { get; set; }
     }
 
 }

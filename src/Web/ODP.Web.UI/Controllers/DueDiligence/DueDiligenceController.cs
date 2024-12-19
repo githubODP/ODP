@@ -122,7 +122,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             risco += due.CadMEI ? 10 : 0;
             risco += due.CadPEP ? 5 : 0;
             risco += due.CadPPE ? 10 : 0; //aqui
-            risco += due.CadViculoPEP ? 5 : 0;
+            risco += due.CadVinculoPEP ? 5 : 0;
             risco += due.CadDoacaoEleitoralCandidato ? 10 : 0;
             risco += due.CadDoacaoEleitoralPartido ? 10 : 0;
             risco += due.CadFornecedorPartido ? 10 : 0;
