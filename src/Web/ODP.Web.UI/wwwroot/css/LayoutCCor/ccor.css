@@ -1,11 +1,12 @@
-﻿body {
+﻿b ody {
     
 }
 
 .bg-light-blue {
-    background-color: #87CEEB; /* Azul celeste */
+    background-color: #3f4e55; /* Azul celeste */
     padding: 15px; /* Espaçamento interno */
     margin-top: 56px; /* Espaçamento do topo */
+    color: white;
 }
 
 .navbar form {
