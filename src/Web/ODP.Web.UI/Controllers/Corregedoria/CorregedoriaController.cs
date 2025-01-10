@@ -212,7 +212,6 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         [HttpDelete]
         public async Task<IActionResult> Deletar(Guid id)
         {
-
             var existente = await _instauracaoService.ObterId(id);
             if (existente == null)
             {
@@ -220,10 +219,9 @@ namespace ODP.Web.UI.Controllers.Corregedoria
             }
 
             await _instauracaoService.Deletar(id);
-            return RedirectToAction(nameof(Index));
-
-
+            return Ok(); 
         }
+
         //public async Task<IActionResult> GerarPdf(Guid id)
         //{
         //    var file = await _instauracaoService.GerarPdf(id);

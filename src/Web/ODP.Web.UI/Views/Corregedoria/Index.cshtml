@@ -177,9 +177,15 @@
                                     <a asp-controller="Corregedoria" asp-action="Editar" asp-route-id="@item.Id" class="btn btn-primary mr-2">
                                         <img src="~/svg/editar.svg" height="16" />
                                     </a>
-                                    <a asp-controller="Corregedoria" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info">
+                                    <a asp-controller="Corregedoria" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
                                         <img src="~/svg/vizualizar.svg" height="16" />
                                     </a>
+                                    <a href="javascript:void(0);"
+                                       class="btn btn-danger delete-button"
+                                       data-id="@item.Id">
+                                        <img src="~/svg/excluir.svg" height="16" />
+                                    </a>
+
                                 </div>
                             </td>
 
@@ -284,6 +290,36 @@
 
 
 
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModal">Confirmar a exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir este item?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
 @section scripts{
     <script>
         $(document).ready(function () {
@@ -298,6 +334,51 @@
                 }
             }
         });
+
+
+
+        //ajax modal
+
+        document.addEventListener('DOMContentLoaded', () => {
+        let deleteId = null;
+
+        // Abrir o modal ao clicar no botão de exclusão
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function () {
+                deleteId = this.getAttribute('data-id');
+                const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+                modal.show();
+            });
+        });
+
+        // Confirmar exclusão no modal
+        document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+            if (deleteId) {
+                fetch(`/Corregedoria/Deletar/${deleteId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Remover a linha correspondente na tabela
+                        document.querySelector(`a[data-id="${deleteId}"]`).closest('tr').remove();
+                        setTimeout(window.location.reload(true), 2000);
+
+                    } else {
+                        // Tratar erros
+                        alert('Erro ao excluir o item. Tente novamente.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na requisição:', error);
+                    alert('Erro ao excluir o item. Tente novamente.');
+                });
+            }
+        });
+    });
+
     </script>
 
 }
