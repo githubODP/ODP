@@ -164,3 +164,47 @@ ul > li:hover .nav-flyout {
 }
 
 
+
+
+/*corregedoria index */
+.bg-light-blue {
+    background-color: #3f4e55; /* Azul celeste */
+    padding: -10px; /* Espaçamento interno */
+    margin-top: 56px; /* Espaçamento do topo */
+    color: white;
+}
+
+
+.navbar form {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+    gap: 15px; /* Espaçamento entre os elementos */
+
+    
+}
+
+.pagination {
+    display: flex;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+    .pagination a {
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        color: #007bff;
+    }
+
+        .pagination a:hover {
+            background-color: #f0f0f0;
+        }
+
+    .pagination .current-page {
+        padding: 5px 10px;
+        border: 1px solid #007bff;
+        border-radius: 3px;
+        background-color: #007bff;
+        color: white;
+    }

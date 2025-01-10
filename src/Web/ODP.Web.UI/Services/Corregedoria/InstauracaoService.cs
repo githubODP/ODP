@@ -99,10 +99,10 @@ namespace ODP.Web.UI.Services.Corregedoria
 
             if (TratarErrosResponse(response))
             {
-                return null;
+                return await DeserializarObjetoResponse<InstauracaoViewModel>(response);
 
             }
-            return await DeserializarObjetoResponse<InstauracaoViewModel>(response);
+            return null;
 
         }
 

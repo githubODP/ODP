@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    
-   @*  <link href="~/css/layout.css" rel="stylesheet" / *@>
+
+    @*  <link href="~/css/layout.css" rel="stylesheet" / *@>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-   
+
     <link href="~/css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/Shared/Layout.css" /> <!--Ajusta o layout das paginas. alteraçoes aqui -->
     <link href="~/css/due/due.css" rel="stylesheet" /> <!-- Ajusta o index das Paginas-->
@@ -28,10 +28,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
-    
-   
+
+
+
 
 </head>
 
@@ -162,9 +165,40 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#"><i class="ion-ios-medical-outline"></i> <span class="">Em Teste</span></a>
-                </li>
+                @if (AppUser.PossuiRole("Administrador")){
+                    <li>
+                        <a href="#"><i class="ion-ios-cloud-download-outline"></i> <span class="">Painel</span></a>
+                        <ul class="nav-flyout">
+
+                            
+                            <li>
+                                <a asp-controller="Identidade" asp-action="ListarUsuarios"><i class="ion-ios-flame-outline"></i>Listar Usuários</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Identidade" asp-action="ListarUsuariosLogados"><i class="ion-ios-lightbulb-outline"></i>Usuários Logados</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Identidade" asp-action="Registro"><i class="ion-ios-location-outline"></i>Criar Usuários</a>
+                            </li>
+                            
+
+                        </ul>
+                    </li>
+                }
+                @if (AppUser.EstaAutenticado())
+                {
+                    <li>
+                        <a asp-controller="Identidade" asp-action="Logout"><i class="ion-ios-flame-outline"></i>Sair</a>
+                    </li>
+                }
+                else{
+                    <li>
+                        <a class="btn btn-primary" asp-controller="Identidade" asp-action="Login">Login</a>
+                    </li>
+                }
+
+
+
             </ul>
         </nav>
     </aside>
@@ -182,16 +216,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
-                @* <li class="nav-item">
-                    <a class="nav-link" href="#">Disabled</a>
-                </li> *@
             </ul>
 
 
-            <partial name="_LoginPartial" />
+            
           
         </div>
-    </nav>
+    </nav> 
 
 
     <main>

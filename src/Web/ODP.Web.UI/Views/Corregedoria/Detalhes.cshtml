@@ -68,10 +68,8 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="Orgao" class="control-label"></label>
-                    <div class="col-mb">
-                        @Html.DropDownListFor(m => m.Orgao, new SelectList(Enum.GetValues(typeof(ETipoOrgao))), new { @class = "custom-dropdown col-checkbox" })
-                        <span asp-validation-for="Orgao" class="text-danger" readonly></span>
-                    </div>
+                    <input asp-for="Orgao" class="form-control" readonly />
+                    <span asp-validation-for="Orgao" class="text-danger"></span>
                 </div>
             </div>
 
@@ -105,10 +103,8 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="Procedimento" class="control-label"></label>
-                    <div class="col-mb" readonly>
-                        @Html.DropDownListFor(m => m.Procedimento, new SelectList(Enum.GetValues(typeof(ETipoProcedimento))), new { @class = "custom-dropdown col-checkbox" })
-                        <span asp-validation-for="Procedimento" class="text-danger" ></span>
-                    </div>
+                    <input asp-for="Procedimento" class="form-control" readonly />
+                    <span asp-validation-for="Procedimento" class="text-danger"></span>
                 </div>
             </div>
 
@@ -146,11 +142,8 @@
             <div class="col-sm-3">
                 <div class="form-group">
                     <label asp-for="Decisao" class="control-label"></label>
-                    <div class="col-mb">
-                        @Html.DropDownListFor(m => m.Decisao, new SelectList(Enum.GetValues(typeof(ETipoDecisao))), new { @class = "custom-dropdown col-checkbox" })
-                        <span asp-validation-for="Decisao" class="text-danger" readonly></span>
-
-                    </div >
+                    <input asp-for="Decisao" class="form-control" readonly />
+                    <span asp-validation-for="Decisao" class="text-danger"></span>
                 </div>
             </div>
 
@@ -263,7 +256,7 @@
     <!-- Botão de submit -->
     <div class="row justify-content-center   p-lg-3">
         <div class="col-md-6 text-center">
-            <button class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Corregedoria")'">Cancelar</button>
+            <button class="btn btn-danger" onclick="location.href='@Url.Action("Index", "Corregedoria")'">Voltar</button>
         </div>
     </div>
 </div>

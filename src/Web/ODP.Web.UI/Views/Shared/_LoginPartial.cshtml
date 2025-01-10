@@ -8,7 +8,7 @@
         @if (AppUser.PossuiRole("Administrador"))
         {
             <!-- Botão de Dropdown para Administração -->
-            <div class="nav-item dropdown" style="margin-left: 10px;">
+            <div class="nav-item dropdown" style="margin-left: 10px; z-index:100;">
                 <button class="btn btn-success dropdown-toggle" type="button" id="adminDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Administração
                 </button>
@@ -21,7 +21,7 @@
         }
 
         <!-- Menu de usuário com logout -->
-        <div class="nav-item dropdown" style="margin-left: 10px;">
+        <div class="nav-item dropdown" style="margin-left: 10px; ">
             <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @AppUser.ObterUserEmail()
             </button>
@@ -29,6 +29,8 @@
                 <a class="dropdown-item" asp-controller="Identidade" asp-action="Logout">Sair</a>
             </div>
         </div>
+
+        
     }
     else
     {

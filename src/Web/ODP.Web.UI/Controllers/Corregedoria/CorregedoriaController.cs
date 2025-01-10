@@ -90,7 +90,14 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         public async Task<IActionResult> Create(InstauracaoViewModel instauracaoViewModel)
         {
             if (!ModelState.IsValid)
+            {
+                TempData["ToastMessage"] = "Falha ao criar o registro. Por favor, verifique os campos.";
+                TempData["ToastType"] = "error";
                 return View(instauracaoViewModel);
+            }
+
+
+
 
             // Valida o tipo de decisão
             var tiposPermitidos = new[] { "TAC_CELEBRADO", "TAC_CONCLUIDO", "TAC_DESCUMPRIDO", "TAC_INVIAVEL" };
@@ -114,9 +121,17 @@ namespace ODP.Web.UI.Controllers.Corregedoria
                 instauracaoViewModel.ObservacaoAjusteTAC = null;
             }
 
-            await _instauracaoService.Adicionar(instauracaoViewModel);
+            var result = await _instauracaoService.Adicionar(instauracaoViewModel);
+            if (result == null)
+            {
+                TempData["ToastMessage"] = "Falha ao criar o registro.";
+                TempData["ToastType"] = "error";
+                return RedirectToAction("Index");
+            }
 
-            return RedirectToAction(nameof(Index));
+            TempData["ToastMessage"] = "Registro criado com sucesso!";
+            TempData["ToastType"] = "success";
+            return RedirectToAction("Index");
         }
 
 

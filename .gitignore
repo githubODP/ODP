@@ -78,3 +78,5 @@ launchSettings.json
 
 # Arquivos de cache do JetBrains
 _ReSharper*
+
+src/Web/ODP.Web.UI/Views/Corregedoria/Index1.cshtml
