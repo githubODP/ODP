@@ -33,6 +33,7 @@ using ODP.Web.UI.Services.DueDiligence;
 using ODP.Web.UI.Services.Fazenda;
 using ODP.Web.UI.Services.GovernoEstadual;
 using ODP.Web.UI.Services.GovernoFederal;
+using ODP.Web.UI.Services.Grafico;
 using ODP.Web.UI.Services.Handlers;
 using ODP.Web.UI.Services.Identidade;
 using ODP.Web.UI.Services.RecursosHumanos;
@@ -408,6 +409,13 @@ namespace ODP.Web.UI.Configuration
 
 
             //services.AddScoped<IDetranServicos, DetranServicos>();
+
+            //graficos
+            services.AddHttpClient<IGraficoService, GraficoService>()
+                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                 .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                 .AddTransientHttpErrorPolicy(
+                 p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
 
 

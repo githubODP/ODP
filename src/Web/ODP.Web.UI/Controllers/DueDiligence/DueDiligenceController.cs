@@ -17,7 +17,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
         [HttpGet]
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 8)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
         {
             var due = await _dueService.Listar(pageNumber, pageSize);
             return View(due);

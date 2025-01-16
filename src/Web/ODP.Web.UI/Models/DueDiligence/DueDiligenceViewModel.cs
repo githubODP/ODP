@@ -7,22 +7,26 @@ namespace ODP.Web.UI.Models.DueDiligence
     public class DueDiligenceViewModel
     {
         public Guid Id { get; set; }
-        [Display(Name = "Nº do Protocolo")]
+        [Display(Name = "Protocolo")]
         [Column("NroProtocolo")]
         public string? NroProtocolo { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
+        [Display(Name = "Orgão")]
         public string? Orgao { get; set; }
+        
         public string? Responsavel { get; set; }
+        [Display(Name = "Indicação")]
+    
         public string? Indicacao { get; set; }
 
 
-        [Display(Name = "Data de Solicitacao")]
+        [Display(Name = "Solicitacao")]
         [DataType(DataType.Date)]
         public DateTime DataSolicitacao { get; set; }
 
 
-        [Display(Name = "Data de Resposta")]
+        [Display(Name = "Resposta")]
         [DataType(DataType.Date)]
         public DateTime DataResposta { get; set; }
 
@@ -204,12 +208,14 @@ namespace ODP.Web.UI.Models.DueDiligence
         [Column("CadAcordo")]
         public bool CadAcordo { get; set; }
 
-
+        [Display(Name = "Risco")]
         public int? ClassificacaoRisco { get; set; }
+        [Display(Name = "Observação")]
         public string? Observacao { get; set; }
+        [Display(Name = "Evidências")]
         public string? Evidencias { get; set; }
 
-        [Display(Name = "Nº Decreto")]
+        [Display(Name = "Decreto")]
         [Column("Decreto")]
         public string? Decreto { get; set; }
     }

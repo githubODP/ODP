@@ -1,0 +1,48 @@
+﻿@model ODP.Web.UI.Models.Graficos.GraficoViewModel
+
+@{
+    ViewData["Title"] = "Gráfico ODP";
+}
+
+<h1>Gráfico de Quantidade por Órgão</h1>
+<div class="container bg-success" id="chart_div" style="width:900px;height:600px;display:block;"></div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            try {
+
+
+                const jsonData = @Html.Raw(Model.Content);
+
+
+                const chartData = [['Órgão', 'Quantidade']];
+
+                jsonData.forEach(item => {
+                    const orgao = item.orgao || 'Não informado';
+                    const quantidade = item.quantidade;
+                    chartData.push([orgao, quantidade]);
+                });
+
+                const data = google.visualization.arrayToDataTable(chartData);
+
+                const options = {
+                    title: 'Quantidade por Órgão',
+                    width: 800,
+                    height: 600,
+                    legend: { position: 'none' },
+                };
+
+                const chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            } catch (error) {
+                console.error("Erro ao processar o JSON ou desenhar o gráfico:", error);
+                alert("Ocorreu um erro ao exibir o gráfico. Verifique o console para mais detalhes.");
+            }
+        }
+    </script>
+}

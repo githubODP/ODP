@@ -11,6 +11,7 @@ using Domain.DueDiligence.Interfaces;
 using Domain.Fazenda.Interfaces;
 using Domain.GovernoEstadual.Interfaces;
 using Domain.GovernoFederal.Interfaces;
+using Domain.Graficos.Interfaces;
 using Domain.Internos.Interfaces;
 using Domain.Library.Interfaces;
 using Domain.RecursosHumanos.Interfaces.RepositoriesRead;
@@ -36,6 +37,7 @@ using Infra.DueDiligence.RepositoriesRead;
 using Infra.Fazenda.RepositoriesRead;
 using Infra.GovernoEstadual.Repositories;
 using Infra.GovernoFederal.Repositories;
+using Infra.Graficos.RepositoryRead;
 using Infra.Internos.RepositoriesRead;
 using Infra.RecursosHumanos.RepositoriesRead;
 using Infra.Tribunal.Repository.TCE;
@@ -170,6 +172,10 @@ namespace API.Configuration
             //Contexto
             services.AddScoped<ObservatorioContext>();
 
+
+            //Graficos
+
+            services.AddScoped<IGraficosRepositoryRead, GraficoRepositoryRead>();
 
 
 

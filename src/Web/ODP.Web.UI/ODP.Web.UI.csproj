@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Detran\**" />
+    <Compile Remove="Controllers\Library\**" />
+    <Compile Remove="Services\Library\**" />
+    <Content Remove="Controllers\Detran\**" />
+    <Content Remove="Controllers\Library\**" />
+    <Content Remove="Services\Library\**" />
+    <EmbeddedResource Remove="Controllers\Detran\**" />
+    <EmbeddedResource Remove="Controllers\Library\**" />
+    <EmbeddedResource Remove="Services\Library\**" />
+    <None Remove="Controllers\Detran\**" />
+    <None Remove="Controllers\Library\**" />
+    <None Remove="Services\Library\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Corregedoria\Confirmacao.cshtml" />
   </ItemGroup>
 
@@ -23,11 +38,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Detran\" />
-    <Folder Include="Controllers\Library\" />
     <Folder Include="Models\Interfaces\Library\" />
     <Folder Include="Models\ViewModels\Library\" />
-    <Folder Include="Services\Library\" />
     <Folder Include="wwwroot\Videos\" />
   </ItemGroup>
 
