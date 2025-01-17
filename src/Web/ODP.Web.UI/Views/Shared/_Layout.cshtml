@@ -32,168 +32,81 @@
 
 <body>
 
+    
     <aside class="sidebar">
         <header>
             <a asp-controller="Home" asp-action="Index">
                 <img src="~/imagens/logo_cge_155x95.png" class="img-fluid" />
             </a>
         </header>
+
         <nav class="sidebar-nav">
             <ul>
-                <li>
-                    <a href="#"><i class="ion-ios-search-strong"></i> <span>Observatório</span></a>
-                    <ul class="nav-flyout">
-                        <li>
-                            <a asp-controller="DueDiligence" asp-action="Index"><i class="ion-ios-color-filter-outline"></i>Due Diligence</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Consulta" asp-action="Index"><i class="ion-ios-color-filter-outline"></i>Consulta CNPJ/CPF</a></a>
-                        </li>
-                        <li>
-                            <a asp-controller="Grafico" asp-action="GraficoODP"><i class="ion-ios-color-filter-outline"></i>Gráficos</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-clock-outline"></i>Sentenças</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-android-star-outline"></i>Nomeados</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-heart-broken"></i>Exonerados</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="ion-ios-paper-outline"></i> <span class="">Corregedoria</span></a>
-                    <ul class="nav-flyout">
-                        <li>
-                            <a asp-controller="Corregedoria" asp-action="Index"><i class="ion-ios-alarm-outline"></i>Instaurações</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Corregedoria" asp-action="Graficos"><i class="ion-ios-camera-outline"></i>Graficos</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-chatboxes-outline"></i>Relatórios</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Corregedoria" asp-action="upload"><i class="ion-ios-alarm-outline"></i>Upload Arquivos</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="ion-ios-briefcase-outline"></i> <span class="">Gabinete</span></a>
-                    <ul class="nav-flyout">
-                        <li>
-                            <a href="#"><i class="ion-ios-flame-outline"></i>DueDiligence</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-lightbulb-outline"></i>Analise Técnica</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-location-outline"></i>Listar Nomeados/Riscos</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-locked-outline"></i>Teste</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-navigate-outline"></i>Ghostface</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="ion-ios-speedometer-outline"></i> <span class="">Graficos</span></a>
-                    <ul class="nav-flyout">
-                        <li>
-                            <a href="#"><i class="ion-ios-timer-outline"></i>Graficos Folha</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-arrow-graph-down-left"></i>Graficos Compras</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-partlysunny-outline"></i>Graficos Viagens</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-timer-outline"></i>Outros Graficos</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-game-controller-a-outline"></i>Outros Graficos</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="ion-ios-box-outline"></i> <span class="">Auditoria</span></a>
-                    <ul class="nav-flyout">
-                        <li>
-                            <a href="#"><i class="ion-ios-filing-outline"></i>Analise Folha Pagamento</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-information-outline"></i>Analise Compras</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-paperplane-outline"></i>Analise Viagens Servidores</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-android-star-outline"></i>Outras Analises</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="ion-ios-cloud-download-outline"></i> <span class="">Arquivos</span></a>
-                    <ul class="nav-flyout">
-                        <li>
-                            <a href="#"><i class="ion-ios-flame-outline"></i>Oficios</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-lightbulb-outline"></i>Memorandos</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-location-outline"></i>Resultados Demandas</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-locked-outline"></i>Leis e Decretos</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="ion-ios-navigate-outline"></i>Outros</a>
-                        </li>
-                    </ul>
-                </li>
-                @if (AppUser.PossuiRole("Administrador")){
-                    <li>
-                        <a href="#"><i class="ion-ios-cloud-download-outline"></i> <span class="">Painel</span></a>
-                        <ul class="nav-flyout">
-
-                            
-                            <li>
-                                <a asp-controller="Identidade" asp-action="ListarUsuarios"><i class="ion-ios-flame-outline"></i>Listar Usuários</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Identidade" asp-action="ListarUsuariosLogados"><i class="ion-ios-lightbulb-outline"></i>Usuários Logados</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Identidade" asp-action="Registro"><i class="ion-ios-location-outline"></i>Criar Usuários</a>
-                            </li>
-                            
-
-                        </ul>
-                    </li>
-                }
                 @if (AppUser.EstaAutenticado())
                 {
+                    <li>
+                        <a href="#"><i class="ion-ios-search-strong"></i> <span>Observatório</span></a>
+                        <ul class="nav-flyout">
+                            <li>
+                                <a asp-controller="DueDiligence" asp-action="Index"><i class="ion-ios-color-filter-outline"></i>Due Diligence</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Consulta" asp-action="Index" ><i class="ion-ios-color-filter-outline"></i>Consulta CNPJ/CPF</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Grafico" asp-action="GraficoODP"><i class="ion-ios-color-filter-outline"></i>Gráficos</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="ion-ios-paper-outline"></i> <span class="">Corregedoria</span></a>
+                        <ul class="nav-flyout">
+                            <li>
+                                <a asp-controller="Corregedoria" asp-action="Index"><i class="ion-ios-alarm-outline"></i>Instaurações</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Corregedoria" asp-action="Graficos"><i class="ion-ios-camera-outline"></i>Graficos</a>
+                            </li>
+
+                            <li>
+                                <a asp-controller="Corregedoria" asp-action="upload"><i class="ion-ios-alarm-outline"></i>Upload Arquivos</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    @if (AppUser.PossuiRole("Administrador"))
+                    {
+                        <li>
+                            <a href="#"><i class="ion-ios-cloud-download-outline"></i> <span class="">Painel</span></a>
+                            <ul class="nav-flyout">
+                                <li>
+                                    <a asp-controller="Identidade" asp-action="ListarUsuarios"><i class="ion-ios-flame-outline"></i>Listar Usuários</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Identidade" asp-action="ListarUsuariosLogados"><i class="ion-ios-lightbulb-outline"></i>Usuários Logados</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Identidade" asp-action="Registro"><i class="ion-ios-location-outline"></i>Criar Usuários</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+
                     <li>
                         <a asp-controller="Identidade" asp-action="Logout"><i class="ion-ios-flame-outline"></i>Sair</a>
                     </li>
                 }
-                else{
-                    <li>
-                        <a class="btn btn-primary" asp-controller="Identidade" asp-action="Login">Login</a>
+                else
+                {
+                    <li class="px-1 mt-2">
+                        <a class="btn btn-primary px-lg-5 mx-lg-5" asp-controller="Identidade" asp-action="Login">Acessar</a>
                     </li>
                 }
-
-
-
             </ul>
         </nav>
     </aside>
+
+
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">

@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Services.DueDiligence;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ODP.Web.UI.Controllers.DueDiligence
 {
@@ -17,9 +20,19 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
         [HttpGet]
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string orgao = null, string cpf = null)
         {
-            var due = await _dueService.Listar(pageNumber, pageSize);
+
+
+            if (!cpf.IsNullOrEmpty())
+            {
+                cpf = FormatarCPF(cpf);
+            }
+
+            var due = await _dueService.Listar(pageNumber, pageSize, orgao,cpf);
+
+            ViewBag.CPFAtual = cpf;
+            ViewBag.OrgaoAtual = orgao;
             return View(due);
         }
 
@@ -160,15 +173,23 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         public async Task<IActionResult> CreateAndGeneratePdf(DueDiligenceViewModel dueViewModel)
         {
             // Salvar o Due Diligence
-            await _dueService.Adicionar(CalculoRisco(dueViewModel));
+             var result  = await _dueService.Adicionar(CalculoRisco(dueViewModel));
 
             // Gerar o PDF e retornar o resultado para download
-            var pdfFile = await _dueService.GerarPdf(dueViewModel);
+            var pdfFile = await _dueService.GerarPdf(result.Id);
 
             return pdfFile;
         }
 
+        public static string FormatarCPF(string cpf)
+        {
+            if (string.IsNullOrWhiteSpace(cpf) || cpf.Length != 11 || !cpf.All(char.IsDigit))
+            {
+                throw new ArgumentException("CPF inválido. Deve conter exatamente 11 dígitos numéricos.");
+            }
 
+            return $"{cpf.Substring(0, 3)}.{cpf.Substring(3, 3)}.{cpf.Substring(6, 3)}-{cpf.Substring(9, 2)}";
+        }
 
     }
 

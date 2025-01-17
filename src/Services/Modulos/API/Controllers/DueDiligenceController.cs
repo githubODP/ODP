@@ -32,9 +32,9 @@ namespace API.Controllers
 
 
         [HttpGet("listar")]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, string orgao = null, string cpf = null)
         {
-            var pagedResult = await _dueRepositoryRead.Listar(pageNumber, pageSize);
+            var pagedResult = await _dueRepositoryRead.ListarCOmFiltroAsync(pageNumber, pageSize, orgao, cpf);
             return Ok(pagedResult);
         }
 
@@ -150,7 +150,7 @@ namespace API.Controllers
             int el3_width = 80;
 
             // page structure options
-            double lineHeight = 18;
+            double lineHeight = 17;
             int marginLeft = 20;
             int marginTop = 200;
 
@@ -191,7 +191,7 @@ namespace API.Controllers
                 dist_Y2 = dist_Y - 2;
                 var displayAttribute = (DisplayAttribute)property.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
                 var columnNameAttribute = (ColumnAttribute)property.GetCustomAttributes(typeof(ColumnAttribute), false).FirstOrDefault();
-                if (property.Name == "CadEmpresario")
+                if (property.Name == "CadFuncionarioPublico")
                 {
                     startup = true;
                 }
@@ -201,7 +201,7 @@ namespace API.Controllers
 
                     string displayValue = (value != null && value is bool && (bool)value) ? "consta" : "não consta";
 
-                    if (property.Name == "CadEmpresaContrato" || flag) { tabela = new XFont("Arial", 8, XFontStyle.Bold); flag = true; } else { tabela = new XFont("Arial", 8, XFontStyle.Regular); }
+                    if (property.Name == "CadInelegivel" || flag) { tabela = new XFont("Arial", 8, XFontStyle.Bold); flag = true; } else { tabela = new XFont("Arial", 8, XFontStyle.Regular); }
 
                     textFormater.Alignment = PdfSharpCore.Drawing.Layout.XParagraphAlignment.Center;
                     graphics.DrawRectangle(rect_style1, marginLeft, dist_Y2 + marginTop, el1_width, rect_height);

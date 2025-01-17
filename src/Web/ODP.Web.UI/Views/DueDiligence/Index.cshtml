@@ -4,6 +4,50 @@
 @using ODP.Web.UI.Extensions
 @model PagedResult<ODP.Web.UI.Models.DueDiligence.DueDiligenceViewModel>
 
+
+
+<nav class="navbar bg-light-blue ">
+    <div class="row ml-5">
+        <!-- Formulário de busca e filtros -->
+        <form method="get" action="@Url.Action("Index")" class="d-flex flex-wrap align-items-center gap-3 w-100">
+            <!-- Filtro por CPF -->
+            <div class="form-group ">
+                <label for="cpf">CPF:</label>
+                <input type="text"
+                       id="CPF"
+                       name="CPF"
+                       value="@ViewBag.CPFAtual"
+                       class="form-control"
+                       placeholder="Digite o CPF" />
+            </div>
+
+           @*  <div class="form-group ">
+                <label for="orgao">Orgão:</label>
+                <input type="text"
+                       id="orgao"
+                       name="orgao"
+                       value="@ViewBag.OrgaoAtual"
+                       class="form-control"
+                       placeholder="Digite o Orgão" />
+            </div>
+ *@
+
+
+            <!-- Botão Pesquisar -->
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">
+                    Pesquisar
+                </button>
+            </div>
+        </form>
+    </div>
+</nav>
+
+
+
+
+
+
 <div class="container-fluid">
     <div class="table-responsive shadow" style="margin-left:-8em;">
         <div class="table-wrapper">

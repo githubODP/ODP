@@ -9,6 +9,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace ODP.Web.UI.Services.DueDiligence
@@ -28,9 +29,29 @@ namespace ODP.Web.UI.Services.DueDiligence
         }
 
 
-        public async Task<PagedResult<DueDiligenceViewModel>> Listar(int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedResult<DueDiligenceViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string orgao = null, string cpf = null)
         {
-            var response = await _httpClient.GetAsync($"/api/duediligence/listar?pageNumber={pageNumber}&pageSize={pageSize}");
+            var queryParams = new List<string>
+            {
+                $"pageNumber={pageNumber}",
+                $"pageSize={pageSize}"
+            };
+
+
+            if (!string.IsNullOrEmpty(cpf))
+            {
+                queryParams.Add($"cpf={cpf}"); // Filtro por protocolo
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(orgao)) ;
+            }
+
+            // Combina todos os parâmetros em uma query string
+            var queryString = string.Join("&", queryParams);
+
+            var response = await _httpClient.GetAsync($"/api/duediligence/listar?{queryString}");
+
 
             TratarErrosResponse(response);
 
@@ -54,12 +75,11 @@ namespace ODP.Web.UI.Services.DueDiligence
 
             var response = await _httpClient.PostAsync("/api/duediligence/adicionar", dueContent);
 
-            if (TratarErrosResponse(response))
-            {
-                return null;
-
-            }
+            TratarErrosResponse(response);
+          
             return await DeserializarObjetoResponse<DueDiligenceViewModel>(response);
+
+            
 
         }
 

@@ -11,7 +11,7 @@ namespace ODP.Web.UI.Services.DueDiligence
 {
     public interface IDueService
     {
-        Task<PagedResult<DueDiligenceViewModel>> Listar(int pageNumber, int pageSize);
+        Task<PagedResult<DueDiligenceViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string orgao = null, string cpf = null);
         Task<DueDiligenceViewModel> ObterId(Guid id);
         Task<DueDiligenceViewModel> Adicionar(DueDiligenceViewModel dueViewModel);
         Task<DueDiligenceViewModel> Alterar(DueDiligenceViewModel dueViewModel, Guid id);
