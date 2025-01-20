@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Corregedoria;
@@ -17,10 +18,12 @@ namespace ODP.Web.UI.Services.Corregedoria
     public class InstauracaoService : Service, IInstauracaoService
     {
         private readonly HttpClient _httpClient;
+        private readonly ILogger<InstauracaoService> _logger;
 
-        public InstauracaoService(HttpClient httpClient,
+        public InstauracaoService(ILogger<InstauracaoService> logger, HttpClient httpClient,
             IOptions<AppSettings> settings)
         {
+            _logger = logger;
             httpClient.BaseAddress = new Uri(settings.Value.ModulosUrl);
 
             _httpClient = httpClient;
@@ -36,6 +39,7 @@ namespace ODP.Web.UI.Services.Corregedoria
             string decisao = null,
             string protocolo = null) // Protocolo incluído como opcional
         {
+            _logger.LogInformation("Iniciando ListarComFiltros com parâmetros: pageNumber={PageNumber}, pageSize={PageSize}, ano={Ano}, orgao={Orgao}, procedimento={Procedimento}, decisao={Decisao}, protocolo={Protocolo}", pageNumber, pageSize, ano, orgao, procedimento, decisao, protocolo);
             // Monta a query string com filtros opcionais
             var queryParams = new List<string>
             {
@@ -46,6 +50,7 @@ namespace ODP.Web.UI.Services.Corregedoria
             if (!string.IsNullOrEmpty(protocolo))
             {
                 queryParams.Add($"protocolo={protocolo}"); // Filtro por protocolo
+                _logger.LogDebug("Filtro por protocolo aplicado.");
             }
             else
             {
@@ -62,18 +67,21 @@ namespace ODP.Web.UI.Services.Corregedoria
                 if (!string.IsNullOrEmpty(decisao))
                     queryParams.Add($"decisao={decisao}");
             }
+            try
+            {
+                var response = await _httpClient.GetAsync($"/api/corregedoria/listar?{string.Join("&", queryParams)}");
 
-            // Combina todos os parâmetros em uma query string
-            var queryString = string.Join("&", queryParams);
+                _logger.LogInformation("Recebeu resposta da API com status {StatusCode}.", response.StatusCode);
 
-            // Faz a requisição para a API
-            var response = await _httpClient.GetAsync($"/api/corregedoria/listar?{queryString}");
+                TratarErrosResponse(response);
 
-            // Trata erros de resposta
-            TratarErrosResponse(response);
-
-            // Deserializa e retorna o resultado
-            return await DeserializarObjetoResponse<PagedResult<InstauracaoViewModel>>(response);
+                return await DeserializarObjetoResponse<PagedResult<InstauracaoViewModel>>(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao executar ListarComFiltros no serviço.");
+                throw;
+            }
         }
 
 

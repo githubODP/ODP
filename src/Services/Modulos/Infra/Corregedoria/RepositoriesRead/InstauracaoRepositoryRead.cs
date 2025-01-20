@@ -5,13 +5,18 @@ using Domain.Corregedoria.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Web;
 
 namespace Infra.Corregedoria.RepositoriesRead
 {
     public class InstauracaoRepositoryRead : RepositoryRead<Instauracao>, IInstauracaoRepositoryRead, IAggregateRoot
     {
-        public InstauracaoRepositoryRead(ObservatorioContext context) : base(context) { }
+        private readonly ILogger<InstauracaoRepositoryRead> _logger;
+        public InstauracaoRepositoryRead(ObservatorioContext context, ILogger<InstauracaoRepositoryRead> logger) : base(context) {
+            _logger = logger;
+        
+        }
 
         public async Task<Instauracao> BuscarPorCNPJ(string cnpj)
         {
@@ -39,6 +44,8 @@ namespace Infra.Corregedoria.RepositoriesRead
                 string decisao = null,
                 string protocolo = null) // Protocolo adicionado
         {
+
+            _logger.LogInformation("Iniciando ListarComFiltrosAsync no repositório com parâmetros: pageNumber={PageNumber}, pageSize={PageSize}, ano={Ano}, orgao={Orgao}, procedimento={Procedimento}, decisao={Decisao}, protocolo={Protocolo}", pageNumber, pageSize, ano, orgao, procedimento, decisao, protocolo);
             // Cria a consulta base
             var query = _context.Set<Instauracao>().AsQueryable();
 
@@ -80,28 +87,33 @@ namespace Infra.Corregedoria.RepositoriesRead
                 }
             }
 
-            // Conta o número total de registros após os filtros
-            var totalRecords = await query.CountAsync();
-
-            // Aplica paginação
-            var items = await query
-                .AsNoTracking()
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            // Calcula o número total de páginas
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-
-            // Retorna os resultados no formato PagedResult
-            return new PagedResult<Instauracao>
+            try
             {
-                Results = items,
-                PageNumber = pageNumber,
-                PageSize = pageSize,
-                TotalRecords = totalRecords,
-                TotalPages = totalPages
-            };
+                var totalRecords = await query.CountAsync();
+                _logger.LogDebug("Consulta retornou {TotalRecords} registros após filtros.", totalRecords);
+
+                var items = await query
+                    .AsNoTracking()
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                _logger.LogInformation("Consulta retornou {Count} registros paginados.", items.Count);
+
+                return new PagedResult<Instauracao>
+                {
+                    Results = items,
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalRecords = totalRecords,
+                    TotalPages = (int)Math.Ceiling(totalRecords / (double)pageSize)
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao executar ListarComFiltrosAsync no repositório.");
+                throw;
+            }
         }
 
 

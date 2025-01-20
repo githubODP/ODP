@@ -27,32 +27,36 @@ namespace ODP.Web.UI.Controllers.Corregedoria
 
         [HttpGet]
         public async Task<IActionResult> Index(
-            int pageNumber = 1,
-            int pageSize = 5,
-            int? ano = null,
-            string orgao = null,
-            string procedimento = null,
-            string decisao = null,
-            string protocolo = null) // Adiciona o parâmetro protocolo
+     int pageNumber = 1,
+     int pageSize = 5,
+     int? ano = null,
+     string orgao = null,
+     string procedimento = null,
+     string decisao = null,
+     string protocolo = null)
         {
-            // Chama o serviço com os filtros ou protocolo
-            var instauracao = await _instauracaoService.ListarComFiltros(
-                pageNumber,
-                pageSize,
-                ano,
-                orgao,
-                procedimento,
-                decisao,
-                protocolo); // Inclui protocolo na chamada
+            _logger.LogInformation("Entrou no método Index do controller com os seguintes parâmetros: pageNumber={PageNumber}, pageSize={PageSize}, ano={Ano}, orgao={Orgao}, procedimento={Procedimento}, decisao={Decisao}, protocolo={Protocolo}", pageNumber, pageSize, ano, orgao, procedimento, decisao, protocolo);
 
-            // Armazena os valores atuais dos filtros para reutilizar na view
-            ViewBag.AnoAtual = ano;
-            ViewBag.OrgaoAtual = orgao;
-            ViewBag.ProcedimentoAtual = procedimento;
-            ViewBag.DecisaoAtual = decisao;
-            ViewBag.ProtocoloAtual = protocolo; // Armazena o protocolo na ViewBag
+            try
+            {
+                var instauracao = await _instauracaoService.ListarComFiltros(
+                    pageNumber,
+                    pageSize,
+                    ano,
+                    orgao,
+                    procedimento,
+                    decisao,
+                    protocolo);
 
-            return View(instauracao);
+                _logger.LogInformation("Retornou {Count} resultados do serviço.", instauracao.Results.Count);
+
+                return View(instauracao);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ocorreu um erro no método Index do controller.");
+                return StatusCode(500, "Erro interno do servidor.");
+            }
         }
 
 
