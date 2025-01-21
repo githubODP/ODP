@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -25,39 +26,54 @@ namespace API.Controllers
     {
         private readonly IInstauracaoRepository _instauracaoRepository;
         private readonly IInstauracaoRepositoryRead _instauracaoRepositoryRead;
+        private readonly ILogger<CorregedoriaController> _logger;
 
-        public CorregedoriaController(IInstauracaoRepository instauracaoRepository, IInstauracaoRepositoryRead instauracaoRepositoryRead)
+
+        public CorregedoriaController(IInstauracaoRepository instauracaoRepository,
+                                      IInstauracaoRepositoryRead instauracaoRepositoryRead,
+                                      ILogger<CorregedoriaController> logger)
         {
             _instauracaoRepository = instauracaoRepository;
             _instauracaoRepositoryRead = instauracaoRepositoryRead;
+            _logger = logger;
         }
 
         [HttpGet("listar")]
-            public async Task<IActionResult> Index(
-        int pageNumber = 1,
-        int pageSize = 8,
-        int? ano = null,
-        string orgao = null,
-        string procedimento = null,
-        string decisao = null,
-        string protocolo = null) // Protocolo incluído como parâmetro opcional
+        public async Task<IActionResult> Index(
+            int pageNumber = 1,
+            int pageSize = 8,
+            int? ano = null,
+            string orgao = null,
+            string procedimento = null,
+            string decisao = null,
+            string protocolo = null)
         {
-            // Chama o repositório para listar registros com base nos filtros ou protocolo
-            var pagedResult = await _instauracaoRepositoryRead.ListarComFiltrosAsync(
-                pageNumber,
-                pageSize,
-                ano,
-                orgao,
-                procedimento,
-                decisao,
-                protocolo); // Inclui o protocolo
+            _logger.LogInformation("Entrou no método Index da API com parâmetros: pageNumber={PageNumber}, pageSize={PageSize}, ano={Ano}, orgao={Orgao}, procedimento={Procedimento}, decisao={Decisao}, protocolo={Protocolo}", pageNumber, pageSize, ano, orgao, procedimento, decisao, protocolo);
 
-            // Retorna os resultados no formato correto
-            return Ok(pagedResult);
+            try
+            {
+                var pagedResult = await _instauracaoRepositoryRead.ListarComFiltrosAsync(
+                    pageNumber,
+                    pageSize,
+                    ano,
+                    orgao,
+                    procedimento,
+                    decisao,
+                    protocolo);
+
+                _logger.LogInformation("Retornou {Count} resultados do repositório.", pagedResult.Results.Count);
+
+                return Ok(pagedResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro no método Index da API.");
+                return StatusCode(500, "Erro interno do servidor.");
+            }
         }
 
 
-       
+
 
         // Buscar por ID
         [HttpGet("buscaId/{id}")]
