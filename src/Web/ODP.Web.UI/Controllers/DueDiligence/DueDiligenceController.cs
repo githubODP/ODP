@@ -20,19 +20,18 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
         [HttpGet]
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string orgao = null, string cpf = null)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo =null)
         {
 
 
-            if (!cpf.IsNullOrEmpty())
-            {
-                cpf = FormatarCPF(cpf);
-            }
+            if (cpf !="123"){cpf = FormatarCPF(cpf);}
+            else { cpf = null;}
 
-            var due = await _dueService.Listar(pageNumber, pageSize, orgao,cpf);
+            var due = await _dueService.Listar(pageNumber, pageSize,nome, cpf, protocolo);
 
             ViewBag.CPFAtual = cpf;
-            ViewBag.OrgaoAtual = orgao;
+            ViewBag.NomeAtual = nome;
+            ViewBag.ProtocoloAtual = protocolo;
             return View(due);
         }
 
@@ -183,12 +182,46 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
         public static string FormatarCPF(string cpf)
         {
-            if (string.IsNullOrWhiteSpace(cpf) || cpf.Length != 11 || !cpf.All(char.IsDigit))
-            {
-                throw new ArgumentException("CPF inválido. Deve conter exatamente 11 dígitos numéricos.");
-            }
+            if (string.IsNullOrWhiteSpace(cpf))
+                throw new ArgumentException("CPF não pode ser nulo ou vazio.");
 
-            return $"{cpf.Substring(0, 3)}.{cpf.Substring(3, 3)}.{cpf.Substring(6, 3)}-{cpf.Substring(9, 2)}";
+            // Remove qualquer caractere que não seja número
+            string numerosCPF = new string(cpf.Where(char.IsDigit).ToArray());
+
+            // Verifica se o CPF tem exatamente 11 números
+            if (numerosCPF.Length != 11)
+                throw new ArgumentException("CPF inválido. Deve conter exatamente 11 dígitos numéricos.");
+
+            // Validação do CPF pelo cálculo dos dígitos verificadores
+            if (!ValidarCPF(numerosCPF))
+                throw new ArgumentException("CPF inválido.");
+
+            // Retorna o CPF formatado
+            return $"{numerosCPF.Substring(0, 3)}.{numerosCPF.Substring(3, 3)}.{numerosCPF.Substring(6, 3)}-{numerosCPF.Substring(9, 2)}";
+        }
+
+        private static bool ValidarCPF(string cpf)
+        {
+            // Verifica se todos os dígitos são iguais (ex: 000.000.000-00), o que é inválido
+            if (cpf.Distinct().Count() == 1)
+                return false;
+
+            // Calcula os dois dígitos verificadores
+            int[] multiplicadores1 = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicadores2 = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+            string tempCpf = cpf.Substring(0, 9);
+            int soma = tempCpf.Select((t, i) => (t - '0') * multiplicadores1[i]).Sum();
+            int resto = (soma * 10) % 11;
+            if (resto == 10) resto = 0;
+            if (resto != (cpf[9] - '0')) return false;
+
+            tempCpf += resto;
+            soma = tempCpf.Select((t, i) => (t - '0') * multiplicadores2[i]).Sum();
+            resto = (soma * 10) % 11;
+            if (resto == 10) resto = 0;
+
+            return resto == (cpf[10] - '0');
         }
 
     }

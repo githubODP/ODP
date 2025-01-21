@@ -35,7 +35,7 @@ namespace Infra.DueDiligence.RepositoriesRead
                 .ToListAsync();
         }
 
-        public async Task<PagedResult<Comissionado>> ListarCOmFiltroAsync(int pageNumber, int pageSize, string orgao = null, string CPF = null)
+        public async Task<PagedResult<Comissionado>> ListarCOmFiltroAsync(int pageNumber, int pageSize, string nome = null, string CPF = null, string protocolo = null)
         {
             // Cria a consulta base
             var query = _context.Set<Comissionado>().AsQueryable();
@@ -48,9 +48,14 @@ namespace Infra.DueDiligence.RepositoriesRead
             else
             {
 
-                if (!string.IsNullOrEmpty(orgao))
+                if (!string.IsNullOrEmpty(nome))
                 {
-                    query = query.Where(i => i.Orgao == orgao);
+                    query = query.Where(i => i.Nome == nome);
+                }
+
+                if (!string.IsNullOrEmpty(protocolo))
+                {
+                    query = query.Where(i => i.NroProtocolo == protocolo);
                 }
             }
 

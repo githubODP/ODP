@@ -11,7 +11,8 @@ namespace Domain.DueDiligence.Interfaces
         Task<PagedResult<Comissionado>> ListarCOmFiltroAsync(
             int pageNumber,
             int pageSize,
-            string orgao = null,
-            string CPF = null);
+            string nome = null,
+            string CPF = null,
+            string protocolo = null);
     }
 }

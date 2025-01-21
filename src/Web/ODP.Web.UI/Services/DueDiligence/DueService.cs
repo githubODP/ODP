@@ -29,7 +29,7 @@ namespace ODP.Web.UI.Services.DueDiligence
         }
 
 
-        public async Task<PagedResult<DueDiligenceViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string orgao = null, string cpf = null)
+        public async Task<PagedResult<DueDiligenceViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = null, string protocolo = null)
         {
             var queryParams = new List<string>
             {
@@ -44,7 +44,8 @@ namespace ODP.Web.UI.Services.DueDiligence
             }
             else
             {
-                if (!string.IsNullOrEmpty(orgao)) ;
+                if (!string.IsNullOrEmpty(nome)) { queryParams.Add($"nome={nome}"); }
+                if (!string.IsNullOrEmpty(protocolo)) { queryParams.Add($"protocolo={protocolo}"); }
             }
 
             // Combina todos os parâmetros em uma query string

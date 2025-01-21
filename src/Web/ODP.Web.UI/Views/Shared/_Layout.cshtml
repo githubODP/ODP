@@ -114,13 +114,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="#">ODP</a>
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 align-content-end">
+             
+                @if (AppUser.EstaAutenticado()){
+                    <div class="btn btn-light d-flex align-self-end">
+
+                        @User.GetUserEmail()
+                    </div>
+                }
             </ul>
 
 

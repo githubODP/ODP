@@ -32,9 +32,9 @@ namespace API.Controllers
 
 
         [HttpGet("listar")]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, string orgao = null, string cpf = null)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = null, string protocolo = null)
         {
-            var pagedResult = await _dueRepositoryRead.ListarCOmFiltroAsync(pageNumber, pageSize, orgao, cpf);
+            var pagedResult = await _dueRepositoryRead.ListarCOmFiltroAsync(pageNumber, pageSize, nome, cpf, protocolo);
             return Ok(pagedResult);
         }
 

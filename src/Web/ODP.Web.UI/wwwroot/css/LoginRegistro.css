@@ -73,3 +73,9 @@ body {
     text-align: center;
     margin-top: 20px;
 }
+
+.toggle-password {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
