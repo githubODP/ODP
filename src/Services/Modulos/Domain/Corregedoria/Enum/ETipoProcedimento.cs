@@ -17,7 +17,8 @@ namespace Domain.Corregedoria.Enum
         [Display(Name = "SINDICÂNCIA/PSS")] SINDICANCIA_PSS = 10,
         CONTROLADORIA = 11,
         [Display(Name = "INSPEÇÕES EM ANDAMENTO")] INSPECOES_ANDAMENTO = 12,
-        [Display(Name = "INSPEÇÕES CONCLUIDAS")] INSPECOES_CONCLUIDAS = 13
+        [Display(Name = "INSPEÇÕES CONCLUIDAS")] INSPECOES_CONCLUIDAS = 13,
+        [Display(Name = "VERIFICAÇÃO PRELIMINAR")] VERIFICACAO_PRELIMINAR = 14
 
     }
 
