@@ -31,6 +31,7 @@ namespace Dividas.Infra.Repositories
                     UFUnidadeResponsavel = c.UFUnidadeResponsavel,
                     ValorConsolidado = c.ValorConsolidado,
                 })
+                .Take(5)
                 .ToListAsync();
 
         }

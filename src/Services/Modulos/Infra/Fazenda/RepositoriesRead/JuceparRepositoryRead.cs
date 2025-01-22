@@ -30,6 +30,8 @@ namespace Infra.Fazenda.RepositoriesRead
                     CPF = c.CPF,
                     Situacao = c.Situacao,
                 })
+                .Distinct()
+                .Take(5)
                 .ToListAsync();
 
         }

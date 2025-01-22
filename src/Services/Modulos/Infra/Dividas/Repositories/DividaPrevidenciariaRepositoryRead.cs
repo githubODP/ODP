@@ -30,6 +30,7 @@ namespace Dividas.Infra.Repositories
                      DataInscricao = c.DataInscricao,
                      ValorConsolidado = c.ValorConsolidado,
                  })
+                .Take(5)
                 .ToListAsync();
 
         }

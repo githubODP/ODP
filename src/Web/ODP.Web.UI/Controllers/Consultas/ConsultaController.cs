@@ -65,7 +65,7 @@ namespace ODP.Web.UI.Controllers.Consultas
             }
 
             // Chama o serviço de busca e obtém o resultado como um DTO com lista de contratos
-            var resultado = await _buscaService.BuscarCNPJPorTabelasSelecionadas(cpf, tabelasSelecionadas);
+            var resultado = await _buscaService.BuscarCPFPorTabelasSelecionadas(cpf, tabelasSelecionadas);
 
             // Passa o DTO com a lista de contratos para a View
             return View("ConsultaCPF", resultado);

@@ -33,6 +33,7 @@ namespace Infra.GovernoFederal.Repositories
                     FundamentacaoLegal = c.FundamentacaoLegal,
 
                 })
+                .Take(5)
                 .ToListAsync();
 
         }

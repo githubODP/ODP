@@ -28,6 +28,8 @@ namespace Infra.GovernoEstadual.Repositories
                     Situacao = c.Situacao,
                     AnoInfracao = c.AnoInfracao,
                 })
+                .OrderByDescending(c => c.AnoInfracao)
+                .Take(5)
                 .ToListAsync();
 
         }

@@ -54,368 +54,372 @@
 <div class="row">
 
     @*Inicio Dados Compras *@
-    <div class="container">
-        <div class="p-3 m-3
-">
-        </div>
-
-        <div class="p-3 bg-white rounded shadow mb-5">
-            <h3 class="text-black">Compras</h3>
-            <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#home" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Contratos</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#profile" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Licitações</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#contact" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Dispensas</a>
-                </li>
-            </ul>
-
-            @*Inicio Dados compras *@
-            <div class="tab-content">
-                <div id="home" class="tab-pane fade px-4 py-4 show active">
-                    @if (Model.BuscaCompras.Contrato.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Órgão</th>
-                                    <th>Status</th>
-                                    <th>Protocolo</th>
-                                    <th>Valor Atual</th>
-                                    <th>Valor Original</th>
-                                    <th>CNPJ</th>
-                                    <th>Data Início</th>
-                                    <th>Data Fim</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var contrato in Model.BuscaCompras.Contrato)
-                                {
-                                    <tr>
-                                        <td>@Html.DisplayFor(m => contrato.OrgaoGestor)</td>
-                                        <td>@Html.DisplayFor(m => contrato.StatusContrato)</td>
-                                        <td>@Html.DisplayFor(m => contrato.Protocolo)</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalAtual)</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalOriginal)</td>
-                                        <td>@Html.DisplayFor(m => contrato.CNPJ)</td>
-                                        <td>@(contrato.DTInicioVigencia?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                        <td>@(contrato.DTFimVigencia?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-
-                    }
-                    else
-                    {
-                        <p>Nenhum contrato encontrado.</p>
-                    }
-                </div>
-                <div id="profile" class="tab-pane fade px-4 py-4">
-                    @if (@Model.BuscaCompras.Licitacao.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Ano</th>
-                                    <th>Órgão</th>
-                                    <th>CNPJ</th>
-                                    <th>Protocolo</th>
-                                    <th>Valor Homologado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var dispensa in Model.BuscaCompras.Licitacao)
-                                {
-                                    <tr>
-                                        <td>@Html.DisplayFor(m => dispensa.Ano)</td>
-                                        <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
-                                        <td>@Html.DisplayFor(m => dispensa.CNPJ)</td>
-                                        <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
-                                        <td id="coluna">@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorHomologado)</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>Nenhuma licitação encontrada.</p>
-                    }
-                </div>
-                <div id="contact" class="tab-pane fade px-4 py-4">
-                    @if (Model.BuscaCompras.Dispensa.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Órgão</th>
-                                    <th>CNPJ</th>
-                                    <th>Protocolo</th>
-                                    <th>Valor Dispensa</th>
-                                    <th>Valor Item</th>
-                                    <th>Qtde Item</th>
-                                    <th>Modalidade</th>
-                                    <th>Data Dispensa</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var dispensa in Model.BuscaCompras.Dispensa)
-                                {
-                                    <tr>
-                                        <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
-                                        <td>@Html.DisplayFor(m => dispensa.CNPJ)</td>
-                                        <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorDispensa)</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorItem)</td>
-                                        <td>@Html.DisplayFor(m => dispensa.QtdItem)</td>
-                                        <td>@Html.DisplayFor(m => dispensa.Modalidade)</td>
-                                        <td>@(dispensa.DataDispensa?.ToString("dd/MM/yyyy") ?? "-")</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>Nenhuma dispensa encontrada.</p>
-                    }
-                </div>
+    @if(Model.BuscaCompras!=null){
+        <div class="container">
+            <div class="p-3 m-3">
             </div>
 
+            <div class="p-3 bg-white rounded shadow mb-5">
+                <h3 class="text-black">Compras</h3>
+                <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#home" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Contratos</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#profile" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Licitações</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#contact" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Dispensas</a>
+                    </li>
+                </ul>
+
+                @*Inicio Dados compras *@
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade px-4 py-4 show active">
+                        @if (Model.BuscaCompras.Contrato.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Órgão</th>
+                                        <th>Status</th>
+                                        <th>Protocolo</th>
+                                        <th>Valor Atual</th>
+                                        <th>Valor Original</th>
+                                        <th>CNPJ</th>
+                                        <th>Data Início</th>
+                                        <th>Data Fim</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var contrato in Model.BuscaCompras.Contrato)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => contrato.OrgaoGestor)</td>
+                                            <td>@Html.DisplayFor(m => contrato.StatusContrato)</td>
+                                            <td>@Html.DisplayFor(m => contrato.Protocolo)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalAtual)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", contrato.VlrTotalOriginal)</td>
+                                            <td>@Html.DisplayFor(m => contrato.CNPJ)</td>
+                                            <td>@(contrato.DTInicioVigencia?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                            <td>@(contrato.DTFimVigencia?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        }
+                        else
+                        {
+                            <p>Nenhum contrato encontrado.</p>
+                        }
+                    </div>
+                    <div id="profile" class="tab-pane fade px-4 py-4">
+                        @if (@Model.BuscaCompras.Licitacao.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ano</th>
+                                        <th>Órgão</th>
+                                        <th>CNPJ</th>
+                                        <th>Protocolo</th>
+                                        <th>Valor Homologado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var dispensa in Model.BuscaCompras.Licitacao)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => dispensa.Ano)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.CNPJ)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
+                                            <td id="coluna">@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorHomologado)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhuma licitação encontrada.</p>
+                        }
+                    </div>
+                    <div id="contact" class="tab-pane fade px-4 py-4">
+                        @if (Model.BuscaCompras.Dispensa.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Órgão</th>
+                                        <th>CNPJ</th>
+                                        <th>Protocolo</th>
+                                        <th>Valor Dispensa</th>
+                                        <th>Valor Item</th>
+                                        <th>Qtde Item</th>
+                                        <th>Modalidade</th>
+                                        <th>Data Dispensa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var dispensa in Model.BuscaCompras.Dispensa)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => dispensa.Orgao)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.CNPJ)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.Protocolo)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorDispensa)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", dispensa.ValorItem)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.QtdItem)</td>
+                                            <td>@Html.DisplayFor(m => dispensa.Modalidade)</td>
+                                            <td>@(dispensa.DataDispensa?.ToString("dd/MM/yyyy") ?? "-")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhuma dispensa encontrada.</p>
+                        }
+                    </div>
+                </div>
+
+            </div>
         </div>
-    </div>
+    }
 
-    <div class="container">
-        <div class="p-3 m-3"></div>
+    @if(Model.BuscaDividas!=null){
+        <div class="container">
+            <div class="p-3 m-3"></div>
 
-        <div class="p-3 bg-white rounded shadow mb-5">
-            <h3 class="text-black">Dividas Federais</h3>
-            <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#fgts" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Dividas FGTS</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#prev" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Dividas Previdênciarias</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#nprev" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Dividas Não Previdênciarias</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="fgts" class="tab-pane fade px-4 py-4 show active">
-                    @if (Model.BuscaDividas.DividaFGTS.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
+            <div class="p-3 bg-white rounded shadow mb-5">
+                <h3 class="text-black">Dividas Federais</h3>
+                <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#fgts" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Dividas FGTS</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#prev" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Dividas Previdênciarias</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#nprev" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Dividas Não Previdênciarias</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="fgts" class="tab-pane fade px-4 py-4 show active">
+                        @if (Model.BuscaDividas.DividaFGTS.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
 
-                            <thead>
-                                <tr>
-                                    <th>Tipo Pessoa</th>
-                                    <th>Devedor</th>
-                                    <th>CNPJ</th>
-                                    <th>UF</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var divida in Model.BuscaDividas.DividaFGTS)
-                                {
+                                <thead>
                                     <tr>
-                                        <td>@Html.DisplayFor(m => divida.TipoPessoa)</td>
-                                        <td>@Html.DisplayFor(m => divida.NomeDevedor)</td>
-                                        <td>@Html.DisplayFor(m => divida.CNPJ)</td>
-                                        <td>@Html.DisplayFor(m => divida.UFUnidadeResponsavel)</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", divida.ValorConsolidado)</td>
-
+                                        <th>Tipo Pessoa</th>
+                                        <th>Devedor</th>
+                                        <th>CNPJ</th>
+                                        <th>UF</th>
+                                        <th>Valor</th>
                                     </tr>
-                                }
+                                </thead>
+                                <tbody>
+                                    @foreach (var divida in Model.BuscaDividas.DividaFGTS)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => divida.TipoPessoa)</td>
+                                            <td>@Html.DisplayFor(m => divida.NomeDevedor)</td>
+                                            <td>@Html.DisplayFor(m => divida.CNPJ)</td>
+                                            <td>@Html.DisplayFor(m => divida.UFUnidadeResponsavel)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", divida.ValorConsolidado)</td>
+
+                                        </tr>
+                                    }
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
 
-                    }
-                    else
-                    {
-                        <p>Nenhum Divida encontrado.</p>
-                    }
-                </div>
-                <div id="prev" class="tab-pane fade px-4 py-4">
-                    @if (@Model.BuscaDividas.DividaPrevidenciaria.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Tipo Pessoa</th>
-                                    <th>Devedor</th>
-                                    <th>CNPJ</th>
-                                    <th>Data Inscrição</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var divida in Model.BuscaDividas.DividaPrevidenciaria)
-                                {
+                        }
+                        else
+                        {
+                            <p>Nenhum Divida encontrado.</p>
+                        }
+                    </div>
+                    <div id="prev" class="tab-pane fade px-4 py-4">
+                        @if (@Model.BuscaDividas.DividaPrevidenciaria.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
                                     <tr>
-                                        <td>@Html.DisplayFor(m => divida.TipoPessoa)</td>
-                                        <td>@Html.DisplayFor(m => divida.NomeDevedor)</td>
-                                        <td>@Html.DisplayFor(m => divida.CNPJ)</td>
-                                        <td>@(divida.DataInscricao.ToString("dd/MM/yyyy") ?? "-")</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", divida.ValorConsolidado)</td>
-
+                                        <th>Tipo Pessoa</th>
+                                        <th>Devedor</th>
+                                        <th>CNPJ</th>
+                                        <th>Data Inscrição</th>
+                                        <th>Valor</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>Nenhuma Divida encontrada.</p>
-                    }
-                </div>
-                <div id="nprev" class="tab-pane fade px-4 py-4">
-                    @if (Model.BuscaDividas.DividaNaoPrevidenciaria.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Tipo Pessoa</th>
-                                    <th>Devedor</th>
-                                    <th>CNPJ</th>
-                                    <th>Data Inscrição</th>
-                                    <th>Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var divida in Model.BuscaDividas.DividaNaoPrevidenciaria)
-                                {
+                                </thead>
+                                <tbody>
+                                    @foreach (var divida in Model.BuscaDividas.DividaPrevidenciaria)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => divida.TipoPessoa)</td>
+                                            <td>@Html.DisplayFor(m => divida.NomeDevedor)</td>
+                                            <td>@Html.DisplayFor(m => divida.CNPJ)</td>
+                                            <td>@(divida.DataInscricao.ToString("dd/MM/yyyy") ?? "-")</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", divida.ValorConsolidado)</td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhuma Divida encontrada.</p>
+                        }
+                    </div>
+                    <div id="nprev" class="tab-pane fade px-4 py-4">
+                        @if (Model.BuscaDividas.DividaNaoPrevidenciaria.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
                                     <tr>
-                                        <td>@Html.DisplayFor(m => divida.TipoPessoa)</td>
-                                        <td>@Html.DisplayFor(m => divida.NomeDevedor)</td>
-                                        <td>@Html.DisplayFor(m => divida.CNPJ)</td>
-                                        <td>@(divida.DataInscricao.ToString("dd/MM/yyyy") ?? "-")</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", divida.ValorConsolidado)</td>
-
+                                        <th>Tipo Pessoa</th>
+                                        <th>Devedor</th>
+                                        <th>CNPJ</th>
+                                        <th>Data Inscrição</th>
+                                        <th>Valor</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>Nenhuma Divida encontrada.</p>
-                    }
+                                </thead>
+                                <tbody>
+                                    @foreach (var divida in Model.BuscaDividas.DividaNaoPrevidenciaria)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => divida.TipoPessoa)</td>
+                                            <td>@Html.DisplayFor(m => divida.NomeDevedor)</td>
+                                            <td>@Html.DisplayFor(m => divida.CNPJ)</td>
+                                            <td>@(divida.DataInscricao.ToString("dd/MM/yyyy") ?? "-")</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", divida.ValorConsolidado)</td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhuma Divida encontrada.</p>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+   }
 
-    <div class="container">
-        <div class="p-3 m-3">
-        </div>
+    @if(Model.BuscaFazenda!=null){
+        <div class="container">
+            <div class="p-3 m-3">
+            </div>
 
-        <div class="p-3 bg-white rounded shadow mb-5">
-            <h3 class="text-black">Dados Fiscais</h3>
-            <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#junta" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Junta Comercial</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#NF" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Nota Fiscal Eletrônica</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#NFederal" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Nota Fiscal Eletrônica/Federal</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="junta" class="tab-pane fade px-4 py-4 show active">
-                    @if (Model.BuscaFazenda.Jucepar.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
+            <div class="p-3 bg-white rounded shadow mb-5">
+                <h3 class="text-black">Dados Fiscais</h3>
+                <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#junta" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Junta Comercial</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#NF" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Nota Fiscal Eletrônica</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#NFederal" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Nota Fiscal Eletrônica/Federal</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="junta" class="tab-pane fade px-4 py-4 show active">
+                        @if (Model.BuscaFazenda.Jucepar.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
 
-                            <thead>
-                                <tr>
-                                    <th>Razão Social</th>
-                                    <th>CNPJ</th>
-                                    <th>Nomes Sócios</th>
-                                    <th>CPF</th>
-                                    <th>Situação</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var junta in Model.BuscaFazenda.Jucepar)
-                                {
+                                <thead>
                                     <tr>
-                                        <td>@Html.DisplayFor(m => junta.RazaoSocial)</td>
-                                        <td>@Html.DisplayFor(m => junta.CNPJ)</td>
-                                        <td>@Html.DisplayFor(m => junta.NomesSocio)</td>
-                                        <td>@Html.DisplayFor(m => junta.CPF)</td>
-                                        <td>@Html.DisplayFor(m => junta.Situacao)</td>
+                                        <th>Razão Social</th>
+                                        <th>CNPJ</th>
+                                        <th>Nomes Sócios</th>
+                                        <th>CPF</th>
+                                        <th>Situação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var junta in Model.BuscaFazenda.Jucepar)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => junta.RazaoSocial)</td>
+                                            <td>@Html.DisplayFor(m => junta.CNPJ)</td>
+                                            <td>@Html.DisplayFor(m => junta.NomesSocio)</td>
+                                            <td>@Html.DisplayFor(m => junta.CPF)</td>
+                                            <td>@Html.DisplayFor(m => junta.Situacao)</td>
+
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>
+
+                        }
+                        else
+                        {
+                            <p>Nenhum Cadastro encontrado.</p>
+                        }
+                    </div>
+                    <div id="NF" class="tab-pane fade px-4 py-4">
+                        @if (@Model.BuscaFazenda.NFEletronica.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Emitente</th>
+                                        <th>CNPJ</th>
+                                        <th>Numero NF</th>
+                                        <th>Destinatário</th>
+                                        <th>CNPJDestinatario</th>
+                                        <th>Valor NF</th>
+                                        <th>Data Emissão</th>
+                                        <th>Ano</th>
 
                                     </tr>
-                                }
 
 
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var nota in Model.BuscaFazenda.NFEletronica)
+                                    {
+                                        <tr>
 
-                    }
-                    else
-                    {
-                        <p>Nenhum Cadastro encontrado.</p>
-                    }
-                </div>
-                <div id="NF" class="tab-pane fade px-4 py-4">
-                    @if (@Model.BuscaFazenda.NFEletronica.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
+                                            <td>@Html.DisplayFor(m => nota.Emitente)</td>
+                                            <td>@Html.DisplayFor(m => nota.CNPJ)</td>
+                                            <td>@Html.DisplayFor(m => nota.NumeroNF)</td>
+                                            <td>@Html.DisplayFor(m => nota.Destinatario)</td>
+                                            <td>@Html.DisplayFor(m => nota.CNPJDestinatario)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", nota.ValorNotaFiscal)</td>
+                                            <td>@Html.DisplayFor(m => nota.DataEmissao)</td>
+                                            <td>@Html.DisplayFor(m => nota.Ano)</td>
 
-                                <tr>
+                                        </tr>
+                                    }
 
-                                    <th>Emitente</th>
-                                    <th>CNPJ</th>
-                                    <th>Numero NF</th>
-                                    <th>Destinatário</th>
-                                    <th>CNPJDestinatario</th>
-                                    <th>Valor NF</th>
-                                    <th>Data Emissão</th>
-                                    <th>Ano</th>
-
-                                </tr>
-
-
-                            </thead>
-                            <tbody>
-                                @foreach (var nota in Model.BuscaFazenda.NFEletronica)
-                                {
-                                    <tr>
-                                        
-                                        <td>@Html.DisplayFor(m => nota.Emitente)</td>
-                                        <td>@Html.DisplayFor(m => nota.CNPJ)</td>
-                                        <td>@Html.DisplayFor(m => nota.NumeroNF)</td>
-                                        <td>@Html.DisplayFor(m => nota.Destinatario)</td>
-                                        <td>@Html.DisplayFor(m => nota.CNPJDestinatario)</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", nota.ValorNotaFiscal)</td>
-                                        <td>@Html.DisplayFor(m => nota.DataEmissao)</td>
-                                        <td>@Html.DisplayFor(m => nota.Ano)</td>
-                                        
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>Nenhuma Nota Fiscal encontrada.</p>
-                    }
-                </div>
-                <div id="NFederal" class="tab-pane fade px-4 py-4">
-                    @* @if (Model.BuscaFazenda.NFEletronicaFederal.Count() != 0)
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhuma Nota Fiscal encontrada.</p>
+                        }
+                    </div>
+                    <div id="NFederal" class="tab-pane fade px-4 py-4">
+                        @* @if (Model.BuscaFazenda.NFEletronicaFederal.Count() != 0)
                     {
                         <table class="table table-striped table-hover">
                             <thead>
@@ -451,225 +455,226 @@
                     {
                         <p>Nenhuma Nota Fiscal encontrada.</p>
                     } *@
+                    </div>
                 </div>
             </div>
         </div>
-    </div> 
+    }
 
- <div class="container">
-        <div class="p-3 m-3">
-        </div>
+    @if(Model.BuscaEstadual!=null){
+        <div class="container">
+            <div class="p-3 m-3">
+            </div>
 
-        <div class="p-3 bg-white rounded shadow mb-5">
-            <h3 class="text-black">Governo Estadual</h3>
-            <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#ambiental" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Infração Ambiental</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#padv" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Pedido de Autorização , Divulgação e Veiculação - PADV</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="ambiental" class="tab-pane fade px-4 py-4 show active">
-                    @if (Model.BuscaEstadual.Ambiental.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
+            <div class="p-3 bg-white rounded shadow mb-5">
+                <h3 class="text-black">Governo Estadual</h3>
+                <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#ambiental" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Infração Ambiental</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#padv" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Pedido de Autorização , Divulgação e Veiculação - PADV</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="ambiental" class="tab-pane fade px-4 py-4 show active">
+                        @if (Model.BuscaEstadual.Ambiental.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
 
-                            <thead>
-                                <tr>
-                                    <th>Infrator</th>
-                                    <th>CNPJ</th>
-                                    <th>Situação</th>
-                                    <th>Ano Infrações</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var ambiental in Model.BuscaEstadual.Ambiental)
-                                {
+                                <thead>
                                     <tr>
-                                        <td>@Html.DisplayFor(m => ambiental.Infrator)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.CNPJ)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.Situacao)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.AnoInfracao)</td>
-
+                                        <th>Infrator</th>
+                                        <th>CNPJ</th>
+                                        <th>Situação</th>
+                                        <th>Ano Infrações</th>
 
                                     </tr>
-                                }
+                                </thead>
+                                <tbody>
+                                    @foreach (var ambiental in Model.BuscaEstadual.Ambiental)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => ambiental.Infrator)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.CNPJ)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.Situacao)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.AnoInfracao)</td>
 
 
-                            </tbody>
-                        </table>
-
-                    }
-                    else
-                    {
-                        <p>Nenhuma infração ambiental encontrada.</p>
-                    }
-                </div>
-                <div id="padv" class="tab-pane fade px-4 py-4">
-                    @if (@Model.BuscaEstadual.PADV.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
-
-                                <tr>
-
-                                    <th>Razão Social</th>
-                                    <th>Agência</th>
-                                    <th>CNPJ</th>
-                                    <th>Numero PADV</th>
-                                    <th>Orgao</th>
-                                    <th>Valor Pago</th>
-                                    <th>Ano</th>
-
-                                </tr>
+                                        </tr>
+                                    }
 
 
-                            </thead>
-                            <tbody>
-                                @foreach (var nota in Model.BuscaEstadual.PADV)
-                                {
+                                </tbody>
+                            </table>
+
+                        }
+                        else
+                        {
+                            <p>Nenhuma infração ambiental encontrada.</p>
+                        }
+                    </div>
+                    <div id="padv" class="tab-pane fade px-4 py-4">
+                        @if (@Model.BuscaEstadual.PADV.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
+
                                     <tr>
-                                        <td>@Html.DisplayFor(m => nota.RazaoSocial)</td>
-                                        <td>@Html.DisplayFor(m => nota.Agencia)</td>
-                                        <td>@Html.DisplayFor(m => nota.CNPJExecutor)</td>
-                                        <td>@Html.DisplayFor(m => nota.NumeroPADV)</td>
-                                        <td>@Html.DisplayFor(m => nota.OrgaoPagador)</td>
-                                        <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", nota.ValorPago)</td>
-                                        <td>@Html.DisplayFor(m => nota.Ano)</td>
+
+                                        <th>Razão Social</th>
+                                        <th>Agência</th>
+                                        <th>CNPJ</th>
+                                        <th>Numero PADV</th>
+                                        <th>Orgao</th>
+                                        <th>Valor Pago</th>
+                                        <th>Ano</th>
+
                                     </tr>
 
-                                }
 
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>Nenhum PADV encontrado.</p>
-                    }
+                                </thead>
+                                <tbody>
+                                    @foreach (var nota in Model.BuscaEstadual.PADV)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => nota.RazaoSocial)</td>
+                                            <td>@Html.DisplayFor(m => nota.Agencia)</td>
+                                            <td>@Html.DisplayFor(m => nota.CNPJExecutor)</td>
+                                            <td>@Html.DisplayFor(m => nota.NumeroPADV)</td>
+                                            <td>@Html.DisplayFor(m => nota.OrgaoPagador)</td>
+                                            <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", nota.ValorPago)</td>
+                                            <td>@Html.DisplayFor(m => nota.Ano)</td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhum PADV encontrado.</p>
+                        }
+                    </div>
+
                 </div>
-
             </div>
         </div>
-    </div>
+}
 
+   @if(Model.BuscaFederal!=null){
+        <div class="container">
+            <div class="p-3 m-3">
+            </div>
 
+            <div class="p-3 bg-white rounded shadow mb-5">
+                <h3 class="text-black">Governo Federal</h3>
+                <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#leniencia" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Acordos de Leniência</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#aeronaves" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Aeronaves</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#cnep" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">CNEP</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#cepim" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">CEPIM</a>
+                    </li>
+                    <li class="nav-item flex-sm-fill">
+                        <a data-toggle="tab" href="#cnte" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">CNTE</a>
+                    </li>
 
+                </ul>
+                <div class="tab-content">
+                    <div id="leniencia" class="tab-pane fade px-4 py-4 show active">
+                        @if (Model.BuscaFederal.AcordosLeniencia.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
 
-    <div class="container">
-        <div class="p-3 m-3">
-        </div>
-
-        <div class="p-3 bg-white rounded shadow mb-5">
-            <h3 class="text-black">Governo Federal</h3>
-            <ul id="myTab" role="tablist" class="nav nav-tabs nav-pills flex-column flex-sm-row text-center bg-light border-0 rounded-nav">
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#leniencia" aria-selected="true" class="nav-link border-0 text-uppercase font-weight-bold active">Acordos de Leniência</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#aeronaves" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">Aeronaves</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#cnep" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">CNEP</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#cepim" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">CEPIM</a>
-                </li>
-                <li class="nav-item flex-sm-fill">
-                    <a data-toggle="tab" href="#cnte" aria-selected="false" class="nav-link border-0 text-uppercase font-weight-bold">CNTE</a>
-                </li>
-
-            </ul>
-            <div class="tab-content">
-                <div id="leniencia" class="tab-pane fade px-4 py-4 show active">
-                    @if (Model.BuscaFederal.AcordosLeniencia.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-
-                            <thead>
-                                <tr>
-                                    <th>Identificaçao Acordo</th>
-                                    <th>Numero Processo</th>
-                                    <th>CNPJ</th>
-                                    <th>Razão Social</th>
-                                    <th>Inicio Acordo</th>
-                                    <th>Fim Acordo</th>
-                                    <th>Situação</th>
-                                    <th>Efeitos</th>
-                                    <th>Termos Acordos</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var ambiental in Model.BuscaFederal.AcordosLeniencia)
-                                {
+                                <thead>
                                     <tr>
-                                        <td>@Html.DisplayFor(m => ambiental.IdentificacaoAcordo)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.NumeroProcesso)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.CNPJ)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.RazaoSocial)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.DataInicioAcordo)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.DataFimAcordo)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.Situacao)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.Efeitos)</td>
-                                        <td>@Html.DisplayFor(m => ambiental.TermosAcordo)</td>
+                                        <th>Identificaçao Acordo</th>
+                                        <th>Numero Processo</th>
+                                        <th>CNPJ</th>
+                                        <th>Razão Social</th>
+                                        <th>Inicio Acordo</th>
+                                        <th>Fim Acordo</th>
+                                        <th>Situação</th>
+                                        <th>Efeitos</th>
+                                        <th>Termos Acordos</th>
+
                                     </tr>
-                                }
+                                </thead>
+                                <tbody>
+                                    @foreach (var ambiental in Model.BuscaFederal.AcordosLeniencia)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => ambiental.IdentificacaoAcordo)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.NumeroProcesso)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.CNPJ)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.RazaoSocial)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.DataInicioAcordo)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.DataFimAcordo)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.Situacao)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.Efeitos)</td>
+                                            <td>@Html.DisplayFor(m => ambiental.TermosAcordo)</td>
+                                        </tr>
+                                    }
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
 
-                    }
-                    else
-                    {
-                        <p>Nenhum acordo encontrado.</p>
-                    }
-                </div>
-                <div id="aeronaves" class="tab-pane fade px-4 py-4">
-                    @if (@Model.BuscaFederal.Aeronave.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
+                        }
+                        else
+                        {
+                            <p>Nenhum acordo encontrado.</p>
+                        }
+                    </div>
+                    <div id="aeronaves" class="tab-pane fade px-4 py-4">
+                        @if (@Model.BuscaFederal.Aeronave.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
 
-                                <tr>
-
-                                    <th>Proprietário</th>
-                                    <th>CPF</th>
-                                    <th>Marca</th>
-                                    <th>Operador</th>
-                                    <th>CPFCGC</th>
-
-                                </tr>
-
-
-                            </thead>
-                            <tbody>
-                                @foreach (var nota in Model.BuscaFederal.Aeronave)
-                                {
                                     <tr>
-                                        <td>@Html.DisplayFor(m => nota.Proprietario)</td>
-                                        <td>@Html.DisplayFor(m => nota.CNPJCPF)</td>
-                                        <td>@Html.DisplayFor(m => nota.Marca)</td>
-                                        <td>@Html.DisplayFor(m => nota.Operador)</td>
-                                        <td>@Html.DisplayFor(m => nota.CPFCGC)</td>
+
+                                        <th>Proprietário</th>
+                                        <th>CPF</th>
+                                        <th>Marca</th>
+                                        <th>Operador</th>
+                                        <th>CPFCGC</th>
+
                                     </tr>
 
-                                }
 
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>Nenhuma aeronave encontrada.</p>
-                    }
-                </div>
-                <div id="cnep" class="tab-pane fade px-4 py-4">
-                  @*   @if (@Model.BuscaFederal.Cnep.Count() != 0)
+                                </thead>
+                                <tbody>
+                                    @foreach (var nota in Model.BuscaFederal.Aeronave)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => nota.Proprietario)</td>
+                                            <td>@Html.DisplayFor(m => nota.CNPJCPF)</td>
+                                            <td>@Html.DisplayFor(m => nota.Marca)</td>
+                                            <td>@Html.DisplayFor(m => nota.Operador)</td>
+                                            <td>@Html.DisplayFor(m => nota.CPFCGC)</td>
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhuma aeronave encontrada.</p>
+                        }
+                    </div>
+                    <div id="cnep" class="tab-pane fade px-4 py-4">
+                        @*   @if (@Model.BuscaFederal.Cnep.Count() != 0)
                     {
                         <table class="table table-striped table-hover">
                             <thead>
@@ -713,9 +718,9 @@
                     {
                         <p>Nenhum cadastro encontrado.</p>
                     } *@
-                </div>
-                <div id="cepim" class="tab-pane fade px-4 py-4">
-                   @*  @if (@Model.BuscaFederal.Cepim.Count() != 0)
+                    </div>
+                    <div id="cepim" class="tab-pane fade px-4 py-4">
+                        @*  @if (@Model.BuscaFederal.Cepim.Count() != 0)
                     {
                         <table class="table table-striped table-hover">
                             <thead>
@@ -753,52 +758,53 @@
                     {
                         <p>Nenhum cadastro encontrado.</p>
                     } *@
-                </div>
-                <div id="cnte" class="tab-pane fade px-4 py-4">
-                    @if (@Model.BuscaFederal.TrabalhoEscravo.Count() != 0)
-                    {
-                        <table class="table table-striped table-hover">
-                            <thead>
+                    </div>
+                    <div id="cnte" class="tab-pane fade px-4 py-4">
+                        @if (@Model.BuscaFederal.TrabalhoEscravo.Count() != 0)
+                        {
+                            <table class="table table-striped table-hover">
+                                <thead>
 
-                                <tr>
-
-                                    <th>Empregador</th>
-                                    <th>CPF</th>
-                                    <th>Estabelecimento</th>
-                                    <th>Ano</th>
-                                    <th>UF</th>
-
-
-                                </tr>
-
-
-                            </thead>
-                            <tbody>
-                                @foreach (var nota in Model.BuscaFederal.TrabalhoEscravo)
-                                {
                                     <tr>
-                                        <td>@Html.DisplayFor(m => nota.Empregador)</td>
-                                        <td>@Html.DisplayFor(m => nota.CNPJCPF)</td>
-                                        <td>@Html.DisplayFor(m => nota.Estabelecimento)</td>
-                                        <td>@Html.DisplayFor(m => nota.Ano)</td>
-                                        <td>@Html.DisplayFor(m => nota.UF)</td>
+
+                                        <th>Empregador</th>
+                                        <th>CPF</th>
+                                        <th>Estabelecimento</th>
+                                        <th>Ano</th>
+                                        <th>UF</th>
+
 
                                     </tr>
 
-                                }
 
-                            </tbody>
-                        </table>
-                    }
-                    else
-                    {
-                        <p>Nenhum cadastro encontrado.</p>
-                    }
+                                </thead>
+                                <tbody>
+                                    @foreach (var nota in Model.BuscaFederal.TrabalhoEscravo)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => nota.Empregador)</td>
+                                            <td>@Html.DisplayFor(m => nota.CNPJCPF)</td>
+                                            <td>@Html.DisplayFor(m => nota.Estabelecimento)</td>
+                                            <td>@Html.DisplayFor(m => nota.Ano)</td>
+                                            <td>@Html.DisplayFor(m => nota.UF)</td>
+
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Nenhum cadastro encontrado.</p>
+                        }
+                    </div>
+
                 </div>
-
             </div>
         </div>
-    </div>
+   }
 
 
 </div>

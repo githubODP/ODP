@@ -30,6 +30,7 @@ namespace Infra.GovernoFederal.Repositories
                     Orgao = c.Orgao,
                     Impedimento = c.Impedimento,
                 })
+                .Take(5)
                 .ToListAsync();
 
         }

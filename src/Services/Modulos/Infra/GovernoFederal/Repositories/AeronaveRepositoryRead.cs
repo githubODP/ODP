@@ -30,6 +30,7 @@ namespace Infra.GovernoFederal.Repositories
                     Operador = c.Operador,
                     CPFCGC = c.CPFCGC,
                 })
+                .Take(5)
                 .ToListAsync();
 
         }

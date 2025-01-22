@@ -30,6 +30,8 @@ namespace Infra.GovernoFederal.Repositories
                     Ano = c.Ano,
                     UF = c.UF,
                 })
+                .OrderByDescending(c => c.Ano)
+                 .Take(5)
                 .ToListAsync();
         }
 

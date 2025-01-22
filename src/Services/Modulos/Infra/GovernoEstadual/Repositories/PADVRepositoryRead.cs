@@ -31,6 +31,8 @@ namespace Infra.GovernoEstadual.Repositories
                     ValorPago = c.ValorPago,
                     Ano = c.Ano,
                 })
+                .OrderByDescending(c => c.Ano)
+                .Take(5)
                 .ToListAsync();
 
         }

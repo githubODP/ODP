@@ -34,6 +34,7 @@ namespace Infra.GovernoFederal.Repositories
                     Efeitos = c.Efeitos,
                     TermosAcordo = c.TermosAcordo,
                 })
+                .Take(5)
                 .ToListAsync();
 
         }

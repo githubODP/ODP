@@ -32,6 +32,7 @@ namespace Infra.Fazenda.RepositoriesRead
                     ValorNF = c.ValorNF,
                     ChaveAcesso = c.ChaveAcesso,
                 })
+                .Take(5)
                 .ToListAsync();
 
         }
