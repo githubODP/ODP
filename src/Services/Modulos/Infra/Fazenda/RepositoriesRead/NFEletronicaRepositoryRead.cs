@@ -33,6 +33,7 @@ namespace Infra.Fazenda.RepositoriesRead
                     DataEmissao = c.DataEmissao,
                     Ano = c.Ano,
                 })
+                .Take(5)
                 .ToListAsync();
 
         }

@@ -51,7 +51,7 @@
 }
 
 
-<div class="row">
+<div class="row mt-lg-5">
 
     @*Inicio Dados Compras *@
     @if(Model.BuscaCompras!=null){
@@ -352,8 +352,8 @@
                                 <tbody>
                                     @foreach (var junta in Model.BuscaFazenda.Jucepar)
                                     {
-                                        <tr>
-                                            <td>@Html.DisplayFor(m => junta.RazaoSocial)</td>
+                                        <tr style=" font-size:14px">
+                                            <td style="width:25%;">@Html.DisplayFor(m => junta.RazaoSocial)</td>
                                             <td>@Html.DisplayFor(m => junta.CNPJ)</td>
                                             <td>@Html.DisplayFor(m => junta.NomesSocio)</td>
                                             <td>@Html.DisplayFor(m => junta.CPF)</td>
@@ -396,10 +396,10 @@
                                 <tbody>
                                     @foreach (var nota in Model.BuscaFazenda.NFEletronica)
                                     {
-                                        <tr>
+                                        <tr style=" font-size:14px">
 
-                                            <td>@Html.DisplayFor(m => nota.Emitente)</td>
-                                            <td>@Html.DisplayFor(m => nota.CNPJ)</td>
+                                            <td style="width:25%;">@Html.DisplayFor(m => nota.Emitente)</td>
+                                            <td style="width:15%;">@Html.DisplayFor(m => nota.CNPJ)</td>
                                             <td>@Html.DisplayFor(m => nota.NumeroNF)</td>
                                             <td>@Html.DisplayFor(m => nota.Destinatario)</td>
                                             <td>@Html.DisplayFor(m => nota.CNPJDestinatario)</td>
