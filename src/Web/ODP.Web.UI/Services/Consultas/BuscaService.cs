@@ -1,7 +1,13 @@
-﻿using ODP.Web.UI.Models.Consultas.InterfaceDTO;
+﻿using Microsoft.AspNetCore.Mvc;
+using ODP.Web.UI.Models.Consultas.InterfaceDTO;
 using ODP.Web.UI.Models.Consultas.ResultadoConsulta;
+using PdfSharpCore.Drawing;
+using PdfSharpCore.Pdf;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services.Consultas
@@ -196,7 +202,84 @@ namespace ODP.Web.UI.Services.Consultas
             return resultados;
         }
 
+        public Task<FileStreamResult> GerarPDF(ResultadoDTO dados, string cnpj)
+        {
+            var document = new PdfDocument();
+            var page = document.AddPage();
+            page.Width = XUnit.FromMillimeter(210);
+            page.Height = XUnit.FromMillimeter(297);
+            var graphics = XGraphics.FromPdfPage(page);
+            var textFormater = new PdfSharpCore.Drawing.Layout.XTextFormatter(graphics);
 
+            // Adicionar logo
+            var logo = XImage.FromFile("D:\\projetos\\CGEODP\\src\\Services\\Due\\DueDiligence.API\\Controllers\\logo.png");
+            double logoImageHeight = 50;
+            double proportionl = logoImageHeight / logo.PixelHeight;
+            double logoImageWidth = logo.PixelWidth * proportionl;
+            double x = (page.Width - logoImageWidth) / 2;
+            graphics.DrawImage(logo, x, 10, logoImageWidth, logoImageHeight);
+
+            // Adicionar título
+            XFont titulo = new XFont("Arial", 14, XFontStyle.Bold);
+            textFormater.Alignment = PdfSharpCore.Drawing.Layout.XParagraphAlignment.Center;
+            textFormater.DrawString("Resultado da consulta do CNPJ às bases de dados", titulo, XBrushes.DarkSlateGray, new XRect(0, 70, page.Width, page.Height));
+
+            // Adicionar CNPJ e data
+            XFont negrito = new XFont("Arial", 10, XFontStyle.Bold);
+            XFont normal = new XFont("Arial", 9, XFontStyle.Regular);
+            graphics.DrawRectangle(XPens.Gray, 20, 100, page.Width - 50, 40);
+            textFormater.Alignment = PdfSharpCore.Drawing.Layout.XParagraphAlignment.Left;
+            textFormater.DrawString($"CNPJ:", negrito, XBrushes.Black, new XRect(25, 103, 5, 3));
+            textFormater.DrawString($"{cnpj}", normal, XBrushes.Black, new XRect(60, 103, 300, 3));
+            textFormater.DrawString($"Data da pesquisa:", negrito, XBrushes.Black, new XRect(330, 103, 5, 3));
+            textFormater.DrawString($"{DateTime.Today:dd/MM/yyyy}", normal, XBrushes.Black, new XRect(360, 103, 5, 11));
+
+            // Criar matriz com bases de dados
+            double startY = 150;
+            double rowHeight = 20;
+            double col1Width = 150;
+            double col2Width = 100;
+            double col3Width = 50;
+
+            var bases = new Dictionary<string, bool>
+    {
+        { "Contratos", dados.BuscaCompras?.Contrato?.Any() == true },
+        { "Dispensas", dados.BuscaCompras?.Dispensa?.Any() == true },
+        { "Licitações", dados.BuscaCompras?.Licitacao?.Any() == true },
+        { "Dívida FGTS", dados.BuscaDividas?.DividaFGTS?.Any() == true },
+        { "Dívida Previdenciária", dados.BuscaDividas?.DividaPrevidenciaria?.Any() == true },
+        { "Dívida Não Previdenciária", dados.BuscaDividas?.DividaNaoPrevidenciaria?.Any() == true },
+        { "Jucepar", dados.BuscaFazenda?.Jucepar?.Any() == true },
+        { "NF Eletrônica Federal", dados.BuscaFazenda?.NFEletronicaFederal?.Any() == true },
+        { "NF Eletrônica Estadual", dados.BuscaFazenda?.NFEletronica?.Any() == true },
+    };
+
+            foreach (var entry in bases)
+            {
+                graphics.DrawRectangle(XPens.Black, 20, startY, col1Width, rowHeight);
+                textFormater.DrawString(entry.Key, normal, XBrushes.Black, new XRect(25, startY + 5, col1Width, rowHeight));
+
+                graphics.DrawRectangle(XPens.Black, 20 + col1Width, startY, col2Width, rowHeight);
+                textFormater.DrawString(entry.Value ? "X" : "", negrito, XBrushes.Black, new XRect(25 + col1Width, startY + 5, col2Width, rowHeight));
+
+                startY += rowHeight;
+            }
+
+            // Adicionar rodapé
+            var rodape = XImage.FromFile("D:\\projetos\\CGEODP\\src\\Services\\Due\\DueDiligence.API\\Controllers\\rodape.jpg");
+            double footerImageHeight = 50;
+            double proportion = footerImageHeight / rodape.PixelHeight;
+            double footerImageWidth = rodape.PixelWidth * proportion;
+            graphics.DrawImage(rodape, page.Width - footerImageWidth, page.Height - footerImageHeight + 10, footerImageWidth, footerImageHeight);
+
+            var stream = new MemoryStream();
+            document.Save(stream, false);
+            stream.Position = 0; // Resetar a posição do stream para leitura
+            return Task.FromResult(new FileStreamResult(stream, "application/pdf")
+            {
+                FileDownloadName = $"Relatorio_{cnpj}.pdf"
+            });
+        }
 
 
 
