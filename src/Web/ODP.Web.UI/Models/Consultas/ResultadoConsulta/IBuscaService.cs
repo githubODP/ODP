@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,9 @@ namespace ODP.Web.UI.Models.Consultas.ResultadoConsulta
         Task<ResultadoDTO> BuscarCNPJPorTabelasSelecionadas(string cnpj, List<string> tabelasSelecionadas);
         Task<ResultadoDTO> BuscarCPFPorTabelasSelecionadas(string cpf, List<string> tabelasSelecionadas);
         Task<List<ResultadoDTO>> BuscarEmLoteAsync(List<string> identificadores, bool isCNPJ, List<string> tabelasSelecionadas);
+        Task<FileStreamResult> GerarPDF(ResultadoDTO dados, string cnpj);
+
+
 
 
     }

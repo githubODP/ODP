@@ -1,7 +1,10 @@
 ﻿
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ODP.Web.UI.Models.Consultas.ResultadoConsulta;
+using ODP.Web.UI.Models.DueDiligence;
 using OfficeOpenXml;
 using System.Collections.Generic;
 using System.IO;
@@ -47,6 +50,7 @@ namespace ODP.Web.UI.Controllers.Consultas
             var resultado = await _buscaService.BuscarCNPJPorTabelasSelecionadas(cnpj, tabelasSelecionadas);
 
             // Passa o DTO com a lista de contratos para a View
+            ViewBag.CNPJAtual = cnpj;
             return View("ConsultaCNPJ", resultado);
         }
 
@@ -1857,6 +1861,28 @@ namespace ODP.Web.UI.Controllers.Consultas
 
 
         }
+
+
+
+
+        [HttpPost] 
+        public async Task<FileStreamResult> GerarPdf([FromBody] PdfRequest request)
+        {
+            var dados = JsonConvert.DeserializeObject<ResultadoDTO>(request.DadosJson);
+
+            var pdfFile = await _buscaService.GerarPDF(dados, request.Cnpj);
+
+            return pdfFile;
+        }
+
+        // Classe auxiliar para receber os dados no JSON
+        public class PdfRequest
+        {
+            public string DadosJson { get; set; }
+            public string Cnpj { get; set; }
+        }
+
+
 
 
     }
