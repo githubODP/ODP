@@ -49,6 +49,7 @@ namespace Infra.Data
 
         /// Due Diligence      
         public DbSet<Comissionado> Comissionados { get; set; }
+        public DbSet<Analise> Analises { get; set; }
 
 
         // Compras
@@ -140,6 +141,7 @@ namespace Infra.Data
         {
             //Due
             modelBuilder.ApplyConfiguration(new ComissionadoMapping());
+            modelBuilder.ApplyConfiguration(new AnaliseMapping());
 
             //Corregedoria
             modelBuilder.ApplyConfiguration(new InstauracaoMapping());

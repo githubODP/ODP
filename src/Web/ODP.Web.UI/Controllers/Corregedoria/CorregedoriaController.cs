@@ -226,11 +226,7 @@ namespace ODP.Web.UI.Controllers.Corregedoria
             return Ok(); 
         }
 
-        //public async Task<IActionResult> GerarPdf(Guid id)
-        //{
-        //    var file = await _instauracaoService.GerarPdf(id);
-        //    return file;
-        //}
+      
 
         [HttpGet]
         public IActionResult Upload()

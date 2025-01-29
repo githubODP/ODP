@@ -1,17 +1,10 @@
 ﻿
-
-
 using CGEODP.Core.DomainObjects;
-using Domain.Corregedoria.Entidade;
-using Domain.Corregedoria.Enum;
 using Domain.DueDiligence.Entidade;
 using Domain.DueDiligence.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Infra.DueDiligence.RepositoriesRead
 {
@@ -81,6 +74,21 @@ namespace Infra.DueDiligence.RepositoriesRead
                 TotalRecords = totalRecords,
                 TotalPages = totalPages
             };
+        }
+
+        public async Task<Comissionado> ObterPorProtocolo(string nroProtocolo)
+        {
+            return await _context.Comissionados
+                .Where(c => c.NroProtocolo == nroProtocolo)
+                .Select(c => new Comissionado
+                {
+                    NroProtocolo = c.NroProtocolo,
+                    Nome = c.Nome,
+                    CPF = c.CPF,
+                    Orgao = c.Orgao,
+                    Observacao = c.Observacao // Apenas os campos necessários
+                })
+                .FirstOrDefaultAsync();
         }
 
 

@@ -27,6 +27,28 @@ namespace Identidade.API.Configuration
 
             app.UseRouting();
 
+
+            ///// teste de claims /////
+            ///
+            app.Use(async (context, next) =>
+            {
+                if (context.User.Identity.IsAuthenticated)
+                {
+                    Console.WriteLine("Usuário autenticado.");
+                    foreach (var claim in context.User.Claims)
+                    {
+                        Console.WriteLine($"Claim: {claim.Type} - {claim.Value}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Usuário não autenticado.");
+                }
+                await next();
+            });
+
+            ////terminio teste claims 
+
             app.UseIdentityConfiguration();
 
             app.UseEndpoints(endpoints =>

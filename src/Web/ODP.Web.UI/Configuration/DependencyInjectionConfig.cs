@@ -75,6 +75,12 @@ namespace ODP.Web.UI.Configuration
                     .AddTransientHttpErrorPolicy(
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
+            services.AddHttpClient<IAnaliseService, AnaliseService>()
+                   .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                   .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                   .AddTransientHttpErrorPolicy(
+                   p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
 
             services.AddHttpClient<IDemandaService, DemandaService>()
                    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()

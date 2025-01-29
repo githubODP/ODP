@@ -1,0 +1,35 @@
+﻿@using ODP.Web.UI.Extensions
+@model PagedResult<ODP.Web.UI.Models.DueDiligence.AnaliseViewModel>
+
+<h2>Lista de Análises</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Protocolo</th>
+            <th>Data Análise</th>
+            <th>Análise Técnica</th>
+            <th>Risco</th>
+            <th>Nome Comissionado</th>
+            <th>CPF Comissionado</th>
+            <th>Órgão Comissionado</th>
+            <th>Observação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Results)
+        {
+            <tr>
+               
+                <td>@item.NroProtocolo</td>
+                <td>@item.DataAnalise</td>
+                <td>@item.AnaliseTecnica</td>
+                <td>@item.Risco</td>
+                <td>@item.Nome</td>
+                <td>@item.CPF</td>
+                <td>@item.Orgao</td>
+                <td>@item.Observacao</td>
+            </tr>
+        }
+    </tbody>
+</table>

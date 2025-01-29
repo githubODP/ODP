@@ -81,6 +81,23 @@ namespace API.Controllers
 
         }
 
+        [HttpGet("pesquisar-comissionado/{nroProtocolo}")]
+        public async Task<IActionResult> PesquisarComissionado([FromRoute] string nroProtocolo)
+        {
+            if (string.IsNullOrWhiteSpace(nroProtocolo))
+                return BadRequest("O número do protocolo deve ser informado.");
+
+            var comissionado = await _dueRepositoryRead.ObterPorProtocolo(nroProtocolo);
+
+            if (comissionado == null)
+                return NotFound($"Nenhum comissionado encontrado com o número de protocolo {nroProtocolo}.");
+
+            return Ok(comissionado);
+        }
+
+
+
+
         [HttpGet("gerarpdf/{id}")]
         public async Task<IActionResult> GerarPdf(Guid id)
         {

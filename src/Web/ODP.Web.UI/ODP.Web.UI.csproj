@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
 	  <Nullable>Disable</Nullable>
 	  <Platforms>AnyCPU;x64</Platforms>
+	  <WebConfigTemplateFile>web.config</WebConfigTemplateFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +24,9 @@
 
   <ItemGroup>
     <Content Remove="Views\Corregedoria\Confirmacao.cshtml" />
+	  <Content Update="web.config">
+	   <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
   </ItemGroup>
 
   <ItemGroup>

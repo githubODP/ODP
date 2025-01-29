@@ -18,13 +18,9 @@ namespace ODP.Web.UI.Services
                 "application/json");
         }
 
-        
-
         protected async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
         {
-            ///teste de log
-            ///
-           
+            
 
             try
             {
