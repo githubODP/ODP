@@ -20,19 +20,37 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
         [HttpGet]
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo =null)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo = null)
         {
 
 
-            if (cpf !="123"){cpf = FormatarCPF(cpf);}
-            else { cpf = null;}
+            if (cpf != "123") { cpf = FormatarCPF(cpf); }
+            else { cpf = null; }
 
-            var due = await _dueService.Listar(pageNumber, pageSize,nome, cpf, protocolo);
+            var due = await _dueService.Listar(pageNumber, pageSize, nome, cpf, protocolo);
 
             ViewBag.CPFAtual = cpf;
             ViewBag.NomeAtual = nome;
             ViewBag.ProtocoloAtual = protocolo;
             return View(due);
+        }
+
+        [HttpGet]
+
+        public async Task<IActionResult> ListarDue(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo = null)
+        {
+
+
+            if (cpf != "123") { cpf = FormatarCPF(cpf); }
+            else { cpf = null; }
+
+            var ListarDue = await _dueService.Listar(pageNumber, pageSize, nome, cpf, protocolo);
+
+            ViewBag.CPFAtual = cpf;
+            ViewBag.NomeAtual = nome;
+            ViewBag.ProtocoloAtual = protocolo;
+            return View("ListarDue", ListarDue);
+
         }
 
         [HttpGet]

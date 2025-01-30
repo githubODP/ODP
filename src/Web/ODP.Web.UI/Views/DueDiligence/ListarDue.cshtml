@@ -1,0 +1,160 @@
+﻿@{
+    Layout = "_Layout";
+}
+@using ODP.Web.UI.Extensions
+@model PagedResult<ODP.Web.UI.Models.DueDiligence.DueDiligenceViewModel>
+
+
+
+<nav class="navbar bg-light-blue ">
+    <div class="row ml-5">
+        <!-- Formulário de busca e filtros -->
+        <form method="get" action="@Url.Action("Index")" class="d-flex flex-wrap align-items-center gap-3 w-100">
+            <!-- Filtro por CPF -->
+            <div class="form-group ">
+                <label for="cpf">CPF:</label>
+                <input type="text"
+                       id="CPF"
+                       name="CPF"
+                       value="@ViewBag.CPFAtual"
+                       class="form-control"
+                       placeholder="Digite o CPF" />
+            </div>
+
+            <div class="form-group ">
+                <label for="protocolo">Protocolo:</label>
+                <input type="text"
+                       id="protocolo"
+                       name="protocolo"
+                       value="@ViewBag.ProtocoloAtual"
+                       class="form-control"
+                       placeholder="Digite o protocolo" />
+            </div>
+
+            <div class="form-group ">
+                <label for="nome">Nome:</label>
+                <input type="text"
+                       id="nome"
+                       name="nome"
+                       value="@ViewBag.NomeAtual"
+                       class="form-control"
+                       placeholder="Digite o Nome" />
+            </div>
+ 
+
+
+            <!-- Botão Pesquisar -->
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">
+                    Pesquisar
+                </button>
+            </div>
+        </form>
+    </div>
+</nav>
+
+
+
+
+
+
+<div class="container-fluid pt-lg-5">
+    <div class="table-responsive shadow" style="margin-left:-12em; width:130%;">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Due <b>Diligence</b></h2>
+                    </div>
+                    <div class="col-sm-6">
+                     
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().NroProtocolo)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Nome)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().CPF)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Decreto)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().DataSolicitacao)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().DataResposta)</th>
+                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Observacao)</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var index = 0;
+                    }
+                    @foreach (var item in Model.Results)
+                    {
+                        <tr>
+                        
+                            <td>@(((Model.PageNumber - 1) * Model.PageSize) + (++index))</td>
+                            <td style="width: 15%;">@Html.DisplayFor(modelItem => item.NroProtocolo)</td>
+                            <td style="width: 30%; font-size:12px;">@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td style="width: 20%;">@Html.DisplayFor(modelItem => item.CPF)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Decreto)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DataSolicitacao)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DataResposta)</td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#observacaoModal-@item.Id" >
+                                    <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Modal Observacao -->
+                        <div class="modal fade" id="observacaoModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="observacaoModalLabel-@item.Id" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="observacaoModalLabel-@item.Id">Observação</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        @Html.DisplayFor(modelItem => item.Observacao)
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+          
+
+            </table>
+            
+        </div>
+    </div>
+    <div class="pagination justify-content-center">
+        @if (Model.PageNumber > 1)
+        {
+            <li class="page-item">
+                <div class="btn-sm btn-info">
+                    <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber - 1)">Anterior</a>
+                </div>
+            </li>
+        }
+        <div class="p-1">
+            @if (Model.PageNumber > 1 && Model.PageNumber < Model.TotalPages - 2)
+            {
+                <span class="bg-white color-black">@Model.PageNumber</span>
+            }
+        </div>
+        @if (Model.TotalPages > Model.PageNumber)
+        {
+            <li class="page-item">
+                <div class="btn-sm btn-info">
+                    <a class="page-link bg-info text-white " asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber + 1)">Próxima</a>
+                </div>
+            </li>
+        }
+    </div>
+</div>
+
