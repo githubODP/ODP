@@ -24,6 +24,10 @@
 
   <ItemGroup>
     <Content Remove="Views\Corregedoria\Confirmacao.cshtml" />
+    <Content Update="Views\DueDiligence\ListarDue.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
 	  <Content Update="web.config">
 	   <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>

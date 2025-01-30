@@ -1,35 +1,107 @@
 ﻿@using ODP.Web.UI.Extensions
 @model PagedResult<ODP.Web.UI.Models.DueDiligence.AnaliseViewModel>
 
-<h2>Lista de Análises</h2>
+@{
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Protocolo</th>
-            <th>Data Análise</th>
-            <th>Análise Técnica</th>
-            <th>Risco</th>
-            <th>Nome Comissionado</th>
-            <th>CPF Comissionado</th>
-            <th>Órgão Comissionado</th>
-            <th>Observação</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Results)
-        {
-            <tr>
-               
-                <td>@item.NroProtocolo</td>
-                <td>@item.DataAnalise</td>
-                <td>@item.AnaliseTecnica</td>
-                <td>@item.Risco</td>
-                <td>@item.Nome</td>
-                <td>@item.CPF</td>
-                <td>@item.Orgao</td>
-                <td>@item.Observacao</td>
-            </tr>
-        }
-    </tbody>
-</table>
+    Layout = "_Layout";
+
+}
+
+
+<div class="container-fluid">
+    <div class="table-responsive shadow" ">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Análises <b>Técnicas</b></h2>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover tablecor ">
+                <thead>
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Results.FirstOrDefault().NroProtocolo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Results.FirstOrDefault().DataAnalise)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Results.FirstOrDefault().AnaliseTecnica)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Results.FirstOrDefault().Risco)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Results.FirstOrDefault().Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Results.FirstOrDefault().CPF)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Results.FirstOrDefault().Observacao)
+                        </th>
+@* 
+                        <th>Opções</th> *@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Results)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NroProtocolo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DataAnalise)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AnaliseTecnica)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Risco)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nome)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CPF)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Orgao)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Observacao)
+                            </td>
+
+                            <td>
+                                @* <div class="d-flex ">
+                                    <a asp-controller="Corregedoria" asp-action="Editar" asp-route-id="@item.Id" class="btn btn-primary mr-2">
+                                        <img src="~/svg/editar.svg" height="16" />
+                                    </a>
+                                    <a asp-controller="Corregedoria" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
+                                        <img src="~/svg/vizualizar.svg" height="16" />
+                                    </a>
+                                    <a href="javascript:void(0);"
+                                       class="btn btn-danger delete-button"
+                                       data-id="@item.Id">
+                                        <img src="~/svg/excluir.svg" height="16" />
+                                    </a>
+
+                                </div> *@
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>

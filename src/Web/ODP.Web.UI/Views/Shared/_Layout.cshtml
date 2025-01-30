@@ -74,6 +74,19 @@
                         </ul>
                     </li>
 
+                    <li>
+                        <a href="#"><i class="ion-ios-search-strong"></i> <span>Gabinete</span></a>
+                        <ul class="nav-flyout">
+                            <li>
+                                <a asp-controller="AnaliseTecnica" asp-action="ListarDadosAdicionais"><i class="ion-ios-alarm-outline"></i>Análise Técnica</a>
+                            </li>
+                            <li>
+                                <a asp-controller="DueDiligence" asp-action="ListarDue"><i class="ion-ios-camera-outline"></i>Due Diligence</a>
+                            </li>
+
+                        </ul>
+                    </li>
+
                     @if (AppUser.PossuiRole("Administrador"))
                     {
                         <li>

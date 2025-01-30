@@ -273,7 +273,7 @@ namespace ODP.Web.UI.Services.Consultas
 
             var stream = new MemoryStream();
             document.Save(stream, false);
-            stream.Position = 0; // Resetar a posição do stream para leitura
+            stream.Position = 0;
             return Task.FromResult(new FileStreamResult(stream, "application/pdf")
             {
                 FileDownloadName = $"Relatorio_{cnpj}.pdf"
