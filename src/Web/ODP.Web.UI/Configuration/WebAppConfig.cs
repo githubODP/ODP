@@ -4,8 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ODP.Web.UI.Extensions;
-using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ODP.Web.UI.Configuration
 {
@@ -28,7 +28,7 @@ namespace ODP.Web.UI.Configuration
 
         public static void UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())   
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }

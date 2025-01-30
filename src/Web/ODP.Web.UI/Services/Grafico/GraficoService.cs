@@ -10,7 +10,8 @@ namespace ODP.Web.UI.Services.Grafico
     public class GraficoService : Service, IGraficoService
     {
         private readonly HttpClient _httpClient;
-        public GraficoService(HttpClient httpClient, IOptions<AppSettings> settings) {
+        public GraficoService(HttpClient httpClient, IOptions<AppSettings> settings)
+        {
             _httpClient = httpClient;
             httpClient.BaseAddress = new Uri(settings.Value.ModulosUrl);
         }
@@ -22,5 +23,5 @@ namespace ODP.Web.UI.Services.Grafico
             return await DeserializarObjetoResponse<GraficoViewModel>(response);
         }
     }
-    
+
 }

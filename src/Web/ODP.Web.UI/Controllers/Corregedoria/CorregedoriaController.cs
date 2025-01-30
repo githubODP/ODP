@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using ODP.Web.UI.Models.Corregedoria;
 using ODP.Web.UI.Services.Corregedoria;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,7 +15,7 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         private readonly IInstauracaoService _instauracaoService;
         private readonly ILogger<CorregedoriaController> _logger;
 
-        public CorregedoriaController(IInstauracaoService instauracaoService, ILogger<CorregedoriaController> logger )
+        public CorregedoriaController(IInstauracaoService instauracaoService, ILogger<CorregedoriaController> logger)
         {
             _instauracaoService = instauracaoService;
             _logger = logger;
@@ -223,10 +222,10 @@ namespace ODP.Web.UI.Controllers.Corregedoria
             }
 
             await _instauracaoService.Deletar(id);
-            return Ok(); 
+            return Ok();
         }
 
-      
+
 
         [HttpGet]
         public IActionResult Upload()

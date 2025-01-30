@@ -1,54 +1,62 @@
-﻿
-
-@using Domain.DueDiligence.Enum
+﻿@using Domain.DueDiligence.Enum
 @model ODP.Web.UI.Models.DueDiligence.AnaliseCadastroViewModel
 
-@{
-    ViewData["Title"] = "Criar Nova Análise";
-}
+
 
 <h2>Criar Nova Análise</h2>
 
-<form id="formCriacao" asp-action="Create" method="post">
-    
-   
 
-   
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
-    <!-- Dados que o usuário deve preencher -->
-    <h4>Dados da Análise</h4>
-
+<form asp-action="Create" method="post">
     <div class="form-group">
-        <label for="DataAnalise">Data da Análise</label>
-        <input type="date" id="DataAnalise" name="DataAnalise" class="form-control" required />
+        <label asp-for="NroProtocolo"></label>
+        <input asp-for="NroProtocolo" class="form-control" required />
+        <span asp-validation-for="NroProtocolo" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="AnaliseTecnica">Análise Técnica</label>
-        <textarea id="AnaliseTecnica" name="AnaliseTecnica" class="form-control" required></textarea>
+        <label asp-for="DataAnalise"></label>
+        <input asp-for="DataAnalise" class="form-control" readonly />
     </div>
 
     <div class="form-group">
-        <label asp-for="Risco" class="control-label"></label>
+        <label asp-for="AnaliseTecnica"></label>
+        <textarea asp-for="AnaliseTecnica" class="form-control"></textarea>
+        <span asp-validation-for="AnaliseTecnica" class="text-danger"></span>
+    </div>
+
+    <!-- DropDown para Risco -->
+    <div class="form-group">
+        <label asp-for="Risco"></label>
         @Html.DropDownListFor(m => m.Risco, new SelectList(Enum.GetValues(typeof(ETipoRisco))), new { @class = "form-control" })
         <span asp-validation-for="Risco" class="text-danger"></span>
     </div>
 
+    <!-- DropDown para Ressalvas -->
     <div class="form-group">
-        <label asp-for="Ressalvas" class="control-label"></label>
+        <label asp-for="Ressalvas"></label>
         @Html.DropDownListFor(m => m.Ressalvas, new SelectList(Enum.GetValues(typeof(ETipoRessalva))), new { @class = "form-control" })
         <span asp-validation-for="Ressalvas" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="Responsavel">Responsável</label>
-        <input type="text" id="Responsavel" name="Responsavel" class="form-control" required />
+        <label asp-for="Responsavel"></label>
+        <input asp-for="Responsavel" class="form-control" readonly />
     </div>
 
-    <button type="submit" class="btn btn-success">Salvar Análise</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Salvar Análise</button>
 </form>
 
-
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
 

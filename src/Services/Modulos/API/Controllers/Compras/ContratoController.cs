@@ -1,5 +1,4 @@
-﻿
-using Domain.Compras.Entidades;
+﻿using Domain.Compras.Entidades;
 using Domain.Compras.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +11,7 @@ namespace Compras.API.Controllers
     [ApiController]
     [Route("api/contratos")]
     [Authorize]
+
     public class ContratoController : Controller
     {
 

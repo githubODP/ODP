@@ -62,6 +62,6 @@ namespace ODP.Web.UI.Models.Corregedoria
         public bool? Cumpriu { get; set; } = false;
 
         [Display(Name = "Observação Ajustes TAC")]
-        public string? ObservacaoAjusteTAC  { get; set; }
+        public string? ObservacaoAjusteTAC { get; set; }
     }
 }

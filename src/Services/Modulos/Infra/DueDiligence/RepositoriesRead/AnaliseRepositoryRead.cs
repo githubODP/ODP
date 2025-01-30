@@ -20,7 +20,7 @@ namespace Infra.DueDiligence.RepositoriesRead
                 .Select(a => new AnaliseResponseDTO
                 {
                     Id = a.Id,
-                    NroProtocolo = null, // Caso este campo seja necessário no futuro
+                    NroProtocolo = a.NroProtocolo,
                     DataAnalise = a.DataAnalise,
                     AnaliseTecnica = a.AnaliseTecnica,
                     Risco = a.Risco.ToString(), // Enum convertido para string

@@ -9,7 +9,6 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace ODP.Web.UI.Services.DueDiligence
@@ -77,10 +76,10 @@ namespace ODP.Web.UI.Services.DueDiligence
             var response = await _httpClient.PostAsync("/api/duediligence/adicionar", dueContent);
 
             TratarErrosResponse(response);
-          
+
             return await DeserializarObjetoResponse<DueDiligenceViewModel>(response);
 
-            
+
 
         }
 

@@ -8,7 +8,7 @@ namespace ODP.Web.UI.Models.DueDiligence
 
         public Guid Id { get; set; }
         public string NroProtocolo { get; set; }
-        public string DataAnalise { get; set; }
+        public DateTime DataAnalise { get; set; }
         public string AnaliseTecnica { get; set; }
         public ETipoRisco Risco { get; set; }
         public ETipoRessalva Ressalvas { get; set; }

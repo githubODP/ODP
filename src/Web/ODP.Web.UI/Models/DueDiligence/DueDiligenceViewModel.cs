@@ -12,12 +12,13 @@ namespace ODP.Web.UI.Models.DueDiligence
         public string? NroProtocolo { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
+
         [Display(Name = "Orgão")]
         public string? Orgao { get; set; }
-        
+
         public string? Responsavel { get; set; }
         [Display(Name = "Indicação")]
-    
+
         public string? Indicacao { get; set; }
 
 
@@ -192,7 +193,7 @@ namespace ODP.Web.UI.Models.DueDiligence
         [Column("CadParentescoGrauServidorPublico")]
         public bool CadParentescoGrauServidorPublico { get; set; }
 
-       
+
 
 
         [Display(Name = "Cadastro de Entidades Privadas Sem Fins Lucrativos Impedidas - CEPIM")]

@@ -12,16 +12,16 @@ namespace API.Controllers
     {
 
         private readonly IGraficosRepositoryRead _graficosRepositoryRead;
-        
+
 
         public GraficoController(IGraficosRepositoryRead graficosRepositoryRead)
         {
             _graficosRepositoryRead = graficosRepositoryRead;
         }
 
-       [HttpGet("GraficoODP")]
+        [HttpGet("GraficoODP")]
 
-       public async Task<IActionResult> GraficoODP()
+        public async Task<IActionResult> GraficoODP()
         {
             var result = await _graficosRepositoryRead.GraficoOdp();
             return Ok(result);

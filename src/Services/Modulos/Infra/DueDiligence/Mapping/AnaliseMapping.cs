@@ -9,7 +9,7 @@ namespace Infra.DueDiligence.Mapping
         public void Configure(EntityTypeBuilder<Analise> builder)
         {
             builder.HasKey(x => x.Id);
-            
+
             builder.Property(c => c.NroProtocolo)
                .HasColumnType("varchar(12)");
 

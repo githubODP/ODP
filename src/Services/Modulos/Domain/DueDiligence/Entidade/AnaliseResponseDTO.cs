@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.DueDiligence.Entidade
+﻿namespace Domain.DueDiligence.Entidade
 {
     public class AnaliseResponseDTO
     {
@@ -23,4 +17,4 @@ namespace Domain.DueDiligence.Entidade
         public string Observacao { get; set; }
     }
 }
-        
+

@@ -1,7 +1,6 @@
 ﻿using CGEODP.Core.Data;
 using CGEODP.Core.DomainObjects;
 using Infra.Data;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace Infra.RepositoryExterno

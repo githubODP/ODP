@@ -76,7 +76,7 @@ namespace Infra.DueDiligence.RepositoriesRead
             };
         }
 
-        public async Task<Comissionado> ObterPorProtocolo(string nroProtocolo)
+        public async Task<List<Comissionado>> ObterPorProtocolo(string nroProtocolo)
         {
             return await _context.Comissionados
                 .Where(c => c.NroProtocolo == nroProtocolo)
@@ -86,14 +86,15 @@ namespace Infra.DueDiligence.RepositoriesRead
                     Nome = c.Nome,
                     CPF = c.CPF,
                     Orgao = c.Orgao,
-                    Observacao = c.Observacao // Apenas os campos necessários
+                    Observacao = c.Observacao,
+                    Id = c.Id // Apenas os campos necessários
                 })
-                .FirstOrDefaultAsync();
+                .ToListAsync(); // Retorna uma lista
         }
 
 
     }
 }
-    
+
 
 

@@ -4,13 +4,7 @@ using Domain.Graficos.Entidades;
 using Domain.Graficos.Interfaces;
 using Infra.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Infra.Graficos.RepositoryRead
 {
@@ -27,11 +21,11 @@ namespace Infra.Graficos.RepositoryRead
         {
             var dados = await _context.Set<Comissionado>()
                 .AsNoTracking()
-                .GroupBy(c => c.Orgao) 
+                .GroupBy(c => c.Orgao)
                 .Select(g => new
                 {
-                    orgao = g.Key, 
-                    quantidade = g.Count() 
+                    orgao = g.Key,
+                    quantidade = g.Count()
                 })
                 .ToListAsync();
 

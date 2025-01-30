@@ -13,9 +13,10 @@ namespace Infra.Corregedoria.RepositoriesRead
     public class InstauracaoRepositoryRead : RepositoryRead<Instauracao>, IInstauracaoRepositoryRead, IAggregateRoot
     {
         private readonly ILogger<InstauracaoRepositoryRead> _logger;
-        public InstauracaoRepositoryRead(ObservatorioContext context, ILogger<InstauracaoRepositoryRead> logger) : base(context) {
+        public InstauracaoRepositoryRead(ObservatorioContext context, ILogger<InstauracaoRepositoryRead> logger) : base(context)
+        {
             _logger = logger;
-        
+
         }
 
         public async Task<Instauracao> BuscarPorCNPJ(string cnpj)

@@ -1,14 +1,10 @@
 ﻿using Domain.DueDiligence.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.DueDiligence.Entidade
 {
-    public  class AnaliseCreateDTO
+    public class AnaliseCreateDTO
     {
+        public Guid ComissionadoId { get; set; }  // Adicionado para vincular ao comissionado correto
         public string NroProtocolo { get; set; }
         public DateTime DataAnalise { get; set; }
         public string AnaliseTecnica { get; set; }
@@ -17,6 +13,6 @@ namespace Domain.DueDiligence.Entidade
         public string Responsavel { get; set; }
 
 
-        
+
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ODP.Web.UI.Models.Demandas;
 using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Services.DueDiligence;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.DueDiligence
@@ -12,7 +12,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
     {
         private readonly IAnaliseService _analiseService;
 
-        public AnaliseTecnicaController (IAnaliseService analiseService)
+        public AnaliseTecnicaController(IAnaliseService analiseService)
         {
             _analiseService = analiseService;
         }
@@ -28,79 +28,109 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             if (resultado == null || !resultado.Results.Any())
                 return NotFound("Nenhuma análise encontrada.");
 
-            return View(resultado); 
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> PesquisarProtocolo(string nroProtocolo)
-        {
-            if (string.IsNullOrEmpty(nroProtocolo))
-                return Json(new { sucesso = false, mensagem = "Número do protocolo deve ser informado." });
-
-            var resultado = await _analiseService.PesquisarComissionado(nroProtocolo);
-
-            if (resultado == null)
-                return Json(new { sucesso = false, mensagem = "Nenhum comissionado encontrado." });
-
-            return Json(new { sucesso = true, dados = resultado });
+            return View(resultado);
         }
 
 
-
         [HttpGet]
-
-        public IActionResult Create()
+        public IActionResult PesquisarProtocolo()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(AnaliseCadastroViewModel analisecadastroViewModel)
+        public async Task<IActionResult> PesquisarProtocolo(string nroProtocolo)
         {
-
-            if (ModelState.IsValid)
+            if (string.IsNullOrWhiteSpace(nroProtocolo))
             {
-                await _analiseService.Adicionar(analisecadastroViewModel);
-                return RedirectToAction(nameof(Index));
+                ViewData["Mensagem"] = "Número do protocolo deve ser informado.";
+                return View();
             }
-            return View(analisecadastroViewModel);
 
+            var resultado = await _analiseService.PesquisarComissionado(nroProtocolo);
+
+            if (resultado == null || resultado.Count == 0)
+            {
+                ViewData["Mensagem"] = "Nenhum comissionado encontrado.";
+                return View();
+            }
+
+            return View(resultado);
         }
 
-        public async Task<IActionResult> Editar(Guid id)
+
+
+
+        [HttpGet]
+        public IActionResult Create()
         {
-            var demanda = await _analiseService.ObterId(id);
-            return View(demanda);
+            var model = new AnaliseCadastroViewModel
+            {
+                DataAnalise = DateTime.Now // Define a data da análise automaticamente
+            };
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Editar(Guid id, AnaliseCadastroViewModel analisecadastroViewModel)
+        public async Task<IActionResult> Create(AnaliseCadastroViewModel model)
         {
-            if (id != analisecadastroViewModel.Id)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return View(model);
             }
 
-            if (ModelState.IsValid)
+            // Obtém o e-mail do usuário logado
+            var emailUsuario = User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            if (!string.IsNullOrWhiteSpace(emailUsuario))
             {
-                await _analiseService.Alterar(analisecadastroViewModel, id);
-                bool edicaoConcluida = true;
-                return RedirectToAction(nameof(Index), new { edicaoConcluida = edicaoConcluida });
+                model.Responsavel = emailUsuario;
             }
-            return View(analisecadastroViewModel);
+
+            var resultado = await _analiseService.Adicionar(model);
+
+            if (resultado == null)
+            {
+                ModelState.AddModelError("", "Erro ao salvar a análise.");
+                return View(model);
+            }
+
+            TempData["SuccessMessage"] = "Análise criada com sucesso!";
+
+            // Redireciona para a listagem correta após a criação
+            return RedirectToAction("ListarDadosAdicionais");
         }
 
 
 
-        [HttpDelete]
-        public async Task<IActionResult> Deletar(Guid id)
-        {
+        //[HttpPost]
+        //public async Task<IActionResult> Editar(Guid id, AnaliseCadastroModel analiseViewModel)
+        //{
+        //    if (id != analiseViewModel.Id)
+        //    {
+        //        return NotFound();
+        //    }
 
-            await _analiseService.Deletar(id);
-            return RedirectToAction(nameof(Index));
+        //    if (ModelState.IsValid)
+        //    {
+        //        await _analiseService.Alterar(analiseViewModel, id);
+        //        bool edicaoConcluida = true;
+        //        return RedirectToAction(nameof(Index), new { edicaoConcluida = edicaoConcluida });
+        //    }
+        //    return View(analiseViewModel);
+        //}
 
 
-        }
+
+        //[HttpDelete]
+        //public async Task<IActionResult> Deletar(Guid id)
+        //{
+
+        //    await _analiseService.Deletar(id);
+        //    return RedirectToAction(nameof(Index));
+
+
+        //}
 
     }
 }

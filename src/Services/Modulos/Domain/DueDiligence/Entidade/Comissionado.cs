@@ -74,6 +74,7 @@ namespace Domain.DueDiligence.Entidade
         public bool CadCVM { get; set; }
 
         public int? ClassificacaoRisco { get; set; }
+        [Display(Name = "Observação")]
         public string? Observacao { get; set; }
         public string? Evidencias { get; set; }
 

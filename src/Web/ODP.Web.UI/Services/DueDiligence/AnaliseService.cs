@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Options;
-using System.Net.Http;
-using System;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.DueDiligence;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services.DueDiligence
@@ -19,7 +21,7 @@ namespace ODP.Web.UI.Services.DueDiligence
             _httpClient = httpClient;
         }
 
-        
+
 
         public async Task<PagedResult<AnaliseViewModel>> ListarDadosAdicionais(int pageNumber = 1, int pageSize = 10)
         {
@@ -29,38 +31,55 @@ namespace ODP.Web.UI.Services.DueDiligence
         }
 
 
-        public async Task<AnaliseCadastroViewModel> ObterId(Guid id)
+        public async Task<AnaliseViewModel> ObterId(Guid id)
         {
-            // Substituir {id:guid} pela variável id diretamente na URL
+
             var response = await _httpClient.GetAsync($"api/analise/obter/{id}");
-
-            TratarErrosResponse(response);
-
-            return await DeserializarObjetoResponse<AnaliseCadastroViewModel>(response);
-        }
-
-        public async Task<AnaliseViewModel> PesquisarComissionado(string nroProtocolo)
-        {
-            var response = await _httpClient.GetAsync($"/api/analise/pesquisar-comissionado/{nroProtocolo}");
 
             TratarErrosResponse(response);
 
             return await DeserializarObjetoResponse<AnaliseViewModel>(response);
         }
 
-        public async Task<AnaliseCadastroViewModel> Adicionar(AnaliseCadastroViewModel analisecadastroViewModel)
+
+
+        public async Task<List<DueDiligenceViewModel>> PesquisarComissionado(string nroProtocolo)
         {
-            var analiseContent = ObterConteudo(analisecadastroViewModel);
+            var response = await _httpClient.GetAsync($"/api/analise/pesquisar-comissionado/{nroProtocolo}");
+            TratarErrosResponse(response);
+
+            // Lê o JSON completo e extrai apenas o campo "dados"
+            var json = await response.Content.ReadAsStringAsync();
+            var resultado = JsonSerializer.Deserialize<JsonResponse<List<DueDiligenceViewModel>>>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            return resultado?.dados ?? new List<DueDiligenceViewModel>();
+        }
+
+        // Criar uma classe auxiliar para mapear o JSON retornado
+        private class JsonResponse<T>
+        {
+            public bool sucesso { get; set; }
+            public T dados { get; set; }
+        }
+
+
+        public async Task<AnaliseCadastroViewModel> Adicionar(AnaliseCadastroViewModel analiseCadastroViewModel)
+        {
+            var analiseContent = ObterConteudo(analiseCadastroViewModel);
+
             var response = await _httpClient.PostAsync("/api/analise/adicionar", analiseContent);
 
             TratarErrosResponse(response);
             return await DeserializarObjetoResponse<AnaliseCadastroViewModel>(response);
         }
 
-        public async Task<AnaliseCadastroViewModel> Alterar(AnaliseCadastroViewModel analisecadastroViewModel, Guid id)
+        public async Task<AnaliseCadastroViewModel> Alterar(AnaliseCadastroViewModel analiseCadastroViewModel, Guid id)
         {
 
-            var analiseContent = ObterConteudo(analisecadastroViewModel);
+            var analiseContent = ObterConteudo(analiseCadastroViewModel);
 
             var response = await _httpClient.PutAsync("/api/analise/alterar", analiseContent);
 
@@ -86,6 +105,6 @@ namespace ODP.Web.UI.Services.DueDiligence
             return null;
         }
 
-       
+
     }
 }

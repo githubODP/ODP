@@ -2,7 +2,6 @@
 using Domain.DueDiligence.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infra.DueDiligence.Repositories
 {
@@ -12,6 +11,6 @@ namespace Infra.DueDiligence.Repositories
         public AnaliseRepository(ObservatorioContext context) : base(context) { }
 
 
-        
+
     }
 }

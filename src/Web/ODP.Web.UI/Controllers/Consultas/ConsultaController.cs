@@ -1,10 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ODP.Web.UI.Models.Consultas.ResultadoConsulta;
-using ODP.Web.UI.Models.DueDiligence;
 using OfficeOpenXml;
 using System.Collections.Generic;
 using System.IO;
@@ -1865,7 +1863,7 @@ namespace ODP.Web.UI.Controllers.Consultas
 
 
 
-        [HttpPost] 
+        [HttpPost]
         public async Task<FileStreamResult> GerarPdf([FromBody] PdfRequest request)
         {
             var dados = JsonConvert.DeserializeObject<ResultadoDTO>(request.DadosJson);

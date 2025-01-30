@@ -12,7 +12,7 @@ namespace Infra.DueDiligence.Mapping
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(c => c.NroProtocolo)               
+            builder.Property(c => c.NroProtocolo)
                 .HasColumnType("varchar(12)");
 
             builder.Property(c => c.Nome)
@@ -23,14 +23,14 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(14)");
 
-            builder.Property(c => c.Orgao)              
+            builder.Property(c => c.Orgao)
                 .HasColumnType("varchar(15)");
 
-            builder.Property(c => c.Indicacao)           
+            builder.Property(c => c.Indicacao)
             .HasColumnType("varchar(30)");
 
             builder.Property(c => c.Responsavel)
-                
+
                 .HasColumnType("varchar(100)");
 
             builder.Property(c => c.DataSolicitacao)
@@ -41,16 +41,16 @@ namespace Infra.DueDiligence.Mapping
                 .IsRequired()
                 .HasColumnType("DateTime");
 
-            builder.Property(c => c.ClassificacaoRisco)            
+            builder.Property(c => c.ClassificacaoRisco)
                 .HasColumnType("int");
 
-            builder.Property(c => c.Observacao)               
+            builder.Property(c => c.Observacao)
                 .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.Evidencias)                
+            builder.Property(c => c.Evidencias)
                 .HasColumnType("nvarchar(max)");
 
-            builder.Property(c => c.Decreto)                
+            builder.Property(c => c.Decreto)
                 .HasColumnType("varchar(10)");
 
             builder.Property(c => c.CadEmpresario)
@@ -168,7 +168,7 @@ namespace Infra.DueDiligence.Mapping
 
             builder.Property(c => c.CadImprobidade)
                .IsRequired()
-              .HasColumnType("bit");            
+              .HasColumnType("bit");
 
             builder.Property(c => c.CadTrabalhoEscravo)
                .IsRequired()

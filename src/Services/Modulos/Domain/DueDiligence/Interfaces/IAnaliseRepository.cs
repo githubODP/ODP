@@ -5,6 +5,6 @@ namespace Domain.DueDiligence.Interfaces
 {
     public interface IAnaliseRepository : IRepository<Analise>
     {
-       
+
     }
 }

@@ -1,15 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Corregedoria;
-using ODP.Web.UI.Models.DueDiligence;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 
@@ -133,7 +129,7 @@ namespace ODP.Web.UI.Services.Corregedoria
 
         public async Task<InstauracaoViewModel> Deletar(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/corregedoria/deletar/{id}");            
+            var response = await _httpClient.DeleteAsync($"api/corregedoria/deletar/{id}");
 
             if (TratarErrosResponse(response))
             {

@@ -250,7 +250,7 @@ namespace API.Controllers
                 return NotFound("Registro não encontrado.");
             }
 
-                
+
 
             try
             {

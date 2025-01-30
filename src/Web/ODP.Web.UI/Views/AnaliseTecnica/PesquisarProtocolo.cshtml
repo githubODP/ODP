@@ -1,0 +1,52 @@
+﻿@model List<ODP.Web.UI.Models.DueDiligence.DueDiligenceViewModel>
+
+@{
+    ViewData["Title"] = "Pesquisar Protocolo";
+}
+
+<h2>Pesquisar Protocolo</h2>
+
+<form method="post" asp-action="PesquisarProtocolo">
+    <div class="form-group">
+        <label for="nroProtocolo">Número do Protocolo</label>
+        <input type="text" id="nroProtocolo" name="nroProtocolo" class="form-control" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+</form>
+
+@if (Model != null && Model.Any())
+{
+    <hr />
+    <h3>Resultados da Busca</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Número do Protocolo</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Órgão</th>
+                <th>Observação</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.NroProtocolo</td>
+                    <td>@item.Nome</td>
+                    <td>@item.CPF</td>
+                    <td>@item.Orgao</td>
+                    <td>@item.Observacao</td>
+                    <td>
+
+                        <a asp-action="Create" asp-route-nroProtocolo="@item.NroProtocolo" class="btn btn-success">
+                            Selecionar
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

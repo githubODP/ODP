@@ -1,21 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ODP.Web.UI.Models.Graficos;
 using ODP.Web.UI.Services.Grafico;
-using System.Text.Json;
 using System.Threading.Tasks;
-using System.Linq;
-using Humanizer;
 
 namespace ODP.Web.UI.Controllers.Grafico
 {
     public class GraficoController : MainController
     {
-       private readonly IGraficoService _graficoService;
+        private readonly IGraficoService _graficoService;
 
 
-        public GraficoController (IGraficoService graficoService)
+        public GraficoController(IGraficoService graficoService)
         {
             _graficoService = graficoService;
         }

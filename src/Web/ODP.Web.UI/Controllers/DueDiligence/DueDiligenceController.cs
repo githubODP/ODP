@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Services.DueDiligence;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ODP.Web.UI.Controllers.DueDiligence
 {
@@ -20,14 +18,14 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
         [HttpGet]
 
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo =null)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo = null)
         {
 
 
-            if (cpf !="123"){cpf = FormatarCPF(cpf);}
-            else { cpf = null;}
+            if (cpf != "123") { cpf = FormatarCPF(cpf); }
+            else { cpf = null; }
 
-            var due = await _dueService.Listar(pageNumber, pageSize,nome, cpf, protocolo);
+            var due = await _dueService.Listar(pageNumber, pageSize, nome, cpf, protocolo);
 
             ViewBag.CPFAtual = cpf;
             ViewBag.NomeAtual = nome;
@@ -172,7 +170,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         public async Task<IActionResult> CreateAndGeneratePdf(DueDiligenceViewModel dueViewModel)
         {
             // Salvar o Due Diligence
-             var result  = await _dueService.Adicionar(CalculoRisco(dueViewModel));
+            var result = await _dueService.Adicionar(CalculoRisco(dueViewModel));
 
             // Gerar o PDF e retornar o resultado para download
             var pdfFile = await _dueService.GerarPdf(result.Id);

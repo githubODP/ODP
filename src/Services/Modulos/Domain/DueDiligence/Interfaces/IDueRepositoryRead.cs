@@ -7,7 +7,7 @@ namespace Domain.DueDiligence.Interfaces
     public interface IDueRepositoryRead : IRepositoryRead<Comissionado>
     {
 
-        Task<Comissionado> ObterPorProtocolo(string nroProtocolo);
+        Task<List<Comissionado>> ObterPorProtocolo(string nroProtocolo);
 
         Task<List<Comissionado>> BuscarPorCPF(string cpf);
         Task<PagedResult<Comissionado>> ListarCOmFiltroAsync(

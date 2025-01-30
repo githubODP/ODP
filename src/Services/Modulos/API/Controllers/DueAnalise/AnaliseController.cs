@@ -1,12 +1,10 @@
-﻿using CGEODP.Core.DomainObjects;
-using Domain.DueDiligence.Entidade;
+﻿using Domain.DueDiligence.Entidade;
 using Domain.DueDiligence.Interfaces;
-using Infra.DueDiligence.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,7 +27,7 @@ namespace API.Controllers.DueAnalise
         {
             _analiseRepository = analiseRepository;
             _analiseRepositoryRead = analiseRepositoryRead;
-           _dueRepositoryRead = dueRepositoryRead;
+            _dueRepositoryRead = dueRepositoryRead;
             _logger = logger;
         }
 
@@ -62,24 +60,31 @@ namespace API.Controllers.DueAnalise
             return Ok(analise);
         }
 
+
+
         [HttpGet("pesquisar-comissionado/{nroProtocolo}")]
         public async Task<IActionResult> PesquisarComissionado(string nroProtocolo)
         {
             if (string.IsNullOrEmpty(nroProtocolo))
                 return BadRequest(new { sucesso = false, mensagem = "Número do protocolo deve ser informado." });
 
-            var resultado = await _dueRepositoryRead.ObterPorProtocolo(nroProtocolo);
+            var resultados = await _dueRepositoryRead.ObterPorProtocolo(nroProtocolo);
 
-            if (resultado == null)
+            if (resultados == null || !resultados.Any())
                 return NotFound(new { sucesso = false, mensagem = $"Nenhum comissionado encontrado com o número de protocolo {nroProtocolo}." });
 
             return Ok(new
             {
-                resultado.NroProtocolo,
-                resultado.Nome,
-                resultado.CPF,
-                resultado.Orgao,
-                resultado.Observacao
+                sucesso = true,
+                dados = resultados.Select(r => new
+                {
+                    r.NroProtocolo,
+                    r.Nome,
+                    r.CPF,
+                    r.Orgao,
+                    r.Observacao,
+                    r.Id
+                })
             });
         }
 
@@ -88,60 +93,55 @@ namespace API.Controllers.DueAnalise
         [HttpPost("adicionar")]
         public async Task<IActionResult> Criar([FromBody] AnaliseCreateDTO dto)
         {
-           
-
             if (dto == null)
                 return BadRequest("Os dados da análise são obrigatórios.");
 
-            if (string.IsNullOrWhiteSpace(dto.NroProtocolo))
+            if (string.IsNullOrEmpty(dto.NroProtocolo))
                 return BadRequest("O número do protocolo deve ser informado.");
 
-            // Buscar o comissionado pelo NroProtocolo
-            var comissionado = await _dueRepositoryRead.ObterPorProtocolo(dto.NroProtocolo);
+            // Buscar o ComissionadoId automaticamente pelo NroProtocolo
+            var comissionados = await _dueRepositoryRead.ObterPorProtocolo(dto.NroProtocolo);
 
-            if (comissionado == null)
-                return NotFound($"Nenhum comissionado encontrado com o número de protocolo {dto.NroProtocolo}.");
+            if (comissionados == null || !comissionados.Any())
+                return NotFound($"Nenhum comissionado encontrado para o protocolo {dto.NroProtocolo}.");
 
-            // Obter o e-mail do usuário logado
+            // Escolher qual ComissionadoId usar (se houver mais de um, pode ser ajustado)
+            var comissionadoId = comissionados.First().Id;
+
+            // Obter e-mail do usuário logado
             var emailUsuarioLogado = HttpContext.User.Claims
-            .FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+                .FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
 
             if (string.IsNullOrEmpty(emailUsuarioLogado))
-            {
                 return Unauthorized("O usuário logado não possui um e-mail válido.");
-            }
 
-            // Criar a nova análise
+            // Criar uma nova análise vinculando ao ComissionadoId correto
             var analise = new Analise
             {
-                DataAnalise = dto.DataAnalise,
+                NroProtocolo = dto.NroProtocolo,
+                DataAnalise = DateTime.Now,
                 AnaliseTecnica = dto.AnaliseTecnica,
                 Risco = dto.Risco,
                 Ressalvas = dto.Ressalvas,
                 Responsavel = emailUsuarioLogado,
-                ComissionadoId = comissionado.Id // Vincula ao comissionado encontrado
+                ComissionadoId = comissionadoId // 🔴 Vinculando o ID correto
             };
 
             await _analiseRepository.Adicionar(analise);
 
-            // Retornar os dados no AnaliseResponseDTO
-            var responseDto = new AnaliseResponseDTO
+            return CreatedAtAction(nameof(ObterPorId), new { id = analise.Id }, new
             {
-                Id = analise.Id,
-                NroProtocolo = dto.NroProtocolo,
-                DataAnalise = analise.DataAnalise,
-                AnaliseTecnica = analise.AnaliseTecnica,
-                Risco = analise.Risco.ToString(),
-                Ressalvas = analise.Ressalvas.ToString(),
-                Responsavel = analise.Responsavel,
-                Nome = comissionado.Nome,
-                CPF = comissionado.CPF,
-                Orgao = comissionado.Orgao,
-                Observacao = comissionado.Observacao
-            };
-
-            return CreatedAtAction(nameof(ObterPorId), new { id = analise.Id }, responseDto);
+                analise.Id,
+                analise.NroProtocolo,
+                analise.DataAnalise,
+                analise.AnaliseTecnica,
+                analise.Risco,
+                analise.Ressalvas,
+                analise.Responsavel,
+                analise.ComissionadoId
+            });
         }
+
 
 
 
@@ -161,13 +161,19 @@ namespace API.Controllers.DueAnalise
 
             // Obter o e-mail do usuário logado
             var emailUsuarioLogado = HttpContext.User?.Claims
-                .FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Email)?.Value;
+               .FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
 
             if (string.IsNullOrWhiteSpace(emailUsuarioLogado))
                 return Unauthorized("O usuário logado não possui um e-mail válido.");
 
+            // Buscar o comissionado correspondente (se necessário)
+            var comissionado = await _dueRepositoryRead.ObterId(analise.ComissionadoId);
+            if (comissionado == null)
+                return NotFound("O comissionado vinculado a esta análise não foi encontrado.");
+
             // Atualizar os dados da análise
-            analise.DataAnalise = dto.DataAnalise;
+            analise.NroProtocolo = comissionado.NroProtocolo;  // Mantendo o vínculo correto
+            analise.DataAnalise = DateTime.Now;
             analise.AnaliseTecnica = dto.AnaliseTecnica;
             analise.Risco = dto.Risco;
             analise.Ressalvas = dto.Ressalvas;
@@ -190,10 +196,17 @@ namespace API.Controllers.DueAnalise
             if (analise == null)
                 return NotFound($"Nenhuma análise encontrada com o ID {id}.");
 
-            await _analiseRepository.Deletar(analise);
-
-            return NoContent(); // Retorna 204 No Content após exclusão
+            try
+            {
+                await _analiseRepository.Deletar(analise);
+                return Ok(new { sucesso = true, mensagem = "Análise excluída com sucesso." });
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest(new { sucesso = false, mensagem = "Erro ao excluir a análise. Verifique se há dependências.", erro = ex.Message });
+            }
         }
+
 
 
     }
