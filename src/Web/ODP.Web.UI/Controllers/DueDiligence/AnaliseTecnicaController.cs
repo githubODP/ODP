@@ -21,7 +21,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
 
         [HttpGet]
-        public async Task<IActionResult> ListarDadosAdicionais([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> ListarDadosAdicionais([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
             var resultado = await _analiseService.ListarDadosAdicionais(pageNumber, pageSize);
 
@@ -78,6 +78,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             if (!ModelState.IsValid)
             {
                 return View(model);
+
             }
 
             // Obtém o e-mail do usuário logado
@@ -86,6 +87,9 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             {
                 model.Responsavel = emailUsuario;
             }
+
+
+            model.DataAnalise = DateTime.Now;
 
             var resultado = await _analiseService.Adicionar(model);
 
@@ -99,7 +103,9 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
             // Redireciona para a listagem correta após a criação
             return RedirectToAction("ListarDadosAdicionais");
+
         }
+
 
 
 

@@ -1,52 +1,98 @@
-﻿@model List<ODP.Web.UI.Models.DueDiligence.DueDiligenceViewModel>
+﻿@using Domain.DueDiligence.Enum
+@using ODP.Web.UI.Models.DueDiligence
+@model List<ODP.Web.UI.Models.DueDiligence.DueDiligenceViewModel>
 
 @{
     ViewData["Title"] = "Pesquisar Protocolo";
 }
 
-<h2>Pesquisar Protocolo</h2>
 
-<form method="post" asp-action="PesquisarProtocolo">
-    <div class="form-group">
-        <label for="nroProtocolo">Número do Protocolo</label>
-        <input type="text" id="nroProtocolo" name="nroProtocolo" class="form-control" required />
+
+
+<div class="d-flex flex-column align-items-center">
+    <!-- Card de Pesquisa -->
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Pesquisa Protocolo</h5>
+            <form method="post" asp-action="PesquisarProtocolo">
+                <div class="form-group">
+                    <input type="text" id="nroProtocolo" name="nroProtocolo" class="form-control" required placeholder="Nº Protocolo" />
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+            </form>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
-</form>
+    <!-- Resultado da Pesquisa -->
+    @if (Model != null && Model.Any())
+    {
+        <div class="container-fluid pt-lg-5 text-center">
+            <div class="table-responsive shadow">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <h2>Resultado da <b>Busca</b></h2>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Protocolo</th>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Órgão</th>
+                                <th>Observação</th>
+                                <th>Análise</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.NroProtocolo</td>
+                                    <td>@item.Nome</td>
+                                    <td>@item.CPF</td>
+                                    <td>@item.Orgao</td>
+                                    <td>@item.Observacao</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary"
+                                                data-toggle="modal"
+                                                data-target="#analiseModal"
+                                                data-protocolo="@item.NroProtocolo">
+                                            Analisar
+                                        </button>
+                                    </td>
 
-@if (Model != null && Model.Any())
-{
-    <hr />
-    <h3>Resultados da Busca</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Número do Protocolo</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Órgão</th>
-                <th>Observação</th>
-                <th>Ação</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.NroProtocolo</td>
-                    <td>@item.Nome</td>
-                    <td>@item.CPF</td>
-                    <td>@item.Orgao</td>
-                    <td>@item.Observacao</td>
-                    <td>
+                                </tr>
+                              
 
-                        <a asp-action="Create" asp-route-nroProtocolo="@item.NroProtocolo" class="btn btn-success">
-                            Selecionar
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                            }
+                        </tbody>
+
+                    </table>
+
+                    @await Html.PartialAsync("_AnaliseCadastroForm", new AnaliseCadastroViewModel())
+                </div>
+
+
+            </div>
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#analiseModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var nroProtocolo = button.data('protocolo');
+                var modal = $(this);
+
+                // Preenche o NroProtocolo
+                modal.find('#NroProtocolo').val(nroProtocolo);
+
+
+            });
+        });
+
+    </script>
 }
