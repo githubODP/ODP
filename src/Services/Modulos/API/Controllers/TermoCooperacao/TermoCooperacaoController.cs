@@ -1,4 +1,4 @@
-﻿using Domain.TermoCooperacao.Interfaces;
+﻿using Domain.Internos.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
