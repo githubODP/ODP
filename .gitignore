@@ -80,3 +80,5 @@ launchSettings.json
 _ReSharper*
 
 src/Web/ODP.Web.UI/Views/Corregedoria/Index1.cshtml
+/src/Web/ODP.Web.UI/appsettings.Development.json
+/src/Web/ODP.Web.UI/appsettings.Development.json
