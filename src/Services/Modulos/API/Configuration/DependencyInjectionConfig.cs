@@ -15,6 +15,7 @@ using Domain.Graficos.Interfaces;
 using Domain.Internos.Interfaces;
 using Domain.Library.Interfaces;
 using Domain.RecursosHumanos.Interfaces.RepositoriesRead;
+using Domain.TermoCooperacao.Interfaces;
 using Domain.Tribunal.Interfaces.TCE;
 using Domain.Tribunal.Interfaces.TCU;
 using Domain.Tribunal.Interfaces.TSE;
@@ -40,6 +41,7 @@ using Infra.GovernoFederal.Repositories;
 using Infra.Graficos.RepositoryRead;
 using Infra.Internos.RepositoriesRead;
 using Infra.RecursosHumanos.RepositoriesRead;
+using Infra.TermoCooperacao.RepositoryRead;
 using Infra.Tribunal.Repository.TCE;
 using Infra.Tribunal.Repository.TCU;
 using Infra.Tribunal.Repository.TSE;
@@ -178,6 +180,10 @@ namespace API.Configuration
             //Graficos
 
             services.AddScoped<IGraficosRepositoryRead, GraficoRepositoryRead>();
+
+            //Termo de Cooperação
+
+            services.AddScoped<ITermoCooperacaoRepositoryRead, TermoCooperacaoRepositoryRead>();
 
 
 

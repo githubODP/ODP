@@ -1,4 +1,5 @@
 ﻿
+
 using Domain.Corregedoria.Entidade;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
