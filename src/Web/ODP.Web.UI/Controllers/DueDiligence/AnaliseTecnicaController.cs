@@ -64,9 +64,12 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         [HttpGet]
         public IActionResult Create()
         {
+            var emailUsuario = User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
             var model = new AnaliseCadastroViewModel
             {
-                DataAnalise = DateTime.Now // Define a data da análise automaticamente
+                DataAnalise = DateTime.Now, // Define a data da análise automaticamente
+                Responsavel = emailUsuario
             };
 
             return View(model);
