@@ -38,6 +38,7 @@ using Infra.Fazenda.RepositoriesRead;
 using Infra.GovernoEstadual.Repositories;
 using Infra.GovernoFederal.Repositories;
 using Infra.Graficos.RepositoryRead;
+using Infra.Internos.Repositories;
 using Infra.Internos.RepositoriesRead;
 using Infra.RecursosHumanos.RepositoriesRead;
 using Infra.Tribunal.Repository.TCE;
@@ -182,6 +183,7 @@ namespace API.Configuration
             //Termo de Cooperação
 
             services.AddScoped<ITermoCooperacaoRepositoryRead, TermoCooperacaoRepositoryRead>();
+            services.AddScoped<ITermoCooperacaoRepository, TermoCooperacaoRepository>();
 
 
 

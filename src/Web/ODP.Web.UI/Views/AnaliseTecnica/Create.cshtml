@@ -5,45 +5,55 @@
     ViewData["Title"] = "Criar Nova Análise";
 }
 
-<h2>Criar Nova Análise</h2>
+<div class="container shadow-lg border-1  px-4 py-3 mt-3">
+    <form asp-action="Create" method="post">
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="NroProtocolo">Número do Protocolo</label>
-        <input type="text" id="NroProtocolo" name="NroProtocolo" class="form-control"
-               value="@Model.NroProtocolo" readonly />
-    </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Adicionar <b>Análise Técnica</b></h2>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="NroProtocolo">Número do Protocolo</label>
+            <input type="text" id="NroProtocolo" name="NroProtocolo" class="form-control"
+                   value="@Model.NroProtocolo" readonly />
+        </div>
 
-    <div class="form-group">
-        <label for="DataAnalise">Data da Análise</label>
-        <input type="text" id="DataAnalise" name="DataAnalise" class="form-control"
-               value="@Model.DataAnalise.ToString("dd/MM/yyyy")" readonly />
-    </div>
+        <div class="form-group">
+            <label for="DataAnalise">Data da Análise</label>
+            <input type="text" id="DataAnalise" name="DataAnalise" class="form-control"
+                   value="@Model.DataAnalise.ToString("dd/MM/yyyy")" readonly />
+        </div>
 
-    <div class="form-group">
-        <label for="Responsavel">Responsável</label>
-        <input type="text" id="Responsavel" name="Responsavel" class="form-control"
-               value="@Model.Responsavel" readonly />
-    </div>
+        <div class="form-group">
+            <label for="Responsavel">Responsável</label>
+            <input type="text" id="Responsavel" name="Responsavel" class="form-control"
+                   value="@Model.Responsavel" readonly />
+        </div>
 
-    <div class="form-group">
-        <label for="AnaliseTecnica">Análise Técnica</label>
-        <textarea id="AnaliseTecnica" name="AnaliseTecnica" class="form-control"></textarea>
-    </div>
+        <div class="form-group">
+            <label for="AnaliseTecnica">Análise Técnica</label>
+            <textarea id="AnaliseTecnica" name="AnaliseTecnica" class="form-control"></textarea>
+        </div>
 
-    <div class="form-group">
-        <label for="Risco">Risco</label>
-        @Html.DropDownListFor(m => m.Risco, new SelectList(Enum.GetValues(typeof(ETipoRisco))),
-                 new { @class = "form-control" })
-    </div>
+        <div class="form-group">
+            <label for="Risco">Risco</label>
+            @Html.DropDownListFor(m => m.Risco, new SelectList(Enum.GetValues(typeof(ETipoRisco))),
+                     new { @class = "form-control" })
+        </div>
 
-    <div class="form-group">
-        <label for="Ressalvas">Ressalvas</label>
-        @Html.DropDownListFor(m => m.Ressalvas, new SelectList(Enum.GetValues(typeof(ETipoRessalva))),
-                 new { @class = "form-control" })
-    </div>
+        <div class="form-group">
+            <label for="Ressalvas">Ressalvas</label>
+            @Html.DropDownListFor(m => m.Ressalvas, new SelectList(Enum.GetValues(typeof(ETipoRessalva))),
+                     new { @class = "form-control" })
+        </div>
 
-    <button type="submit" class="btn btn-primary">Salvar Análise</button>
-    <a asp-action="ListarDadosAdicionais" class="btn btn-secondary">Cancelar</a>
-</form>
 
+        <a asp-action="ListarDadosAdicionais" class="btn btn-danger">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Salvar </button>
+        
+    </form>
+</div>
