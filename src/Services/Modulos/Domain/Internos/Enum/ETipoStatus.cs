@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Internos.Enum
 {
@@ -12,8 +7,8 @@ namespace Domain.Internos.Enum
 
         SELECIONE = 0,
         EXPIRADO = 1,
-        [Display(Name = "Assinado Vigente")] ASSINADO_VIGENTE = 2,       
+        [Display(Name = "Assinado Vigente")] ASSINADO_VIGENTE = 2,
         TRAMITANDO = 3,
-        
+
     }
 }

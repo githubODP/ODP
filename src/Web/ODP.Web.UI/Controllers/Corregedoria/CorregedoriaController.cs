@@ -22,17 +22,15 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         }
 
 
-
-
         [HttpGet]
         public async Task<IActionResult> Index(
-     int pageNumber = 1,
-     int pageSize = 5,
-     int? ano = null,
-     string orgao = null,
-     string procedimento = null,
-     string decisao = null,
-     string protocolo = null)
+             int pageNumber = 1,
+             int pageSize = 5,
+             int? ano = null,
+             string orgao = null,
+             string procedimento = null,
+             string decisao = null,
+             string protocolo = null)
         {
             _logger.LogInformation("Entrou no método Index do controller com os seguintes parâmetros: pageNumber={PageNumber}, pageSize={PageSize}, ano={Ano}, orgao={Orgao}, procedimento={Procedimento}, decisao={Decisao}, protocolo={Protocolo}", pageNumber, pageSize, ano, orgao, procedimento, decisao, protocolo);
 

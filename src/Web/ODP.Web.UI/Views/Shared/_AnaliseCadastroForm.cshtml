@@ -1,11 +1,16 @@
 ﻿@using Domain.DueDiligence.Enum
 @model ODP.Web.UI.Models.DueDiligence.AnaliseCadastroViewModel
 
+
+
 <div class="modal fade" id="analiseModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Análise de Cadastro</h5>
+                <h5 class="modal-title">Análise de Cadastro</h5>             
+
+
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -18,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="DataAnalise"></label>
-                        <input asp-for="DataAnalise" class="form-control" readonly />
+                        <input asp-for="DataAnalise" class="form-control" readonly value="@Model.DataAnalise.ToString("dd/MM/yyyy HH:mm")" />
                     </div>
                     <div class="form-group">
                         <label asp-for="AnaliseTecnica"></label>
@@ -34,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Responsavel"></label>
-                        <input asp-for="Responsavel" class="form-control" readonly />
+                        <input asp-for="Responsavel" class="form-control" readonly value="@Model.Responsavel" />
                     </div>
                     <button type="submit" class="btn btn-primary">Salvar Análise</button>
                 </form>

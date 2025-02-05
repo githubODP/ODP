@@ -18,7 +18,8 @@ namespace API.Controllers.TermoCooperacao
 
         [HttpGet("teste")]
 
-        public string Texto() {
+        public string Texto()
+        {
             return "ta funcionando";
         }
     }

@@ -31,14 +31,14 @@ namespace ODP.Web.UI.Services.DueDiligence
         }
 
 
-        public async Task<AnaliseViewModel> ObterId(Guid id)
+        public async Task<AnaliseCadastroViewModel> ObterId(Guid id)
         {
 
             var response = await _httpClient.GetAsync($"api/analise/obter/{id}");
 
             TratarErrosResponse(response);
 
-            return await DeserializarObjetoResponse<AnaliseViewModel>(response);
+            return await DeserializarObjetoResponse<AnaliseCadastroViewModel>(response);
         }
 
 

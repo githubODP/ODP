@@ -2,6 +2,7 @@
 using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Services.DueDiligence;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -62,14 +63,15 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(string nroProtocolo)
         {
             var emailUsuario = User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
             var model = new AnaliseCadastroViewModel
             {
                 DataAnalise = DateTime.Now, // Define a data da análise automaticamente
-                Responsavel = emailUsuario
+                Responsavel = emailUsuario,
+                NroProtocolo = nroProtocolo,
             };
 
             return View(model);
@@ -111,35 +113,69 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
 
 
-
-        //[HttpPost]
-        //public async Task<IActionResult> Editar(Guid id, AnaliseCadastroModel analiseViewModel)
-        //{
-        //    if (id != analiseViewModel.Id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        await _analiseService.Alterar(analiseViewModel, id);
-        //        bool edicaoConcluida = true;
-        //        return RedirectToAction(nameof(Index), new { edicaoConcluida = edicaoConcluida });
-        //    }
-        //    return View(analiseViewModel);
-        //}
+        [HttpGet("Editar/{id}")]
+        public async Task<IActionResult> Editar(Guid id)
+        {
+            var analise = await _analiseService.ObterId(id);
+            if (analise == null)
+            {
+                TempData["ErrorMessage"] = "Análise não encontrada.";
+                return RedirectToAction("ListarDadosAdicionais");
+            }
 
 
+            return View(analise);
+        }
 
-        //[HttpDelete]
-        //public async Task<IActionResult> Deletar(Guid id)
-        //{
+        [HttpPost("Editar/{id}")]
+        public async Task<IActionResult> Editar(Guid id, AnaliseCadastroViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
 
-        //    await _analiseService.Deletar(id);
-        //    return RedirectToAction(nameof(Index));
+            var resultado = await _analiseService.Alterar(model, id);
+            if (resultado == null)
+            {
+                ModelState.AddModelError("", "Erro ao atualizar a análise.");
+                return View(model);
+            }
+
+            TempData["SuccessMessage"] = "Análise atualizada com sucesso!";
+            return RedirectToAction("ListarDadosAdicionais");
+        }
 
 
-        //}
+        
+        [HttpGet("Deletar/{id}")]
+        public async Task<IActionResult> Deletar(Guid id)
+        {
+            var analise = await _analiseService.ObterId(id);
+            if (analise == null)
+            {
+                TempData["ErrorMessage"] = "Análise não encontrada.";
+                return RedirectToAction("ListarDadosAdicionais");
+            }
+
+            return View(analise);
+        }
+
+        
+        [HttpPost("Deletar/{id}")]
+        public async Task<IActionResult> DeletarConfirmado(Guid id)
+        {
+            var resultado = await _analiseService.Deletar(id);
+            if (resultado == null)
+            {
+                TempData["ErrorMessage"] = "Erro ao excluir a análise.";
+                return RedirectToAction("ListarDadosAdicionais");
+            }
+
+            TempData["SuccessMessage"] = "Análise excluída com sucesso!";
+            return RedirectToAction("ListarDadosAdicionais");
+        }
+
 
     }
 }

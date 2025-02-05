@@ -30,6 +30,10 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             ViewBag.CPFAtual = cpf;
             ViewBag.NomeAtual = nome;
             ViewBag.ProtocoloAtual = protocolo;
+
+
+
+
             return View(due);
         }
 

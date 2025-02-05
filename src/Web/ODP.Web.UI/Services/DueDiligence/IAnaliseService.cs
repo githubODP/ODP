@@ -11,7 +11,7 @@ namespace ODP.Web.UI.Services.DueDiligence
 
         Task<PagedResult<AnaliseViewModel>> ListarDadosAdicionais(int pageNumber = 1, int pageSize = 10);
 
-        Task<AnaliseViewModel> ObterId(Guid id);
+        Task<AnaliseCadastroViewModel> ObterId(Guid id);
         Task<AnaliseCadastroViewModel> Adicionar(AnaliseCadastroViewModel analiseCadastroViewModel);
         Task<AnaliseCadastroViewModel> Alterar(AnaliseCadastroViewModel analiseCadastroViewModel, Guid id);
         Task<AnaliseCadastroViewModel> Deletar(Guid id);

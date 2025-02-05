@@ -21,7 +21,7 @@
                                class="btn btn-success">
                                 <img src="~/svg/adicionar.svg" width="20" height="20"
                                      class="d-inline-block align-top" alt="Pesquisar Protocolo">
-                                <span class="m-1">Adicionar Análise</span>
+                                <span class="m-1">Nova Análise</span>
                             </a>
                         </div> 
                     </div>
@@ -59,6 +59,39 @@
                                         <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
                                     </button>
                                 </td>
+                            <td>
+                                <!-- BOTÃO EDITAR -->
+                                <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+
+                                <!-- BOTÃO DELETAR (ABRE MODAL) -->
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal-@item.Id">
+                                    <i class="fas fa-trash-alt"></i> Deletar
+                                </button>
+
+                                <!-- MODAL DE CONFIRMAÇÃO PARA EXCLUSÃO -->
+                                <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title text-danger">Confirmar Exclusão</h5>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Tem certeza que deseja excluir a análise do protocolo <b>@item.NroProtocolo</b>?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form asp-action="Deletar" asp-route-id="@item.Id" method="post">
+                                                    <button type="submit" class="btn btn-danger">Confirmar</button>
+                                                </form>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </td>
                                
                             </tr>
                             <!-- Modal Observacao -->
@@ -69,7 +102,7 @@
                                             <h5 class="modal-title" id="observacaoModalLabel-@item.Id">Observação</h5>
                                         </div>
                                         <div class="modal-body">
-                        @Html.DisplayFor(modelItem => item.Observacao)
+                                         @Html.DisplayFor(modelItem => item.Observacao)
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -85,7 +118,7 @@
                                             <h5 class="modal-title" id="evidenciasModalLabel-@item.Id">Evidências</h5>
                                         </div>
                                         <div class="modal-body" style="white-space: pre-wrap;overflow-wrap: break-word;">
-                        @Html.DisplayFor(modelItem => item.AnaliseTecnica)
+                                        @Html.DisplayFor(modelItem => item.AnaliseTecnica)
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

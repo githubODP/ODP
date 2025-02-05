@@ -1,0 +1,36 @@
+﻿@model ODP.Web.UI.Models.DueDiligence.AnaliseCadastroViewModel
+
+@{
+    ViewData["Title"] = "Deletar Análise";
+}
+
+<h2 class="text-danger">Confirmar Exclusão</h2>
+
+<div class="alert alert-warning">
+    <p>Tem certeza que deseja excluir esta análise? Esta ação não pode ser desfeita.</p>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Número do Protocolo:</dt>
+            <dd class="col-sm-9">@Model.NroProtocolo</dd>
+
+            <dt class="col-sm-3">Data da Análise:</dt>
+            <dd class="col-sm-9">@Model.DataAnalise.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Responsável:</dt>
+            <dd class="col-sm-9">@Model.Responsavel</dd>
+
+            <dt class="col-sm-3">Análise Técnica:</dt>
+            <dd class="col-sm-9">@Model.AnaliseTecnica</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Deletar" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-action="ListarDadosAdicionais" class="btn btn-secondary">Cancelar</a>
+</form>

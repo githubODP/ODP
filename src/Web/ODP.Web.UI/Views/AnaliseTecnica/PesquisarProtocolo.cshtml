@@ -5,33 +5,46 @@
 @{
     ViewData["Title"] = "Pesquisar Protocolo";
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
 
 
-
-
-<div class="d-flex flex-column align-items-center">
-    <!-- Card de Pesquisa -->
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Pesquisa Protocolo</h5>
-            <form method="post" asp-action="PesquisarProtocolo">
-                <div class="form-group">
-                    <input type="text" id="nroProtocolo" name="nroProtocolo" class="form-control" required placeholder="Nº Protocolo" />
+ <nav class="navbar bg-light-blue" style="margin-top: 56px; padding: 10px 15px;">
+    <div class="row ml-3 d-flex align-items-center">
+        <div class="card-body p-0">
+            <label for="protocolo" class="mb-1">Pesquisa Protocolo:</label>
+            <form method="post" asp-action="PesquisarProtocolo" class="d-flex">
+                <div class="form-group mb-0">
+                    <input type="text" id="nroProtocolo" name="nroProtocolo"
+                           class="form-control" required placeholder="__.___.___-_" 
+                           style="height: 38px;"/>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+                <button type="submit" class="btn btn-primary ml-2"
+                        style="height: 38px; padding: 5px 15px;">
+                    Pesquisar
+                </button>
             </form>
         </div>
     </div>
+</nav>
 
-    <!-- Resultado da Pesquisa -->
-    @if (Model != null && Model.Any())
-    {
-        <div class="container-fluid pt-lg-5 text-center">
-            <div class="table-responsive shadow">
+
+<div class="container-fluid mt-3 px-3">
+    <div id="tabelaResultados" class="mx-auto" style="max-width: 95%;">
+        @if (Model != null && Model.Any())
+        {
+            <div class="table-responsive shadow-sm p-3 bg-white rounded">
                 <div class="table-wrapper">
-                    <div class="table-title">
-                        <h2>Resultado da <b>Busca</b></h2>
+                    <div class="table-title text-center">
+                        <h2 class="mb-3">Resultado da <b>Busca</b></h2>
                     </div>
+                   
+                    @if (!string.IsNullOrEmpty(ViewData["Mensagem"] as string))
+                    {
+                        <div class="alert alert-warning text-center">
+                            @ViewData["Mensagem"]
+                        </div>
+                    }
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
@@ -40,7 +53,7 @@
                                 <th>CPF</th>
                                 <th>Órgão</th>
                                 <th>Observação</th>
-                                <th>Análise</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,48 +64,28 @@
                                     <td>@item.Nome</td>
                                     <td>@item.CPF</td>
                                     <td>@item.Orgao</td>
-                                    <td>@item.Observacao</td>
+                                    <td>@item.Observacao</td>                                    
                                     <td>
-                                        <button type="button" class="btn btn-primary"
-                                                data-toggle="modal"
-                                                data-target="#analiseModal"
-                                                data-protocolo="@item.NroProtocolo">
-                                            Analisar
-                                        </button>
+                                        <a href="@Url.Action("Create", "AnaliseTecnica", new { nroProtocolo = item.NroProtocolo })"
+                                           class="btn btn-success">
+                                            Criar Análise
+                                        </a>
                                     </td>
-
                                 </tr>
-                              
-
                             }
                         </tbody>
-
                     </table>
-
-                    @await Html.PartialAsync("_AnaliseCadastroForm", new AnaliseCadastroViewModel())
                 </div>
-
-
             </div>
-        </div>
-    }
+        }
+        else
+        {
+            <div class="alert alert-warning text-center">Nenhum protocolo encontrado.</div>
+        }
+    </div>
 </div>
-
-
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#analiseModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var nroProtocolo = button.data('protocolo');
-                var modal = $(this);
-
-                // Preenche o NroProtocolo
-                modal.find('#NroProtocolo').val(nroProtocolo);
-
-
-            });
-        });
-
-    </script>
-}
+<script>
+    $(document).ready(function () {
+        $("#nroProtocolo").inputmask("99.999.999-9");
+    });
+</script>

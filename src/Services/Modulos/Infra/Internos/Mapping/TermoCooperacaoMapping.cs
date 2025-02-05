@@ -15,6 +15,9 @@ namespace Infra.Internos.Mapping
             builder.Property(c => c.Orgao)
                .HasColumnType("varchar(50)");
 
+            builder.Property(c => c.Sigla)
+              .HasColumnType("varchar(10)");
+
             builder.Property(c => c.NroTermo)
                .HasColumnType("varchar(20)");
 
@@ -40,7 +43,7 @@ namespace Infra.Internos.Mapping
               .HasColumnType("int");
 
             builder.Property(c => c.DataPublicacao)
-              .HasColumnType("Datetime");                       
+              .HasColumnType("Datetime");
 
             builder.Property(c => c.Objeto)
               .HasColumnType("nvarchar(max)");
