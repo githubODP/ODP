@@ -25,6 +25,7 @@ using ODP.Web.UI.Services.Consultas.Repositories.GovernoFederal;
 using ODP.Web.UI.Services.Consultas.Repositories.Tribunal.TCE;
 using ODP.Web.UI.Services.Consultas.Repositories.Tribunal.TCU;
 using ODP.Web.UI.Services.Consultas.Repositories.Tribunal.TSE;
+using ODP.Web.UI.Services.Cooperacao;
 using ODP.Web.UI.Services.Corregedoria;
 using ODP.Web.UI.Services.Demanda;
 using ODP.Web.UI.Services.Detran;
@@ -418,6 +419,12 @@ namespace ODP.Web.UI.Configuration
 
             //graficos
             services.AddHttpClient<IGraficoService, GraficoService>()
+                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                 .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                 .AddTransientHttpErrorPolicy(
+                 p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+            services.AddHttpClient<IcooperacaoServices, CooperacaoServices>()
                  .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                  .AddPolicyHandler(PollyExtensions.EsperarTentar())
                  .AddTransientHttpErrorPolicy(

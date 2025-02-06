@@ -6,6 +6,7 @@ using Domain.Internos.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infra.Internos.RepositoriesRead
 {
@@ -40,5 +41,12 @@ namespace Infra.Internos.RepositoriesRead
             };
         
         }
+
+        public  Task<TermoCooperacao> ObterID(Guid id)
+        {
+           return ObterId(id);
+        }
+
+    
     }
 }
