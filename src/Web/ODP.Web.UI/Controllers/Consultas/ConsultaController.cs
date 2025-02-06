@@ -1258,7 +1258,8 @@ namespace ODP.Web.UI.Controllers.Consultas
                             {
                                 worksheet.Cells[row, 1].Value = "IRREGULARIDADES TCE";
                                 worksheet.Cells[row, 2].Value = tce.Nome;
-                                worksheet.Cells[row, 3].Value = tce.CNPJCPF;
+                                worksheet.Cells[row, 3].Value = tce.CNPJ;
+                                worksheet.Cells[row, 3].Value = tce.CPF;
                                 worksheet.Cells[row, 4].Value = tce.Cargo;
                                 worksheet.Cells[row, 5].Value = tce.InicioVigencia;
                                 worksheet.Cells[row, 6].Value = tce.TerminoVigencia;
