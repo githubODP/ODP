@@ -30,14 +30,10 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             ViewBag.CPFAtual = cpf;
             ViewBag.NomeAtual = nome;
             ViewBag.ProtocoloAtual = protocolo;
-
-
-
-
             return View(due);
         }
 
-        [HttpGet]
+        [HttpGet]  /// lista due do gabinete
 
         public async Task<IActionResult> ListarDue(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo = null)
         {

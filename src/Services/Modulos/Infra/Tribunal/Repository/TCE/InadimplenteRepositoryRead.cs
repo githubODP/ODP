@@ -18,11 +18,11 @@ namespace Infra.Tribunal.Repository.TCE
             cnpj = HttpUtility.UrlDecode(cnpj);
             return await _context.Set<Inadimplente>()
                                  .AsNoTracking()
-                                 .Where(c => c.CNPJCPF == cnpj)
+                                 .Where(c => c.CNPJ == cnpj)
             .Select(c => new Inadimplente
             {
                 Devedor = c.Devedor,
-                CNPJCPF = c.CNPJCPF,
+                CNPJ = c.CNPJ,
                 Credor = c.Credor,
                 Processo = c.Processo,
                 TipoSancao = c.TipoSancao,
@@ -39,11 +39,11 @@ namespace Infra.Tribunal.Repository.TCE
         {
             return await _context.Set<Inadimplente>()
                                 .AsNoTracking()
-                                .Where(c => c.CNPJCPF == cpf)
+                                .Where(c => c.CPF == cpf)
            .Select(c => new Inadimplente
            {
                Devedor = c.Devedor,
-               CNPJCPF = c.CNPJCPF,
+               CPF = c.CPF,
                Credor = c.Credor,
                Processo = c.Processo,
                TipoSancao = c.TipoSancao,

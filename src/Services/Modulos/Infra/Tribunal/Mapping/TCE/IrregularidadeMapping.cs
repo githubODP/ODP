@@ -12,15 +12,15 @@ namespace Infra.Tribunal.Mapping.TCE
 
             builder.Property(c => c.Nome)
               .IsRequired()
-              .HasColumnType("nvarchar(max)");
+              .HasColumnType("nvarchar(500)");
 
             builder.Property(c => c.CPF)
               .IsRequired()
-              .HasColumnType("varchar(15)");
+              .HasColumnType("varchar(14)");
 
             builder.Property(c => c.Cargo)
               .IsRequired()
-              .HasColumnType("varchar(30)");
+              .HasColumnType("varchar(50)");
 
             builder.Property(c => c.InicioVigencia)
               .IsRequired()
@@ -32,7 +32,7 @@ namespace Infra.Tribunal.Mapping.TCE
 
             builder.Property(c => c.Decisao)
               .IsRequired()
-              .HasColumnType("nvarchar(max)");
+              .HasColumnType("nvarchar(150)");
 
             builder.Property(c => c.DataPublicacao)
               .IsRequired()
@@ -44,11 +44,11 @@ namespace Infra.Tribunal.Mapping.TCE
 
             builder.Property(c => c.Assunto)
               .IsRequired()
-              .HasColumnType("nvarchar(max)");
+              .HasColumnType("nvarchar(150)");
 
             builder.Property(c => c.Entidade)
             .IsRequired()
-            .HasColumnType("nvarchar(max)");
+            .HasColumnType("nvarchar(500)");
 
             builder.Property(c => c.CNPJ)
               .HasColumnType("varchar(18)");
