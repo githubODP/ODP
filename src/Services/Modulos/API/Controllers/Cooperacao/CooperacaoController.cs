@@ -59,7 +59,7 @@ namespace API.Controllers.Cooperacao
 
         }
 
-        [HttpPost("excluir")]
+        [HttpDelete("excluir")]
         public async Task<IActionResult> excluir(TermoCooperacao termo)
         {
             try
@@ -73,6 +73,14 @@ namespace API.Controllers.Cooperacao
                 return BadRequest();
             }
 
+        }
+
+
+        [HttpGet("pesquisar/{id}")]
+
+        public async Task<IActionResult> ObterId(Guid id)
+        {
+            return Ok(await _termoRepositoriyRead.ObterId(id));
         }
     } 
 }
