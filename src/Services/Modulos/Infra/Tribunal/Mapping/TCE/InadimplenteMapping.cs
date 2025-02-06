@@ -14,9 +14,13 @@ namespace Infra.Tribunal.Mapping.TCE
               .IsRequired()
               .HasColumnType("varchar(300)");
 
-            builder.Property(c => c.CNPJCPF)
+            builder.Property(c => c.CPF)
             .IsRequired()
             .HasColumnType("varchar(18)");
+
+            builder.Property(c => c.CPF)
+           .IsRequired()
+           .HasColumnType("varchar(14)");
 
             builder.Property(c => c.Credor)
               .IsRequired()
@@ -50,7 +54,7 @@ namespace Infra.Tribunal.Mapping.TCE
              .IsRequired()
              .HasColumnType("float");
 
-            builder.Property(c => c.Execução)
+            builder.Property(c => c.Execucao)
            .IsRequired()
            .HasColumnType("nvarchar(max)");
 

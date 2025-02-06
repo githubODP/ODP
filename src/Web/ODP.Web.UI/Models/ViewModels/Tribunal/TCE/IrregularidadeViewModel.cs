@@ -6,7 +6,7 @@ namespace ODP.Web.UI.Models.ViewModels.Tribunal.TCE
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
-        public string CNPJCPF { get; set; }
+        public string CPF { get; set; }
         public string Cargo { get; set; }
         public DateTime? InicioVigencia { get; set; }
         public DateTime? TerminoVigencia { get; set; }

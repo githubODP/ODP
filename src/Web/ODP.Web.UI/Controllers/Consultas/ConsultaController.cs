@@ -1191,14 +1191,15 @@ namespace ODP.Web.UI.Controllers.Consultas
                     // Cabeçalho de INADIMPLENTES TCE 
                     worksheet.Cells[row, 1].Value = "Tipo de Registro";
                     worksheet.Cells[row, 2].Value = "Devedor";
-                    worksheet.Cells[row, 3].Value = "CNPJCPF";
-                    worksheet.Cells[row, 4].Value = "Credor";
-                    worksheet.Cells[row, 5].Value = "Processo";
-                    worksheet.Cells[row, 6].Value = "Tipo Sanção";
-                    worksheet.Cells[row, 7].Value = "Referência";
-                    worksheet.Cells[row, 8].Value = "Valor";
-                    worksheet.Cells[row, 9].Value = "Valor Recolhido";
-                    worksheet.Cells[row, 10].Value = "Saldo Devedor";
+                    worksheet.Cells[row, 3].Value = "CNPJ";
+                    worksheet.Cells[row, 4].Value = "CPF";
+                    worksheet.Cells[row, 5].Value = "Credor";
+                    worksheet.Cells[row, 6].Value = "Processo";
+                    worksheet.Cells[row, 7].Value = "Tipo Sanção";
+                    worksheet.Cells[row, 8].Value = "Referência";
+                    worksheet.Cells[row, 9].Value = "Valor";
+                    worksheet.Cells[row, 10].Value = "Valor Recolhido";
+                    worksheet.Cells[row, 11].Value = "Saldo Devedor";
                     row++;
 
                     foreach (var resultado in resultados)
@@ -1209,14 +1210,15 @@ namespace ODP.Web.UI.Controllers.Consultas
                             {
                                 worksheet.Cells[row, 1].Value = "INADIMPLENTES TCE";
                                 worksheet.Cells[row, 2].Value = tce.Devedor;
-                                worksheet.Cells[row, 3].Value = tce.CNPJCPF;
-                                worksheet.Cells[row, 4].Value = tce.Credor;
-                                worksheet.Cells[row, 5].Value = tce.Processo;
-                                worksheet.Cells[row, 6].Value = tce.TipoSancao;
-                                worksheet.Cells[row, 7].Value = tce.Referencia;
-                                worksheet.Cells[row, 8].Value = tce.Valor;
-                                worksheet.Cells[row, 9].Value = tce.ValorRecolhido;
-                                worksheet.Cells[row, 10].Value = tce.SaldoDevedor;
+                                worksheet.Cells[row, 3].Value = tce.CNPJ;
+                                worksheet.Cells[row, 4].Value = tce.CPF;
+                                worksheet.Cells[row, 5].Value = tce.Credor;
+                                worksheet.Cells[row, 6].Value = tce.Processo;
+                                worksheet.Cells[row, 7].Value = tce.TipoSancao;
+                                worksheet.Cells[row, 8].Value = tce.Referencia;
+                                worksheet.Cells[row, 9].Value = tce.Valor;
+                                worksheet.Cells[row, 10].Value = tce.ValorRecolhido;
+                                worksheet.Cells[row, 11].Value = tce.SaldoDevedor;
 
                                 row++;
                             }

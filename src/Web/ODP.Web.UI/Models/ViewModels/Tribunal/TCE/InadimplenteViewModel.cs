@@ -6,7 +6,8 @@ namespace ODP.Web.UI.Models.ViewModels.Tribunal.TCE
     {
         public Guid Id { get; set; }
         public string Devedor { get; set; }
-        public string CNPJCPF { get; set; }
+        public string CNPJ { get; set; }
+        public string CPF { get; set; }
         public string Credor { get; set; }
         public string Processo { get; set; }
         public string Decisao { get; set; }
