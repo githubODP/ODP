@@ -37,6 +37,7 @@
                             <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
                             <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().AnaliseTecnica) </th>
                             <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Observacao)</th>
+                            <th>Opções</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,17 +61,17 @@
                                     </button>
                                 </td>
                             <td>
-                                <!-- BOTÃO EDITAR -->
-                                <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
 
-                                <!-- BOTÃO DELETAR (ABRE MODAL) -->
-                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal-@item.Id">
-                                    <i class="fas fa-trash-alt"></i> Deletar
-                                </button>
+                                <div class="d-flex ">
+                                    <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-sm btn-info p-2">
+                                        <img src="~/svg/editar.svg" height="24" />
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-danger p-2 ml-2 " data-toggle="modal" data-target="#deleteModal-@item.Id">
+                                        <img src="~/svg/excluir.svg" height="24" />
+                                    </button>
 
-                                <!-- MODAL DE CONFIRMAÇÃO PARA EXCLUSÃO -->
+                                </div>
+
                                 <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" role="dialog">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
