@@ -1,8 +1,8 @@
 ﻿@using ODP.Web.UI.Extensions
 @model PagedResult<ODP.Web.UI.Models.Cooperacao.TermoCooperacaoViewModel>
 
-<div class="container-fluid pt-lg-5">
-    <div class="table-responsive shadow" style="margin-left:-12em; width:130%;">
+<div class="container-xxl ">
+    <div class="table-responsive shadow">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -27,11 +27,7 @@
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().NroTermo)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().InicioVigencia)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().FimVIgencia)</th>
-                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Validade)</th>
-                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Ativo)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Status)</th>
-                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Informacoes)</th>
-                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Observacao)</th>
                         <th>Opções</th>
                     </tr>
                 </thead>
@@ -42,59 +38,20 @@
                             <td >@Html.DisplayFor(modelItem => item.Protocolo)</td>
                             <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
                             <td>@Html.DisplayFor(modelItem => item.NroTermo)</td>
-                            <td>@Html.DisplayFor(modelItem => item.InicioVigencia)</td>
-                            <td>@Html.DisplayFor(modelItem => item.FimVIgencia)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Validade)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Ativo)</td>
+                            <td>@item.InicioVigencia.ToString("dd/MM/yyyy")</td>
+                            <td>@item.FimVIgencia.ToString("dd/MM/yyyy")</td>
                             <td>@Html.DisplayFor(modelItem => item.Status)</td>
                             <td>
-                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#observacaoModal-@item.Protocolo">
-                                    <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#evidenciasModal-@item.Protocolo">
-                                    <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
-                                </button>
-                            </td>
-                            <td>
                                 <div class="d-flex">
-
+                                    <a asp-controller="Cooperacao" asp-action="Editar" asp-route-protocolo="@item.Protocolo" class="btn btn-primary mr-2">
+                                        <img src="~/svg/editar.svg" height="16" />
+                                    </a>
+                                    <a asp-controller="Cooperacao" asp-action="Detalhes" asp-route-id="@item" class="btn btn-info mr-2">
+                                        <img src="~/svg/vizualizar.svg" height="16" />
+                                    </a>
                                 </div>
                             </td>
                         </tr>
-                        <!-- Modal Observacao -->
-                        <div class="modal fade" id="observacaoModal-@item.Protocolo" tabindex="-1" role="dialog" aria-labelledby="observacaoModalLabel-@item.Protocolo" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="observacaoModalLabel-@item.Protocolo">Informações</h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        @Html.DisplayFor(modelItem => item.Informacoes)
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Modal Evidencias -->
-                        <div class="modal fade" id="evidenciasModal-@item.Protocolo" tabindex="-1" role="dialog" aria-labelledby="evidenciasModalLabel-@item.Protocolo" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="evidenciasModalLabel-@item.Protocolo">Observações</h5>
-                                    </div>
-                                    <div class="modal-body" style="white-space: pre-wrap;overflow-wrap: break-word;">
-                                        @Html.DisplayFor(modelItem => item.Observacao)
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     }
                 </tbody>
 

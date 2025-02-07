@@ -9,6 +9,6 @@ namespace Domain.Internos.Interfaces
     {
         Task<PagedResult<TermoCooperacao>> ListarComFiltrosAsync(int pageNumber, int pageSize);
 
-        Task<TermoCooperacao> ObterID(Guid id);
+        Task<TermoCooperacao> ObterProtocolo(string protocolo);
     }
 }

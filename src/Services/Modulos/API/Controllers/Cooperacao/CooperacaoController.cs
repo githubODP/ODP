@@ -37,18 +37,19 @@ namespace API.Controllers.Cooperacao
                 await _termoRepository.Adicionar(termo);
                 return Ok();
             }
-            catch {
+            catch
+            {
                 return BadRequest();
             }
         }
 
 
-        [HttpPost ("alterar")]
-        public async Task<IActionResult> Alterar (TermoCooperacao termo)
+        [HttpPost("alterar")]
+        public async Task<IActionResult> Alterar(TermoCooperacao termo)
         {
             try
             {
-                 await _termoRepository.Atualizar(termo);
+                await _termoRepository.Atualizar(termo);
 
                 return Ok();
             }
@@ -76,11 +77,13 @@ namespace API.Controllers.Cooperacao
         }
 
 
-        [HttpGet("pesquisar/{id}")]
+        [HttpGet("pesquisar/{protocolo}")]
 
-        public async Task<IActionResult> ObterId(Guid id)
+        public async Task<IActionResult> ObterProtocolo([FromRoute] string protocolo)
         {
-            return Ok(await _termoRepositoriyRead.ObterId(id));
+            {
+                return Ok(await _termoRepositoriyRead.ObterProtocolo(protocolo));
+            }
         }
-    } 
+    }
 }

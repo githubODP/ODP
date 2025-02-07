@@ -69,17 +69,16 @@ namespace ODP.Web.UI.Controllers.Cooperacao
 
 
         [HttpGet]
-
-        public IActionResult Editar(string id)
+        public async Task<IActionResult> Editar(string protocolo)
         {
-
-            var termo = _cooperacaoServices.ObterId(id);
+            var termo = await _cooperacaoServices.ObterProtocolo(protocolo);
             return View(termo);
         }
 
+
         [HttpPost]
 
-        public async Task<IActionResult> Editar(TermoCooperacaoViewModel termo)
+        public async Task<IActionResult> Editarpost(TermoCooperacaoViewModel termo)
         {
             if (!ModelState.IsValid)
             {

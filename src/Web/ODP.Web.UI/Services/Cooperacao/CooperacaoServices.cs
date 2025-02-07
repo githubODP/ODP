@@ -74,11 +74,12 @@ namespace ODP.Web.UI.Services.Cooperacao
             return await DeserializarObjetoResponse<PagedResult<TermoCooperacaoViewModel>>(response);
         }
 
-        public async Task<TermoCooperacaoViewModel> ObterId(string id)
+        public async Task<TermoCooperacaoViewModel> ObterProtocolo(string protocolo)
         {
-            var response = await _httpClient.GetAsync($"api/termocooperacao/pesquisar/?id={id}");
+            var response = await _httpClient.GetAsync($"api/termocooperacao/pesquisar/{protocolo}");
             TratarErrosResponse(response);
-            return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
+            var teste = DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
+            return await teste;
         }
     }
 }

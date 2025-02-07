@@ -21,6 +21,7 @@ using Infra.DueDiligence.Mapping;
 using Infra.Fazenda.Mapping;
 using Infra.GovernoEstadual.Mapping;
 using Infra.GovernoFederal.Mapping;
+using Infra.Internos.Mapping;
 using Infra.RecursosHumanos.Mapping;
 using Infra.Tribunal.Mapping.TCE;
 using Infra.Tribunal.Mapping.TCU;
@@ -133,6 +134,13 @@ namespace Infra.Data
         public DbSet<FornecedorPartido> FornecedorPartidos { get; set; }
         public DbSet<FornecedorCandidato> FornecedorCandidatos { get; set; }
 
+        // Termo de Cooperação
+
+        public DbSet<TermoCooperacao> TermosCooperacao { get; set; }
+
+
+
+        //
 
 
         /// <summary>
@@ -219,6 +227,10 @@ namespace Infra.Data
             modelBuilder.ApplyConfiguration(new RubricaMapping());
             modelBuilder.ApplyConfiguration(new OcorrenciaMapping());
             modelBuilder.ApplyConfiguration(new DependenteMapping());
+
+            //termos cooperaçao
+
+            modelBuilder.ApplyConfiguration(new TermoMapping());
 
 
 

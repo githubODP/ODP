@@ -42,11 +42,32 @@ namespace Infra.Internos.RepositoriesRead
         
         }
 
-        public  Task<TermoCooperacao> ObterID(Guid id)
+        public async Task<TermoCooperacao> ObterProtocolo(string protocolo)
         {
-           return ObterId(id);
+            return await _context.TermosCooperacao
+                 .Where(c => c.Protocolo == protocolo)
+                 .Select(c => new TermoCooperacao
+                 {
+                     Protocolo = c.Protocolo,
+                     Orgao = c.Orgao,
+                     Sigla = c.Sigla,
+                     NroTermo = c.NroTermo,
+                     InicioVigencia = c.InicioVigencia,
+                     FimVIgencia = c.FimVIgencia,
+                     Validade = c.Validade,
+                     Ativo = c.Ativo,
+                     Status = c.Status,
+                     Renovar = c.Renovar,
+                     DIOE = c.DIOE,
+                     DataPublicacao = c.DataPublicacao,
+                     Objeto = c.Objeto,
+                     Regulamentacao = c.Regulamentacao,
+                     Informacoes = c.Informacoes,
+                     Observacao = c.Observacao
+                 }).FirstOrDefaultAsync(); 
         }
 
-    
+
+
     }
 }
