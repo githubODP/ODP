@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,9 +39,17 @@ namespace API.Controllers.DueAnalise
                 return BadRequest("Número da página e tamanho da página devem ser maiores que zero.");
 
             var resultado = await _analiseRepositoryRead.ListarDadosAdicionais(pageNumber, pageSize);
-
-            if (resultado.Results == null || !resultado.Results.Any())
-                return NotFound("Nenhuma análise encontrada.");
+            if (resultado == null || resultado.Results == null || !resultado.Results.Any())
+            {
+                return Ok(new
+                {
+                    Results = new List<AnaliseResponseDTO>(),
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalPages = 0,
+                    TotalRecords = 0
+                });
+            }
 
             return Ok(resultado);
         }

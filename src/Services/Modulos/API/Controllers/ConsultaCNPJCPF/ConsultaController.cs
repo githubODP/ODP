@@ -9,7 +9,7 @@ namespace API.Controllers.ConsultaCNPJCPF
 {
     [ApiController]
     [Route("api/busca")]
-    [Authorize]
+     [Authorize]
 
     public class ConsultaController : Controller
     {

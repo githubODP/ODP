@@ -23,10 +23,19 @@ namespace ODP.Web.UI.Services.DueDiligence
 
 
 
+       
         public async Task<PagedResult<AnaliseViewModel>> ListarDadosAdicionais(int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/analise/listaradicionais?pageNumber={pageNumber}&pageSize={pageSize}");
-            TratarErrosResponse(response);
+            var response = await _httpClient.GetAsync($"/api/analise/Listaradicionais?pageNumber={pageNumber}&pageSize={pageSize}");
+
+            Console.WriteLine($"Status da resposta: {response.StatusCode}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Erro na API: {response.StatusCode}");
+                return null; // Evita que a exception suba
+            }
+
             return await DeserializarObjetoResponse<PagedResult<AnaliseViewModel>>(response);
         }
 

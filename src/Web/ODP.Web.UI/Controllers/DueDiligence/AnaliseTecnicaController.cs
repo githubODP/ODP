@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Services.DueDiligence;
 using System;
@@ -26,8 +27,18 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         {
             var resultado = await _analiseService.ListarDadosAdicionais(pageNumber, pageSize);
 
-            if (resultado == null || !resultado.Results.Any())
-                return NotFound("Nenhuma análise encontrada.");
+            if (resultado == null || resultado.Results == null || !resultado.Results.Any())
+            {
+                ViewBag.Mensagem = "Nenhuma análise encontrada.";
+                resultado = new PagedResult<AnaliseViewModel> // Criar um objeto vazio para evitar erro na View
+                {
+                    Results = new List<AnaliseViewModel>(),
+                    PageNumber = pageNumber,
+                    PageSize = pageSize,
+                    TotalPages = 0,
+                    TotalRecords = 0
+                };
+            }
 
             return View(resultado);
         }
@@ -148,7 +159,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
 
         
-        [HttpGet("Deletar/{id}")]
+        [HttpGet]
         public async Task<IActionResult> Deletar(Guid id)
         {
             var analise = await _analiseService.ObterId(id);
@@ -162,7 +173,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         }
 
         
-        [HttpPost("Deletar/{id}")]
+        [HttpDelete]
         public async Task<IActionResult> DeletarConfirmado(Guid id)
         {
             var resultado = await _analiseService.Deletar(id);

@@ -78,7 +78,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
 
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> Editar(Guid id)
         {
             var due = await _dueService.ObterId(id);
@@ -102,6 +102,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             return View(dueViewModel);
         }
 
+        [HttpDelete]
         public async Task<IActionResult> Deletar(Guid id)
         {
             await _dueService.Deletar(id);
