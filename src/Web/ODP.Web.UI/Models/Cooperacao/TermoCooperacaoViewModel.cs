@@ -7,6 +7,7 @@ namespace ODP.Web.UI.Models.Cooperacao
     public class TermoCooperacaoViewModel
     {
 
+        public Guid Id { get; set; }
         public string Protocolo { get; set; }
         [Display(Name = "Orgão")]
         public string Orgao { get; set; }

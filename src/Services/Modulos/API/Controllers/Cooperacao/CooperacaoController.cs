@@ -2,6 +2,7 @@
 using Domain.Internos.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Threading.Tasks;
 
@@ -51,13 +52,15 @@ namespace API.Controllers.Cooperacao
             {
                 await _termoRepository.Atualizar(termo);
 
-                return Ok();
-            }
-            catch
-            {
-                return BadRequest();
-            }
+                // Busca o objeto atualizado no banco de dados
+                var termoAtualizado = await _termoRepositoriyRead.ObterId(termo.Id);
 
+                return Ok(termoAtualizado); // Retorna o objeto atualizado
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [HttpDelete("excluir")]
@@ -85,5 +88,14 @@ namespace API.Controllers.Cooperacao
                 return Ok(await _termoRepositoriyRead.ObterProtocolo(protocolo));
             }
         }
+
+        [HttpGet("obterid/{id}")]
+        public async Task<IActionResult> ObterID( Guid id)
+        {
+            return Ok (await _termoRepositoriyRead.ObterId(id));
+        }
+
+
+      
     }
 }

@@ -69,9 +69,9 @@ namespace ODP.Web.UI.Controllers.Cooperacao
 
 
         [HttpGet]
-        public async Task<IActionResult> Editar(string protocolo)
+        public async Task<IActionResult> Editar(Guid Id)
         {
-            var termo = await _cooperacaoServices.ObterProtocolo(protocolo);
+            var termo = await _cooperacaoServices.ObterId(Id);
             return View(termo);
         }
 
@@ -85,9 +85,40 @@ namespace ODP.Web.UI.Controllers.Cooperacao
                 return View(termo);
 
             }
-            var resultado = await _cooperacaoServices.Alterar(termo);
+            var alterar = await _cooperacaoServices.ObterId(termo.Id);
+            var resultado = await _cooperacaoServices.Alterar(copiaTermo(termo, alterar));
             return RedirectToAction("Index");
         }
 
+
+        private TermoCooperacaoViewModel copiaTermo(TermoCooperacaoViewModel copia, TermoCooperacaoViewModel copiado)
+        {
+            if (copia == null || copiado == null)
+                throw new ArgumentNullException("Os objetos não podem ser nulos");
+
+            var propriedades = typeof(TermoCooperacaoViewModel).GetProperties();
+
+            foreach (var propriedade in propriedades)
+            {
+                if (!propriedade.CanRead || !propriedade.CanWrite) continue;
+
+                var valorCopia = propriedade.GetValue(copia);
+                var valorCopiado = propriedade.GetValue(copiado);
+
+                // Se os valores forem diferentes, atualiza o valor no objeto copiado
+                if ((valorCopia != null && !valorCopia.Equals(valorCopiado)) || (valorCopia == null && valorCopiado != null))
+                {
+                    propriedade.SetValue(copiado, valorCopia);
+                }
+            }
+
+            return copiado;
+        }
+
+
+
     }
 }
+
+
+

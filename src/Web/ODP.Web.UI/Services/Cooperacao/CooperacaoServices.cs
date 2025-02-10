@@ -43,14 +43,7 @@ namespace ODP.Web.UI.Services.Cooperacao
 
             var response = await _httpClient.PostAsync("/api/termocooperacao/alterar", dueContent);
 
-            if (TratarErrosResponse(response))
-            {
-                return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
-
-            }
-            return null;
-
-
+            return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
         }
 
         public async Task<TermoCooperacaoViewModel> Deletar(TermoCooperacaoViewModel termo)
@@ -72,6 +65,14 @@ namespace ODP.Web.UI.Services.Cooperacao
             var response = await _httpClient.GetAsync($"api/termocooperacao/listar?pageNumber={pageNumber}&pageSize={pageSize}");
             TratarErrosResponse(response);
             return await DeserializarObjetoResponse<PagedResult<TermoCooperacaoViewModel>>(response);
+        }
+
+        public async Task<TermoCooperacaoViewModel> ObterId(Guid Id)
+        {
+            var response = await _httpClient.GetAsync($"api/termocooperacao/obterid/{Id}");
+            
+            var teste = DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
+            return await teste;
         }
 
         public async Task<TermoCooperacaoViewModel> ObterProtocolo(string protocolo)

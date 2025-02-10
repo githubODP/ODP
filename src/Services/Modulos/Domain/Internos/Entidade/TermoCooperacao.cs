@@ -8,6 +8,8 @@ namespace Domain.Internos.Entidade
     public class TermoCooperacao : Entity, IAggregateRoot
     {
 
+
+        
         public string Protocolo { get; set; }
         public string Orgao { get; set; }
         public string Sigla { get; set; }

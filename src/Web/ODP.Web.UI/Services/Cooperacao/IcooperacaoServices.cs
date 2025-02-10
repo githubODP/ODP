@@ -13,5 +13,7 @@ namespace ODP.Web.UI.Services.Cooperacao
         Task<TermoCooperacaoViewModel> Alterar(TermoCooperacaoViewModel termo);
         Task<TermoCooperacaoViewModel> Deletar(TermoCooperacaoViewModel termo);
         Task<TermoCooperacaoViewModel> ObterProtocolo(string protocolo);
+        Task<TermoCooperacaoViewModel> ObterId(Guid Id);
+
     }
 }
