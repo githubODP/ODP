@@ -2,7 +2,7 @@
 @model ODP.Web.UI.Models.Cooperacao.TermoCooperacaoViewModel
 
 @{
-    ViewData["Title"] = "Criar";
+    ViewData["Title"] = "Detalhes";
 }
 
 <div class="container shadow-lg border-1  px-4 py-3 mt-3">
@@ -11,7 +11,7 @@
         <div class="table-title">
             <div class="row">
                 <div class="col-sm-6">
-                    <h2>Adicionar <b>Termo de Cooperação</b></h2>
+                    <h2>Detalhes <b>Termo de Cooperação</b></h2>
                 </div>
             </div>
         </div>
@@ -20,42 +20,42 @@
 
             <div class="form-group col-6">
                 <label asp-for="Orgao" class="control-label"></label>
-                <input asp-for="Orgao" class="form-control"  />
+                <input asp-for="Orgao" class="form-control" readonly />
                 <span asp-validation-for="Orgao" class="text-danger"></span>
             </div>
             <div class="form-group col-3">
                 <label asp-for="Sigla" class="control-label"></label>
-                <input asp-for="Sigla" class="form-control" />
+                <input asp-for="Sigla" class="form-control" readonly />
                 <span asp-validation-for="Sigla" class="text-danger"></span>
             </div>
             <div class="form-group col-3">
                 <label asp-for="Protocolo" class="control-label"></label>
-                <input asp-for="Protocolo" class="form-control" />
+                <input asp-for="Protocolo" class="form-control" readonly />
                 <span asp-validation-for="Protocolo" class="text-danger"></span>
             </div>
-          
-            
+
+
         </div>
 
         <div class="row   p-1">
             <div class="form-group col-sm-3">
                 <label asp-for="InicioVigencia" class="control-label"></label>
-                <input asp-for="InicioVigencia" class="form-control" />
+                <input asp-for="InicioVigencia" class="form-control" readonly />
                 <span asp-validation-for="InicioVigencia" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
                 <label asp-for="FimVIgencia" class="control-label"></label>
-                <input asp-for="FimVIgencia" class="form-control" />
+                <input asp-for="FimVIgencia" class="form-control" readonly />
                 <span asp-validation-for="FimVIgencia" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
                 <label asp-for="Validade" class="control-label"></label>
-                <input asp-for="Validade" class="form-control"  />
+                <input asp-for="Validade" class="form-control" readonly />
                 <span asp-validation-for="Validade" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
                 <label asp-for="Status" class="control-label"></label>
-                @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(ETipoStatus))), new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(ETipoStatus))), new { @class = "form-control", @disabled = "disabled" })
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
         </div>
@@ -64,11 +64,11 @@
             <div class="form-group col-sm-2">
                 <label class="control-label">Ativo</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" asp-for="Ativo" value="true" id="ativoSim">
+                    <input class="form-check-input" type="radio" asp-for="Ativo" value="true" id="ativoSim" readonly>
                     <label class="form-check-label" for="ativoSim">Sim</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" asp-for="Ativo" value="false" id="ativoNao">
+                    <input class="form-check-input" type="radio" asp-for="Ativo" value="false" id="ativoNao" readonly>
                     <label class="form-check-label" for="ativoNao">Não</label>
                 </div>
                 <span asp-validation-for="Ativo" class="text-danger"></span>
@@ -77,11 +77,11 @@
             <div class="form-group col-sm-2">
                 <label class="control-label">Renovar</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" asp-for="Renovar" value="true" id="renovarsim">
+                    <input class="form-check-input" type="radio" asp-for="Renovar" value="true" id="renovarsim" readonly>
                     <label class="form-check-label" for="renovarsim">Sim</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" asp-for="Renovar" value="false" id="renovarnao">
+                    <input class="form-check-input" type="radio" asp-for="Renovar" value="false" id="renovarnao" readonly>
                     <label class="form-check-label" for="renovarnao">Não</label>
                 </div>
                 <span asp-validation-for="Renovar" class="text-danger"></span>
@@ -89,18 +89,18 @@
 
             <div class="form-group col-sm-3">
                 <label asp-for="NroTermo" class="control-label"></label>
-                <input asp-for="NroTermo" class="form-control" />
+                <input asp-for="NroTermo" class="form-control" readonly />
                 <span asp-validation-for="NroTermo" class="text-danger"></span>
             </div>
 
             <div class="form-group col-sm-2">
                 <label asp-for="DIOE" class="control-label"></label>
-                <input asp-for="DIOE" class="form-control"  />
+                <input asp-for="DIOE" class="form-control" readonly />
                 <span asp-validation-for="DIOE" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
                 <label asp-for="DataPublicacao" class="control-label"></label>
-                <input asp-for="DataPublicacao" class="form-control"  />
+                <input asp-for="DataPublicacao" class="form-control" readonly />
                 <span asp-validation-for="DataPublicacao" class="text-danger"></span>
             </div>
         </div>
@@ -108,12 +108,12 @@
         <div class="row   p-1">
             <div class="form-group col-md-6">
                 <label asp-for="Observacao" class="control-label"></label>
-                <textarea asp-for="Observacao" class="form-control" rows="3"></textarea>
+                <textarea asp-for="Observacao" class="form-control" rows="3" readonly></textarea>
                 <span asp-validation-for="Observacao" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Objeto" class="control-label"></label>
-                <textarea asp-for="Objeto" class="form-control" rows="3"></textarea>
+                <textarea asp-for="Objeto" class="form-control" rows="3" readonly></textarea>
                 <span asp-validation-for="Objeto" class="text-danger"></span>
             </div>
         </div>
@@ -121,21 +121,20 @@
         <div class="row   p-1">
             <div class="form-group col-md-6">
                 <label asp-for="Regulamentacao" class="control-label"></label>
-                <textarea asp-for="Regulamentacao" class="form-control" rows="3"></textarea>
+                <textarea asp-for="Regulamentacao" class="form-control" rows="3" readonly></textarea>
                 <span asp-validation-for="Regulamentacao" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Informacoes" class="control-label"></label>
-                <textarea asp-for="Informacoes" class="form-control" rows="3"></textarea>
+                <textarea asp-for="Informacoes" class="form-control" rows="3" readonly></textarea>
                 <span asp-validation-for="Informacoes" class="text-danger"></span>
             </div>
         </div>
         <!-- Botão de submit -->
         <div class="row justify-content-center">
             <div class="col-md-6 text-center">
-                <a class="btn btn-danger" href="@Url.Action("Index", "cooperacao")">Cancelar</a>
-                <button type="submit" class="btn btn-primary ml-3">Salvar</button>
-                
+                <a class="btn btn-danger" href="@Url.Action("Index", "cooperacao")">Voltar</a>
+
             </div>
 
         </div>

@@ -55,13 +55,9 @@ namespace ODP.Web.UI.Controllers.Cooperacao
 
         [HttpDelete]
 
-        public async Task<IActionResult> Excluir (TermoCooperacaoViewModel termo)
+        public async Task<IActionResult> Excluir (Guid id)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(termo);
-
-            }
+            var termo = await _cooperacaoServices.ObterId(id);
             var resultado = await _cooperacaoServices.Deletar(termo);
             return RedirectToAction("Index");
         }
@@ -116,6 +112,14 @@ namespace ODP.Web.UI.Controllers.Cooperacao
         }
 
 
+
+        [HttpGet]
+        public async Task <IActionResult> Detalhes ( Guid id)
+        {
+            var termo = await _cooperacaoServices.ObterId(id);
+
+            return View(termo);
+        }
 
     }
 }
