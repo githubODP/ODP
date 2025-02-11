@@ -107,7 +107,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a id="confirmDeleteButton" class="btn btn-danger">Confirmar Exclusão</a>
+                    <form id="deleteForm" method="post">
+                        @Html.AntiForgeryToken() <!-- Token de segurança -->
+                        <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -119,16 +122,12 @@
     <script>
         $(document).ready(function () {
             $('#confirmDeleteModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Botão que acionou o modal
-                var itemId = button.data('itemid'); // Extrai o ID do item
-                var itemName = button.data('itemname'); // Extrai o nome/número (opcional)
+                var button = $(event.relatedTarget);
+                var itemId = button.data('itemid');
 
-                // Atualiza o link de confirmação com o ID correto
-                var deleteUrl = '@Url.Action("Excluir", "Cooperacao")/' + itemId;
-                $('#confirmDeleteButton').attr('href', deleteUrl);
-
-                // Opcional: Exibir informações do item no modal
-                $('.modal-body').html(`Tem certeza que deseja excluir o termo <strong>${itemName}</strong>?`);
+                // Define a ação do formulário com o ID correto
+                var deleteUrl = '@Url.Action("Excluir", "Cooperacao")?id=' + itemId;
+                $('#deleteForm').attr('action', deleteUrl);
             });
         });
     </script>

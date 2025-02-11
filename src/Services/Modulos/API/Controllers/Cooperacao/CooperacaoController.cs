@@ -1,4 +1,5 @@
 ﻿using Domain.Internos.Entidade;
+using Domain.Internos.Enum;
 using Domain.Internos.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -63,21 +64,48 @@ namespace API.Controllers.Cooperacao
             }
         }
 
-        [HttpDelete("excluir")]
-        public async Task<IActionResult> excluir(TermoCooperacao termo)
+        [HttpPost("excluir")]
+        public async Task<IActionResult> Excluir([FromBody] TermoCooperacao termo)
         {
+            if (termo == null)
+                return BadRequest("O termo não pode ser nulo.");
+
             try
             {
                 await _termoRepository.Deletar(termo);
 
-                return Ok();
+                // Retorna o próprio termo excluído
+                return Ok(termo);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
-            }
+                // Caso ocorra erro, retorna um termo padrão
+                var termoPadrao = new TermoCooperacao
+                {
+                    Id = Guid.NewGuid(),
+                    Protocolo = "ERRO",
+                    Orgao = "Erro ao excluir",
+                    Sigla = "N/A",
+                    NroTermo = "0000",
+                    InicioVigencia = DateTime.MinValue,
+                    FimVIgencia = DateTime.MinValue,
+                    Validade = 0,
+                    Ativo = false,
+                    Status = ETipoStatus.SELECIONE, 
+                    Renovar = false,
+                    DIOE = 0,
+                    DataPublicacao = DateTime.MinValue,
+                    Objeto = "Erro",
+                    Regulamentacao = "N/A",
+                    Informacoes = "Erro ao excluir",
+                    Observacao = "Erro ao excluir"
+                };
 
+                return StatusCode(500, termoPadrao);
+            }
         }
+
+
 
 
         [HttpGet("pesquisar/{protocolo}")]
