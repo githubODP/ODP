@@ -2,6 +2,7 @@
 using Dividas.Domain.Entidades;
 using Dividas.Infra.Mapping;
 using Domain.Compras.Entidades;
+using Domain.Contratos.Entidades;
 using Domain.Corregedoria.Entidade;
 using Domain.Detran.Entidades;
 using Domain.DueDiligence.Entidade;
@@ -41,6 +42,7 @@ namespace Infra.Data
         /// Documentos Internos
         public DbSet<DocumentoInterno> DocumentosInternos { get; set; }
         public DbSet<DemandasInternas> Demandas { get; set; }
+        public DbSet<ContratosInternos> ContratosInternos { get; set; }
 
 
         ////Corregedoria

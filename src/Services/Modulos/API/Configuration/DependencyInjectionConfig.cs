@@ -14,6 +14,7 @@ using Domain.GovernoFederal.Interfaces;
 using Domain.Graficos.Interfaces;
 using Domain.Internos.Interfaces;
 using Domain.Library.Interfaces;
+using Domain.Notificação.Interfaces;
 using Domain.RecursosHumanos.Interfaces.RepositoriesRead;
 using Domain.Tribunal.Interfaces.TCE;
 using Domain.Tribunal.Interfaces.TCU;
@@ -40,6 +41,7 @@ using Infra.GovernoFederal.Repositories;
 using Infra.Graficos.RepositoryRead;
 using Infra.Internos.Repositories;
 using Infra.Internos.RepositoriesRead;
+using Infra.Notificacao.RepositoryRead;
 using Infra.RecursosHumanos.RepositoriesRead;
 using Infra.Tribunal.Repository.TCE;
 using Infra.Tribunal.Repository.TCU;
@@ -54,6 +56,9 @@ namespace API.Configuration
     {
         public static void RegisterServices(this IServiceCollection services)
         {
+
+            services.AddScoped<INotificacaoRepositoryRead, NotificacaoRepositoryRead>();
+
 
             //Corregedoria
             services.AddScoped<IInstauracaoRepository, InstauracaoRepository>();
