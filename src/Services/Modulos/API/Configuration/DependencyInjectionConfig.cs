@@ -57,7 +57,7 @@ namespace API.Configuration
         public static void RegisterServices(this IServiceCollection services)
         {
 
-            services.AddScoped<INotificacaoRepositoryRead, NotificacaoRepositoryRead>();
+            //services.AddScoped<INotificacaoRepositoryRead, NotificacaoRepositoryRead>();
 
 
             //Corregedoria
