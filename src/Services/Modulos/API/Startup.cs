@@ -1,6 +1,5 @@
 using API.Configuration;
 using CGEODP.WebApi.Core.Identidade;
-using Domain.Notificação.Entidade;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,19 +36,6 @@ namespace API
         {
 
 
-            //// Configuração do SMTP
-            //var emailSettings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
-            //services.AddSingleton(emailSettings);
-
-            //services.AddFluentEmail(emailSettings.SenderEmail)
-            //    .AddRazorRenderer()
-            //    .AddSmtpSender(new SmtpClient
-            //    {
-            //        Host = emailSettings.SmtpHost,
-            //        Port = emailSettings.SmtpPort,
-            //        EnableSsl = emailSettings.EnableSsl,
-            //        Credentials = new NetworkCredential(emailSettings.SenderEmail, emailSettings.SenderPassword)
-            //    });
             services.AddApiConfiguration(Configuration);
             services.AddSwaggerConfiguration();
             services.AddJwtConfiguration(Configuration);
