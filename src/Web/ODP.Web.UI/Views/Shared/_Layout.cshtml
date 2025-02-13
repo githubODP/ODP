@@ -32,7 +32,7 @@
 
 <body>
 
-    
+
     <aside class="sidebar">
         <header>
             <a asp-controller="Home" asp-action="Index">
@@ -44,64 +44,75 @@
             <ul>
                 @if (AppUser.EstaAutenticado())
                 {
-                    <li>
-                        <a href="#"><i class="ion-ios-search-strong"></i> <span>Observatório</span></a>
-                        <ul class="nav-flyout">
-                            <li>
-                                <a asp-controller="DueDiligence" asp-action="Index"><i class="ion-ios-color-filter-outline"></i>Due Diligence</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Consulta" asp-action="Index" ><i class="ion-ios-color-filter-outline"></i>Consulta CNPJ/CPF</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Grafico" asp-action="GraficoODP"><i class="ion-ios-color-filter-outline"></i>Gráficos</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="ion-ios-paper-outline"></i> <span class="">Corregedoria</span></a>
-                        <ul class="nav-flyout">
-                            <li>
-                                <a asp-controller="Corregedoria" asp-action="Index"><i class="ion-ios-alarm-outline"></i>Instaurações</a>
-                            </li>
-                            <li>
-                                <a asp-controller="Corregedoria" asp-action="Graficos"><i class="ion-ios-camera-outline"></i>Graficos</a>
-                            </li>
+                    @if (AppUser.PossuiRole("Administrador"))
+                    {
+                        <li>
+                            <a href="#"><i class="ion-ios-search-strong"></i> <span>Observatório</span></a>
+                            <ul class="nav-flyout">
+                                <li>
+                                    <a asp-controller="DueDiligence" asp-action="Index"><i class="ion-ios-color-filter-outline"></i>Due Diligence</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Consulta" asp-action="Index" ><i class="ion-ios-color-filter-outline"></i>Consulta CNPJ/CPF</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Grafico" asp-action="GraficoODP"><i class="ion-ios-color-filter-outline"></i>Gráficos</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
 
-                            <li>
-                                <a asp-controller="Corregedoria" asp-action="upload"><i class="ion-ios-alarm-outline"></i>Upload Arquivos</a>
-                            </li>
-                        </ul>
-                    </li>
+                    @if (AppUser.PossuiRole("Administrador") || AppUser.PossuiRole("Operador"))
+                    {
 
-                    <li>
-                        <a href="#"><i class="ion-ios-search-strong"></i> <span>Gabinete</span></a>
-                        <ul class="nav-flyout">
-                            <li>
-                                <a asp-controller="AnaliseTecnica" asp-action="ListarDadosAdicionais"><i class="ion-ios-alarm-outline"></i>Análise Técnica</a>
-                            </li>
-                            <li>
-                                <a asp-controller="DueDiligence" asp-action="ListarDue"><i class="ion-ios-camera-outline"></i>Due Diligence</a>
-                            </li>
+                        <li>
+                            <a href="#"><i class="ion-ios-paper-outline"></i> <span class="">Corregedoria</span></a>
+                            <ul class="nav-flyout">
+                                <li>
+                                    <a asp-controller="Corregedoria" asp-action="Index"><i class="ion-ios-alarm-outline"></i>Instaurações</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Corregedoria" asp-action="Graficos"><i class="ion-ios-camera-outline"></i>Graficos</a>
+                                </li>
 
-                        </ul>
-                    </li>
+                                <li>
+                                    <a asp-controller="Corregedoria" asp-action="upload"><i class="ion-ios-alarm-outline"></i>Upload Arquivos</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    @if (AppUser.PossuiRole("Administrador") || AppUser.PossuiRole("Usuario"))
+                    {
+                        <li>
+                            <a href="#"><i class="ion-ios-search-strong"></i> <span>Gabinete</span></a>
+                            <ul class="nav-flyout">
+                                <li>
+                                    <a asp-controller="AnaliseTecnica" asp-action="ListarDadosAdicionais"><i class="ion-ios-alarm-outline"></i>Análise Técnica</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="DueDiligence" asp-action="ListarDue"><i class="ion-ios-camera-outline"></i>Due Diligence</a>
+                                </li>
 
-                    <li>
-                        <a href="#"><i class="ion-ios-search-strong"></i> <span>Internos</span></a>
-                        <ul class="nav-flyout">
-                            <li>
-                                <a asp-controller="Cooperacao" asp-action="Index"><i class="ion-ios-alarm-outline"></i>Termos Cooperação</a>
-                            </li>
-                            <li>
-                                <a asp-controller="ContratosInternos" asp-action="Listar"><i class="ion-ios-camera-outline"></i>Contratos Internos - Desenvolvimento</a>
-                            </li>
+                            </ul>
+                        </li>
+                    }
 
-                        </ul>
-                    </li>
 
                     @if (AppUser.PossuiRole("Administrador"))
                     {
+                        <li>
+                            <a href="#"><i class="ion-ios-search-strong"></i> <span>Internos</span></a>
+                            <ul class="nav-flyout">
+                                <li>
+                                    <a asp-controller="Cooperacao" asp-action="Index"><i class="ion-ios-alarm-outline"></i>Termos Cooperação</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="ContratosInternos" asp-action="Listar"><i class="ion-ios-camera-outline"></i>Contratos Internos - Desenvolvimento</a>
+                                </li>
+
+                            </ul>
+                        </li>
+
                         <li>
                             <a href="#"><i class="ion-ios-cloud-download-outline"></i> <span class="">Painel</span></a>
                             <ul class="nav-flyout">
