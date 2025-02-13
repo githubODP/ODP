@@ -1,12 +1,9 @@
 ﻿using CGEODP.Core.DomainObjects;
-using Domain.Corregedoria.Entidade;
-using Domain.DueDiligence.Entidade;
 using Domain.Internos.Entidade;
 using Domain.Internos.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
 using Microsoft.EntityFrameworkCore;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infra.Internos.RepositoriesRead
 {
@@ -14,33 +11,52 @@ namespace Infra.Internos.RepositoriesRead
     {
         public TermoCooperacaoRepositoryRead(ObservatorioContext context) : base(context) { }
 
-
-
-
-        public async Task<PagedResult<TermoCooperacao>> ListarComFiltrosAsync(int pageNumber, int pageSize)
+        public async Task<PagedResult<TermoCooperacao>> ListarComFiltroAsync(int pageNumber, int pageSize, string protocolo = null)
         {
-            var query = _context.Set<TermoCooperacao>().AsQueryable();
+            IQueryable<TermoCooperacao> query = _context.TermosCooperacao;
 
-            var totalRecords = await query.CountAsync();
+            // Aplica o filtro pelo Protocolo, se informado
+            if (!string.IsNullOrEmpty(protocolo))
+            {
+                query = query.Where(t => t.Protocolo.Contains(protocolo));
+            }
 
+            // Conta o total de registros após o filtro
+            int totalRecords = await query.CountAsync();
+
+            // Paginação dos dados
             var items = await query
-                .AsNoTracking()
+                .OrderBy(t => t.Protocolo) // Ordenação opcional
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-
+            // Retorna o resultado paginado
             return new PagedResult<TermoCooperacao>
             {
                 Results = items,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalRecords = totalRecords,
-                TotalPages = totalPages
+                TotalRecords = totalRecords
             };
-        
         }
+
+
+
+
+
+        public async Task<List<TermoCooperacao>> ListarEnvio()
+        {
+            var diasParaAviso = new int[] { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10 }; // Intervalos de alerta
+
+            var termos = await _context.TermosCooperacao
+                .Where(t => diasParaAviso.Contains(EF.Functions.DateDiffDay(t.InicioVigencia, t.FimVigencia)))
+                .ToListAsync();
+
+            return termos;
+        }
+
+
 
         public async Task<TermoCooperacao> ObterProtocolo(string protocolo)
         {
@@ -53,7 +69,7 @@ namespace Infra.Internos.RepositoriesRead
                      Sigla = c.Sigla,
                      NroTermo = c.NroTermo,
                      InicioVigencia = c.InicioVigencia,
-                     FimVIgencia = c.FimVIgencia,
+                     FimVigencia = c.FimVigencia,
                      Validade = c.Validade,
                      Ativo = c.Ativo,
                      Status = c.Status,

@@ -82,12 +82,21 @@ namespace ODP.Web.UI.Configuration
                    .AddTransientHttpErrorPolicy(
                    p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
+            services.AddHttpClient<ICooperacaoService, CooperacaoService>()
+                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                .AddTransientHttpErrorPolicy(
+                p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
 
             services.AddHttpClient<IDemandaService, DemandaService>()
                    .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
                    .AddPolicyHandler(PollyExtensions.EsperarTentar())
                    .AddTransientHttpErrorPolicy(
                    p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+
+            /// Recursos Humanos 
 
             services.AddHttpClient<IFuncionarioService, FuncionarioService>()
                   .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
@@ -424,11 +433,7 @@ namespace ODP.Web.UI.Configuration
                  .AddTransientHttpErrorPolicy(
                  p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-            services.AddHttpClient<IcooperacaoServices, CooperacaoServices>()
-                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
-                 .AddPolicyHandler(PollyExtensions.EsperarTentar())
-                 .AddTransientHttpErrorPolicy(
-                 p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+           
 
 
 

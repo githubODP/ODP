@@ -66,6 +66,8 @@ namespace API.Configuration
             ///Due Diligence             
             services.AddScoped<IDueRepository, DueRepository>();
             services.AddScoped<IDueRepositoryRead, DueRepositoryRead>();
+
+            //Analise Tecnica
             services.AddScoped<IAnaliseRepository, AnaliseRepository>();
             services.AddScoped<IAnaliseRepositoryRead, AnaliseRepositoryRead>();
 

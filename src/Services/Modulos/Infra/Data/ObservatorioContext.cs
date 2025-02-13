@@ -2,7 +2,6 @@
 using Dividas.Domain.Entidades;
 using Dividas.Infra.Mapping;
 using Domain.Compras.Entidades;
-using Domain.Contratos.Entidades;
 using Domain.Corregedoria.Entidade;
 using Domain.Detran.Entidades;
 using Domain.DueDiligence.Entidade;

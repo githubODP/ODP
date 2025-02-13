@@ -24,7 +24,7 @@ namespace Infra.Internos.Mapping
             builder.Property(c => c.InicioVigencia)
              .HasColumnType("Datetime");
 
-            builder.Property(c => c.FimVIgencia)
+            builder.Property(c => c.FimVigencia)
               .HasColumnType("Datetime");
 
             builder.Property(c => c.Validade)

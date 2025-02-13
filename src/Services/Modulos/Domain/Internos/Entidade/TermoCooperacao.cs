@@ -2,6 +2,7 @@
 
 using CGEODP.Core.DomainObjects;
 using Domain.Internos.Enum;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Internos.Entidade
 {
@@ -15,7 +16,7 @@ namespace Domain.Internos.Entidade
         public string Sigla { get; set; }
         public string NroTermo { get; set; }
         public DateTime InicioVigencia { get; set; }
-        public DateTime FimVIgencia { get; set; }
+        public DateTime FimVigencia { get; set; }
         public int Validade { get; set; }
         public bool Ativo { get; set; }
         public ETipoStatus Status { get; set; }
@@ -26,6 +27,9 @@ namespace Domain.Internos.Entidade
         public string Regulamentacao { get; set; }
         public string Informacoes { get; set; }
         public string Observacao { get; set; }
+
+        [NotMapped]
+        public int DiasRestantes => (FimVigencia - InicioVigencia).Days;
 
 
 

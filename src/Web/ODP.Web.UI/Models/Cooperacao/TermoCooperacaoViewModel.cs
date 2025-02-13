@@ -17,7 +17,7 @@ namespace ODP.Web.UI.Models.Cooperacao
         [Display(Name = "Ínicio Vigência")]
         public DateTime InicioVigencia { get; set; }
         [Display(Name = "Fim Vigência")]
-        public DateTime FimVIgencia { get; set; }
+        public DateTime FimVigencia { get; set; }
         public int Validade { get; set; }
         public bool Ativo { get; set; }
         public ETipoStatus Status { get; set; }
@@ -32,5 +32,11 @@ namespace ODP.Web.UI.Models.Cooperacao
         public string Informacoes { get; set; }
         [Display(Name = "Observações")]
         public string Observacao { get; set; }
+
+
+        
+        /// calculado automatico
+        
+        public int DiasRestantes => (FimVigencia - InicioVigencia).Days;
     }
 }

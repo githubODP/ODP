@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infra.Contratos.Mapping
+namespace Infra.Internos.Mapping
 {
     public class ContratosInternoMapping : IEntityTypeConfiguration<ContratosInternos>
     {
