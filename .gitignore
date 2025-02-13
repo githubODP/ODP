@@ -87,3 +87,7 @@ src/Web/ODP.Web.UI/appsettings.Development.json
 src/Web/ODP.Web.UI/appsettings.Development.json
 /src/Web/ODP.Web.UI/appsettings.Development.json
 /src/Web/ODP.Web.UI/appsettings.Development.json
+/src/Services/Modulos/API/Properties/launchSettings.json
+/src/Services/Identidade/Identidade.API/Properties/launchSettings.json
+/src/Web/ODP.Web.UI/Properties/launchSettings.json
+/src/Web/ODP.Web.UI/appsettings.Development.json
