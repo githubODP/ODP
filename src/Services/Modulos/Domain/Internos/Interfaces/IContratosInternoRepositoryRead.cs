@@ -1,7 +1,7 @@
 ﻿using CGEODP.Core.Data;
-using Domain.Contratos.Entidades;
+using Domain.Internos.Entidade;
 
-namespace Domain.Contratos.Interfaces
+namespace Domain.Internos.Interfaces
 {
     public interface IContratosInternoRepositoryRead : IRepositoryRead<ContratosInternos>
     {

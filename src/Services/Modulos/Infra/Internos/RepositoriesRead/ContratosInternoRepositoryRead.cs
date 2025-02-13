@@ -4,10 +4,10 @@ using Domain.Internos.Interfaces;
 using Infra.Data;
 using Infra.RepositoryExterno;
 
-namespace Infra.Contratos.RepositoriesRead
+namespace Infra.Internos.RepositoriesRead
 {
     public class ContratosInternoRepositoryRead : RepositoryRead<ContratosInternos>, IContratosInternoRepositoryRead, IAggregateRoot
     {
-        public ContratosInternoRepositoryRead(ObservatorioContext context): base(context) { }
+        public ContratosInternoRepositoryRead(ObservatorioContext context) : base(context) { }
     }
 }

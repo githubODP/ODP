@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Consultas
 {
+    [Authorize(Roles = "Administrador")]
     public class ConsultaController : Controller
     {
         private readonly IBuscaService _buscaService;

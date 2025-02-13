@@ -7,16 +7,17 @@ using ODP.Web.UI.Models.DueDiligence;
 using ODP.Web.UI.Services.Corregedoria;
 using PdfSharpCore;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services.Cooperacao
 {
-    public class CooperacaoServices : Service, IcooperacaoServices
+    public class CooperacaoService : Service, ICooperacaoService
     {
         private readonly HttpClient _httpClient;
 
-        public CooperacaoServices( HttpClient httpClient,
+        public CooperacaoService( HttpClient httpClient,
            IOptions<AppSettings> settings)
         {
            
@@ -60,9 +61,16 @@ namespace ODP.Web.UI.Services.Cooperacao
             return null;
         }
 
-        public async Task<PagedResult<TermoCooperacaoViewModel>> ListarComFiltros(int pageNumber = 1, int pageSize = 5)
+        public async Task<PagedResult<TermoCooperacaoViewModel>> Listar(int pageNumber = 1, int pageSize = 5)
         {
             var response = await _httpClient.GetAsync($"api/termocooperacao/listar?pageNumber={pageNumber}&pageSize={pageSize}");
+            TratarErrosResponse(response);
+            return await DeserializarObjetoResponse<PagedResult<TermoCooperacaoViewModel>>(response);
+        }
+
+        public async Task<PagedResult<TermoCooperacaoViewModel>> ListarComFiltros(int pageNumber = 1, int pageSize = 5)
+        {
+            var response = await _httpClient.GetAsync($"api/termocooperacao/listar-com-filtro?pageNumber={pageNumber}&pageSize={pageSize}");
             TratarErrosResponse(response);
             return await DeserializarObjetoResponse<PagedResult<TermoCooperacaoViewModel>>(response);
         }
@@ -81,6 +89,20 @@ namespace ODP.Web.UI.Services.Cooperacao
             TratarErrosResponse(response);
             var teste = DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
             return await teste;
+        }
+
+        public async Task<List<TermoCooperacaoViewModel>> VerificarAlertasFimVigencia()
+        {
+            var response = await _httpClient.GetAsync("api/termocooperacao/listar-envio");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new List<TermoCooperacaoViewModel>(); 
+            }
+
+            var termos = await DeserializarObjetoResponse<List<TermoCooperacaoViewModel>>(response);
+
+            return termos; 
         }
     }
 }

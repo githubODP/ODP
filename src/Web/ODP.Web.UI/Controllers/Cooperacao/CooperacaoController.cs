@@ -1,20 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ODP.Web.UI.Models.Cooperacao;
 using ODP.Web.UI.Services.Cooperacao;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Cooperacao
 {
+    [Authorize(Roles = "Usuario")]
     public class CooperacaoController : Controller
     {
-        private readonly IcooperacaoServices _cooperacaoServices;
+        private readonly ICooperacaoService _cooperacaoService;
 
-        public CooperacaoController(IcooperacaoServices cooperacaoServices)
+        public CooperacaoController(ICooperacaoService cooperacaoService)
         {
-            _cooperacaoServices = cooperacaoServices;
+            _cooperacaoService = cooperacaoService;
         }
 
 
@@ -22,13 +24,18 @@ namespace ODP.Web.UI.Controllers.Cooperacao
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
         {
-            var resultado = await _cooperacaoServices.ListarComFiltros(pageNumber, pageSize);
+            var resultado = await _cooperacaoService.Listar(pageNumber, pageSize);
 
             if (resultado == null || !resultado.Results.Any())
                 return NotFound("Nenhuma análise encontrada.");
 
-            return View(resultado);
+            // Obtém os alertas e armazena na ViewBag
+            var alertas = await _cooperacaoService.VerificarAlertasFimVigencia();
+            ViewBag.Alertas = alertas ?? new List<TermoCooperacaoViewModel>();
+
+            return View(resultado); // Continua retornando o resultado normal
         }
+
 
 
         [HttpGet]
@@ -47,7 +54,7 @@ namespace ODP.Web.UI.Controllers.Cooperacao
                 return View(termo);
 
             }
-            var resultado = await _cooperacaoServices.Adicionar(termo);
+            var resultado = await _cooperacaoService.Adicionar(termo);
             return View(resultado);
 
         }
@@ -57,8 +64,8 @@ namespace ODP.Web.UI.Controllers.Cooperacao
         [ValidateAntiForgeryToken] // Adicione este atributo para segurança
         public async Task<IActionResult> Excluir(Guid id)
         {
-            var termo = await _cooperacaoServices.ObterId(id);
-            var resultado = await _cooperacaoServices.Deletar(termo);
+            var termo = await _cooperacaoService.ObterId(id);
+            var resultado = await _cooperacaoService.Deletar(termo);
             return RedirectToAction("Index");
         }
 
@@ -67,7 +74,7 @@ namespace ODP.Web.UI.Controllers.Cooperacao
         [HttpGet]
         public async Task<IActionResult> Editar(Guid Id)
         {
-            var termo = await _cooperacaoServices.ObterId(Id);
+            var termo = await _cooperacaoService.ObterId(Id);
             return View(termo);
         }
 
@@ -81,8 +88,8 @@ namespace ODP.Web.UI.Controllers.Cooperacao
                 return View(termo);
 
             }
-            var alterar = await _cooperacaoServices.ObterId(termo.Id);
-            var resultado = await _cooperacaoServices.Alterar(copiaTermo(termo, alterar));
+            var alterar = await _cooperacaoService.ObterId(termo.Id);
+            var resultado = await _cooperacaoService.Alterar(copiaTermo(termo, alterar));
             return RedirectToAction("Index");
         }
 
@@ -116,10 +123,14 @@ namespace ODP.Web.UI.Controllers.Cooperacao
         [HttpGet]
         public async Task <IActionResult> Detalhes ( Guid id)
         {
-            var termo = await _cooperacaoServices.ObterId(id);
+            var termo = await _cooperacaoService.ObterId(id);
 
             return View(termo);
         }
+
+
+
+
 
     }
 }
