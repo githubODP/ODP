@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="col-12">
+    <div>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -97,30 +97,31 @@
                 }
             </tbody>
         </table>
+            </div>
+        </div>
     </div>
 
-    <div class="col-12">
-        <ul class="pagination justify-content-center">
-            @if (Model.PageNumber > 1)
-            {
-                <li class="page-item">
-                    <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber - 1)">Anterior</a>
-                </li>
-            }
-            <li class="page-item disabled">
-                <span class="page-link bg-white text-dark">@Model.PageNumber</span>
+    <ul class="pagination justify-content-center">
+        @if (Model.PageNumber > 1)
+        {
+            <li class="page-item">
+                <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber - 1)">Anterior</a>
             </li>
-            @if (Model.TotalPages > Model.PageNumber)
-            {
-                <li class="page-item">
-                    <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber + 1)">Próxima</a>
-                </li>
-            }
-        </ul>
-    </div>
+        }
+        <li class="page-item disabled">
+            <span class="page-link bg-white text-dark">@Model.PageNumber</span>
+        </li>
+        @if (Model.TotalPages > Model.PageNumber)
+        {
+            <li class="page-item">
+                <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber + 1)">Próxima</a>
+            </li>
+        }
+    </ul>
+
 </div>
-</div>
-</div>
+
+       
 <!-- Modal de Confirmação -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

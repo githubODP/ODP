@@ -68,6 +68,24 @@ nav.navbar {
 
 
 
+
+table.table {
+    table-layout: fixed; /* Força divisão igual de largura */
+}
+
+.table td, .table th {
+    white-space: normal !important; /* Permite quebra de linha */
+}
+
+.table td {
+     word-wrap: break-word;
+}
+.table {
+    font-size: 0.9em; /* 90% do tamanho padrão */
+}
+
+
+
 @media (max-width: 768px) {
     .img-logo img {
         width: 70%;

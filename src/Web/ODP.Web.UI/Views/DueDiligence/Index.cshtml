@@ -58,7 +58,7 @@
 
 
 
-<div class="container-fluid pt-lg-5">
+<div class="container pt-lg-5">
     <div class="table-responsive shadow">
         <div class="table-wrapper">
             <div class="table-title">
@@ -112,9 +112,9 @@
                                 </button>
                             </td>
                             <td>@(((Model.PageNumber - 1) * Model.PageSize) + (++index))</td>
-                            <td style="width: 15%;">@Html.DisplayFor(modelItem => item.NroProtocolo)</td>
-                            <td style="width: 30%; font-size:12px;">@Html.DisplayFor(modelItem => item.Nome)</td>
-                            <td style="width: 20%;">@Html.DisplayFor(modelItem => item.CPF)</td>
+                            <td>@Html.DisplayFor(modelItem => item.NroProtocolo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CPF)</td>
                             <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
                             <td>@Html.DisplayFor(modelItem => item.Decreto)</td>
                             <td>@Html.DisplayFor(modelItem => item.DataSolicitacao)</td>
