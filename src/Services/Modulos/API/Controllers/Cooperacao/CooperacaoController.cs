@@ -55,7 +55,7 @@ namespace API.Controllers.Cooperacao
             try
             {
                 await _termoRepository.Adicionar(termo);
-                return Ok();
+                return Ok(termo);
             }
             catch
             {

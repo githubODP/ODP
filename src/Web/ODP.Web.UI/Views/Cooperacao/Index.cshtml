@@ -4,150 +4,146 @@
 @{
     var alertas = ViewBag.Alertas as List<ODP.Web.UI.Models.Cooperacao.TermoCooperacaoViewModel>;
 }
-<div class="row">
-
-    @if (alertas != null && alertas.Count > 0)
-    {
-        <div class="alert alert-warning">
-            <strong>Atenção!</strong> Os seguintes Termos de Cooperação estão próximos do vencimento:
-            <ul>
-                @foreach (var alerta in alertas)
-                {
-                    <li>
-                        <strong>Protocolo:</strong> @alerta.Protocolo -
-                        <strong>Nº Termo:</strong> @alerta.NroTermo -
-                        <strong>Início:</strong> @alerta.InicioVigencia.ToString("dd/MM/yyyy") -
-                        <strong>Fim:</strong> @alerta.FimVigencia.ToString("dd/MM/yyyy") -
-                        <strong>Dias Restantes:</strong> @alerta.DiasRestantes
-                    </li>
-                }
-            </ul>
-        </div>
-    }
 
 
-
-    <div class="container-fluid ">
-        <div class="table-responsive shadow">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Termos de <b>Cooperação</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a asp-controller="Cooperacao" asp-action="Create"
-                               class="btn btn-success">
-                                <img src="~/svg/adicionar.svg" width="20" height="20"
-                                     class="d-inline-block align-top" alt="Adicionar">
-                                <span class="m-1">Novo</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Protocolo)</th>
-                            <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
-                            <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().NroTermo)</th>
-                            <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().InicioVigencia)</th>
-                            <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().FimVigencia)</th>
-                            <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Status)</th>
-                            <th>Opções</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Results)
-                        {
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
-                                <td>@Html.DisplayFor(modelItem => item.NroTermo)</td>
-                                <td>@item.InicioVigencia.ToString("dd/MM/yyyy")</td>
-                                <td>@item.FimVigencia.ToString("dd/MM/yyyy")</td>
-                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                                <td>
-                                    <div class="d-flex">
-                                        <a asp-controller="Cooperacao" asp-action="Editar" asp-route-id="@item.Id" class="btn btn-primary mr-2">
-                                            <img src="~/svg/editar.svg" height="16" />
-                                        </a>
-                                        <a asp-controller="Cooperacao" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
-                                            <img src="~/svg/vizualizar.svg" height="16" />
-                                        </a>
-
-                                        <a href="#" class="btn btn-info mr-2" data-toggle="modal" data-target="#confirmDeleteModal"
-                                           data-itemid="@item.Id" data-itemname="@item.NroTermo">
-                                            <img src="~/svg/excluir.svg" height="16" />
-                                        </a>
-
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-
-
-                </table>
-
+<div class="container-fluid pt-lg-5">
+    <div class="table-responsive shadow">
+        <div class="table-wrapper">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Termos de <b>Cooperação</b></h2>
             </div>
-        </div>
-        <div class="pagination justify-content-center">
-            @if (Model.PageNumber > 1)
-            {
-                <li class="page-item">
-                    <div class="btn-sm btn-info">
-                        <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber - 1)">Anterior</a>
-                    </div>
-                </li>
-            }
-            <div class="p-1">
-                @if (Model.PageNumber > 1 && Model.PageNumber < Model.TotalPages - 2)
+            <div class="col-sm-6 d-flex justify-content-end align-items-center">
+                @if (alertas != null && alertas.Count > 0)
                 {
-                    <span class="bg-white color-black">@Model.PageNumber</span>
-                }
-            </div>
-            @if (Model.TotalPages > Model.PageNumber)
-            {
-                <li class="page-item">
-                    <div class="btn-sm btn-info">
-                        <a class="page-link bg-info text-white " asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber + 1)">Próxima</a>
-                    </div>
-                </li>
-            }
-        </div>
-
-
-        <!-- Modal de Confirmação -->
-        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                            <span aria-hidden="true">&times;</span>
+                    <div class="dropdown mr-3">
+                        <button class="btn btn-warning dropdown-toggle" type="button" id="notificationDropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge badge-danger">@alertas.Count</span>
                         </button>
+                        <div class="dropdown-menu dropdown-menu-right p-3" aria-labelledby="notificationDropdown"
+                             style="min-width: 400px; max-height: 500px; overflow-y: auto;">
+                            <h6 class="dropdown-header text-danger">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Termos próximos do vencimento
+                            </h6>
+                            @foreach (var alerta in alertas)
+                            {
+                                <div class="dropdown-item d-flex flex-column mb-2 p-2 alert-item">
+                                    <div class="d-flex justify-content-between">
+                                        <small class="text-muted">#@alerta.Protocolo</small>
+                                        <span class="badge @GetBadgeClass(alerta.DiasRestantes)">
+                                            @alerta.DiasRestantes dias
+                                        </span>
+                                    </div>
+                                    <div class="font-weight-bold">@alerta.NroTermo</div>
+                                    <div class="text-sm">
+                                        <span>Vencimento: @alerta.FimVigencia.ToString("dd/MM/yyyy")</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        Tem certeza que deseja excluir este termo de cooperação?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <form id="deleteForm" method="post">
-                            @Html.AntiForgeryToken() <!-- Token de segurança -->
-                            <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
-                        </form>
-                    </div>
-                </div>
+                }
+
+                <a asp-controller="Cooperacao" asp-action="Create" class="btn btn-success">
+                    <img src="~/svg/adicionar.svg" width="20" height="20" class="d-inline-block align-top" alt="Adicionar">
+                    <span class="m-1">Novo</span>
+                </a>
             </div>
         </div>
     </div>
 
+    <div class="col-12">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Protocolo)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().NroTermo)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().InicioVigencia)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().FimVigencia)</th>
+                    <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Status)</th>
+                    <th>Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Results)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NroTermo)</td>
+                        <td>@item.InicioVigencia.ToString("dd/MM/yyyy")</td>
+                        <td>@item.FimVigencia.ToString("dd/MM/yyyy")</td>
+                        <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        <td>
+                            <div class="d-flex">
+                                <a asp-controller="Cooperacao" asp-action="Editar" asp-route-id="@item.Id" class="btn btn-primary mr-2">
+                                    <img src="~/svg/editar.svg" height="16" />
+                                </a>
+                                <a asp-controller="Cooperacao" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
+                                    <img src="~/svg/vizualizar.svg" height="16" />
+                                </a>
+                                <a href="#" class="btn btn-info mr-2" data-toggle="modal" data-target="#confirmDeleteModal"
+                                   data-itemid="@item.Id" data-itemname="@item.NroTermo">
+                                    <img src="~/svg/excluir.svg" height="16" />
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
+    <div class="col-12">
+        <ul class="pagination justify-content-center">
+            @if (Model.PageNumber > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber - 1)">Anterior</a>
+                </li>
+            }
+            <li class="page-item disabled">
+                <span class="page-link bg-white text-dark">@Model.PageNumber</span>
+            </li>
+            @if (Model.TotalPages > Model.PageNumber)
+            {
+                <li class="page-item">
+                    <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber + 1)">Próxima</a>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
-
- 
-
+</div>
+</div>
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir este termo de cooperação?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form id="deleteForm" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
@@ -155,11 +151,20 @@
             $('#confirmDeleteModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var itemId = button.data('itemid');
-
-                // Define a ação do formulário com o ID correto
                 var deleteUrl = '@Url.Action("Excluir", "Cooperacao")?id=' + itemId;
                 $('#deleteForm').attr('action', deleteUrl);
             });
         });
     </script>
+}
+@functions {
+    string GetBadgeClass(int diasRestantes)
+    {
+        return diasRestantes switch
+        {
+            <= 10 => "badge-danger",
+            <= 30 => "badge-warning",
+            _ => "badge-secondary"
+        };
+    }
 }

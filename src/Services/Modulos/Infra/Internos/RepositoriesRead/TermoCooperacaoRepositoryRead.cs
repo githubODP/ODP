@@ -51,6 +51,7 @@ namespace Infra.Internos.RepositoriesRead
 
             var termos = await _context.TermosCooperacao
                 .Where(t => diasParaAviso.Contains(EF.Functions.DateDiffDay(t.InicioVigencia, t.FimVigencia)))
+                .OrderBy(t => t.FimVigencia)
                 .ToListAsync();
 
             return termos;

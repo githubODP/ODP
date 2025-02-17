@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Cooperacao
 {
-    [Authorize(Roles = "Usuario")]
+   
     public class CooperacaoController : Controller
     {
         private readonly ICooperacaoService _cooperacaoService;

@@ -59,7 +59,7 @@
 
 
 <div class="container-fluid pt-lg-5">
-    <div class="table-responsive shadow" style="margin-left:-12em; width:130%;">
+    <div class="table-responsive shadow">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -86,7 +86,6 @@
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Nome)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().CPF)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
-                        <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Indicacao)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Decreto)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().DataSolicitacao)</th>
                         <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().DataResposta)</th>
@@ -117,7 +116,6 @@
                             <td style="width: 30%; font-size:12px;">@Html.DisplayFor(modelItem => item.Nome)</td>
                             <td style="width: 20%;">@Html.DisplayFor(modelItem => item.CPF)</td>
                             <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Indicacao)</td>
                             <td>@Html.DisplayFor(modelItem => item.Decreto)</td>
                             <td>@Html.DisplayFor(modelItem => item.DataSolicitacao)</td>
                             <td>@Html.DisplayFor(modelItem => item.DataResposta)</td>

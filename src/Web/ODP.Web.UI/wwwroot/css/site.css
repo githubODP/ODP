@@ -69,4 +69,25 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
-Explicar
+
+    /* Estilização personalizada para os itens de alerta */
+    .alert-item {
+        border-left: 4px solid #ffc107;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+    }
+
+        .alert-item:hover {
+            background-color: #fff3cd;
+            transform: translateX(5px);
+        }
+
+    /* Badge dinâmico */
+    .badge-danger {
+        background-color: #dc3545;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+        color: #000;
+    }
