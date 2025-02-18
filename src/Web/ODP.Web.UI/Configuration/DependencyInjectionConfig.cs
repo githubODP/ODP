@@ -433,7 +433,7 @@ namespace ODP.Web.UI.Configuration
                  .AddTransientHttpErrorPolicy(
                  p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
-           
+
 
 
 

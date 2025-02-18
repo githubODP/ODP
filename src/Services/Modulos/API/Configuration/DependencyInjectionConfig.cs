@@ -55,7 +55,7 @@ namespace API.Configuration
         public static void RegisterServices(this IServiceCollection services)
         {
 
-            
+
 
 
             //Corregedoria

@@ -36,7 +36,7 @@ namespace Infra.Corregedoria.RepositoriesRead
                  .FirstOrDefaultAsync(c => c.CNPJCPF == cpf);
         }
 
-        public async  Task<PagedResult<Instauracao>> ListarComFiltrosAsync(
+        public async Task<PagedResult<Instauracao>> ListarComFiltrosAsync(
                 int pageNumber,
                 int pageSize,
                 int? ano = null,

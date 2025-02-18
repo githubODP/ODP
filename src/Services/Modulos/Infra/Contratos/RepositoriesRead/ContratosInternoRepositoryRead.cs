@@ -8,6 +8,6 @@ namespace Infra.Contratos.RepositoriesRead
 {
     public class ContratosInternoRepositoryRead : RepositoryRead<ContratosInternos>, IContratosInternoRepositoryRead, IAggregateRoot
     {
-        public ContratosInternoRepositoryRead(ObservatorioContext context): base(context) { }
+        public ContratosInternoRepositoryRead(ObservatorioContext context) : base(context) { }
     }
 }

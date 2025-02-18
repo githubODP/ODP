@@ -158,7 +158,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         }
 
 
-        
+
         [HttpGet]
         public async Task<IActionResult> Deletar(Guid id)
         {
@@ -172,7 +172,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             return View(analise);
         }
 
-        
+
         [HttpDelete]
         public async Task<IActionResult> DeletarConfirmado(Guid id)
         {

@@ -5,8 +5,8 @@ using Infra.RepositoryExterno;
 
 namespace Infra.Contratos.Repositories
 {
-    public class ContratosInternoRepository : Repository < ContratosInternos>, IContratosInternosRepository
+    public class ContratosInternoRepository : Repository<ContratosInternos>, IContratosInternosRepository
     {
-        public ContratosInternoRepository(ObservatorioContext context): base(context) { }
+        public ContratosInternoRepository(ObservatorioContext context) : base(context) { }
     }
 }

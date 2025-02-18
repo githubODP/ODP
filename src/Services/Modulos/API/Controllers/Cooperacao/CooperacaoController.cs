@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -109,7 +109,7 @@ namespace API.Controllers.Cooperacao
                     FimVigencia = DateTime.MinValue,
                     Validade = 0,
                     Ativo = false,
-                    Status = ETipoStatus.SELECIONE, 
+                    Status = ETipoStatus.SELECIONE,
                     Renovar = false,
                     DIOE = 0,
                     DataPublicacao = DateTime.MinValue,
@@ -136,9 +136,9 @@ namespace API.Controllers.Cooperacao
         }
 
         [HttpGet("obterid/{id}")]
-        public async Task<IActionResult> ObterID( Guid id)
+        public async Task<IActionResult> ObterID(Guid id)
         {
-            return Ok (await _termoRepositoryRead.ObterId(id));
+            return Ok(await _termoRepositoryRead.ObterId(id));
         }
 
 
@@ -160,7 +160,7 @@ namespace API.Controllers.Cooperacao
                 NroTermo = t.NroTermo,
                 InicioVigencia = t.InicioVigencia,
                 FimVigencia = t.FimVigencia,
-                
+
             }).ToList();
 
             return Ok(resultado);

@@ -1,6 +1,5 @@
 ﻿using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Cooperacao;
-using ODP.Web.UI.Models.Corregedoria;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

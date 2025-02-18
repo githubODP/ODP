@@ -6,13 +6,13 @@ namespace Domain.Internos.Interfaces
 {
     public interface ITermoCooperacaoRepositoryRead : IRepositoryRead<TermoCooperacao>
     {
-       
+
         Task<TermoCooperacao> ObterProtocolo(string protocolo);
 
         Task<List<TermoCooperacao>> ListarEnvio();
         Task<PagedResult<TermoCooperacao>> ListarComFiltroAsync(
             int pageNumber,
-            int pageSize,           
+            int pageSize,
             string protocolo = null);
     }
 }

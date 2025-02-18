@@ -1,11 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Cooperacao;
-using ODP.Web.UI.Models.Corregedoria;
-using ODP.Web.UI.Models.DueDiligence;
-using ODP.Web.UI.Services.Corregedoria;
-using PdfSharpCore;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -17,10 +12,10 @@ namespace ODP.Web.UI.Services.Cooperacao
     {
         private readonly HttpClient _httpClient;
 
-        public CooperacaoService( HttpClient httpClient,
+        public CooperacaoService(HttpClient httpClient,
            IOptions<AppSettings> settings)
         {
-           
+
             httpClient.BaseAddress = new Uri(settings.Value.ModulosUrl);
 
             _httpClient = httpClient;
@@ -34,7 +29,7 @@ namespace ODP.Web.UI.Services.Cooperacao
 
             var response = await _httpClient.PostAsync("/api/termocooperacao/adicionar", dueContent);
 
-             return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
+            return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
 
         }
 
@@ -78,7 +73,7 @@ namespace ODP.Web.UI.Services.Cooperacao
         public async Task<TermoCooperacaoViewModel> ObterId(Guid Id)
         {
             var response = await _httpClient.GetAsync($"api/termocooperacao/obterid/{Id}");
-            
+
             var teste = DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
             return await teste;
         }
@@ -97,12 +92,12 @@ namespace ODP.Web.UI.Services.Cooperacao
 
             if (!response.IsSuccessStatusCode)
             {
-                return new List<TermoCooperacaoViewModel>(); 
+                return new List<TermoCooperacaoViewModel>();
             }
 
             var termos = await DeserializarObjetoResponse<List<TermoCooperacaoViewModel>>(response);
 
-            return termos; 
+            return termos;
         }
     }
 }

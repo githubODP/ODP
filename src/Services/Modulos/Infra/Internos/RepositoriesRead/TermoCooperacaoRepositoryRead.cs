@@ -81,7 +81,7 @@ namespace Infra.Internos.RepositoriesRead
                      Regulamentacao = c.Regulamentacao,
                      Informacoes = c.Informacoes,
                      Observacao = c.Observacao
-                 }).FirstOrDefaultAsync(); 
+                 }).FirstOrDefaultAsync();
         }
 
 

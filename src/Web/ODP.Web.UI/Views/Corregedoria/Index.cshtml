@@ -4,9 +4,11 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "_Layout";
+    // Layout = "_Layout";
    
 }
+
+
 
 
 
@@ -106,20 +108,20 @@
 
 
 
+
+
+
 <div class="container-fluid">
     <div class="table-responsive shadow">
         <div class="table-wrapper">
             <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h2>Instaurações</h2>
-                    </div>
+                <div class="row">                    
+                 <h2>Instaurações</h2>
                 </div>
             </div>
-            <table class="table table-striped table-hover tablecor">
+            <table class="table table-striped table-hover" style="width:90%">
                 <thead>
                     <tr>
-
                         <th>
                             @Html.DisplayNameFor(model => model.Results.FirstOrDefault().Ano)
                         </th>
@@ -143,9 +145,11 @@
                         </th>
 
                         <th>Opções</th>
+
                     </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach (var item in Model.Results)
                     {
                         <tr>
@@ -190,21 +194,25 @@
                             </td>
 
                         </tr>
+
+                       
                     }
                 </tbody>
+          
 
             </table>
-
+            
         </div>
     </div>
 
-    <div class="pagination">
-        @if (Model.TotalPages > 1)
+
+<div class="pagination">
+    @if (Model.TotalPages > 1)
+    {
+        <!-- Botão Anterior -->
+        @if (Model.PageNumber > 1)
         {
-            <!-- Botão Anterior -->
-            @if (Model.PageNumber > 1)
-            {
-                <a href="@Url.Action("Index", new {
+            <a href="@Url.Action("Index", new {
                                             pageNumber = Model.PageNumber - 1,
                                             pageSize = Model.PageSize,
                                             ano = ViewBag.AnoAtual,
@@ -212,70 +220,70 @@
                                             procedimento = ViewBag.ProcedimentoAtual,
                                             decisao = ViewBag.DecisaoAtual
                                         })" class="btn btn-light">Anterior</a>
-            }
+        }
 
-            <!-- Primeiras Páginas -->
-            @for (int i = 1; i <= 3 && i <= Model.TotalPages; i++)
+        <!-- Primeiras Páginas -->
+        @for (int i = 1; i <= 3 && i <= Model.TotalPages; i++)
+        {
+            if (i == Model.PageNumber)
             {
-                if (i == Model.PageNumber)
-                {
-                    <span class="current-page">@i</span>
-                }
-                else
-                {
-                    <a href="@Url.Action("Index", new {
-                                                pageNumber = i,
-                                                pageSize = Model.PageSize,
-                                                ano = ViewBag.AnoAtual,
-                                                orgao = ViewBag.OrgaoAtual,
-                                                procedimento = ViewBag.ProcedimentoAtual,
-                                                decisao = ViewBag.DecisaoAtual
-                                            })">@i</a>
-                }
+                <span class="current-page">@i</span>
             }
-
-            <!-- Adicione "..." caso existam muitas páginas entre o início e o final -->
-            @if (Model.TotalPages > 5 && Model.PageNumber > 3)
-            {
-                <span>...</span>
-            }
-
-            <!-- Páginas Próximas -->
-            @if (Model.PageNumber > 3 && Model.PageNumber < Model.TotalPages - 2)
-            {
-                <span class="current-page">@Model.PageNumber</span>
-            }
-
-            <!-- Adicione "..." caso existam muitas páginas antes do final -->
-            @if (Model.TotalPages > 5 && Model.PageNumber < Model.TotalPages - 2)
-            {
-                <span>...</span>
-            }
-
-            <!-- Últimas Páginas -->
-            @for (int i = Math.Max(Model.TotalPages - 2, 4); i <= Model.TotalPages; i++)
-            {
-                if (i == Model.PageNumber)
-                {
-                    <span class="current-page">@i</span>
-                }
-                else
-                {
-                    <a href="@Url.Action("Index", new {
-                                                pageNumber = i,
-                                                pageSize = Model.PageSize,
-                                                ano = ViewBag.AnoAtual,
-                                                orgao = ViewBag.OrgaoAtual,
-                                                procedimento = ViewBag.ProcedimentoAtual,
-                                                decisao = ViewBag.DecisaoAtual
-                                            })">@i</a>
-                }
-            }
-
-            <!-- Botão Próximo -->
-            @if (Model.PageNumber < Model.TotalPages)
+            else
             {
                 <a href="@Url.Action("Index", new {
+                                                pageNumber = i,
+                                                pageSize = Model.PageSize,
+                                                ano = ViewBag.AnoAtual,
+                                                orgao = ViewBag.OrgaoAtual,
+                                                procedimento = ViewBag.ProcedimentoAtual,
+                                                decisao = ViewBag.DecisaoAtual
+                                            })">@i</a>
+            }
+        }
+
+        <!-- Adicione "..." caso existam muitas páginas entre o início e o final -->
+        @if (Model.TotalPages > 5 && Model.PageNumber > 3)
+        {
+            <span>...</span>
+        }
+
+        <!-- Páginas Próximas -->
+        @if (Model.PageNumber > 3 && Model.PageNumber < Model.TotalPages - 2)
+        {
+            <span class="current-page">@Model.PageNumber</span>
+        }
+
+        <!-- Adicione "..." caso existam muitas páginas antes do final -->
+        @if (Model.TotalPages > 5 && Model.PageNumber < Model.TotalPages - 2)
+        {
+            <span>...</span>
+        }
+
+        <!-- Últimas Páginas -->
+        @for (int i = Math.Max(Model.TotalPages - 2, 4); i <= Model.TotalPages; i++)
+        {
+            if (i == Model.PageNumber)
+            {
+                <span class="current-page">@i</span>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", new {
+                                                pageNumber = i,
+                                                pageSize = Model.PageSize,
+                                                ano = ViewBag.AnoAtual,
+                                                orgao = ViewBag.OrgaoAtual,
+                                                procedimento = ViewBag.ProcedimentoAtual,
+                                                decisao = ViewBag.DecisaoAtual
+                                            })">@i</a>
+            }
+        }
+
+        <!-- Botão Próximo -->
+        @if (Model.PageNumber < Model.TotalPages)
+        {
+            <a href="@Url.Action("Index", new {
                                             pageNumber = Model.PageNumber + 1,
                                             pageSize = Model.PageSize,
                                             ano = ViewBag.AnoAtual,
@@ -283,11 +291,11 @@
                                             procedimento = ViewBag.ProcedimentoAtual,
                                             decisao = ViewBag.DecisaoAtual
                                         })" class="btn btn-light">Próximo</a>
-            }
         }
-    </div>
+    }
 </div>
 
+</div>
 
 
 
@@ -312,77 +320,3 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            const toastMessage = '@TempData["ToastMessage"]';
-            const toastType = '@TempData["ToastType"]';
-
-            if (toastMessage) {
-                if (toastType === 'success') {
-                    toastr.success(toastMessage, { timeOut: 10, progressBar: true });
-                } else if (toastType === 'error') {
-                    toastr.error(toastMessage, { timeOut: 10, progressBar: true });
-                }
-            }
-        });
-
-
-
-        //ajax modal
-
-        document.addEventListener('DOMContentLoaded', () => {
-        let deleteId = null;
-
-        // Abrir o modal ao clicar no botão de exclusão
-        document.querySelectorAll('.delete-button').forEach(button => {
-            button.addEventListener('click', function () {
-                deleteId = this.getAttribute('data-id');
-                const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-                modal.show();
-            });
-        });
-
-        // Confirmar exclusão no modal
-        document.getElementById('confirmDeleteButton').addEventListener('click', function () {
-            if (deleteId) {
-                fetch(`/Corregedoria/Deletar/${deleteId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        // Remover a linha correspondente na tabela
-                        document.querySelector(`a[data-id="${deleteId}"]`).closest('tr').remove();
-                        setTimeout(window.location.reload(true), 2000);
-
-                    } else {
-                        // Tratar erros
-                        alert('Erro ao excluir o item. Tente novamente.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro na requisição:', error);
-                    alert('Erro ao excluir o item. Tente novamente.');
-                });
-            }
-        });
-    });
-
-    </script>
-
-}
-
- 
-
-    

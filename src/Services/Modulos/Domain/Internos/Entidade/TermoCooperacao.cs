@@ -10,7 +10,7 @@ namespace Domain.Internos.Entidade
     {
 
 
-        
+
         public string Protocolo { get; set; }
         public string Orgao { get; set; }
         public string Sigla { get; set; }

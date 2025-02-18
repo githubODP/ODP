@@ -34,9 +34,9 @@ namespace ODP.Web.UI.Models.Cooperacao
         public string Observacao { get; set; }
 
 
-        
+
         /// calculado automatico
-        
+
         public int DiasRestantes => (FimVigencia - InicioVigencia).Days;
     }
 }

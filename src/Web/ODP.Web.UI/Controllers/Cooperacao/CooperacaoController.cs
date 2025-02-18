@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ODP.Web.UI.Models.Cooperacao;
 using ODP.Web.UI.Services.Cooperacao;
 using System;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Cooperacao
 {
-   
+
     public class CooperacaoController : Controller
     {
         private readonly ICooperacaoService _cooperacaoService;
@@ -121,7 +120,7 @@ namespace ODP.Web.UI.Controllers.Cooperacao
 
 
         [HttpGet]
-        public async Task <IActionResult> Detalhes ( Guid id)
+        public async Task<IActionResult> Detalhes(Guid id)
         {
             var termo = await _cooperacaoService.ObterId(id);
 
