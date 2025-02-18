@@ -88,7 +88,7 @@
                                 <a asp-controller="Cooperacao" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
                                     <img src="~/svg/vizualizar.svg" height="16" />
                                 </a>
-                                <a href="#" class="btn btn-info mr-2" data-toggle="modal" data-target="#confirmDeleteModal"
+                                <a href="#" class="btn btn-danger mr-2" data-toggle="modal" data-target="#confirmDeleteModal"
                                    data-itemid="@item.Id" data-itemname="@item.NroTermo">
                                     <img src="~/svg/excluir.svg" height="16" />
                                 </a>
@@ -103,19 +103,30 @@
     </div>
 
     <ul class="pagination justify-content-center">
+
+
         @if (Model.PageNumber > 1)
         {
             <li class="page-item">
-                <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber - 1)">Anterior</a>
+                <div class="btn-sm btn-info">
+                    <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber - 1)">Anterior</a>
+                </div>
             </li>
         }
-        <li class="page-item disabled">
-            <span class="page-link bg-white text-dark">@Model.PageNumber</span>
-        </li>
+
+        @if (Model.PageNumber > 1 && Model.PageNumber < Model.TotalPages - 2)
+        {
+            <li class="page-item disabled">
+                <span class="page-link bg-white color-black">@Model.PageNumber</span>
+            </li>
+        }
+
         @if (Model.TotalPages > Model.PageNumber)
         {
             <li class="page-item">
-                <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber + 1)">Próxima</a>
+                <div class="btn-sm btn-info">
+                    <a class="page-link bg-info text-white " asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber + 1)">Próxima</a>
+                </div>
             </li>
         }
     </ul>

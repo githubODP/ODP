@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Consultas
 {
-    
+
     public class ConsultaController : Controller
     {
         private readonly IBuscaService _buscaService;
