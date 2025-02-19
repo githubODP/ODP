@@ -10,11 +10,9 @@ namespace Domain.DueDiligence.Interfaces
         Task<List<Comissionado>> ObterPorProtocolo(string nroProtocolo);
 
         Task<List<Comissionado>> BuscarPorCPF(string cpf);
-        Task<PagedResult<Comissionado>> ListarCOmFiltroAsync(
+        Task<PagedResult<Comissionado>> Listar(
             int pageNumber,
             int pageSize,
-            string nome = null,
-            string CPF = null,
-            string protocolo = null);
+            string termo = null);
     }
 }

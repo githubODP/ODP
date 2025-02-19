@@ -72,6 +72,10 @@ namespace API.Configuration
             services.AddScoped<IAnaliseRepositoryRead, AnaliseRepositoryRead>();
 
 
+            //envio email
+
+            services.AddScoped<IEmailService, EmailService>();
+
             ///Compras
             services.AddScoped<IContratoRepositoryRead, ContratoRepositoryRead>();
             services.AddScoped<IDispensaRepositoryRead, DispensaRepositoryRead>();
