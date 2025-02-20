@@ -31,12 +31,10 @@
     </div>
 </nav>
 
-<!-- Área onde os resultados da pesquisa serão exibidos -->
-@* <div id="resultContainer"></div> *@
 
 
-<div class="container-fluid">
-    <div class="table-responsive shadow">
+<div class="container-fluid mt-2 pr-2" style="width:90%">
+    <div class="table-responsive shadow" >
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -53,6 +51,7 @@
                     </div>
                 </div>
             </div>
+
             @if (Model != null && Model.Results.Any())
             {
                 
@@ -80,7 +79,7 @@
                             @foreach (var item in Model.Results)
                             {
 
-
+            
 
                                 <tr>
                                     <td>
@@ -167,6 +166,7 @@
 
 
 
+
             @foreach (var item in Model.Results)
             {
                 <!-- Modal Observacao -->
@@ -204,11 +204,40 @@
             }
 
         </div>
+
     </div>
 
+
+    <ul class="pagination justify-content-center">
+
+
+        @if (Model.PageNumber > 1)
+        {
+            <li class="page-item">
+                <div class="btn-sm btn-info">
+                    <a class="page-link bg-info text-white" asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber - 1)">Anterior</a>
+                </div>
+            </li>
+        }
+        
+         @if (Model.PageNumber > 1 && Model.PageNumber < Model.TotalPages - 2)
+            {
+            <li class="page-item disabled">
+                <span class="page-link bg-white color-black">@Model.PageNumber</span>
+            </li>
+         }
+       
+        @if (Model.TotalPages > Model.PageNumber)
+        {
+            <li class="page-item">
+                <div class="btn-sm btn-info">
+                    <a class="page-link bg-info text-white " asp-action="Index" asp-route-pageSize="@Model.PageSize" asp-route-pageNumber="@(Model.PageNumber + 1)">Próxima</a>
+                </div>
+            </li>
+        }
+    </ul>
+
 </div>
-
-
 
 
 @section Scripts {
@@ -233,56 +262,7 @@
     </script>
 
     <script>
-        //     document.addEventListener("DOMContentLoaded", function () {
-        //     const searchInput = document.getElementById("searchTerm");
-        //     const tabelaCorpo = document.getElementById("tabelaCorpo");
-
-        //     searchInput.addEventListener("input", function () {
-        //         let termo = this.value.trim();
-
-        //         if (termo.length < 2) {
-        //             return;
-        //         }
-
-        //         fetch(`/DueDiligence/BuscarJson?termo=${termo}`)
-        //             .then(response => response.json())
-        //             .then(data => {
-        //                 // Remove todas as linhas do <tbody>
-        //                 tabelaCorpo.innerHTML = "";
-
-        //                 // Adiciona os novos resultados
-        //                 data.forEach(item => {
-        //                     const row = `<tr>
-        //                         <td>
-        //                             <button type="button" class="btn btn-info btn-editar"
-        //                                     onclick="location.href='/DueDiligence/Editar/${item.id}'">
-        //                                 <img src="/svg/editar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
-        //                             </button>
-        //                         </td>
-        //                         <td>${item.id}</td>
-        //                         <td>${item.nroProtocolo}</td>
-        //                         <td>${item.nome}</td>
-        //                         <td>${item.cpf}</td>
-        //                         <td>${item.orgao}</td>
-        //                         <td>${item.decreto}</td>
-        //                         <td>${item.dataSolicitacao}</td>
-        //                         <td>${item.dataResposta}</td>
-        //                         <td>${item.observacao}</td>
-        //                         <td>${item.evidencias}</td>
-        //                         <td>
-        //                             <a href="/DueDiligence/GerarPdf/${item.id}" class="btn btn-primary btn-print" target="_blank">
-        //                                 <img src="/svg/imprimir.svg" width="20" height="20" class="d-inline-block align-top" alt="">
-        //                             </a>
-        //                         </td>
-        //                     </tr>`;
-
-        //                     tabelaCorpo.innerHTML += row;
-        //                 });
-        //             })
-        //             .catch(error => console.error("Erro na busca:", error));
-        //     });
-        // });
-
+       
                 document.addEventListener("DOMContentLoaded", function () {
             const searchInput = document.getElementById("searchTerm");
             const tabelaCorpo = document.getElementById("tabelaCorpo");

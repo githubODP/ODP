@@ -194,6 +194,11 @@ namespace API.Configuration
             services.AddScoped<ITermoCooperacaoRepositoryRead, TermoCooperacaoRepositoryRead>();
             services.AddScoped<ITermoCooperacaoRepository, TermoCooperacaoRepository>();
 
+            //Termo de Cooperação
+
+            services.AddScoped<IContratosInternoRepositoryRead, ContratosInternoRepositoryRead>();
+            services.AddScoped<IContratosInternosRepository, ContratosInternoRepository>();
+
 
 
         }
