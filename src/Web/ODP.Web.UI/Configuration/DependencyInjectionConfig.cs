@@ -37,6 +37,7 @@ using ODP.Web.UI.Services.GovernoFederal;
 using ODP.Web.UI.Services.Grafico;
 using ODP.Web.UI.Services.Handlers;
 using ODP.Web.UI.Services.Identidade;
+using ODP.Web.UI.Services.Internos;
 using ODP.Web.UI.Services.RecursosHumanos;
 using ODP.Web.UI.Services.Tribunal.TCE;
 using ODP.Web.UI.Services.Tribunal.TCU;
@@ -407,6 +408,14 @@ namespace ODP.Web.UI.Configuration
                    .AddTransientHttpErrorPolicy(
                    p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
+            services.AddHttpClient<IFornecedorCandidatoService, FornecedorCandidatoService>()
+                  .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                  .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                  .AddTransientHttpErrorPolicy(
+                  p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
+
+
 
 
             services.AddScoped<IUser, AspNetUser>();
@@ -434,6 +443,14 @@ namespace ODP.Web.UI.Configuration
                  p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
 
+
+            // Contratos Internos
+
+            services.AddHttpClient<IContratosInternosService, ContratosInternosService>()
+                  .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                  .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                  .AddTransientHttpErrorPolicy(
+                  p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
 
 

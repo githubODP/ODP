@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace API.Controllers.Internos
 {
     [ApiController]
-    [Route("api/contratrosinterno")]
+    [Route("api/contratrosinternos")]
     [Authorize]
     public class ContratosInternosController : Controller
     {

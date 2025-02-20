@@ -59,8 +59,8 @@ namespace ODP.Web.UI.Controllers.Cooperacao
         }
 
 
-        [HttpPost] // Alterado de [HttpDelete] para [HttpPost]
-        [ValidateAntiForgeryToken] // Adicione este atributo para segurança
+        [HttpPost] 
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Excluir(Guid id)
         {
             var termo = await _cooperacaoService.ObterId(id);
