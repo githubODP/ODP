@@ -57,6 +57,25 @@ namespace Infra.Internos.RepositoriesRead
             return termos;
         }
 
+        public async Task<List<string>> EnviarAlertasPorEmail()
+        {
+            var termos = await ListarEnvio(); // Reutiliza o método ListarEnvio
+
+            if (!termos.Any())
+                return new List<string>(); // Retorna lista vazia caso não haja alertas
+
+            var mensagens = termos.Select(termo =>
+                $"O Termo de Cooperação {termo.NroTermo} com protocolo {termo.Protocolo} " +
+                $"está próximo do vencimento. Período: {termo.InicioVigencia:dd/MM/yyyy} - " +
+                $"{termo.FimVigencia:dd/MM/yyyy}."
+            ).ToList();
+
+            return mensagens; // Retorna as mensagens para serem enviadas na controller
+        }
+
+
+
+
 
 
         public async Task<TermoCooperacao> ObterProtocolo(string protocolo)

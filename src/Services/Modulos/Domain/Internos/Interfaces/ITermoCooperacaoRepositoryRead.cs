@@ -10,6 +10,7 @@ namespace Domain.Internos.Interfaces
         Task<TermoCooperacao> ObterProtocolo(string protocolo);
 
         Task<List<TermoCooperacao>> ListarEnvio();
+        Task<List<string>> EnviarAlertasPorEmail();
         Task<PagedResult<TermoCooperacao>> ListarComFiltroAsync(
             int pageNumber,
             int pageSize,

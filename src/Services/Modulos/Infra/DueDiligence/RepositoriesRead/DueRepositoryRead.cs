@@ -28,44 +28,34 @@ namespace Infra.DueDiligence.RepositoriesRead
                 .ToListAsync();
         }
 
-        public async Task<PagedResult<Comissionado>> ListarCOmFiltroAsync(int pageNumber, int pageSize, string nome = null, string CPF = null, string protocolo = null)
+        public async Task<PagedResult<Comissionado>> Listar(int pageNumber, int pageSize, string termo = null)
         {
             // Cria a consulta base
             var query = _context.Set<Comissionado>().AsQueryable();
 
-            // Prioriza a busca pelo protocolo, se informado
-            if (!string.IsNullOrEmpty(CPF))
+            // Aplicando filtro caso o termo seja informado
+            if (!string.IsNullOrEmpty(termo))
             {
-                query = query.Where(i => i.CPF.Contains(CPF));
-            }
-            else
-            {
-
-                if (!string.IsNullOrEmpty(nome))
-                {
-                    query = query.Where(i => i.Nome == nome);
-                }
-
-                if (!string.IsNullOrEmpty(protocolo))
-                {
-                    query = query.Where(i => i.NroProtocolo == protocolo);
-                }
+                query = query.Where(i =>
+                    i.Nome.Contains(termo) ||
+                    i.CPF.Contains(termo) ||
+                    i.NroProtocolo.Contains(termo));
             }
 
-            // Conta o número total de registros após os filtros
+            // Contando registros filtrados
             var totalRecords = await query.CountAsync();
 
-            // Aplica paginação
+            // Aplicando paginação
             var items = await query
                 .AsNoTracking()
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-            // Calcula o número total de páginas
+            // Calculando total de páginas
             var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
 
-            // Retorna os resultados no formato PagedResult
+            // Retornando resultado paginado
             return new PagedResult<Comissionado>
             {
                 Results = items,

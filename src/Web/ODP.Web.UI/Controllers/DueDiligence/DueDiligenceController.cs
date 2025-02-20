@@ -17,39 +17,32 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         }
 
         [HttpGet]
-
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo = null)
+        [HttpGet]
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo = null)
         {
+            var dueList = await _dueService.Listar(pageNumber, pageSize, termo);
 
-
-            if (cpf != "123") { cpf = FormatarCPF(cpf); }
-            else { cpf = null; }
-
-            var due = await _dueService.Listar(pageNumber, pageSize, nome, cpf, protocolo);
-
-            ViewBag.CPFAtual = cpf;
-            ViewBag.NomeAtual = nome;
-            ViewBag.ProtocoloAtual = protocolo;
-            return View(due);
+            ViewBag.TermoAtual = termo; // Armazena o termo pesquisado para manter no input
+            return View(dueList);
         }
 
-        [HttpGet]  /// lista due do gabinete
+        //[HttpGet]  /// lista due do gabinete
 
-        public async Task<IActionResult> ListarDue(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo = null)
-        {
+        //public async Task<IActionResult> ListarDue(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = "123", string protocolo = null)
+        //{
 
 
-            if (cpf != "123") { cpf = FormatarCPF(cpf); }
-            else { cpf = null; }
+        //    if (cpf != "123") { cpf = FormatarCPF(cpf); }
+        //    else { cpf = null; }
 
-            var ListarDue = await _dueService.Listar(pageNumber, pageSize, nome, cpf, protocolo);
+        //    var ListarDue = await _dueService.Listar(pageNumber, pageSize, nome, cpf, protocolo);
 
-            ViewBag.CPFAtual = cpf;
-            ViewBag.NomeAtual = nome;
-            ViewBag.ProtocoloAtual = protocolo;
-            return View("ListarDue", ListarDue);
+        //    ViewBag.CPFAtual = cpf;
+        //    ViewBag.NomeAtual = nome;
+        //    ViewBag.ProtocoloAtual = protocolo;
+        //    return View("ListarDue", ListarDue);
 
-        }
+        //}
 
         [HttpGet]
         public async Task<IActionResult> Detalhes(Guid id)

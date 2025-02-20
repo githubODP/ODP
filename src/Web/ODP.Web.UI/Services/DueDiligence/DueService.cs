@@ -28,23 +28,17 @@ namespace ODP.Web.UI.Services.DueDiligence
         }
 
 
-        public async Task<PagedResult<DueDiligenceViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string nome = null, string cpf = null, string protocolo = null)
+        public async Task<PagedResult<DueDiligenceViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string termo = null)
         {
             var queryParams = new List<string>
             {
                 $"pageNumber={pageNumber}",
                 $"pageSize={pageSize}"
-            };
+    };
 
-
-            if (!string.IsNullOrEmpty(cpf))
+            if (!string.IsNullOrEmpty(termo))
             {
-                queryParams.Add($"cpf={cpf}"); // Filtro por protocolo
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(nome)) { queryParams.Add($"nome={nome}"); }
-                if (!string.IsNullOrEmpty(protocolo)) { queryParams.Add($"protocolo={protocolo}"); }
+                queryParams.Add($"termo={termo}"); // Enviando um único termo para busca dinâmica
             }
 
             // Combina todos os parâmetros em uma query string
