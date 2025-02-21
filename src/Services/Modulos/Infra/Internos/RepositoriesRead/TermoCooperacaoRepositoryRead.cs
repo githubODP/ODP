@@ -1,4 +1,5 @@
 ﻿using CGEODP.Core.DomainObjects;
+using Domain.DueDiligence.Entidade;
 using Domain.Internos.Entidade;
 using Domain.Internos.Interfaces;
 using Infra.Data;
@@ -11,33 +12,58 @@ namespace Infra.Internos.RepositoriesRead
     {
         public TermoCooperacaoRepositoryRead(ObservatorioContext context) : base(context) { }
 
-        public async Task<PagedResult<TermoCooperacao>> ListarComFiltroAsync(int pageNumber, int pageSize, string protocolo = null)
+        public async Task<PagedResult<TermoCooperacao>> Listar(
+            int pageNumber, 
+            int pageSize, 
+            string termo = null
+            
+                                                                                    )
         {
-            IQueryable<TermoCooperacao> query = _context.TermosCooperacao;
+            //IQueryable<TermoCooperacao> query = _context.TermosCooperacao;
 
-            // Aplica o filtro pelo Protocolo, se informado
-            if (!string.IsNullOrEmpty(protocolo))
+            var query = _context.Set<TermoCooperacao>().AsQueryable();
+
+
+
+            // Aplica o filtro pelo Termo, se informado
+            if (!string.IsNullOrEmpty(termo))
             {
-                query = query.Where(t => t.Protocolo.Contains(protocolo));
+               
+                
+                    query = query.Where(i =>
+                        i.Orgao.Contains(termo) ||
+                        i.Objeto.Contains(termo) ||
+                        i.Protocolo.Contains(termo)||
+                        i.Observacao.Contains(termo)||
+                        i.NroTermo.Contains(termo)||
+                        i.Informacoes.Contains(termo)||
+                        i.Regulamentacao.Contains(termo));
+                
             }
 
-            // Conta o total de registros após o filtro
-            int totalRecords = await query.CountAsync();
-
-            // Paginação dos dados
+            // Aplicando paginação
             var items = await query
-                .OrderBy(t => t.Protocolo) // Ordenação opcional
+                .AsNoTracking()
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-            // Retorna o resultado paginado
+
+            // Contando registros filtrados
+            var totalRecords = await query.CountAsync();
+
+
+            // Calculando total de páginas
+            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+            // Retornando resultado paginado
             return new PagedResult<TermoCooperacao>
             {
                 Results = items,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalRecords = totalRecords
+                TotalRecords = totalRecords,
+                TotalPages = totalPages
             };
         }
 

@@ -8,9 +8,7 @@ namespace ODP.Web.UI.Services.Cooperacao
 {
     public interface ICooperacaoService
     {
-        Task<PagedResult<TermoCooperacaoViewModel>> ListarComFiltros(int pageNumber, int pageSize);
-
-        Task<PagedResult<TermoCooperacaoViewModel>> Listar(int pageNumber, int pageSize);
+        Task<PagedResult<TermoCooperacaoViewModel>> Listar(int pageNumber =1, int pageSize = 5, string termo = null);       
         Task<TermoCooperacaoViewModel> Adicionar(TermoCooperacaoViewModel termo);
         Task<TermoCooperacaoViewModel> Alterar(TermoCooperacaoViewModel termo);
         Task<TermoCooperacaoViewModel> Deletar(TermoCooperacaoViewModel termo);

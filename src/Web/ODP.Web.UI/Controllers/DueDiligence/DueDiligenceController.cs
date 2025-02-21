@@ -16,7 +16,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             _dueService = dueService;
         }
 
-        [HttpGet]
+        
         [HttpGet]
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo = null)
         {

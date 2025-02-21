@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Domain.Internos.Entidade;
+using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Cooperacao;
+using ODP.Web.UI.Models.DueDiligence;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -21,6 +23,39 @@ namespace ODP.Web.UI.Services.Cooperacao
             _httpClient = httpClient;
         }
 
+        public async Task<PagedResult<TermoCooperacaoViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string termo = null)
+        {
+            var queryParams = new List<string>
+            {
+                $"pageNumber={pageNumber}",
+                $"pageSize={pageSize}"
+    };
+
+            if (!string.IsNullOrEmpty(termo))
+            {
+                queryParams.Add($"termo={termo}"); // Enviando um único termo para busca dinâmica
+            }
+
+            // Combina todos os parâmetros em uma query string
+            var queryString = string.Join("&", queryParams);
+
+            var response = await _httpClient.GetAsync($"/api/termocooperacao/listar?{queryString}");
+
+
+            TratarErrosResponse(response);
+
+            return await DeserializarObjetoResponse<PagedResult<TermoCooperacaoViewModel>>(response);
+        }
+
+        
+
+        public async Task<TermoCooperacaoViewModel> ObterId(Guid Id)
+        {
+            var response = await _httpClient.GetAsync($"api/termocooperacao/obterid/{Id}");
+
+            var teste = DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
+            return await teste;
+        }
 
 
         public async Task<TermoCooperacaoViewModel> Adicionar(TermoCooperacaoViewModel termo)
@@ -56,27 +91,7 @@ namespace ODP.Web.UI.Services.Cooperacao
             return null;
         }
 
-        public async Task<PagedResult<TermoCooperacaoViewModel>> Listar(int pageNumber = 1, int pageSize = 5)
-        {
-            var response = await _httpClient.GetAsync($"api/termocooperacao/listar?pageNumber={pageNumber}&pageSize={pageSize}");
-            TratarErrosResponse(response);
-            return await DeserializarObjetoResponse<PagedResult<TermoCooperacaoViewModel>>(response);
-        }
-
-        public async Task<PagedResult<TermoCooperacaoViewModel>> ListarComFiltros(int pageNumber = 1, int pageSize = 5)
-        {
-            var response = await _httpClient.GetAsync($"api/termocooperacao/listar-com-filtro?pageNumber={pageNumber}&pageSize={pageSize}");
-            TratarErrosResponse(response);
-            return await DeserializarObjetoResponse<PagedResult<TermoCooperacaoViewModel>>(response);
-        }
-
-        public async Task<TermoCooperacaoViewModel> ObterId(Guid Id)
-        {
-            var response = await _httpClient.GetAsync($"api/termocooperacao/obterid/{Id}");
-
-            var teste = DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
-            return await teste;
-        }
+        
 
         public async Task<TermoCooperacaoViewModel> ObterProtocolo(string protocolo)
         {

@@ -16,7 +16,7 @@ namespace API.Controllers.Internos
         private readonly IContratosInternosRepository _contratosInternosRepository;
         private readonly IContratosInternoRepositoryRead _contratosInternoRepositoryRead;
 
-        public  ContratosInternosController (IContratosInternoRepositoryRead contratosInternoRepositoryRead, IContratosInternosRepository contratosInternosRepository)
+        public ContratosInternosController(IContratosInternoRepositoryRead contratosInternoRepositoryRead, IContratosInternosRepository contratosInternosRepository)
         {
             _contratosInternoRepositoryRead = contratosInternoRepositoryRead;
             _contratosInternosRepository = contratosInternosRepository;
@@ -51,7 +51,7 @@ namespace API.Controllers.Internos
             {
                 await _contratosInternosRepository.Atualizar(contratos);
 
-                
+
                 var Atualizado = await _contratosInternoRepositoryRead.ObterId(contratos.Id);
 
                 return Ok(Atualizado);
@@ -81,19 +81,19 @@ namespace API.Controllers.Internos
                 // Caso ocorra erro, retorna um termo padrão
                 var contratoErro = new ContratosInternos
                 {
-                        Id = Guid.NewGuid(),
-                        Contrato = "Erro ao excluir",
-                        NroContrato = "Erro ao excluir",
-                        InicioContrato = DateTime.MinValue,
-                        FimContrato = DateTime.MinValue,
-                        Protocolo = "Erro ao excluir",
-                        Valor = 0.00F,
-                        Objeto = "Erro ao excluir",
-                        Gestor = "Erro ao excluir",
+                    Id = Guid.NewGuid(),
+                    Contrato = "Erro ao excluir",
+                    NroContrato = "Erro ao excluir",
+                    InicioContrato = DateTime.MinValue,
+                    FimContrato = DateTime.MinValue,
+                    Protocolo = "Erro ao excluir",
+                    Valor = 0.00F,
+                    Objeto = "Erro ao excluir",
+                    Gestor = "Erro ao excluir",
                     //Fiscal = "Erro ao excluir",
                     Dioe = 0,
-                        DataPublicacao = DateTime.MinValue,
-                        Status = ETipoStatus.SELECIONE
+                    DataPublicacao = DateTime.MinValue,
+                    Status = ETipoStatus.SELECIONE
                 };
 
                 return StatusCode(500, contratoErro);

@@ -1,15 +1,11 @@
 ﻿using Domain.Internos.Entidade;
 using Domain.Internos.Enum;
 using Domain.Internos.Interfaces;
-using Infra.Internos.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace API.Controllers.Cooperacao
@@ -31,24 +27,10 @@ namespace API.Controllers.Cooperacao
         }
 
         [HttpGet("listar")]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo =null)
         {
-            var pagedResult = await _termoRepositoryRead.Listar(pageNumber, pageSize);
+            var pagedResult = await _termoRepositoryRead.Listar(pageNumber, pageSize, termo);
             return Ok(pagedResult);
-        }
-
-
-        [HttpGet("listar-com-filtro")]
-        public async Task<IActionResult> ListarComFiltroAsync([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string protocolo = null)
-        {
-            var resultado = await _termoRepositoryRead.ListarComFiltroAsync(pageNumber, pageSize, protocolo);
-
-            if (resultado == null || !resultado.Results.Any())
-            {
-                return NotFound("Nenhum registro encontrado para os filtros informados.");
-            }
-
-            return Ok(resultado);
         }
 
 
@@ -144,7 +126,7 @@ namespace API.Controllers.Cooperacao
             return Ok(await _termoRepositoryRead.ObterId(id));
         }
 
-       
+
 
 
 

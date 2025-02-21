@@ -9,6 +9,7 @@ namespace Domain.Internos.Enum
         EXPIRADO = 1,
         [Display(Name = "Assinado Vigente")] ASSINADO_VIGENTE = 2,
         TRAMITANDO = 3,
+        ARQUIVADO = 4,
 
     }
 }

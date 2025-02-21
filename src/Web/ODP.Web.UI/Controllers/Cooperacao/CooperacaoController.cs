@@ -21,19 +21,16 @@ namespace ODP.Web.UI.Controllers.Cooperacao
 
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 5)
-        {
-            var resultado = await _cooperacaoService.Listar(pageNumber, pageSize);
-
-            if (resultado == null || !resultado.Results.Any())
-                return NotFound("Nenhuma análise encontrada.");
-
-            // Obtém os alertas e armazena na ViewBag
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo = null)
+        {           
+            var cooperacaoList = await _cooperacaoService.Listar(pageNumber, pageSize, termo);            
             var alertas = await _cooperacaoService.VerificarAlertasFimVigencia();
-            ViewBag.Alertas = alertas ?? new List<TermoCooperacaoViewModel>();
-
-            return View(resultado); // Continua retornando o resultado normal
+          
+            ViewBag.TermoAtual = termo; 
+            ViewBag.alertas = alertas ?? new List<TermoCooperacaoViewModel>(); 
+            return View(cooperacaoList);
         }
+
 
 
 

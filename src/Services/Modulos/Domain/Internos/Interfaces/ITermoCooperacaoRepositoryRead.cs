@@ -1,5 +1,6 @@
 ﻿using CGEODP.Core.Data;
 using CGEODP.Core.DomainObjects;
+using Domain.Corregedoria.Enum;
 using Domain.Internos.Entidade;
 
 namespace Domain.Internos.Interfaces
@@ -11,9 +12,9 @@ namespace Domain.Internos.Interfaces
 
         Task<List<TermoCooperacao>> ListarEnvio();
         Task<List<string>> EnviarAlertasPorEmail();
-        Task<PagedResult<TermoCooperacao>> ListarComFiltroAsync(
+        Task<PagedResult<TermoCooperacao>> Listar(
             int pageNumber,
             int pageSize,
-            string protocolo = null);
+            string termo = null);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Domain.Internos.Interfaces;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 
 namespace Infra.Internos.Repositories
 {
