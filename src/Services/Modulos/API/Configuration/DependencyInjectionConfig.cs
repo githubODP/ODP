@@ -56,6 +56,9 @@ namespace API.Configuration
         {
 
 
+      
+
+
 
 
             //Corregedoria
@@ -199,6 +202,7 @@ namespace API.Configuration
             services.AddScoped<IContratosInternoRepositoryRead, ContratosInternoRepositoryRead>();
             services.AddScoped<IContratosInternosRepository, ContratosInternoRepository>();
 
+            
 
 
         }

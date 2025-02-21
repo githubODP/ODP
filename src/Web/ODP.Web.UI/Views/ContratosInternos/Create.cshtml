@@ -1,0 +1,101 @@
+﻿@using Domain.Internos.Enum
+@model ODP.Web.UI.Models.Internos.ContratosInternosViewModel
+
+@{
+    ViewData["Title"] = "Adicionar";
+}
+
+<div class="container shadow-lg border-1  px-4 py-3 mt-3">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Adicionar <b>Contrato Interno</b></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row  p-1">
+
+            <div class="form-group col-3">
+                <label asp-for="Contrato" class="control-label"></label>
+                <input asp-for="Contrato" class="form-control" />
+                <span asp-validation-for="Contrato" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="NroContrato" class="control-label"></label>
+                <input asp-for="NroContrato" class="form-control" />
+                <span asp-validation-for="NroContrato" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="Protocolo" class="control-label"></label>
+                <input asp-for="Protocolo" class="form-control" />
+                <span asp-validation-for="Protocolo" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="Status" class="control-label"></label>
+                @Html.DropDownListFor(m => m.Status, new SelectList(Enum.GetValues(typeof(ETipoStatus))), new { @class = "form-control" })
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row   p-1">
+            <div class="form-group col-sm-3">
+                <label asp-for="InicioContrato" class="control-label"></label>
+                <input asp-for="InicioContrato" class="form-control" />
+                <span asp-validation-for="InicioContrato" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="FimContrato" class="control-label"></label>
+                <input asp-for="FimContrato" class="form-control" />
+                <span asp-validation-for="FimContrato" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="Gestor" class="control-label"></label>
+                <input asp-for="Gestor" class="form-control" />
+                <span asp-validation-for="Gestor" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="Fiscal" class="control-label"></label>
+                <input asp-for="Fiscal" class="form-control" />
+                <span asp-validation-for="Fiscal" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="row   p-1">
+            <div class="form-group col-sm-3">
+                <label asp-for="Valor" class="control-label"></label>
+                <input asp-for="Valor" class="form-control" />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="Objeto" class="control-label"></label>
+                <input asp-for="Objeto" class="form-control" />
+                <span asp-validation-for="Objeto" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="Dioe" class="control-label"></label>
+                <input asp-for="Dioe" class="form-control" />
+                <span asp-validation-for="Dioe" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="DataPublicacao" class="control-label"></label>
+                <input asp-for="DataPublicacao" class="form-control" />
+                <span asp-validation-for="DataPublicacao" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Botão de submit -->
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <a class="btn btn-danger" href="@Url.Action("Index", "contratosinternos")">Cancelar</a>
+                <button type="submit" class="btn btn-primary ml-3">Salvar</button>
+
+            </div>
+
+        </div>
+    </form>
+</div>
