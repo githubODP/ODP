@@ -17,5 +17,9 @@ namespace Identidade.Domain.Entidades
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Role { get; set; }
+
+        // Novo campo para o departamento
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public string Departamento { get; set; }
     }
 }
