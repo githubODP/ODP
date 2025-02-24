@@ -1,4 +1,5 @@
-﻿using Domain.Internos.Entidade;
+﻿using CGEODP.WebApi.Core.Identidade;
+using Domain.Internos.Entidade;
 using Domain.Internos.Enum;
 using Domain.Internos.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Threading.Tasks;
 
 namespace API.Controllers.Cooperacao
@@ -34,100 +36,51 @@ namespace API.Controllers.Cooperacao
         }
 
 
-        [HttpPost("adicionar")]
-        public async Task<IActionResult> adicionar(TermoCooperacao termo)
-        {
-            try
-            {
-                await _termoRepository.Adicionar(termo);
-                return Ok(termo);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
-
-
-        [HttpPost("alterar")]
-        public async Task<IActionResult> Alterar(TermoCooperacao termo)
-        {
-            try
-            {
-                await _termoRepository.Atualizar(termo);
-
-                // Busca o objeto atualizado no banco de dados
-                var termoAtualizado = await _termoRepositoryRead.ObterId(termo.Id);
-
-                return Ok(termoAtualizado); // Retorna o objeto atualizado
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
-
-        [HttpPost("excluir")]
-        public async Task<IActionResult> Excluir([FromBody] TermoCooperacao termo)
-        {
-            if (termo == null)
-                return BadRequest("O termo não pode ser nulo.");
-
-            try
-            {
-                await _termoRepository.Deletar(termo);
-
-                // Retorna o próprio termo excluído
-                return Ok(termo);
-            }
-            catch (Exception ex)
-            {
-                // Caso ocorra erro, retorna um termo padrão
-                var termoPadrao = new TermoCooperacao
-                {
-                    Id = Guid.NewGuid(),
-                    Protocolo = "ERRO",
-                    Orgao = "Erro ao excluir",
-                    Sigla = "N/A",
-                    NroTermo = "0000",
-                    InicioVigencia = DateTime.MinValue,
-                    FimVigencia = DateTime.MinValue,
-                    Validade = 0,
-                    Ativo = false,
-                    Status = ETipoStatus.SELECIONE,
-                    Renovar = false,
-                    DIOE = 0,
-                    DataPublicacao = DateTime.MinValue,
-                    Objeto = "Erro",
-                    Regulamentacao = "N/A",
-                    Informacoes = "Erro ao excluir",
-                    Observacao = "Erro ao excluir"
-                };
-
-                return StatusCode(500, termoPadrao);
-            }
-        }
-
-
-
-
-        [HttpGet("pesquisar/{protocolo}")]
-
-        public async Task<IActionResult> ObterProtocolo([FromRoute] string protocolo)
-        {
-            {
-                return Ok(await _termoRepositoryRead.ObterProtocolo(protocolo));
-            }
-        }
-
         [HttpGet("obterid/{id}")]
         public async Task<IActionResult> ObterID(Guid id)
         {
             return Ok(await _termoRepositoryRead.ObterId(id));
         }
 
+        [ClaimsAuthorize("","")]
+
+        [HttpPost("adicionar")]
+        public async Task<IActionResult> Adicionar([FromBody] TermoCooperacao termo)
+        {
+            if (termo == null)
+                return BadRequest("Dados inválidos.");
+
+            await _termoRepository.Adicionar(termo);
+            return Ok(termo);
+        }
 
 
+        [HttpPut("alterar/{id}")]
+        public async Task<IActionResult> Alterar(Guid id, [FromBody] TermoCooperacao termo)
+        {
+            if (termo == null || id == Guid.Empty)
+                return BadRequest("Dados inválidos.");
+
+            var termoExistente = await _termoRepositoryRead.ObterId(id);
+            if (termoExistente == null)
+                return NotFound("Termo de cooperação não encontrado.");
+            
+            termo.Id = id;
+            await _termoRepository.Atualizar(termo);
+
+            return Ok(termo);
+        }
+
+        [HttpDelete("excluir/{id}")]
+        public async Task<IActionResult> Deletar(Guid id)
+        {
+            var termoExistente = await _termoRepositoryRead.ObterId(id);
+            if (termoExistente == null)
+                return NotFound("Termo de cooperação não encontrado.");
+
+            await _termoRepository.Deletar(termoExistente);
+            return Ok("Termo excluído com sucesso.");
+        }
 
 
 

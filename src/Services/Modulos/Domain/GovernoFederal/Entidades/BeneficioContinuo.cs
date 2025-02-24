@@ -1,4 +1,5 @@
 ﻿using CGEODP.Core.DomainObjects;
+#nullable disable
 
 namespace Domain.GovernoFederal.Entidades
 {

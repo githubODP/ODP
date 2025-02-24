@@ -117,10 +117,12 @@
                                 <a asp-controller="Cooperacao" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
                                     <img src="~/svg/vizualizar.svg" height="16" />
                                 </a>
-                                <a href="#" class="btn btn-danger mr-2" data-toggle="modal" data-target="#confirmDeleteModal"
+                                <a href="#" class="btn btn-danger mr-2" data-toggle="modal" data-target="#confirmDeleteModal" 
                                    data-itemid="@item.Id" data-itemname="@item.NroTermo">
                                     <img src="~/svg/excluir.svg" height="16" />
                                 </a>
+
+                                
                             </div>
                         </td>
                         
@@ -203,15 +205,20 @@
             $('#confirmDeleteModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var itemId = button.data('itemid');
-                var deleteUrl = '@Url.Action("Excluir", "Cooperacao")?id=' + itemId;
+
+                // Definindo a URL correta de exclusão
+                var deleteUrl = '/Cooperacao/Excluir/' + itemId;
+
+                // Definindo o action do formulário
                 $('#deleteForm').attr('action', deleteUrl);
             });
         });
     </script>
 
+    
     <script>
 
-                document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function () {
             const searchInput = document.getElementById("searchTerm");
             const tabelaCorpo = document.getElementById("tabelaCorpo");
 

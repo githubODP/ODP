@@ -1,4 +1,4 @@
-﻿
+﻿#nullable disable
 using CGEODP.Core.DomainObjects;
 
 namespace Domain.RecursosHumanos.Entidades

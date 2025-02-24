@@ -3,7 +3,6 @@ using ODP.Web.UI.Models.Cooperacao;
 using ODP.Web.UI.Services.Cooperacao;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Cooperacao
@@ -32,96 +31,74 @@ namespace ODP.Web.UI.Controllers.Cooperacao
         }
 
 
-
-
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-
-        [HttpPost]
-
-        public async Task<IActionResult> Create(TermoCooperacaoViewModel termo)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(termo);
-
-            }
-            var resultado = await _cooperacaoService.Adicionar(termo);
-            return View(resultado);
-
-        }
-
-
-        [HttpPost] 
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Excluir(Guid id)
-        {
-            var termo = await _cooperacaoService.ObterId(id);
-            var resultado = await _cooperacaoService.Deletar(termo);
-            return RedirectToAction("Index");
-        }
-
-
-
-        [HttpGet]
-        public async Task<IActionResult> Editar(Guid Id)
-        {
-            var termo = await _cooperacaoService.ObterId(Id);
-            return View(termo);
-        }
-
-
-        [HttpPost]
-
-        public async Task<IActionResult> Editarpost(TermoCooperacaoViewModel termo)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(termo);
-
-            }
-            var alterar = await _cooperacaoService.ObterId(termo.Id);
-            var resultado = await _cooperacaoService.Alterar(copiaTermo(termo, alterar));
-            return RedirectToAction("Index");
-        }
-
-
-        private TermoCooperacaoViewModel copiaTermo(TermoCooperacaoViewModel copia, TermoCooperacaoViewModel copiado)
-        {
-            if (copia == null || copiado == null)
-                throw new ArgumentNullException("Os objetos não podem ser nulos");
-
-            var propriedades = typeof(TermoCooperacaoViewModel).GetProperties();
-
-            foreach (var propriedade in propriedades)
-            {
-                if (!propriedade.CanRead || !propriedade.CanWrite) continue;
-
-                var valorCopia = propriedade.GetValue(copia);
-                var valorCopiado = propriedade.GetValue(copiado);
-
-                // Se os valores forem diferentes, atualiza o valor no objeto copiado
-                if ((valorCopia != null && !valorCopia.Equals(valorCopiado)) || (valorCopia == null && valorCopiado != null))
-                {
-                    propriedade.SetValue(copiado, valorCopia);
-                }
-            }
-
-            return copiado;
-        }
-
-
-
         [HttpGet]
         public async Task<IActionResult> Detalhes(Guid id)
         {
             var termo = await _cooperacaoService.ObterId(id);
 
             return View(termo);
+        }
+
+        
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(); 
+        }
+
+       
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm] TermoCooperacaoViewModel termo)
+        {
+            if (termo == null)
+                return BadRequest("O termo de cooperação não pode ser nulo.");
+
+            var resultado = await _cooperacaoService.Adicionar(termo);
+            if (resultado == null)
+                return BadRequest("Erro ao adicionar o termo de cooperação.");
+
+            return RedirectToAction("Index"); // Redireciona para a lista após adicionar
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Editar(Guid id)
+        {
+            var termo = await _cooperacaoService.ObterId(id);
+            if (termo == null)
+            {
+                return NotFound();
+            }
+            return View(termo);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(Guid id, [FromForm] TermoCooperacaoViewModel termo)
+        {
+            if (termo == null)
+                return BadRequest("O termo de cooperação não pode ser nulo.");
+
+            var resultado = await _cooperacaoService.Alterar(id, termo);
+            if (resultado == null)
+                return BadRequest("Erro ao atualizar o termo de cooperação.");
+
+            return RedirectToAction("Index");
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Excluir(Guid id)
+        {
+            var resultado = await _cooperacaoService.Deletar(id);
+
+            if (resultado == null)
+            {
+                return BadRequest("Erro ao deletar o termo de cooperação.");
+            }
+
+            return RedirectToAction("Index");
         }
 
 

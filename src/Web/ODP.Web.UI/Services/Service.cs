@@ -17,11 +17,8 @@ namespace ODP.Web.UI.Services
                 Encoding.UTF8,
                 "application/json");
         }
-
         protected async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
         {
-
-
             try
             {
                 var options = new JsonSerializerOptions
@@ -45,9 +42,6 @@ namespace ODP.Web.UI.Services
                 throw;
             }
         }
-
-
-
         protected bool TratarErrosResponse(HttpResponseMessage response)
         {
             if (!response.IsSuccessStatusCode)

@@ -8,7 +8,7 @@ namespace Domain.Internos.Interfaces
     public interface ITermoCooperacaoRepositoryRead : IRepositoryRead<TermoCooperacao>
     {
 
-        Task<TermoCooperacao> ObterProtocolo(string protocolo);
+
 
         Task<List<TermoCooperacao>> ListarEnvio();
         Task<List<string>> EnviarAlertasPorEmail();

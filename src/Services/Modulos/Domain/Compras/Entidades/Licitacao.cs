@@ -1,7 +1,10 @@
-﻿using CGEODP.Core.DomainObjects;
+﻿#nullable disable
+using CGEODP.Core.DomainObjects;
+
 
 namespace Domain.Compras.Entidades
 {
+
     public class Licitacao : Entity, IAggregateRoot
 
     {

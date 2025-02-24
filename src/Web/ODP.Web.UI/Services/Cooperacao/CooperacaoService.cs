@@ -1,8 +1,6 @@
-﻿using Domain.Internos.Entidade;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Cooperacao;
-using ODP.Web.UI.Models.DueDiligence;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -40,10 +38,7 @@ namespace ODP.Web.UI.Services.Cooperacao
             var queryString = string.Join("&", queryParams);
 
             var response = await _httpClient.GetAsync($"/api/termocooperacao/listar?{queryString}");
-
-
             TratarErrosResponse(response);
-
             return await DeserializarObjetoResponse<PagedResult<TermoCooperacaoViewModel>>(response);
         }
 
@@ -60,46 +55,36 @@ namespace ODP.Web.UI.Services.Cooperacao
 
         public async Task<TermoCooperacaoViewModel> Adicionar(TermoCooperacaoViewModel termo)
         {
-            var dueContent = ObterConteudo(termo);
+            var cooperacaoContent = ObterConteudo(termo);
 
-            var response = await _httpClient.PostAsync("/api/termocooperacao/adicionar", dueContent);
+            var response = await _httpClient.PostAsync("/api/termocooperacao/adicionar", cooperacaoContent);
 
             return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
 
         }
 
-        public async Task<TermoCooperacaoViewModel> Alterar(TermoCooperacaoViewModel termo)
+        public async Task<TermoCooperacaoViewModel> Alterar(Guid id, TermoCooperacaoViewModel termo)
         {
-            var dueContent = ObterConteudo(termo);
-
-            var response = await _httpClient.PostAsync("/api/termocooperacao/alterar", dueContent);
-
+            var cooperacaoContent = ObterConteudo(termo);
+            var response = await _httpClient.PutAsync($"/api/termocooperacao/alterar/{id}", cooperacaoContent);
+            TratarErrosResponse(response);
             return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
         }
 
-        public async Task<TermoCooperacaoViewModel> Deletar(TermoCooperacaoViewModel termo)
+        public async Task<TermoCooperacaoViewModel> Deletar(Guid id)
         {
-            var dueContent = ObterConteudo(termo);
-
-            var response = await _httpClient.PostAsync("/api/termocooperacao/excluir", dueContent);
+            var response = await _httpClient.DeleteAsync($"/api/termocooperacao/excluir/{id}");
 
             if (TratarErrosResponse(response))
             {
-                return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
-
+                
+                return new TermoCooperacaoViewModel();
             }
+
             return null;
         }
 
-        
 
-        public async Task<TermoCooperacaoViewModel> ObterProtocolo(string protocolo)
-        {
-            var response = await _httpClient.GetAsync($"api/termocooperacao/pesquisar/{protocolo}");
-            TratarErrosResponse(response);
-            var teste = DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
-            return await teste;
-        }
 
         public async Task<List<TermoCooperacaoViewModel>> VerificarAlertasFimVigencia()
         {

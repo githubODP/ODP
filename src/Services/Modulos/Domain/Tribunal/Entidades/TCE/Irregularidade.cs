@@ -1,4 +1,5 @@
-﻿using CGEODP.Core.DomainObjects;
+﻿#nullable disable
+using CGEODP.Core.DomainObjects;
 
 namespace Domain.Tribunal.Entidades.TCE
 {

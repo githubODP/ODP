@@ -1,5 +1,4 @@
 ﻿using CGEODP.Core.DomainObjects;
-using Domain.DueDiligence.Entidade;
 using Domain.Internos.Entidade;
 using Domain.Internos.Interfaces;
 using Infra.Data;
@@ -19,13 +18,9 @@ namespace Infra.Internos.RepositoriesRead
             
                                                                                     )
         {
-            //IQueryable<TermoCooperacao> query = _context.TermosCooperacao;
 
             var query = _context.Set<TermoCooperacao>().AsQueryable();
-
-
-
-            // Aplica o filtro pelo Termo, se informado
+           
             if (!string.IsNullOrEmpty(termo))
             {
                
@@ -40,23 +35,15 @@ namespace Infra.Internos.RepositoriesRead
                         i.Regulamentacao.Contains(termo));
                 
             }
-
-            // Aplicando paginação
             var items = await query
                 .AsNoTracking()
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
 
-
-            // Contando registros filtrados
-            var totalRecords = await query.CountAsync();
-
-
-            // Calculando total de páginas
+            var totalRecords = await query.CountAsync();           
             var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-
-            // Retornando resultado paginado
+           
             return new PagedResult<TermoCooperacao>
             {
                 Results = items,
@@ -98,7 +85,7 @@ namespace Infra.Internos.RepositoriesRead
                 $"{termo.FimVigencia:dd/MM/yyyy}."
             ).ToList();
 
-            return mensagens; // Retorna as mensagens para serem enviadas na controller
+            return mensagens; 
         }
 
 
@@ -106,30 +93,6 @@ namespace Infra.Internos.RepositoriesRead
 
 
 
-        public async Task<TermoCooperacao> ObterProtocolo(string protocolo)
-        {
-            return await _context.TermosCooperacao
-                 .Where(c => c.Protocolo == protocolo)
-                 .Select(c => new TermoCooperacao
-                 {
-                     Protocolo = c.Protocolo,
-                     Orgao = c.Orgao,
-                     Sigla = c.Sigla,
-                     NroTermo = c.NroTermo,
-                     InicioVigencia = c.InicioVigencia,
-                     FimVigencia = c.FimVigencia,
-                     Validade = c.Validade,
-                     Ativo = c.Ativo,
-                     Status = c.Status,
-                     Renovar = c.Renovar,
-                     DIOE = c.DIOE,
-                     DataPublicacao = c.DataPublicacao,
-                     Objeto = c.Objeto,
-                     Regulamentacao = c.Regulamentacao,
-                     Informacoes = c.Informacoes,
-                     Observacao = c.Observacao
-                 }).FirstOrDefaultAsync();
-        }
 
 
 

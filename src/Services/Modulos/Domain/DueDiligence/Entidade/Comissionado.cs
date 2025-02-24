@@ -1,6 +1,7 @@
 ﻿using CGEODP.Core.DomainObjects;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+#nullable disable
 
 namespace Domain.DueDiligence.Entidade
 {
