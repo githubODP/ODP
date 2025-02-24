@@ -1,4 +1,5 @@
-﻿using Domain.Compras.Entidades;
+﻿using CGEODP.WebApi.Core.Identidade;
+using Domain.Compras.Entidades;
 using Domain.Compras.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -36,6 +36,13 @@ namespace Identidade.API
 
             services.AddSwaggerConfiguration();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("FinanceiroPolicy", policy =>
+                      policy.RequireClaim("Department", "Financeiro"));
+            });
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

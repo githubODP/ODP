@@ -67,6 +67,7 @@ namespace Identidade.API.Controllers
 
             if (result.Succeeded)
             {
+                // Adiciona a role padrão
                 var roleResult = await _userManager.AddToRoleAsync(user, usuarioRegistro.Role);
                 if (!roleResult.Succeeded)
                 {
@@ -75,6 +76,18 @@ namespace Identidade.API.Controllers
                         AdicionarErroProcessamento(error.Description);
                     }
                 }
+
+                // Adiciona o claim do departamento
+                var claimDepartamento = new Claim("Department", usuarioRegistro.Departamento);
+                var claimResult = await _userManager.AddClaimAsync(user, claimDepartamento);
+                if (!claimResult.Succeeded)
+                {
+                    foreach (var error in claimResult.Errors)
+                    {
+                        AdicionarErroProcessamento(error.Description);
+                    }
+                }
+
                 return CustomResponse(await GerarJwt(usuarioRegistro.Email));
             }
 
@@ -85,6 +98,7 @@ namespace Identidade.API.Controllers
 
             return CustomResponse();
         }
+
 
 
         [HttpPost("autenticar")]
@@ -119,13 +133,19 @@ namespace Identidade.API.Controllers
             var user = await _userManager.FindByEmailAsync(email);
             var claims = await _userManager.GetClaimsAsync(user);
 
+            // Se desejar, verifique se o claim "Department" existe e adicione se necessário
+            if (!claims.Any(c => c.Type == "Department"))
+            {
+                // Aqui você pode definir um valor padrão ou obter essa informação de outro lugar
+                claims.Add(new Claim("Department", "DepartamentoPadrão"));
+            }
+
             var identityClaims = await ObterClaimsUsuario(claims, user);
             var encodedToken = CodificarToken(identityClaims);
 
-
-
             return ObterRespostaToken(encodedToken, user, claims);
         }
+
 
         private async Task<ClaimsIdentity> ObterClaimsUsuario(ICollection<Claim> claims, IdentityUser user)
         {
