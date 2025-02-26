@@ -15,6 +15,7 @@ namespace API.Controllers.Cooperacao
     [ApiController]
     [Route("api/termocooperacao")]
     [Authorize]
+
     public class CooperacaoController : Controller
     {
         private readonly ITermoCooperacaoRepositoryRead _termoRepositoryRead;

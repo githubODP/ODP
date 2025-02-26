@@ -77,8 +77,8 @@ namespace Identidade.API.Controllers
                     }
                 }
 
-                // Adiciona o claim do departamento
-                var claimDepartamento = new Claim("Department", usuarioRegistro.Departamento);
+                // Adiciona o claim do departamento convertendo o enum para string
+                var claimDepartamento = new Claim("Departamento", usuarioRegistro.Departamento.ToString());
                 var claimResult = await _userManager.AddClaimAsync(user, claimDepartamento);
                 if (!claimResult.Succeeded)
                 {

@@ -32,6 +32,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identidade.Infra", "src\Services\Identidade\Identidade.Infra\Identidade.Infra.csproj", "{B580075D-777F-4B46-BC6E-CF1820E93456}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODP.Web.UI", "src\Web\ODP.Web.UI\ODP.Web.UI.csproj", "{BF258194-542A-443B-B764-D4DBBD6CB557}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EAD07461-D71C-43CB-827D-AE752BDAA16C} = {EAD07461-D71C-43CB-827D-AE752BDAA16C}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identidade.API", "src\Services\Identidade\Identidade.API\Identidade.API.csproj", "{55D0E398-EE34-4511-9BB1-4F19C5D52D15}"
 EndProject
