@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infra.Internos.Mapping
 {
-    public class TermoMapping : IEntityTypeConfiguration<Domain.Internos.Entidade.TermoCooperacao>
+    public class TermoCooperacaoMapping : IEntityTypeConfiguration<Domain.Internos.Entidade.TermoCooperacao>
     {
         public void Configure(EntityTypeBuilder<Domain.Internos.Entidade.TermoCooperacao> builder)
         {

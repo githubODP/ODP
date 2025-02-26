@@ -46,10 +46,10 @@ namespace ODP.Web.UI.Services.Cooperacao
 
         public async Task<TermoCooperacaoViewModel> ObterId(Guid Id)
         {
-            var response = await _httpClient.GetAsync($"api/termocooperacao/obterid/{Id}");
-
-            var teste = DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
-            return await teste;
+            var response = await _httpClient.GetAsync($"/api/termocooperacao/obterid/{Id}");
+            TratarErrosResponse(response);
+            return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
+            
         }
 
 
@@ -66,38 +66,31 @@ namespace ODP.Web.UI.Services.Cooperacao
         public async Task<TermoCooperacaoViewModel> Alterar(Guid id, TermoCooperacaoViewModel termo)
         {
             var cooperacaoContent = ObterConteudo(termo);
-            var response = await _httpClient.PutAsync($"/api/termocooperacao/alterar/{id}", cooperacaoContent);
+            var response = await _httpClient.PostAsync($"/api/termocooperacao/alterar/{id}", cooperacaoContent);
             TratarErrosResponse(response);
             return await DeserializarObjetoResponse<TermoCooperacaoViewModel>(response);
         }
 
-        public async Task<TermoCooperacaoViewModel> Deletar(Guid id)
+        public async Task<bool> Deletar(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"/api/termocooperacao/excluir/{id}");
-
-            if (TratarErrosResponse(response))
-            {
-                
-                return new TermoCooperacaoViewModel();
-            }
-
-            return null;
+            return TratarErrosResponse(response);
         }
 
 
 
         public async Task<List<TermoCooperacaoViewModel>> VerificarAlertasFimVigencia()
         {
-            var response = await _httpClient.GetAsync("api/termocooperacao/listar-envio");
+            var response = await _httpClient.GetAsync("/api/termocooperacao/listar-envio");
 
             if (!response.IsSuccessStatusCode)
             {
                 return new List<TermoCooperacaoViewModel>();
             }
+            TratarErrosResponse(response);
+            return await  DeserializarObjetoResponse<List<TermoCooperacaoViewModel>>(response);
 
-            var termos = await DeserializarObjetoResponse<List<TermoCooperacaoViewModel>>(response);
-
-            return termos;
+            
         }
     }
 }

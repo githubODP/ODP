@@ -16,7 +16,7 @@ namespace Infra.RepositoryExterno
 
         public IUnitOfWork UnitOfWork => _context;
 
-        public async Task Atualizar(T entity)
+        public virtual async Task Atualizar(T entity)
         {
             _context.Set<T>().Update(entity);
             await _context.SaveChangesAsync();

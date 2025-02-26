@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,12 +14,17 @@ namespace ODP.Web.UI.Configuration
     {
         public static void AddMvcConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllersWithViews()
-                .AddJsonOptions(options =>
+            services.AddControllersWithViews(options =>
+            {
+                // Adiciona o FormValueProviderFactory para interpretar o campo _method
+                options.ValueProviderFactories.Add(new FormValueProviderFactory());
+            })
+           .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = null;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
-                });
+
+            });
 
 
 

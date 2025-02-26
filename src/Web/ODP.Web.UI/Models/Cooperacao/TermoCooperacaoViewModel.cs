@@ -33,10 +33,7 @@ namespace ODP.Web.UI.Models.Cooperacao
         [Display(Name = "Observações")]
         public string Observacao { get; set; }
 
-
-
-        /// calculado automatico
-
-        public int DiasRestantes => (FimVigencia - InicioVigencia).Days;
+        // Propriedade calculada para dias restantes
+        public int DiasRestantes => Math.Max((FimVigencia - DateTime.Today).Days, 0);
     }
 }

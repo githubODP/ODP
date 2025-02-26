@@ -10,9 +10,9 @@ namespace ODP.Web.UI.Services.Cooperacao
     {
         Task<PagedResult<TermoCooperacaoViewModel>> Listar(int pageNumber =1, int pageSize = 5, string termo = null);       
         Task<TermoCooperacaoViewModel> Adicionar(TermoCooperacaoViewModel termo);
-        Task<TermoCooperacaoViewModel> Alterar(Guid Id, TermoCooperacaoViewModel termo);
-        Task<TermoCooperacaoViewModel> Deletar(Guid Id);       
-        Task<TermoCooperacaoViewModel> ObterId(Guid Id);
+        Task<TermoCooperacaoViewModel> Alterar(Guid id, TermoCooperacaoViewModel termo);
+        Task<bool> Deletar(Guid id);       
+        Task<TermoCooperacaoViewModel> ObterId(Guid id);
         Task<List<TermoCooperacaoViewModel>> VerificarAlertasFimVigencia();
 
     }
