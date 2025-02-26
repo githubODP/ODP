@@ -12,15 +12,17 @@
         <!-- Formulário de busca e filtros -->
         <form method="get" action="@Url.Action("Index")" class="d-flex flex-wrap align-items-center gap-3 w-100">
             <!-- Filtro por Protocolo -->
-            <div class="form-group ">
-                <label for="protocolo">Protocolo:</label>
+            <!-- Filtro por Protocolo ou CNPJ/CPF -->
+            <div class="form-group">
+                <label for="protocolo">Protocolo ou CNPJ/CPF:</label>
                 <input type="text"
                        id="protocolo"
                        name="protocolo"
                        value="@ViewBag.ProtocoloAtual"
                        class="form-control"
-                       placeholder="Digite o protocolo" />
+                       placeholder="Digite o protocolo ou CNPJ/CPF" />
             </div>
+
 
             <!-- Filtro por Ano -->
             <div class="form-group">

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿
+using Identidade.Domain.Enum;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ODP.Web.UI.Models.Identidade
@@ -18,8 +20,11 @@ namespace ODP.Web.UI.Models.Identidade
         public string SenhaConfirmacao { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [Display(Name = "Permissão")] // Adiciona este atributo
-        public string Role { get; set; } // Adiciona este campo
+        [Display(Name = "Permissão")] 
+        public string Role { get; set; }
+
+        [Required(ErrorMessage = "O campo Departamento é obrigatório")]
+        public ETipoDepartamento   Departamento { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿@model ODP.Web.UI.Models.Identidade.UsuarioRegistroViewModel
+﻿@using Identidade.Domain.Enum;
+@model ODP.Web.UI.Models.Identidade.UsuarioRegistroViewModel
 
 @{
     ViewData["Title"] = "Registro";
@@ -8,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Data Mining</title>
+    <title>Registro</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -80,6 +81,14 @@
                             <option value="Usuario">Usuário</option>
                         </select>
                         <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label asp-for="Departamento" class="control-label"></label>
+                            @Html.DropDownListFor(m => m.Departamento, new SelectList(Enum.GetValues(typeof(ETipoDepartamento))), new { @class = "form-control" })
+                            <span asp-validation-for="Departamento" class="text-danger"></span>
+                        </div>
                     </div>
 
                     <!-- Botão de Registro Centralizado -->

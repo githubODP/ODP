@@ -11,6 +11,7 @@ namespace API.Controllers.Internos
     [ApiController]
     [Route("api/contratrosinternos")]
     [Authorize]
+
     public class ContratosInternosController : Controller
     {
         private readonly IContratosInternosRepository _contratosInternosRepository;

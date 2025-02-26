@@ -37,54 +37,51 @@ namespace Infra.Corregedoria.RepositoriesRead
         }
 
         public async Task<PagedResult<Instauracao>> ListarComFiltrosAsync(
-                int pageNumber,
-                int pageSize,
-                int? ano = null,
-                string orgao = null,
-                string procedimento = null,
-                string decisao = null,
-                string protocolo = null) // Protocolo adicionado
+            int pageNumber,
+            int pageSize,
+            int? ano = null,
+            string orgao = null,
+            string procedimento = null,
+            string decisao = null,
+            string identificador = null)
         {
+            _logger.LogInformation("Iniciando ListarComFiltrosAsync com parâmetros: pageNumber={PageNumber}, pageSize={PageSize}, ano={Ano}, orgao={Orgao}, procedimento={Procedimento}, decisao={Decisao}, identificador={Identificador}", pageNumber, pageSize, ano, orgao, procedimento, decisao, identificador);
 
-            _logger.LogInformation("Iniciando ListarComFiltrosAsync no repositório com parâmetros: pageNumber={PageNumber}, pageSize={PageSize}, ano={Ano}, orgao={Orgao}, procedimento={Procedimento}, decisao={Decisao}, protocolo={Protocolo}", pageNumber, pageSize, ano, orgao, procedimento, decisao, protocolo);
-            // Cria a consulta base
             var query = _context.Set<Instauracao>().AsQueryable();
 
-            // Prioriza a busca pelo protocolo, se informado
-            if (!string.IsNullOrEmpty(protocolo))
+            if (!string.IsNullOrEmpty(identificador))
             {
-                query = query.Where(i => i.Protocolo.Contains(protocolo));
+                if (identificador.Length == 12)
+                {
+                    // Considera como protocolo
+                    query = query.Where(i => i.Protocolo.Contains(identificador));
+                }
+                else
+                {
+                    // Considera como CNPJ/CPF
+                    query = query.Where(i => i.CNPJCPF.Contains(identificador));
+                }
             }
             else
             {
-                // Aplica filtros opcionais se protocolo não foi fornecido
                 if (ano.HasValue)
                 {
                     query = query.Where(i => i.Ano == ano.Value);
                 }
 
-                if (!string.IsNullOrEmpty(orgao))
+                if (!string.IsNullOrEmpty(orgao) && Enum.TryParse<ETipoOrgao>(orgao, out var orgaoEnum))
                 {
-                    if (Enum.TryParse<ETipoOrgao>(orgao, out var orgaoEnum))
-                    {
-                        query = query.Where(i => i.Orgao == orgaoEnum);
-                    }
+                    query = query.Where(i => i.Orgao == orgaoEnum);
                 }
 
-                if (!string.IsNullOrEmpty(procedimento))
+                if (!string.IsNullOrEmpty(procedimento) && Enum.TryParse<ETipoProcedimento>(procedimento, out var procedimentoEnum))
                 {
-                    if (Enum.TryParse<ETipoProcedimento>(procedimento, out var procedimentoEnum))
-                    {
-                        query = query.Where(i => i.Procedimento == procedimentoEnum);
-                    }
+                    query = query.Where(i => i.Procedimento == procedimentoEnum);
                 }
 
-                if (!string.IsNullOrEmpty(decisao))
+                if (!string.IsNullOrEmpty(decisao) && Enum.TryParse<ETipoDecisao>(decisao, out var decisaoEnum))
                 {
-                    if (Enum.TryParse<ETipoDecisao>(decisao, out var decisaoEnum))
-                    {
-                        query = query.Where(i => i.Decisao == decisaoEnum);
-                    }
+                    query = query.Where(i => i.Decisao == decisaoEnum);
                 }
             }
 
@@ -112,10 +109,52 @@ namespace Infra.Corregedoria.RepositoriesRead
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao executar ListarComFiltrosAsync no repositório.");
+                _logger.LogError(ex, "Erro ao executar ListarComFiltrosAsync.");
                 throw;
             }
         }
+
+
+        private bool IsValidCpfCnpj(string value)
+        {
+            // Remover caracteres não numéricos
+            var numericValue = new string(value.Where(char.IsDigit).ToArray());
+
+            if (numericValue.Length == 11)
+            {
+                // Validar CPF
+                return IsValidCpf(numericValue);
+            }
+            else if (numericValue.Length == 14)
+            {
+                // Validar CNPJ
+                return IsValidCnpj(numericValue);
+            }
+
+            return false;
+        }
+
+        private bool IsValidCpf(string cpf)
+        {
+            // Implementar a validação de CPF conforme as regras específicas
+            // Você pode encontrar algoritmos de validação de CPF em fontes confiáveis
+            // Exemplo: https://www.macoratti.net/11/09/c_val1.htm
+            // Certifique-se de adaptar o código para remover caracteres não numéricos antes da validação
+            // e de que o CPF possui exatamente 11 dígitos
+            return true; // Substitua pelo resultado da validação
+        }
+
+        private bool IsValidCnpj(string cnpj)
+        {
+            // Implementar a validação de CNPJ conforme as regras específicas
+            // Você pode encontrar algoritmos de validação de CNPJ em fontes confiáveis
+            // Exemplo: https://www.macoratti.net/11/09/c_val1.htm
+            // Certifique-se de adaptar o código para remover caracteres não numéricos antes da validação
+            // e de que o CNPJ possui exatamente 14 dígitos
+            return true; // Substitua pelo resultado da validação
+        }
+
+
 
 
     }

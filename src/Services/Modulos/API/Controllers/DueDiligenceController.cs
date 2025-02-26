@@ -16,6 +16,7 @@ namespace API.Controllers
     [ApiController]
     [Route("api/duediligence")]
     [Authorize(Roles = "Administrador")]
+    [Authorize(Policy = "odp_admin")]
 
     public class DueDiligenceController : Controller
     {
@@ -30,8 +31,9 @@ namespace API.Controllers
         }
 
 
-
+        
         [HttpGet("listar")]
+        
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo = null)
         {
             var pagedResult = await _dueRepositoryRead.Listar(pageNumber, pageSize, termo);
