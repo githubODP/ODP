@@ -88,7 +88,7 @@ namespace ODP.Web.UI.Services.Corregedoria
 
         public async Task<InstauracaoViewModel> ObterId(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/corregedoria/buscaId/{id}");
+            var response = await _httpClient.GetAsync($"/api/corregedoria/buscaId/{id}");
 
             TratarErrosResponse(response);
 
@@ -97,9 +97,9 @@ namespace ODP.Web.UI.Services.Corregedoria
 
         public async Task<InstauracaoViewModel> Adicionar(InstauracaoViewModel instauracaoViewModel)
         {
-            var dueContent = ObterConteudo(instauracaoViewModel);
+            var instauracaoContent = ObterConteudo(instauracaoViewModel);
 
-            var response = await _httpClient.PostAsync("/api/corregedoria/adicionar", dueContent);
+            var response = await _httpClient.PostAsync("/api/corregedoria/adicionar", instauracaoContent);
 
             if (TratarErrosResponse(response))
             {
@@ -114,32 +114,18 @@ namespace ODP.Web.UI.Services.Corregedoria
         {
 
             var instauracaoContent = ObterConteudo(instauracaoViewModel);
-
             var response = await _httpClient.PostAsync($"/api/corregedoria/alterar/{id}", instauracaoContent);
-
-            if (TratarErrosResponse(response))
-            {
-                return null;
-            }
+            TratarErrosResponse(response);
             return await DeserializarObjetoResponse<InstauracaoViewModel>(response);
 
-
         }
 
 
-        public async Task<InstauracaoViewModel> Deletar(Guid id)
+        public async Task<bool> Deletar(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/corregedoria/deletar/{id}");
-
-            if (TratarErrosResponse(response))
-            {
-                return null;
-            }
-            return null;
+            var response = await _httpClient.DeleteAsync($"/api/corregedoria/excluir/{id}");
+            return TratarErrosResponse(response);
         }
-
-
-
 
 
         public async Task<bool> UploadCsv(IFormFile file)
@@ -167,11 +153,6 @@ namespace ODP.Web.UI.Services.Corregedoria
                 throw new InvalidOperationException("Erro ao enviar o arquivo CSV.", ex);
             }
         }
-
-
-
-
-
 
 
     }

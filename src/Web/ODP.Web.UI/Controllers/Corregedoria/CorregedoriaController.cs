@@ -57,9 +57,6 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         }
 
 
-
-
-
         [HttpGet]
         public async Task<IActionResult> Detalhes(Guid id)
         {
@@ -76,9 +73,6 @@ namespace ODP.Web.UI.Controllers.Corregedoria
             // Retorna a View com o objeto encontrado
             return View(instauracao);
         }
-
-
-
 
         [HttpGet]
 
@@ -208,19 +202,31 @@ namespace ODP.Web.UI.Controllers.Corregedoria
         }
 
 
-
-
-        [HttpDelete]
-        public async Task<IActionResult> Deletar(Guid id)
+        [HttpPost, ActionName("ConfirmarExclusao")]
+        public async Task<IActionResult> ConfirmarExclusao(Guid id)
         {
-            var existente = await _instauracaoService.ObterId(id);
-            if (existente == null)
+            try
             {
-                return NotFound("Registro não encontrado.");
+                var sucesso = await _instauracaoService.Deletar(id);
+                if (sucesso)
+                {
+                    TempData["ToastMessage"] = "Registro excluído com sucesso!";
+                    TempData["ToastType"] = "success";
+                }
+                else
+                {
+                    TempData["ToastMessage"] = "Falha ao excluir o registro.";
+                    TempData["ToastType"] = "error";
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao excluir registro com ID: {Id}", id);
+                TempData["ToastMessage"] = "Erro interno ao excluir o registro.";
+                TempData["ToastType"] = "error";
             }
 
-            await _instauracaoService.Deletar(id);
-            return Ok();
+            return RedirectToAction(nameof(Index));
         }
 
 

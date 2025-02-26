@@ -235,35 +235,37 @@ namespace API.Controllers
 
 
         // Remover uma instauração
-        [HttpDelete("deletar/{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+
+        //[HttpDelete("excluir/{id}")]
+        //public async Task<IActionResult> Deletar(Guid id)
+        //{
+        //    var termoExistente = await _instauracaoRepositoryRead.ObterId(id);
+        //    if (termoExistente == null)
+        //        return NotFound("Termo de cooperação não encontrado.");
+
+        //    await _instauracaoRepository.Deletar(termoExistente);
+        //    return Ok("Termo excluído com sucesso.");
+        //}
+        [HttpDelete("excluir/{id}")]
+        public async Task<IActionResult> Deletar(Guid id)
         {
-            //log para teste
-            _logger.LogInformation("Iniciando exclusão do registro com ID: {Id}", id);
-
-            // Busca o registro no banco pelo ID
-            var existente = await _instauracaoRepositoryRead.ObterId(id);
-            if (existente == null)
-            {
-
-                _logger.LogWarning("Registro com ID {Id} não encontrado.", id);
-                return NotFound("Registro não encontrado.");
-            }
-
-
-
             try
             {
-                // Remove o registro encontrado
-                await _instauracaoRepository.Deletar(existente);
-                return NoContent(); // Retorna 204 NoContent
+                var termoExistente = await _instauracaoRepositoryRead.ObterId(id);
+                if (termoExistente == null)
+                {
+                    _logger.LogWarning("Termo de cooperação com ID {Id} não encontrado.", id);
+                    return NotFound("Termo de cooperação não encontrado.");
+                }
+
+                await _instauracaoRepository.Deletar(termoExistente);
+                _logger.LogInformation("Termo de cooperação com ID {Id} excluído com sucesso.", id);
+                return Ok("Termo excluído com sucesso.");
             }
             catch (Exception ex)
             {
-                //tentar capturar o erro 
-                _logger.LogError(ex, "Erro ao excluir registro com ID {Id}.", id);
-                // Retorna erro 500 com mensagem detalhada
-                return StatusCode(500, $"Erro ao deletar registro: {ex.Message}");
+                _logger.LogError(ex, "Erro ao excluir termo de cooperação com ID {Id}.", id);
+                return StatusCode(500, "Erro interno ao excluir o registro.");
             }
         }
 

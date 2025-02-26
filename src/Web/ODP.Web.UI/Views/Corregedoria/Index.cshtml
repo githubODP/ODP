@@ -7,11 +7,6 @@
     // Layout = "_Layout";
    
 }
-
-
-
-
-
 <nav class="navbar bg-light-blue ">
     <div class="row ml-5">
         <!-- Formulário de busca e filtros -->
@@ -183,10 +178,9 @@
                                     </a>
                                     <a asp-controller="Corregedoria" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
                                         <img src="~/svg/vizualizar.svg" height="16" />
-                                    </a>
-                                    <a href="javascript:void(0);"
-                                       class="btn btn-danger delete-button"
-                                       data-id="@item.Id">
+                                    </a>                                   
+                                    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal"
+                                       data-itemid="@item.Id" data-itemname="@item.Protocolo">
                                         <img src="~/svg/excluir.svg" height="16" />
                                     </a>
 
@@ -206,7 +200,9 @@
     </div>
 
 
-<div class="pagination">
+   
+
+    <div class="pagination">
     @if (Model.TotalPages > 1)
     {
         <!-- Botão Anterior -->
@@ -297,26 +293,42 @@
 
 </div>
 
-
-
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModal" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModal">Confirmar a exclusão</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Tem certeza que deseja excluir este item?
+                Tem certeza que deseja excluir esta Instauração?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Sim</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form id="deleteForm" method="post" action="@Url.Action("ConfirmarExclusao", "Corregedoria")">
+                    <input type="hidden" name="id" value="" /> <!-- ID do item a ser excluído -->
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        // Configura o modal para passar o ID do item a ser excluído
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botão que acionou o modal
+            var itemId = button.data('itemid'); // Extrai o ID do item
+            var form = $('#deleteForm'); // Formulário de exclusão
+
+            // Atualiza o campo oculto com o ID do item
+            form.find('input[name="id"]').val(itemId);
+        });
+    });
+</script>
 
