@@ -1,6 +1,9 @@
 ﻿
 using CGEODP.WebApi.Core.Identidade;
+using Domain.Internos.Entidade;
+using Domain.Internos.Interfaces;
 using Infra.Data;
+using Infra.Internos.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +29,7 @@ namespace API.Configuration
                   options.JsonSerializerOptions.PropertyNamingPolicy = null; // Mantém os nomes das propriedades
                   options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // Enum como string
               });
+            
 
             services.AddCors(options =>
             {
@@ -36,6 +40,10 @@ namespace API.Configuration
                             .AllowAnyMethod()
                             .AllowAnyHeader());
             });
+
+            // Configuração do serviço de e-mail
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+            services.AddTransient<IEmailService, EmailService>();
         }
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)

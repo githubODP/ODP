@@ -3,6 +3,7 @@ using ODP.Web.UI.Models.Cooperacao;
 using ODP.Web.UI.Services.Cooperacao;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Cooperacao
@@ -46,18 +47,16 @@ namespace ODP.Web.UI.Controllers.Cooperacao
             return View(); 
         }
 
-       
+        
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] TermoCooperacaoViewModel termo)
+        public async Task<IActionResult> Create(TermoCooperacaoViewModel termo)
         {
-            if (termo == null)
-                return BadRequest("O termo de cooperação não pode ser nulo.");
-
-            var resultado = await _cooperacaoService.Adicionar(termo);
-            if (resultado == null)
-                return BadRequest("Erro ao adicionar o termo de cooperação.");
-
-            return RedirectToAction("Index"); // Redireciona para a lista após adicionar
+            if (ModelState.IsValid)
+            {
+                await _cooperacaoService.Adicionar(termo);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(termo);
         }
 
 
@@ -71,35 +70,68 @@ namespace ODP.Web.UI.Controllers.Cooperacao
             }
             return View(termo);
         }
-
+        
+        
         [HttpPost]
-        public async Task<IActionResult> Editar(Guid id, [FromForm] TermoCooperacaoViewModel termo)
+        public async Task<IActionResult> Editar(Guid id, TermoCooperacaoViewModel termo)
         {
-            if (termo == null)
-                return BadRequest("O termo de cooperação não pode ser nulo.");
-
-            var resultado = await _cooperacaoService.Alterar(id, termo);
-            if (resultado == null)
-                return BadRequest("Erro ao atualizar o termo de cooperação.");
-
-            return RedirectToAction("Index");
-        }
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Excluir(Guid id)
-        {
-            var resultado = await _cooperacaoService.Deletar(id);
-
-            if (resultado == null)
+            if (id != termo.Id)
             {
-                return BadRequest("Erro ao deletar o termo de cooperação.");
+                return NotFound();
             }
 
-            return RedirectToAction("Index");
+            if (!ModelState.IsValid)
+            {
+                // Log dos erros de validação
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+                return View(termo);
+            }
+
+            try
+            {
+                await _cooperacaoService.Alterar(id, termo);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                // Log da exceção
+                Console.WriteLine($"Erro ao atualizar o termo: {ex.Message}");
+                ModelState.AddModelError(string.Empty, "Ocorreu um erro ao atualizar o termo.");
+                return View(termo);
+            }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Excluir(Guid id)
+        {
+            var termo = await _cooperacaoService.ObterId(id);
+            if (termo == null)
+            {
+                return NotFound();
+            }
+            return View(termo);
+        }
+
+        
+        [HttpPost, ActionName("Excluir")]
+        public async Task<IActionResult> ConfirmarExclusao(Guid id)
+        {
+            await _cooperacaoService.Deletar(id);
+            return RedirectToAction(nameof(Index));
+        }
+
+       
+        public async Task<IActionResult> AlertasFimVigencia()
+        {
+            var termos = await _cooperacaoService.VerificarAlertasFimVigencia();
+            return View(termos);
+        }
+
+        
 
 
 

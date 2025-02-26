@@ -9,8 +9,6 @@ namespace Domain.Internos.Entidade
     public class TermoCooperacao : Entity, IAggregateRoot
     {
 
-
-
         public string Protocolo { get; set; }
         public string Orgao { get; set; }
         public string Sigla { get; set; }
@@ -29,9 +27,7 @@ namespace Domain.Internos.Entidade
         public string Observacao { get; set; }
 
         [NotMapped]
-        public int DiasRestantes => (FimVigencia - InicioVigencia).Days;
-
-
+        public int DiasRestantes => Math.Max((FimVigencia - DateTime.Today).Days, 0);
 
     }
 }

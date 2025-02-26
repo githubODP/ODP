@@ -25,5 +25,7 @@ namespace ODP.Web.UI.Models.Internos
         [Display(Name = "Data Publicação ")]
         public DateTime DataPublicacao { get; set; }
         public ETipoStatus Status { get; set; }
+        public int DiasRestantes { get; set; }
+
     }
 }

@@ -231,7 +231,7 @@ namespace Infra.Data
 
             //termos cooperaçao
 
-            modelBuilder.ApplyConfiguration(new TermoMapping());
+            modelBuilder.ApplyConfiguration(new TermoCooperacaoMapping());
 
 
 
