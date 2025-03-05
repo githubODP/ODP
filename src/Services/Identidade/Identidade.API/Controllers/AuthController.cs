@@ -77,16 +77,7 @@ namespace Identidade.API.Controllers
                     }
                 }
 
-                // Adiciona o claim do departamento convertendo o enum para string
-                var claimDepartamento = new Claim("Departamento", usuarioRegistro.Departamento.ToString());
-                var claimResult = await _userManager.AddClaimAsync(user, claimDepartamento);
-                if (!claimResult.Succeeded)
-                {
-                    foreach (var error in claimResult.Errors)
-                    {
-                        AdicionarErroProcessamento(error.Description);
-                    }
-                }
+                
 
                 return CustomResponse(await GerarJwt(usuarioRegistro.Email));
             }

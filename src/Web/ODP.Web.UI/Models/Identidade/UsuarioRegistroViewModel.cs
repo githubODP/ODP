@@ -1,5 +1,5 @@
 ﻿
-using Identidade.Domain.Enum;
+
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,8 +23,6 @@ namespace ODP.Web.UI.Models.Identidade
         [Display(Name = "Permissão")] 
         public string Role { get; set; }
 
-        [Required(ErrorMessage = "O campo Departamento é obrigatório")]
-        public ETipoDepartamento   Departamento { get; set; }
 
     }
 }

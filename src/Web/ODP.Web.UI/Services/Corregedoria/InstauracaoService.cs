@@ -123,8 +123,23 @@ namespace ODP.Web.UI.Services.Corregedoria
 
         public async Task<bool> Deletar(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"/api/corregedoria/excluir/{id}");
-            return TratarErrosResponse(response);
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"/api/corregedoria/excluir/{id}");
+                return TratarErrosResponse(response); // Usa o método TratarErrosResponse
+            }
+            catch (CustomHttpRequestException ex)
+            {
+                // Log da exceção personalizada
+                Console.WriteLine($"Erro ao excluir registro: {ex.StatusCode}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Log de exceções genéricas
+                Console.WriteLine($"Erro inesperado ao excluir registro: {ex.Message}");
+                return false;
+            }
         }
 
 

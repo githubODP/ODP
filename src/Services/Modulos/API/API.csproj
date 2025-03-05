@@ -7,6 +7,13 @@
 	  <WebConfigTemplateFile>web.config</WebConfigTemplateFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\Cooperacao\**" />
+    <Content Remove="Controllers\Cooperacao\**" />
+    <EmbeddedResource Remove="Controllers\Cooperacao\**" />
+    <None Remove="Controllers\Cooperacao\**" />
+  </ItemGroup>
+
 
 
 	<ItemGroup>

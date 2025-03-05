@@ -201,31 +201,20 @@ namespace ODP.Web.UI.Controllers.Corregedoria
             }
         }
 
-
-        [HttpPost, ActionName("ConfirmarExclusao")]
-        public async Task<IActionResult> ConfirmarExclusao(Guid id)
+        [HttpPost]
+        public async Task<IActionResult> Excluir(Guid id)
         {
-            try
+            var sucesso = await _instauracaoService.Deletar(id);
+            if (sucesso)
             {
-                var sucesso = await _instauracaoService.Deletar(id);
-                if (sucesso)
-                {
-                    TempData["ToastMessage"] = "Registro excluído com sucesso!";
-                    TempData["ToastType"] = "success";
-                }
-                else
-                {
-                    TempData["ToastMessage"] = "Falha ao excluir o registro.";
-                    TempData["ToastType"] = "error";
-                }
+                TempData["ToastMessage"] = "Registro excluído com sucesso!";
+                TempData["ToastType"] = "success";
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex, "Erro ao excluir registro com ID: {Id}", id);
-                TempData["ToastMessage"] = "Erro interno ao excluir o registro.";
+                TempData["ToastMessage"] = "Falha ao excluir o registro.";
                 TempData["ToastType"] = "error";
             }
-
             return RedirectToAction(nameof(Index));
         }
 

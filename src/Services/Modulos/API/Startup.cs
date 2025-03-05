@@ -1,6 +1,5 @@
 using API.Configuration;
 using CGEODP.WebApi.Core.Identidade;
-using Identidade.Domain.Enum;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,31 +37,6 @@ namespace API
             services.AddSwaggerConfiguration();
             services.AddJwtConfiguration(Configuration);
             services.RegisterServices();
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("corregedoria_admin", policy =>
-                {
-                    policy.RequireClaim("Departamento",
-                        ETipoDepartamento.CORREGEDORIA.ToString(),
-                        ETipoDepartamento.ADMINISTRADOR.ToString());
-                });
-
-                options.AddPolicy("odp_admin", policy =>
-                {
-                    policy.RequireClaim("Departamento",
-                        ETipoDepartamento.ADMINISTRADOR.ToString(),
-                        ETipoDepartamento.ODP.ToString());
-                });
-                options.AddPolicy("gabinete_admin", policy =>
-                {
-                    policy.RequireClaim("Departamento",
-                        ETipoDepartamento.GABINETE.ToString(),
-                        ETipoDepartamento.ADMINISTRADOR.ToString());
-                });
-
-            });
-
 
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,4 +1,4 @@
-﻿using Identidade.Domain.Enum;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace Identidade.Domain.Entidades
@@ -19,8 +19,5 @@ namespace Identidade.Domain.Entidades
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Role { get; set; }
 
-
-        [Required(ErrorMessage = "O campo Departamento é obrigatório")]
-        public ETipoDepartamento Departamento { get; set; }
     }
 }

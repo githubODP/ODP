@@ -15,8 +15,8 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/duediligence")]
-    [Authorize(Roles = "Administrador")]
-    [Authorize(Policy = "odp_admin")]
+   
+
 
     public class DueDiligenceController : Controller
     {

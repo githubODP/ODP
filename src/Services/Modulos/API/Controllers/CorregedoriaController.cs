@@ -233,42 +233,18 @@ namespace API.Controllers
 
 
 
-
-        // Remover uma instauração
-
-        //[HttpDelete("excluir/{id}")]
-        //public async Task<IActionResult> Deletar(Guid id)
-        //{
-        //    var termoExistente = await _instauracaoRepositoryRead.ObterId(id);
-        //    if (termoExistente == null)
-        //        return NotFound("Termo de cooperação não encontrado.");
-
-        //    await _instauracaoRepository.Deletar(termoExistente);
-        //    return Ok("Termo excluído com sucesso.");
-        //}
         [HttpDelete("excluir/{id}")]
         public async Task<IActionResult> Deletar(Guid id)
         {
-            try
+            var termoExistente = await _instauracaoRepositoryRead.ObterId(id);
+            if (termoExistente == null)
             {
-                var termoExistente = await _instauracaoRepositoryRead.ObterId(id);
-                if (termoExistente == null)
-                {
-                    _logger.LogWarning("Termo de cooperação com ID {Id} não encontrado.", id);
-                    return NotFound("Termo de cooperação não encontrado.");
-                }
+                return NotFound("Termo de cooperação não encontrado.");
+            }
 
-                await _instauracaoRepository.Deletar(termoExistente);
-                _logger.LogInformation("Termo de cooperação com ID {Id} excluído com sucesso.", id);
-                return Ok("Termo excluído com sucesso.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Erro ao excluir termo de cooperação com ID {Id}.", id);
-                return StatusCode(500, "Erro interno ao excluir o registro.");
-            }
+            await _instauracaoRepository.Deletar(termoExistente);
+            return NoContent(); // Retorna 204 (No Content) para indicar sucesso
         }
-
 
 
 

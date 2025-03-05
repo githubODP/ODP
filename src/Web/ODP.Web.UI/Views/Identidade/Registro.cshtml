@@ -1,4 +1,4 @@
-﻿@using Identidade.Domain.Enum;
+﻿
 @model ODP.Web.UI.Models.Identidade.UsuarioRegistroViewModel
 
 @{
@@ -82,14 +82,7 @@
                         </select>
                         <span asp-validation-for="Role" class="text-danger"></span>
                     </div>
-
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label asp-for="Departamento" class="control-label"></label>
-                            @Html.DropDownListFor(m => m.Departamento, new SelectList(Enum.GetValues(typeof(ETipoDepartamento))), new { @class = "form-control" })
-                            <span asp-validation-for="Departamento" class="text-danger"></span>
-                        </div>
-                    </div>
+                   
 
                     <!-- Botão de Registro Centralizado -->
                     <div class="d-grid">
