@@ -1,8 +1,8 @@
 ﻿using ODP.Web.UI.Models.Consultas.DTOViewModels.Internos;
 using ODP.Web.UI.Models.Consultas.InterfaceDTO;
 using ODP.Web.UI.Models.Interfaces.RecursosHumanos;
-using ODP.Web.UI.Services.Demanda;
 using ODP.Web.UI.Services.DueDiligence;
+using ODP.Web.UI.Services.Internos;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services.Consultas.Repositories.Due
@@ -23,41 +23,41 @@ namespace ODP.Web.UI.Services.Consultas.Repositories.Due
         }
 
 
-        public async Task<BuscaInternoDTO> BuscarCNPJ(string cnpj)
-        {
+        //public async Task<BuscaInternoDTO> BuscarCNPJ(string cnpj)
+        //{
 
-            var demanda = await _demandaService.BuscarCNPJ(cnpj);
-
-
-
-            return new BuscaInternoDTO
-            {
-
-
-                Demanda = demanda,
-
-            };
-        }
-
-
-        public async Task<BuscaInternoDTO> BuscarCPF(string cpf)
-        {
-            var due = await _dueService.BuscarPorCPF(cpf);
-            var demanda = await _demandaService.BuscarCPF(cpf);
-            var dependente = await _dependenteService.BuscarCPF(cpf);
-            var funcionario = await _funcionarioService.BuscarCPF(cpf);
+        //    var demanda = await _demandaService.BuscarCNPJ(cnpj);
 
 
 
-            return new BuscaInternoDTO
-            {
+        //    return new BuscaInternoDTO
+        //    {
 
-                DueDiligence = due,
-                Demanda = demanda,
-                Dependente = dependente,
-                Funcionario = funcionario
 
-            };
-        }
+        //        Demanda = demanda,
+
+        //    };
+        //}
+
+
+        //public async Task<BuscaInternoDTO> BuscarCPF(string cpf)
+        //{
+        //    var due = await _dueService.BuscarPorCPF(cpf);
+        //    var demanda = await _demandaService.BuscarCPF(cpf);
+        //    var dependente = await _dependenteService.BuscarCPF(cpf);
+        //    var funcionario = await _funcionarioService.BuscarCPF(cpf);
+
+
+
+        //    return new BuscaInternoDTO
+        //    {
+
+        //        DueDiligence = due,
+        //        Demanda = demanda,
+        //        Dependente = dependente,
+        //        Funcionario = funcionario
+
+        //    };
+        //}
     }
 }

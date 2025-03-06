@@ -74,7 +74,7 @@ namespace ODP.Web.UI.Services.Consultas
                 BuscaTCU = await ExecutarComTratamentoDeErro(() => _tcuServicos.BuscarCNPJ(cnpj)),
                 BuscaTCE = await ExecutarComTratamentoDeErro(() => _tceServicos.BuscarCNPJ(cnpj)),
                 BuscaTSE = await ExecutarComTratamentoDeErro(() => _tseServicos.BuscarCNPJ(cnpj)),
-                BuscaInterno = await ExecutarComTratamentoDeErro(() => _internoServicos.BuscarCNPJ(cnpj)),
+                //BuscaInterno = await ExecutarComTratamentoDeErro(() => _internoServicos.BuscarCNPJ(cnpj)),
 
             };
 
@@ -96,7 +96,7 @@ namespace ODP.Web.UI.Services.Consultas
                 BuscaTCU = await ExecutarComTratamentoDeErro(() => _tcuServicos.BuscarCPF(cpf)),
                 BuscaTCE = await ExecutarComTratamentoDeErro(() => _tceServicos.BuscarCPF(cpf)),
                 BuscaTSE = await ExecutarComTratamentoDeErro(() => _tseServicos.BuscarCPF(cpf)),
-                BuscaInterno = await ExecutarComTratamentoDeErro(() => _internoServicos.BuscarCPF(cpf))
+                //BuscaInterno = await ExecutarComTratamentoDeErro(() => _internoServicos.BuscarCPF(cpf))
             };
 
             return resultado;
@@ -167,8 +167,8 @@ namespace ODP.Web.UI.Services.Consultas
             if (tabelasSelecionadas.Contains("tse"))
                 resultado.BuscaTSE = await _tseServicos.BuscarCPF(cpf);
 
-            if (tabelasSelecionadas.Contains("interno"))
-                resultado.BuscaInterno = await _internoServicos.BuscarCPF(cpf);
+            //if (tabelasSelecionadas.Contains("interno"))
+            //    resultado.BuscaInterno = await _internoServicos.BuscarCPF(cpf);
 
 
 

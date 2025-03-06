@@ -27,7 +27,6 @@ using ODP.Web.UI.Services.Consultas.Repositories.Tribunal.TCU;
 using ODP.Web.UI.Services.Consultas.Repositories.Tribunal.TSE;
 using ODP.Web.UI.Services.Cooperacao;
 using ODP.Web.UI.Services.Corregedoria;
-using ODP.Web.UI.Services.Demanda;
 using ODP.Web.UI.Services.Detran;
 using ODP.Web.UI.Services.Dividas;
 using ODP.Web.UI.Services.DueDiligence;
@@ -453,6 +452,11 @@ namespace ODP.Web.UI.Configuration
                   p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
 
+            services.AddHttpClient<IDemandaService, DemandaService>()
+                  .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>()
+                  .AddPolicyHandler(PollyExtensions.EsperarTentar())
+                  .AddTransientHttpErrorPolicy(
+                  p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
 
 

@@ -5,7 +5,7 @@ namespace ODP.Web.UI.Models.Consultas.InterfaceDTO
 {
     public interface IInternosServicos
     {
-        Task<BuscaInternoDTO> BuscarCNPJ(string cnpj);
-        Task<BuscaInternoDTO> BuscarCPF(string cpf);
+        //Task<BuscaInternoDTO> BuscarCNPJ(string cnpj);
+        //Task<BuscaInternoDTO> BuscarCPF(string cpf);
     }
 }

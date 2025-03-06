@@ -121,7 +121,7 @@ namespace API.Configuration
 
             services.AddScoped<IDocumentoInternoRepository, DocumentoInternoRepository>();
             services.AddScoped<IDocumentoInternoRepositoryRead, DocumentoInternoRepositoryRead>();
-            services.AddScoped<IDemandaRepositoryRead, DemandaRepositoryRead>();
+          
 
             ////Recursos Humanos    
 
@@ -202,6 +202,9 @@ namespace API.Configuration
             services.AddScoped<IContratosInternoRepositoryRead, ContratosInternoRepositoryRead>();
             services.AddScoped<IContratosInternosRepository, ContratosInternoRepository>();
 
+
+            services.AddScoped<IDemandaRepository, DemandaRepository>();
+            services.AddScoped<IDemandaRepositoryRead, DemandaRepositoryRead>();
             
 
 
