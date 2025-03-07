@@ -1,8 +1,8 @@
 ﻿using ODP.Web.UI.Models.Consultas.DTOViewModels.Internos;
 using ODP.Web.UI.Models.Consultas.InterfaceDTO;
 using ODP.Web.UI.Models.Interfaces.RecursosHumanos;
-using ODP.Web.UI.Services.Demanda;
 using ODP.Web.UI.Services.DueDiligence;
+using ODP.Web.UI.Services.Internos;
 using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services.Consultas.Repositories.Due

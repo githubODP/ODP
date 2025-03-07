@@ -55,23 +55,6 @@ namespace Infra.Internos.RepositoriesRead
         }
 
 
-
-
-
-        //public async Task<List<TermoCooperacao>> ListarEnvio()
-        //{
-        //    var diasParaAviso = new int[] { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10 };
-        //    var dataAtual = DateTime.Today;
-
-        //    var termos = await _context.TermosCooperacao
-        //        .Where(t => t.FimVigencia > dataAtual &&
-        //            diasParaAviso.Contains((t.FimVigencia - dataAtual).Days))
-        //        .OrderBy(t => t.FimVigencia)
-        //        .ToListAsync();
-
-        //    return termos;
-        //}
-
         public async Task<List<TermoCooperacao>> ListarEnvio()
         {
             var diasParaAviso = new int[] { 100, 90, 80, 70, 60, 50, 40, 30, 20, 10 };

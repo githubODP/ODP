@@ -31,7 +31,7 @@ namespace Infra.Internos.RepositoriesRead
                                      Protocolo = d.Protocolo,
                                      Objeto = d.Objeto,
                                      Orgao = d.Orgao,
-                                     Solicitante = d.Solicitante,
+                                     Solicitante = d.Solicitante,                                     
                                      NomeSolicita = d.NomeSolicita,
                                      Observacao = d.Observacao,
 
@@ -75,7 +75,46 @@ namespace Infra.Internos.RepositoriesRead
         }
 
 
+        public async Task<PagedResult<DemandasInternas>> Listar(
+          int pageNumber,
+          int pageSize,
+          string termo = null )
+        {
 
+            var query = _context.Set<DemandasInternas>().AsQueryable();
+
+            if (!string.IsNullOrEmpty(termo))
+            {
+
+
+                query = query.Where(i =>
+                    i.Orgao.Contains(termo) ||
+                    i.Objeto.Contains(termo) ||
+                    i.Protocolo.Contains(termo) ||
+                    i.Observacao.Contains(termo) ||
+                    i.NomeDocto.Contains(termo) ||
+                    i.Solicitacao.Contains(termo) ||
+                    i.Solicitante.Contains(termo));
+
+            }
+            var items = await query
+                .AsNoTracking()
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var totalRecords = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+            return new PagedResult<DemandasInternas>
+            {
+                Results = items,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalRecords = totalRecords,
+                TotalPages = totalPages
+            };
+        }
 
 
 

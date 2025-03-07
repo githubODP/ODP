@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ODP.Web.UI.Models.Cooperacao
+namespace ODP.Web.UI.Models.Internos
 {
     public class TermoCooperacaoViewModel
     {

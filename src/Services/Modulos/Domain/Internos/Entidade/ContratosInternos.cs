@@ -1,5 +1,6 @@
 ﻿using CGEODP.Core.DomainObjects;
 using Domain.Internos.Enum;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Internos.Entidade
 {
@@ -17,6 +18,9 @@ namespace Domain.Internos.Entidade
         public int Dioe { get; set; }
         public DateTime DataPublicacao { get; set; }
         public ETipoStatus Status { get; set; }
+
+        [NotMapped]
+        public int DiasRestantes => Math.Max((FimContrato - DateTime.Today).Days, 0);
 
 
 

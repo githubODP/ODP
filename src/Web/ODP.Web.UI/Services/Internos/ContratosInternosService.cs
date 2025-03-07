@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
-using ODP.Web.UI.Models.Cooperacao;
 using ODP.Web.UI.Models.Internos;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -23,46 +23,59 @@ namespace ODP.Web.UI.Services.Internos
 
 
 
-        public async Task<ContratosInternosViewModel> Adicionar(ContratosInternosViewModel contratos)
+        public async Task<PagedResult<ContratosInternosViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string termo = null)
         {
-            var content = ObterConteudo(contratos);
+            var queryParams = new List<string>
+            {
+                $"pageNumber={pageNumber}",
+                $"pageSize={pageSize}"
+    };
 
-            var response = await _httpClient.PostAsync("/api/contratrosinternos/adicionar", content);
+            if (!string.IsNullOrEmpty(termo))
+            {
+                queryParams.Add($"termo={termo}"); // Enviando um único termo para busca dinâmica
+            }
 
-            return await DeserializarObjetoResponse<ContratosInternosViewModel>(response);
-        }
+            // Combina todos os parâmetros em uma query string
+            var queryString = string.Join("&", queryParams);
 
-        public async Task<ContratosInternosViewModel> Alterar(ContratosInternosViewModel contratos)
-        {
-            var content = ObterConteudo(contratos);
-
-            var response = await _httpClient.PostAsync("/api/contratrosinternos/alterar", content);
-
-            return await DeserializarObjetoResponse<ContratosInternosViewModel>(response);
-        }
-
-        public async Task<ContratosInternosViewModel> Deletar(ContratosInternosViewModel contratos)
-        {
-            var content = ObterConteudo(contratos);
-
-            var response = await _httpClient.PostAsync("/api/contratrosinternos/excluir", content);
-
-            return await DeserializarObjetoResponse<ContratosInternosViewModel>(response);
-        }
-
-        public async Task<PagedResult<ContratosInternosViewModel>> Listar(int pageNumber = 1, int pageSize = 5)
-        {
-            var response = await _httpClient.GetAsync($"api/contratrosinternos/listar?pageNumber={pageNumber}&pageSize={pageSize}");
+            var response = await _httpClient.GetAsync($"/api/contratosinternos/listar?{queryString}");
             TratarErrosResponse(response);
             return await DeserializarObjetoResponse<PagedResult<ContratosInternosViewModel>>(response);
         }
 
         public async Task<ContratosInternosViewModel> ObterId(Guid Id)
         {
-            var response = await _httpClient.GetAsync($"api/contratrosinternos/obterid/{Id}");
+            var response = await _httpClient.GetAsync($"/api/contratosinternos/obterid/{Id}");
+            TratarErrosResponse(response);
+            return await DeserializarObjetoResponse<ContratosInternosViewModel>(response);
 
-            var teste = DeserializarObjetoResponse<ContratosInternosViewModel>(response);
-            return await teste;
         }
+
+        public async Task<ContratosInternosViewModel> Adicionar(ContratosInternosViewModel contrato)
+        {
+            var contratoContent = ObterConteudo(contrato);
+
+            var response = await _httpClient.PostAsync("/api/contratosinternos/adicionar", contratoContent);
+
+            return await DeserializarObjetoResponse<ContratosInternosViewModel>(response);
+
+        }
+
+        public async Task<ContratosInternosViewModel> Alterar(Guid id, ContratosInternosViewModel contrato)
+        {
+            var contratoContent = ObterConteudo(contrato);
+            var response = await _httpClient.PostAsync($"/api/contratosinternos/alterar/{id}", contratoContent);
+            TratarErrosResponse(response);
+            return await DeserializarObjetoResponse<ContratosInternosViewModel>(response);
+        }
+
+        public async Task<bool> Deletar(Guid id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/contratosinternos/excluir/{id}");
+            return TratarErrosResponse(response);
+        }
+
+
     }
 }

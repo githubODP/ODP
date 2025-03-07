@@ -1,10 +1,9 @@
 ﻿@using ODP.Web.UI.Extensions
-@using ODP.Web.UI.Models.Internos
-@model PagedResult<ContratosInternosViewModel>
+@model PagedResult<ODP.Web.UI.Models.Internos.DemandaViewModel>
+
 @{
     ViewData["Title"] = "Index";
 }
-
 
 
 <nav class="navbar bg-light-blue">
@@ -39,13 +38,13 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Contratos <b>Interno</b></h2>
+                        <h2>Demandas <b>Internas</b></h2>
                     </div>
 
                     <div class="col-sm-6 d-flex justify-content-end align-items-center">
-                       
 
-                        <a asp-controller="ContratosInternos" asp-action="Create" class="btn btn-success">
+
+                        <a asp-controller="Demanda" asp-action="Create" class="btn btn-success">
                             <img src="~/svg/adicionar.svg" width="20" height="20" class="d-inline-block align-top" alt="Adicionar">
                             <span class="m-1">Novo</span>
                         </a>
@@ -62,11 +61,12 @@
                         <thead>
                             <tr>
                                 <th style="width: 10%;">@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Protocolo)</th>
-                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().NroContrato)</th>
-                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Contrato)</th>
-                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().FimContrato)</th>
-                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Valor)</th>
-                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Status)</th>
+                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Ano)</th>
+                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().NomeDocto)</th>
+                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Solicitacao)</th>
+                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Objeto)</th>
+                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Orgao)</th>
+                                <th>@Html.DisplayNameFor(model => model.Results.FirstOrDefault().Observacao)</th>
                                 <th>Opções</th>
                             </tr>
                         </thead>
@@ -75,21 +75,22 @@
                             {
                                 <tr>
                                     <td>@Html.DisplayFor(modelItem => item.Protocolo)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.NroContrato)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Contrato)</td>
-                                    <td>@item.FimContrato.ToString("dd/MM/yyyy")</td>
-                                    <td>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", item.Valor)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Ano)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.NomeDocto)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Solicitacao)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Objeto)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Orgao)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Observacao)</td>
                                     <td>
                                         <div class="d-flex">
-                                            <a asp-controller="ContratosInternos" asp-action="Editar" asp-route-id="@item.Id" class="btn btn-primary mr-2">
+                                            <a asp-controller="Demanda" asp-action="Editar" asp-route-id="@item.Id" class="btn btn-primary mr-2">
                                                 <img src="~/svg/editar.svg" height="16" />
                                             </a>
-                                            <a asp-controller="ContratosInternos" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
+                                            <a asp-controller="Demanda" asp-action="Detalhes" asp-route-id="@item.Id" class="btn btn-info mr-2">
                                                 <img src="~/svg/vizualizar.svg" height="16" />
                                             </a>
                                             <a href="#" class="btn btn-danger mr-2" data-toggle="modal" data-target="#confirmDeleteModal"
-                                               data-itemid="@item.Id" data-itemname="@item.NroContrato">
+                                               data-itemid="@item.Id" data-itemname="@item.Protocolo">
                                                 <img src="~/svg/excluir.svg" height="16" />
                                             </a>
                                         </div>
@@ -155,7 +156,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                Tem certeza que deseja excluir este Cotrato Interno?
+                Tem certeza que deseja excluir este Contrato Interno?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -178,7 +179,7 @@
                 var itemId = button.data('itemid');
 
                 // Definindo a URL correta de exclusão
-                var deleteUrl = '/ContratosInternos/Excluir/' + itemId;
+                var deleteUrl = '/Demanda/Excluir/' + itemId;
 
                 // Definindo o action do formulário
                 $('#deleteForm').attr('action', deleteUrl);
@@ -207,7 +208,7 @@
                 }
 
                 timeout = setTimeout(() => {
-                    fetch(`/ContratosInternos/Index?termo=${encodeURIComponent(termo)}`)
+                    fetch(`/Demanda/Index?termo=${encodeURIComponent(termo)}`)
                         .then(response => {
                             if (!response.ok) {
                                 throw new Error("Erro na busca"); // 🔹 Captura erro de resposta
@@ -236,14 +237,4 @@
 
 
 }
-@functions {
-    string GetBadgeClass(int diasRestantes)
-    {
-        return diasRestantes switch
-        {
-            <= 10 => "badge-danger",
-            <= 30 => "badge-warning",
-            _ => "badge-secondary"
-        };
-    }
-}
+

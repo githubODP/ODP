@@ -117,11 +117,16 @@ namespace API.Configuration
             services.AddScoped<ICepimRepositoryRead, CepimRepositoryRead>();
 
 
-            ///Documentos Internos   
+            ///Documentos Internos (Termos Cooperaçao, Contratos Internos, Demandas Internas)  
 
             services.AddScoped<IDocumentoInternoRepository, DocumentoInternoRepository>();
             services.AddScoped<IDocumentoInternoRepositoryRead, DocumentoInternoRepositoryRead>();
             services.AddScoped<IDemandaRepositoryRead, DemandaRepositoryRead>();
+            services.AddScoped<IDemandaRepository, DemandaRepository>();
+            services.AddScoped<ITermoCooperacaoRepositoryRead, TermoCooperacaoRepositoryRead>();
+            services.AddScoped<ITermoCooperacaoRepository, TermoCooperacaoRepository>();
+            services.AddScoped<IContratosInternosRepositoryRead, ContratosInternosRepositoryRead>();
+            services.AddScoped<IContratosInternosRepository, ContratosInternosRepository>();
 
             ////Recursos Humanos    
 
@@ -192,15 +197,7 @@ namespace API.Configuration
 
             services.AddScoped<IGraficosRepositoryRead, GraficoRepositoryRead>();
 
-            //Termo de Cooperação
-
-            services.AddScoped<ITermoCooperacaoRepositoryRead, TermoCooperacaoRepositoryRead>();
-            services.AddScoped<ITermoCooperacaoRepository, TermoCooperacaoRepository>();
-
-            //Termo de Cooperação
-
-            services.AddScoped<IContratosInternoRepositoryRead, ContratosInternoRepositoryRead>();
-            services.AddScoped<IContratosInternosRepository, ContratosInternoRepository>();
+           
 
             
 

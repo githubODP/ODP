@@ -25,7 +25,9 @@ namespace ODP.Web.UI.Models.Internos
         [Display(Name = "Data Publicação ")]
         public DateTime DataPublicacao { get; set; }
         public ETipoStatus Status { get; set; }
-        public int DiasRestantes { get; set; }
+
+        // Propriedade calculada para dias restantes
+        public int DiasRestantes => Math.Max((FimContrato - DateTime.Today).Days, 0);
 
     }
 }

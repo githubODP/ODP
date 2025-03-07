@@ -23,21 +23,58 @@ namespace API.Controllers.Internos
         }
 
         [HttpGet("listar")]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo = null)
         {
-            var pagedResult = await _demandaRepositoryRead.Listar(pageNumber, pageSize);
-            return Ok(pagedResult);
+            try
+            {
+                // Validação dos parâmetros
+                if (pageNumber < 1 || pageSize < 1)
+                {
+                    return BadRequest("O número da página e o tamanho da página devem ser maiores que zero.");
+                }
+
+                termo = string.IsNullOrWhiteSpace(termo) ? null : termo.Trim();
+
+                var pagedResult = await _demandaRepositoryRead.Listar(pageNumber, pageSize, termo);
+                return Ok(pagedResult);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Ocorreu um erro ao processar sua solicitação.");
+            }
         }
 
 
 
 
-        [HttpGet("buscaId/{id}")]
-        public async Task<DemandasInternas> BuscaId(Guid id)
+        [HttpGet("obterid/{id}")]
+        public async Task<IActionResult> ObterID(Guid id)
         {
-            return await _demandaRepositoryRead.ObterId(id);
-        }
+            try
+            {
+                // Validação do ID
+                if (id == Guid.Empty)
+                {
+                    return BadRequest("O ID fornecido é inválido.");
+                }
 
+                var termo = await _demandaRepositoryRead.ObterId(id);
+
+                if (termo == null)
+                {
+                    return NotFound("Demanda não encontrado.");
+                }
+
+                return Ok(termo);
+            }
+            catch (Exception ex)
+            {
+
+
+                return StatusCode(500, "Ocorreu um erro ao processar sua solicitação.");
+            }
+        }
 
 
         [HttpGet("consultacnpj/{cnpj}")]
@@ -67,26 +104,65 @@ namespace API.Controllers.Internos
         }
 
         [HttpPost("adicionar")]
-
-        public async Task Add(DemandasInternas demandas)
+        public async Task<IActionResult> Adicionar([FromBody] DemandasInternas termo)
         {
-            await _demandaRepository.Adicionar(demandas);
+            if (termo == null)
+            {
+                return BadRequest("Dados inválidos.");
+            }
+
+            await _demandaRepository.Adicionar(termo);
+            return CreatedAtAction(nameof(ObterID), new { id = termo.Id }, termo);
         }
 
 
-        [HttpPut("alterar")]
-
-        public async Task Update(DemandasInternas demandas)
+        [HttpPost("alterar/{id}")]
+        public async Task<IActionResult> Alterar(Guid id, [FromBody] DemandasInternas termo)
         {
-            await _demandaRepository.Atualizar(demandas);
+            try
+            {
+                if (termo == null || id == Guid.Empty)
+                {
+                    return BadRequest("Dados inválidos.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (termo.Id != id)
+                {
+                    return BadRequest("O ID da Demanda não corresponde ao ID da rota.");
+                }
+
+                await _demandaRepository.Atualizar(termo);
+
+                return Ok(termo);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocorreu um erro ao processar sua solicitação.");
+            }
         }
 
-        [HttpDelete("deletar/{id}")]
-        public async Task RemoveInstauracao(Guid id)
-        {
-            var remover = await _demandaRepositoryRead.ObterId(id);
-            await _demandaRepository.Deletar(remover);
 
+
+
+        [HttpDelete("excluir/{id}")]
+        public async Task<IActionResult> Deletar(Guid id)
+        {
+            var termoExistente = await _demandaRepositoryRead.ObterId(id);
+            if (termoExistente == null)
+                return NotFound("Termo de cooperação não encontrado.");
+
+            await _demandaRepository.Deletar(termoExistente);
+            return Ok("Termo excluído com sucesso.");
         }
+
     }
 }

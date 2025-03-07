@@ -1,8 +1,9 @@
 ﻿@using ODP.Web.UI.Extensions
-@model PagedResult<ODP.Web.UI.Models.Cooperacao.TermoCooperacaoViewModel>
+@using ODP.Web.UI.Models.Internos
+@model PagedResult<TermoCooperacaoViewModel>
 
 @{
-    var alertas = ViewBag.Alertas as List<ODP.Web.UI.Models.Cooperacao.TermoCooperacaoViewModel>;
+    var alertas = ViewBag.Alertas as List<TermoCooperacaoViewModel>;
 }
 
 <nav class="navbar bg-light-blue">
@@ -220,7 +221,7 @@
     </script>
 
     
-}
+
 
     
     <script>

@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
-using ODP.Web.UI.Models.Cooperacao;
+using ODP.Web.UI.Models.Internos;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ODP.Web.UI.Services.Cooperacao
+namespace ODP.Web.UI.Services.Internos
 {
     public class CooperacaoService : Service, ICooperacaoService
     {

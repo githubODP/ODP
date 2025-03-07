@@ -8,66 +8,72 @@ using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Controllers.Internos
 {
-    public class ContratosInternosController : Controller
+
+    public class CooperacaoController : Controller
     {
-        private readonly IContratosInternosService _contratoInternosService;
-        
-        public ContratosInternosController (IContratosInternosService contratoInternoservice)
+        private readonly ICooperacaoService _cooperacaoService;
+
+        public CooperacaoController(ICooperacaoService cooperacaoService)
         {
-            _contratoInternosService = contratoInternoservice;
+            _cooperacaoService = cooperacaoService;
         }
+
+
 
         [HttpGet]
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo = null)
-        {
-            var contratoList = await _contratoInternosService.Listar(pageNumber, pageSize, termo);
-           
-
-            ViewBag.TermoAtual = termo;            
-            return View(contratoList);
+        {           
+            var cooperacaoList = await _cooperacaoService.Listar(pageNumber, pageSize, termo);            
+            var alertas = await _cooperacaoService.VerificarAlertasFimVigencia();
+          
+            ViewBag.TermoAtual = termo; 
+            ViewBag.alertas = alertas ?? new List<TermoCooperacaoViewModel>(); 
+            return View(cooperacaoList);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Detalhes(Guid id)
         {
-            var termo = await _contratoInternosService.ObterId(id);
+            var termo = await _cooperacaoService.ObterId(id);
 
             return View(termo);
         }
 
+        
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(); 
         }
 
+        
         [HttpPost]
-        public async Task<IActionResult> Create(ContratosInternosViewModel termo)
+        public async Task<IActionResult> Create(TermoCooperacaoViewModel termo)
         {
             if (ModelState.IsValid)
             {
-                await _contratoInternosService.Adicionar(termo);
+                await _cooperacaoService.Adicionar(termo);
                 return RedirectToAction(nameof(Index));
             }
             return View(termo);
         }
 
 
-
         [HttpGet]
         public async Task<IActionResult> Editar(Guid id)
         {
-            var contrato = await _contratoInternosService.ObterId(id);
-            if (contrato == null)
+            var termo = await _cooperacaoService.ObterId(id);
+            if (termo == null)
             {
                 return NotFound();
             }
-            return View(contrato);
+            return View(termo);
         }
-
-
+        
+        
         [HttpPost]
-        public async Task<IActionResult> Editar(Guid id, ContratosInternosViewModel termo)
+        public async Task<IActionResult> Editar(Guid id, TermoCooperacaoViewModel termo)
         {
             if (id != termo.Id)
             {
@@ -87,7 +93,7 @@ namespace ODP.Web.UI.Controllers.Internos
 
             try
             {
-                await _contratoInternosService.Alterar(id, termo);
+                await _cooperacaoService.Alterar(id, termo);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -99,15 +105,40 @@ namespace ODP.Web.UI.Controllers.Internos
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Excluir(Guid id)
+        {
+            var termo = await _cooperacaoService.ObterId(id);
+            if (termo == null)
+            {
+                return NotFound();
+            }
+            return View(termo);
+        }
+
+        
         [HttpPost, ActionName("Excluir")]
         public async Task<IActionResult> ConfirmarExclusao(Guid id)
         {
-            await _contratoInternosService.Deletar(id);
+            await _cooperacaoService.Deletar(id);
             return RedirectToAction(nameof(Index));
         }
 
+       
+        public async Task<IActionResult> AlertasFimVigencia()
+        {
+            var termos = await _cooperacaoService.VerificarAlertasFimVigencia();
+            return View(termos);
+        }
+
+        
+
+
+
+
 
     }
-
-
 }
+
+
+

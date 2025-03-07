@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ODP.Web.UI.Models.Demandas
+namespace ODP.Web.UI.Models.Internos
 {
     public class DemandaViewModel
     {

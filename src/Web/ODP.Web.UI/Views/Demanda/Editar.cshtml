@@ -1,0 +1,112 @@
+﻿@model ODP.Web.UI.Models.Internos.DemandaViewModel
+
+@{
+    ViewData["Title"] = "Editar Demanda";
+}
+
+<div class="container shadow-lg border-1  px-4 py-3 mt-3">
+    <form asp-action="Editar" method="post">       
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="table-title">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Editar <b>Demanda Interna</b></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row  p-1">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group col-6">
+                <label asp-for="Ano" class="control-label"></label>
+                <input asp-for="Ano" class="form-control" />
+                <span asp-validation-for="Ano" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="Mes" class="control-label"></label>
+                <input asp-for="Mes" class="form-control" />
+                <span asp-validation-for="Mes" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3">
+                <label asp-for="NomeDocto" class="control-label"></label>
+                <input asp-for="NomeDocto" class="form-control" />
+                <span asp-validation-for="NomeDocto" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row   p-1">
+            <div class="form-group col-sm-3">
+                <label asp-for="Protocolo" class="control-label"></label>
+                <input asp-for="Protocolo" class="form-control" />
+                <span asp-validation-for="Protocolo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-sm-3">
+                <label asp-for="Solicitacao" class="control-label"></label>
+                <input asp-for="Solicitacao" class="form-control" />
+                <span asp-validation-for="Solicitacao" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="Orgao" class="control-label"></label>
+                <input asp-for="Orgao" class="form-control" />
+                <span asp-validation-for="Orgao" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="NomeSolicita" class="control-label"></label>
+                <input asp-for="NomeSolicita" class="form-control" />
+                <span asp-validation-for="NomeSolicita" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row   p-1">
+
+            <div class="form-group col-sm-3">
+                <label asp-for="DataRecebe" class="control-label"></label>
+                <input type="date" asp-for="DataRecebe" class="form-control" />
+                <span asp-validation-for="DataRecebe" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-sm-2">
+                <label asp-for="DataResposta" class="control-label"></label>
+                <input type="date" asp-for="DataResposta" class="form-control" />
+                <span asp-validation-for="DataResposta" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="Tempo" class="control-label"></label>
+                <input asp-for="Tempo" class="form-control" />
+                <span asp-validation-for="Tempo" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-3">
+                <label asp-for="Solicitante" class="control-label"></label>
+                <input asp-for="Solicitante" class="form-control" />
+                <span asp-validation-for="Solicitante" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row   p-1">
+            <div class="form-group col-md-6">
+                <label asp-for="Observacao" class="control-label"></label>
+                <textarea asp-for="Observacao" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Observacao" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Objeto" class="control-label"></label>
+                <textarea asp-for="Objeto" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Objeto" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Botão de submit -->
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center">
+                <a class="btn btn-danger" href="@Url.Action("Index", "Demanda")">Cancelar</a>
+                <button type="submit" class="btn btn-primary ml-3">Salvar</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>

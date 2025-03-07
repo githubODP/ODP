@@ -1,81 +1,74 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ODP.Web.UI.Models.Cooperacao;
-using ODP.Web.UI.Services.Cooperacao;
+using ODP.Web.UI.Models.Internos;
+using ODP.Web.UI.Services.Internos;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ODP.Web.UI.Controllers.Cooperacao
+namespace ODP.Web.UI.Controllers.Internos
 {
-
-    public class CooperacaoController : Controller
+    public class DemandaController : MainController
     {
-        private readonly ICooperacaoService _cooperacaoService;
+        private readonly IDemandaService _demandaService;
 
-        public CooperacaoController(ICooperacaoService cooperacaoService)
+        public DemandaController(IDemandaService demandaService)
         {
-            _cooperacaoService = cooperacaoService;
+            _demandaService = demandaService;
         }
-
 
 
         [HttpGet]
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo = null)
-        {           
-            var cooperacaoList = await _cooperacaoService.Listar(pageNumber, pageSize, termo);            
-            var alertas = await _cooperacaoService.VerificarAlertasFimVigencia();
-          
-            ViewBag.TermoAtual = termo; 
-            ViewBag.alertas = alertas ?? new List<TermoCooperacaoViewModel>(); 
-            return View(cooperacaoList);
+        {
+            var demandaList = await _demandaService.Listar(pageNumber, pageSize, termo);
+            ViewBag.TermoAtual = termo;           
+            return View(demandaList);
         }
 
 
         [HttpGet]
         public async Task<IActionResult> Detalhes(Guid id)
         {
-            var termo = await _cooperacaoService.ObterId(id);
+            var termo = await _demandaService.ObterId(id);
 
             return View(termo);
         }
 
-        
+
         [HttpGet]
         public IActionResult Create()
         {
-            return View(); 
+            return View();
         }
 
-        
+
         [HttpPost]
-        public async Task<IActionResult> Create(TermoCooperacaoViewModel termo)
+        public async Task<IActionResult> Create(DemandaViewModel demandaViewModel)
         {
             if (ModelState.IsValid)
             {
-                await _cooperacaoService.Adicionar(termo);
+                await _demandaService.Adicionar(demandaViewModel);
                 return RedirectToAction(nameof(Index));
             }
-            return View(termo);
+            return View(demandaViewModel);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Editar(Guid id)
         {
-            var termo = await _cooperacaoService.ObterId(id);
+            var termo = await _demandaService.ObterId(id);
             if (termo == null)
             {
                 return NotFound();
             }
             return View(termo);
         }
-        
-        
+
+
         [HttpPost]
-        public async Task<IActionResult> Editar(Guid id, TermoCooperacaoViewModel termo)
+        public async Task<IActionResult> Editar(Guid id, DemandaViewModel demandaViewModel)
         {
-            if (id != termo.Id)
+            if (id != demandaViewModel.Id)
             {
                 return NotFound();
             }
@@ -88,27 +81,26 @@ namespace ODP.Web.UI.Controllers.Cooperacao
                 {
                     Console.WriteLine(error.ErrorMessage);
                 }
-                return View(termo);
+                return View(demandaViewModel);
             }
 
             try
             {
-                await _cooperacaoService.Alterar(id, termo);
+                await _demandaService.Alterar(id, demandaViewModel);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 // Log da exceção
-                Console.WriteLine($"Erro ao atualizar o termo: {ex.Message}");
+                Console.WriteLine($"Erro ao atualizar o Demanda: {ex.Message}");
                 ModelState.AddModelError(string.Empty, "Ocorreu um erro ao atualizar o termo.");
-                return View(termo);
+                return View(demandaViewModel);
             }
         }
-
         [HttpGet]
         public async Task<IActionResult> Excluir(Guid id)
         {
-            var termo = await _cooperacaoService.ObterId(id);
+            var termo = await _demandaService.ObterId(id);
             if (termo == null)
             {
                 return NotFound();
@@ -116,29 +108,29 @@ namespace ODP.Web.UI.Controllers.Cooperacao
             return View(termo);
         }
 
-        
+
         [HttpPost, ActionName("Excluir")]
         public async Task<IActionResult> ConfirmarExclusao(Guid id)
         {
-            await _cooperacaoService.Deletar(id);
+            await _demandaService.Deletar(id);
             return RedirectToAction(nameof(Index));
         }
 
-       
-        public async Task<IActionResult> AlertasFimVigencia()
+
+        [HttpGet]
+        public async Task<IActionResult> ConsultaCNPJ(string cnpj)
         {
-            var termos = await _cooperacaoService.VerificarAlertasFimVigencia();
-            return View(termos);
+            var demanda = await _demandaService.BuscarCPF(cnpj);
+            return View(demanda);
         }
 
-        
 
-
-
-
+        [HttpGet]
+        public async Task<IActionResult> ConsultaCPF(string cpf)
+        {
+            var demanda = await _demandaService.BuscarCPF(cpf);
+            return View(demanda);
+        }
 
     }
 }
-
-
-

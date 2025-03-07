@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
-using ODP.Web.UI.Models.Demandas;
+using ODP.Web.UI.Models.Internos;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace ODP.Web.UI.Services.Demanda
+namespace ODP.Web.UI.Services.Internos
 {
     public class DemandaService : Service, IDemandaService
     {
@@ -21,12 +21,24 @@ namespace ODP.Web.UI.Services.Demanda
         }
 
 
-        public async Task<PagedResult<DemandaViewModel>> Listar(int pageNumber = 1, int pageSize = 10)
+        public async Task<PagedResult<DemandaViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string termo = null)
         {
-            var response = await _httpClient.GetAsync($"/api/demanda/listar?pageNumber={pageNumber}&pageSize={pageSize}");
+            var queryParams = new List<string>
+            {
+                $"pageNumber={pageNumber}",
+                $"pageSize={pageSize}"
+    };
 
+            if (!string.IsNullOrEmpty(termo))
+            {
+                queryParams.Add($"termo={termo}"); // Enviando um único termo para busca dinâmica
+            }
+
+            // Combina todos os parâmetros em uma query string
+            var queryString = string.Join("&", queryParams);
+
+            var response = await _httpClient.GetAsync($"/api/demanda/listar?{queryString}");
             TratarErrosResponse(response);
-
             return await DeserializarObjetoResponse<PagedResult<DemandaViewModel>>(response);
         }
 
@@ -34,57 +46,37 @@ namespace ODP.Web.UI.Services.Demanda
 
         public async Task<DemandaViewModel> ObterId(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/demanda/buscaId/{id}");
+            var response = await _httpClient.GetAsync($"api/demanda/obterid/{id}");
 
             TratarErrosResponse(response);
 
             return await DeserializarObjetoResponse<DemandaViewModel>(response);
         }
 
-        public async Task<DemandaViewModel> Adicionar(DemandaViewModel dueViewModel)
+        public async Task<DemandaViewModel> Adicionar(DemandaViewModel demandaViewModel)
         {
-            var dueContent = ObterConteudo(dueViewModel);
+            var demandaContent = ObterConteudo(demandaViewModel);
 
-            var response = await _httpClient.PostAsync("/api/demanda/adicionar", dueContent);
+            var response = await _httpClient.PostAsync("/api/demanda/adicionar", demandaContent);
 
-            if (TratarErrosResponse(response))
-            {
-                return null;
-
-            }
             return await DeserializarObjetoResponse<DemandaViewModel>(response);
 
         }
 
-        public async Task<DemandaViewModel> Alterar(DemandaViewModel dueViewModel, Guid id)
+        public async Task<DemandaViewModel> Alterar(Guid id, DemandaViewModel demandaViewModel)
         {
-
-            var dueContent = ObterConteudo(dueViewModel);
-
-            var response = await _httpClient.PutAsync("/api/demanda/alterar", dueContent);
-
-            if (TratarErrosResponse(response))
-            {
-                return null;
-
-            }
-            return await DeserializarObjetoResponse<DemandaViewModel>(response);
-
-        }
-
-
-
-        public async Task<DemandaViewModel> Deletar(Guid id)
-        {
-            var response = await _httpClient.DeleteAsync($"api/demanda/deletar/{id}");
+            var demandaContent = ObterConteudo(demandaViewModel);
+            var response = await _httpClient.PostAsync($"/api/demanda/alterar/{id}", demandaContent);
             TratarErrosResponse(response);
-
-            if (TratarErrosResponse(response))
-            {
-                return null;
-            }
-            return null;
+            return await DeserializarObjetoResponse<DemandaViewModel>(response);
         }
+
+        public async Task<bool> Deletar(Guid id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/demanda/excluir/{id}");
+            return TratarErrosResponse(response);
+        }
+
 
 
         public async Task<List<DemandaViewModel>> BuscarCNPJ(string cnpj)

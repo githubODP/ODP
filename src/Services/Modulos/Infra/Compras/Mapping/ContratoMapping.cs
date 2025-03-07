@@ -29,7 +29,7 @@ namespace Infra.Compras.Mapping
                 .IsRequired()
                 .HasColumnType("varchar(25)");
 
-            builder.Property(c => c.Fornecedor)
+            builder.Property(c => c.Fornecedor)               
                .HasColumnType("varchar(200)");
 
             builder.Property(c => c.CNPJ)

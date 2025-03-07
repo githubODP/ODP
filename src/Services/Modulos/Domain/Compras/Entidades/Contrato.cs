@@ -1,4 +1,4 @@
-﻿#nullable disable
+﻿
 using CGEODP.Core.DomainObjects;
 
 namespace Domain.Compras.Entidades
@@ -7,17 +7,17 @@ namespace Domain.Compras.Entidades
     {
 
         public int AnoContrato { get; set; }
-        public string OrgaoGestor { get; set; }
-        public string OrgaoGMS { get; set; }
-        public string StatusContrato { get; set; }
+        public string OrgaoGestor { get; set; } 
+        public string OrgaoGMS { get; set; } 
+        public string StatusContrato { get; set; } 
         public string? Fornecedor { get; set; }
         public string? CNPJ { get; set; }
         public string? CPF { get; set; }
         public string? Protocolo { get; set; }
-        public string NumeroContrato { get; set; }
-        public string TipoContrato { get; set; }
-        public string Fiscal { get; set; }
-        public string? TermoAditivo { get; set; }
+        public string NumeroContrato { get; set; } 
+        public string TipoContrato { get; set; } 
+        public string Fiscal { get; set; } 
+        public string? TermoAditivo { get; set; }   
         public string? Empenho { get; set; }
         public int QtdeAditivo { get; set; }
         public float VlrTotalOriginal { get; set; }
@@ -27,4 +27,5 @@ namespace Domain.Compras.Entidades
         public DateTime? DTInicioVigencia { get; set; }
         public DateTime? DTFimVigencia { get; set; }
     }
+
 }

@@ -1,5 +1,6 @@
 ﻿@using Domain.Internos.Enum
-@model ODP.Web.UI.Models.Cooperacao.TermoCooperacaoViewModel
+@using ODP.Web.UI.Models.Internos
+@model TermoCooperacaoViewModel
 
 @{
     ViewData["Title"] = "Detalhes";
@@ -40,17 +41,17 @@
         <div class="row   p-1">
             <div class="form-group col-sm-3">
                 <label asp-for="InicioVigencia" class="control-label"></label>
-                <input asp-for="InicioVigencia" class="form-control" readonly />
+                <input type="date"  asp-for="InicioVigencia" class="form-control" readonly />
                 <span asp-validation-for="InicioVigencia" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
                 <label asp-for="FimVigencia" class="control-label"></label>
-                <input asp-for="FimVigencia" class="form-control" readonly />
+                <input type="date" asp-for="FimVigencia" class="form-control" readonly />
                 <span asp-validation-for="FimVigencia" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
                 <label asp-for="Validade" class="control-label"></label>
-                <input asp-for="Validade" class="form-control" readonly />
+                <input type="date" asp-for="Validade" class="form-control" readonly />
                 <span asp-validation-for="Validade" class="text-danger"></span>
             </div>
             <div class="form-group col-sm-3">
@@ -100,7 +101,7 @@
             </div>
             <div class="form-group col-sm-3">
                 <label asp-for="DataPublicacao" class="control-label"></label>
-                <input asp-for="DataPublicacao" class="form-control" readonly />
+                <input type="date" asp-for="DataPublicacao" class="form-control" readonly />
                 <span asp-validation-for="DataPublicacao" class="text-danger"></span>
             </div>
         </div>

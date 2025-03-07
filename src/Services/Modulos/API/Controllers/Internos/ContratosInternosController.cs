@@ -9,102 +9,134 @@ using System.Threading.Tasks;
 namespace API.Controllers.Internos
 {
     [ApiController]
-    [Route("api/contratrosinternos")]
+    [Route("api/contratosinternos")]
     [Authorize]
 
     public class ContratosInternosController : Controller
     {
         private readonly IContratosInternosRepository _contratosInternosRepository;
-        private readonly IContratosInternoRepositoryRead _contratosInternoRepositoryRead;
+        private readonly IContratosInternosRepositoryRead _contratosInternoRepositoryRead;
 
-        public ContratosInternosController(IContratosInternoRepositoryRead contratosInternoRepositoryRead, IContratosInternosRepository contratosInternosRepository)
+        public ContratosInternosController(IContratosInternosRepositoryRead contratosInternoRepositoryRead, IContratosInternosRepository contratosInternosRepository)
         {
             _contratosInternoRepositoryRead = contratosInternoRepositoryRead;
             _contratosInternosRepository = contratosInternosRepository;
         }
 
+
         [HttpGet("listar")]
-        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5)
-        {
-            var pagedResult = await _contratosInternoRepositoryRead.Listar(pageNumber, pageSize);
-            return Ok(pagedResult);
-        }
-
-
-        [HttpPost("adicionar")]
-        public async Task<IActionResult> adicionar(ContratosInternos contratos)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 5, string termo = null)
         {
             try
             {
-                await _contratosInternosRepository.Adicionar(contratos);
-                return Ok(contratos);
-            }
-            catch
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPost("alterar")]
-        public async Task<IActionResult> Alterar(ContratosInternos contratos)
-        {
-            try
-            {
-                await _contratosInternosRepository.Atualizar(contratos);
-
-
-                var Atualizado = await _contratosInternoRepositoryRead.ObterId(contratos.Id);
-
-                return Ok(Atualizado);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
-
-
-        [HttpPost("excluir")]
-        public async Task<IActionResult> Excluir([FromBody] ContratosInternos contratos)
-        {
-            if (contratos == null)
-                return BadRequest("O contrato não pode ser nulo.");
-
-            try
-            {
-                await _contratosInternosRepository.Deletar(contratos);
-
-                // Retorna o próprio termo excluído
-                return Ok(contratos);
-            }
-            catch (Exception ex)
-            {
-                // Caso ocorra erro, retorna um termo padrão
-                var contratoErro = new ContratosInternos
+                // Validação dos parâmetros
+                if (pageNumber < 1 || pageSize < 1)
                 {
-                    Id = Guid.NewGuid(),
-                    Contrato = "Erro ao excluir",
-                    NroContrato = "Erro ao excluir",
-                    InicioContrato = DateTime.MinValue,
-                    FimContrato = DateTime.MinValue,
-                    Protocolo = "Erro ao excluir",
-                    Valor = 0.00F,
-                    Objeto = "Erro ao excluir",
-                    Gestor = "Erro ao excluir",
-                    //Fiscal = "Erro ao excluir",
-                    Dioe = 0,
-                    DataPublicacao = DateTime.MinValue,
-                    Status = ETipoStatus.SELECIONE
-                };
+                    return BadRequest("O número da página e o tamanho da página devem ser maiores que zero.");
+                }
 
-                return StatusCode(500, contratoErro);
+                termo = string.IsNullOrWhiteSpace(termo) ? null : termo.Trim();
+
+                var pagedResult = await _contratosInternoRepositoryRead.Listar(pageNumber, pageSize, termo);
+                return Ok(pagedResult);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, "Ocorreu um erro ao processar sua solicitação.");
             }
         }
 
         [HttpGet("obterid/{id}")]
         public async Task<IActionResult> ObterID(Guid id)
         {
-            return Ok(await _contratosInternoRepositoryRead.ObterId(id));
+            try
+            {
+                // Validação do ID
+                if (id == Guid.Empty)
+                {
+                    return BadRequest("O ID fornecido é inválido.");
+                }
+
+                var termo = await _contratosInternoRepositoryRead.ObterId(id);
+
+                if (termo == null)
+                {
+                    return NotFound("Contrato não encontrado.");
+                }
+
+                return Ok(termo);
+            }
+            catch (Exception ex)
+            {
+
+
+                return StatusCode(500, "Ocorreu um erro ao processar sua solicitação.");
+            }
         }
+
+
+       
+
+        [HttpPost("adicionar")]
+        public async Task<IActionResult> Adicionar([FromBody] ContratosInternos contratos)
+        {
+            if (contratos == null)
+            {
+                return BadRequest("Dados inválidos.");
+            }
+
+            await _contratosInternosRepository.Adicionar(contratos);
+            return CreatedAtAction(nameof(ObterID), new { id = contratos.Id }, contratos);
+        }
+
+
+        [HttpPost("alterar/{id}")]
+        public async Task<IActionResult> Alterar(Guid id, [FromBody] ContratosInternos contratos)
+        {
+            try
+            {
+                if (contratos == null || id == Guid.Empty)
+                {
+                    return BadRequest("Dados inválidos.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (contratos.Id != id)
+                {
+                    return BadRequest("O ID do Contrato não corresponde ao ID da rota.");
+                }
+
+                await _contratosInternosRepository.Atualizar(contratos);
+
+                return Ok(contratos);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Ocorreu um erro ao processar sua solicitação.");
+            }
+        }
+
+
+        [HttpDelete("excluir/{id}")]
+        public async Task<IActionResult> Deletar(Guid id)
+        {
+            var contratoExistente = await _contratosInternoRepositoryRead.ObterId(id);
+            if (contratoExistente == null)
+                return NotFound("Termo de cooperação não encontrado.");
+
+            await _contratosInternosRepository.Deletar(contratoExistente);
+            return Ok("Termo excluído com sucesso.");
+        }
+
+
     }
 }
