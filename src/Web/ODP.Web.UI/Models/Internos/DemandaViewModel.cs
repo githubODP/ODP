@@ -1,65 +1,48 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace ODP.Web.UI.Models.Internos
 {
     public class DemandaViewModel
     {
-        public Guid Id { get; set; }
 
-        [Display(Name = "Ano")]
-        [Column("Ano")]
+        public Guid Id { get; set; }
         public int Ano { get; set; }
 
-        [Display(Name = "Mes")]
-        [Column("Mes")]
+        [Display(Name = "Mês")]
         public int Mes { get; set; }
 
         [Display(Name = "Nome do Documento")]
-        [Column("NomeDocto")]
         public string NomeDocto { get; set; }
-
-        [Display(Name = "Protocolo")]
-        [Column("Protocolo")]
         public string Protocolo { get; set; }
 
-        [Display(Name = "Objeto de Analise")]
+        [Display(Name = "Objeto de Análise")]
         [Column("Objeto")]
         public string Objeto { get; set; }
 
-        [Display(Name = "Solicitaçao de Analise")]
-        [Column("Solicitacao")]
+        [Display(Name = "Solicitação de Análise")]
         public string Solicitacao { get; set; }
 
-        [Display(Name = "Orgao Investigado")]
-        [Column("Orgao")]
+        [Display(Name = "Orgão Investigado")]
         public string Orgao { get; set; }
 
         [Display(Name = "Data de Recebimento")]
-        [Column("DataRecebe")]
         public DateTime DataRecebe { get; set; }
 
         [Display(Name = "Data de Resposta")]
-        [Column("DataResposta")]
         public DateTime DataResposta { get; set; } = DateTime.Now;
 
         [Display(Name = "Tempo de Resposta (Dias)")]
-        [NotMapped] // Indica que essa propriedade não será mapeada no banco de dados
         public int Tempo => (DataResposta - DataRecebe).Days;
 
         [Display(Name = "Area Solicitante")]
-        [Column("Solicitante")]
         public string Solicitante { get; set; }
 
         [Display(Name = "Nome do Solicitante")]
-        [Column("NomeSolicita")]
         public string NomeSolicita { get; set; }
 
-
-        [Display(Name = "Observacao")]
-        [Column("Observacao")]
+        [Display(Name = "Observação")]
         public string Observacao { get; set; }
-
     }
 }

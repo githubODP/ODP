@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+
+using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Internos;
 using System;
@@ -13,8 +14,12 @@ namespace ODP.Web.UI.Services.Internos
         private readonly HttpClient _httpClient;
 
         public DemandaService(HttpClient httpClient,
+
             IOptions<AppSettings> settings)
         {
+
+       
+
             httpClient.BaseAddress = new Uri(settings.Value.ModulosUrl);
 
             _httpClient = httpClient;

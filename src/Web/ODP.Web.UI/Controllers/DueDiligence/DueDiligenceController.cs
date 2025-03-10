@@ -118,9 +118,8 @@ namespace ODP.Web.UI.Controllers.DueDiligence
             if (ModelState.IsValid)
             {
                 due.Id = new Guid();
-                await Create(due);
-                bool duplicataConcluida = true;
-                return RedirectToAction(nameof(Index), new { duplicataConcluida = duplicataConcluida });
+                await _dueService.Adicionar(due);
+                return RedirectToAction(nameof(Index));
             }
             return View(due);
         }

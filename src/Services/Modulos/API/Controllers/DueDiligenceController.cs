@@ -62,9 +62,10 @@ namespace API.Controllers
 
         [HttpPost("adicionar")]
 
-        public async Task Add(Comissionado comissionado)
+        public async Task<IActionResult> Add(Comissionado comissionado)
         {
             await _dueRepository.Adicionar(comissionado);
+            return Ok(await _dueRepositoryRead.ObterId(comissionado.Id));
         }
 
 

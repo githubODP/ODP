@@ -66,11 +66,8 @@ namespace ODP.Web.UI.Services.DueDiligence
         public async Task<DueDiligenceViewModel> Adicionar(DueDiligenceViewModel dueViewModel)
         {
             var dueContent = ObterConteudo(dueViewModel);
-
             var response = await _httpClient.PostAsync("/api/duediligence/adicionar", dueContent);
-
             TratarErrosResponse(response);
-
             return await DeserializarObjetoResponse<DueDiligenceViewModel>(response);
 
 

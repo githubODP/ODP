@@ -121,8 +121,10 @@ namespace API.Configuration
 
             services.AddScoped<IDocumentoInternoRepository, DocumentoInternoRepository>();
             services.AddScoped<IDocumentoInternoRepositoryRead, DocumentoInternoRepositoryRead>();
+
             services.AddScoped<IDemandaRepositoryRead, DemandaRepositoryRead>();
             services.AddScoped<IDemandaRepository, DemandaRepository>();
+
             services.AddScoped<ITermoCooperacaoRepositoryRead, TermoCooperacaoRepositoryRead>();
             services.AddScoped<ITermoCooperacaoRepository, TermoCooperacaoRepository>();
             services.AddScoped<IContratosInternosRepositoryRead, ContratosInternosRepositoryRead>();
@@ -199,6 +201,8 @@ namespace API.Configuration
 
            
 
+
+           
             
 
 

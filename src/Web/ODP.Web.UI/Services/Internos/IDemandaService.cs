@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
+
 namespace ODP.Web.UI.Services.Internos
 
 {
@@ -18,5 +19,6 @@ namespace ODP.Web.UI.Services.Internos
 
         Task<List<DemandaViewModel>> BuscarCNPJ(string cnpj);
         Task<List<DemandaViewModel>> BuscarCPF(string cpf);
+
     }
 }
