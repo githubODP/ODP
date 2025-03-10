@@ -99,83 +99,81 @@
                                     <td>@Html.DisplayFor(modelItem => item.Decreto)</td>
                                     <td>@Html.DisplayFor(modelItem => item.DataSolicitacao)</td>
                                     <td>@Html.DisplayFor(modelItem => item.DataResposta)</td>
-                                    <td>
-                                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#observacaoModal-@item.Id">
-                                            <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                <td>
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#observacaoModal-@item.Id">
+                                        <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#evidenciasModal-@item.Id">
+                                        <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                    </button>
+                                </td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="@Url.Action("GerarPdf", new { id = item.Id })" class="btn btn-primary btn-print" target="_blank">
+                                            <img src="~/svg/imprimir.svg" width="20" height="20" class="d-inline-block align-top" alt="">
+                                        </a>
+                                        <div class="px-1"></div>
+                                        <button type="button" class="btn btn-info btn-duplicar" onclick="location.href='@Url.Action("Duplicar", new { id = item.Id })'">
+                                            <img src="~/svg/duplicar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
                                         </button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#evidenciasModal-@item.Id">
-                                            <img src="~/svg/vizualizar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <a href="@Url.Action("GerarPdf", new { id = item.Id })" class="btn btn-primary btn-print " target="_blank">
-                                                <img src="~/svg/imprimir.svg" width="20" height="20" class="d-inline-block align-top" alt="">
-                                            </a>
-                                            <div class=" px-1"></div>
-                                            <button type="button" class="btn btn-info btn-duplicar" onclick="location.href='@Url.Action("Duplicar", new { id = item.Id })'">
-                                                <img src="~/svg/duplicar.svg" width="20" height="20" class="d-inline-block align-top" alt="">
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                contador++; // 🔹 Incrementa o contador a cada linha
-                            }
-                        </tbody>
-                    </table>
-                
+                                    </div>
+                                </td>
+                            </tr>
+                            contador++;
+                        }
+                    </tbody>
+                </table>
             }
             else
             {
                 <p>Nenhum resultado encontrado.</p>
             }
 
-           
 
 
 
 
-            @foreach (var item in Model.Results)
-            {
-                <!-- Modal Observacao -->
-                <div class="modal fade" id="observacaoModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="observacaoModalLabel-@item.Id" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="observacaoModalLabel-@item.Id">Observação</h5>
-                            </div>
-                            <div class="modal-body">
-                                @Html.DisplayFor(modelItem => item.Observacao)
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <div id="modaisContainer">
+                @foreach (var item in Model.Results)
+                {
+                    <!-- Modal Observacao -->
+                    <div class="modal fade" id="observacaoModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="observacaoModalLabel-@item.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="observacaoModalLabel-@item.Id">Observação</h5>
+                                </div>
+                                <div class="modal-body">
+                                    @Html.DisplayFor(modelItem => item.Observacao)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Modal Evidencias -->
-                <div class="modal fade" id="evidenciasModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="evidenciasModalLabel-@item.Id" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="evidenciasModalLabel-@item.Id">Evidências</h5>
-                            </div>
-                            <div class="modal-body" style="white-space: pre-wrap;overflow-wrap: break-word;">
-                                @Html.DisplayFor(modelItem => item.Evidencias)
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+                    <!-- Modal Evidencias -->
+                    <div class="modal fade" id="evidenciasModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="evidenciasModalLabel-@item.Id" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="evidenciasModalLabel-@item.Id">Evidências</h5>
+                                </div>
+                                <div class="modal-body" style="white-space: pre-wrap;overflow-wrap: break-word;">
+                                    @Html.DisplayFor(modelItem => item.Evidencias)
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
-
+                }
+            </div>
         </div>
-
-    </div>
     <!-- Paginação -->
     <ul class="pagination pt-1">
         @if (Model.PageNumber > 1)
@@ -231,38 +229,54 @@
     </script>
 
     <script>
-       
-                document.addEventListener("DOMContentLoaded", function () {
+
+                   document.addEventListener("DOMContentLoaded", function () {
             const searchInput = document.getElementById("searchTerm");
             const tabelaCorpo = document.getElementById("tabelaCorpo");
+            const modaisContainer = document.getElementById("modaisContainer"); // Container para os modais
 
             let timeout = null;
 
+            // Função para renderizar os modais
+            function renderModals(data) {
+                const parser = new DOMParser();
+                const newDocument = parser.parseFromString(data, "text/html");
+                const novosModais = newDocument.querySelector("#modaisContainer");
+
+                if (novosModais) {
+                    modaisContainer.innerHTML = novosModais.innerHTML; // Atualiza os modais
+                }
+            }
+
+            // Lógica de busca
             searchInput.addEventListener("input", function () {
                 clearTimeout(timeout); // Evita múltiplas requisições rápidas
                 let termo = this.value.trim();
 
                 if (termo.length < 2) {
-                    return; // 🔹 Permite digitação contínua sem travar
+                    return; // Permite digitação contínua sem travar
                 }
 
                 timeout = setTimeout(() => {
                     fetch(`/DueDiligence/Index?termo=${encodeURIComponent(termo)}`)
                         .then(response => {
                             if (!response.ok) {
-                                throw new Error("Erro na busca"); // 🔹 Captura erro de resposta
+                                throw new Error("Erro na busca");
                             }
                             return response.text();
                         })
                         .then(data => {
-                            // Captura o novo <tbody> da resposta e substitui
+                            // Atualiza a tabela
                             const parser = new DOMParser();
                             const newDocument = parser.parseFromString(data, "text/html");
                             const novoCorpoTabela = newDocument.querySelector("#tabelaCorpo");
 
                             if (novoCorpoTabela) {
-                                tabelaCorpo.innerHTML = novoCorpoTabela.innerHTML; // 🔹 Atualiza apenas o tbody
+                                tabelaCorpo.innerHTML = novoCorpoTabela.innerHTML; // Atualiza apenas o tbody
                             }
+
+                            // Renderiza os modais novamente
+                            renderModals(data);
                         })
                         .catch(error => {
                             console.error("Erro na busca:", error);
