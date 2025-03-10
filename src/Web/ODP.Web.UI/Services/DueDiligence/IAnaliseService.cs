@@ -13,8 +13,8 @@ namespace ODP.Web.UI.Services.DueDiligence
 
         Task<AnaliseCadastroViewModel> ObterId(Guid id);
         Task<AnaliseCadastroViewModel> Adicionar(AnaliseCadastroViewModel analiseCadastroViewModel);
-        Task<AnaliseCadastroViewModel> Alterar(AnaliseCadastroViewModel analiseCadastroViewModel, Guid id);
-        Task<AnaliseCadastroViewModel> Deletar(Guid id);
+        Task<AnaliseCadastroViewModel> Alterar(Guid id, AnaliseCadastroViewModel analiseCadastroViewModel );
+        Task<bool> Deletar(Guid id);
         Task<List<DueDiligenceViewModel>> PesquisarComissionado(string nroProtocolo);
 
 

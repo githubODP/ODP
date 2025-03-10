@@ -247,7 +247,16 @@ namespace Infra.Data
 
         public async Task<bool> Commit()
         {
-            return await base.SaveChangesAsync() > 0;
+
+            try
+            {
+                return await base.SaveChangesAsync() > 0;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log ou tratamento de erro
+                return false;
+            }
         }
     }
 

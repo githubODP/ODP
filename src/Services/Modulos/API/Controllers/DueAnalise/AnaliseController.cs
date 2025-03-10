@@ -154,7 +154,7 @@ namespace API.Controllers.DueAnalise
 
 
 
-        [HttpPut("alterar")]
+        [HttpPost("alterar/{id}")]
         public async Task<IActionResult> Alterar([FromBody] AnaliseUpdateDTO dto)
         {
             if (dto == null)
@@ -181,39 +181,59 @@ namespace API.Controllers.DueAnalise
                 return NotFound("O comissionado vinculado a esta análise não foi encontrado.");
 
             // Atualizar os dados da análise
-            analise.NroProtocolo = comissionado.NroProtocolo;  // Mantendo o vínculo correto
+           /* analise.NroProtocolo = comissionado.NroProtocolo;*/  // Mantendo o vínculo correto
             analise.DataAnalise = DateTime.Now;
             analise.AnaliseTecnica = dto.AnaliseTecnica;
             analise.Risco = dto.Risco;
             analise.Ressalvas = dto.Ressalvas;
             analise.Responsavel = emailUsuarioLogado;
 
-            await _analiseRepository.Atualizar(analise);
-
-            return Ok(analise);
-        }
-
-
-        [HttpDelete("excluir/{id:guid}")]
-        public async Task<IActionResult> Excluir([FromRoute] Guid id)
-        {
-            if (id == Guid.Empty)
-                return BadRequest("O ID da análise deve ser informado.");
-
-            var analise = await _analiseRepositoryRead.ObterId(id);
-
-            if (analise == null)
-                return NotFound($"Nenhuma análise encontrada com o ID {id}.");
-
             try
             {
-                await _analiseRepository.Deletar(analise);
-                return Ok(new { sucesso = true, mensagem = "Análise excluída com sucesso." });
+                await _analiseRepository.Atualizar(analise);
+                return Ok(analise);
             }
             catch (DbUpdateException ex)
             {
-                return BadRequest(new { sucesso = false, mensagem = "Erro ao excluir a análise. Verifique se há dependências.", erro = ex.Message });
+                _logger.LogError(ex, "Erro ao atualizar a análise com ID {Id}", dto.Id);
+                return StatusCode(500, "Erro interno ao atualizar a análise.");
             }
+
+            //return Ok(analise);
+        }
+
+
+        //[HttpDelete("excluir/{id:guid}")]
+        //public async Task<IActionResult> Excluir([FromRoute] Guid id)
+        //{
+        //    if (id == Guid.Empty)
+        //        return BadRequest("O ID da análise deve ser informado.");
+
+        //    var analise = await _analiseRepositoryRead.ObterId(id);
+
+        //    if (analise == null)
+        //        return NotFound($"Nenhuma análise encontrada com o ID {id}.");
+
+        //    try
+        //    {
+        //        await _analiseRepository.Deletar(analise);
+        //        return Ok(new { sucesso = true, mensagem = "Análise excluída com sucesso." });
+        //    }
+        //    catch (DbUpdateException ex)
+        //    {
+        //        return BadRequest(new { sucesso = false, mensagem = "Erro ao excluir a análise. Verifique se há dependências.", erro = ex.Message });
+        //    }
+        //}
+
+        [HttpDelete("excluir/{id}")]
+        public async Task<IActionResult> Deletar(Guid id)
+        {
+            var analiseExistente = await _analiseRepositoryRead.ObterId(id);
+            if (analiseExistente == null)
+                return NotFound("Termo de cooperação não encontrado.");
+
+            await _analiseRepository.Deletar(analiseExistente);
+            return Ok("Termo excluído com sucesso.");
         }
 
 

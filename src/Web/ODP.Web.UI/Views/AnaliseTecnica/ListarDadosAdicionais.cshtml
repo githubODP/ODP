@@ -71,35 +71,22 @@
                                 </td>
                                 <td>
 
-                                    <div class="d-flex ">
-                                        <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-sm btn-info p-2">
-                                            <img src="~/svg/editar.svg" height="24" />
+                                    <div class="d-flex">
+                                        <a asp-controller="AnaliseTecnica" asp-action="Editar" asp-route-id="@item.Id" class="btn btn-primary mr-2">
+                                            <img src="~/svg/editar.svg" height="16" />
                                         </a>
-                                        <button type="button" class="btn btn-sm btn-danger p-2 ml-2 " data-toggle="modal" data-target="#deleteModal-@item.Id">
-                                            <img src="~/svg/excluir.svg" height="24" />
-                                        </button>
+                                        <a asp-controller="AnaliseTecnica" asp-action="Deletar" asp-route-id="@item.Id" class="btn btn-info mr-2">
+                                            <img src="~/svg/vizualizar.svg" height="16" />
+                                        </a>
+                                        <a href="#" class="btn btn-danger mr-2" data-toggle="modal" data-target="#confirmDeleteModal"
+                                           data-itemid="@item.Id" data-itemname="@item.NroProtocolo">
+                                            <img src="~/svg/excluir.svg" height="16" />
+                                        </a>
+
 
                                     </div>
 
-                                    <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title text-danger">Confirmar Exclusão</h5>
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Tem certeza que deseja excluir a análise do protocolo <b>@item.NroProtocolo</b>?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <form asp-action="Deletar" asp-route-id="@item.Id" method="delete">
-                                                        <button type="submit" class="btn btn-danger">Confirmar</button>
-                                                    </form>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                  
 
                                 </td>
 
@@ -147,13 +134,35 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal de Confirmação -->
+                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Tem certeza que deseja excluir esta Analise Tecnica
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form id="deleteForm" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             }
 
 
         </div>
     </div>
-
-
 
 
 
@@ -188,3 +197,24 @@
 
 
 </div>
+
+
+@section Scripts{
+
+    <script>
+         $(document).ready(function () {
+            $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var itemId = button.data('itemid');
+
+                // Definindo a URL correta de exclusão
+                var deleteUrl = '/AnaliseTecnica/Excluir/' + itemId;
+
+                // Definindo o action do formulário
+                $('#deleteForm').attr('action', deleteUrl);
+            });
+        });
+
+    </script>
+
+}

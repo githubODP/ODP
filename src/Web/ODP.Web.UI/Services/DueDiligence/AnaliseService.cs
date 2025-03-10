@@ -26,7 +26,7 @@ namespace ODP.Web.UI.Services.DueDiligence
 
         public async Task<PagedResult<AnaliseViewModel>> ListarDadosAdicionais(int pageNumber = 1, int pageSize = 10)
         {
-            var response = await _httpClient.GetAsync($"/api/analise/Listaradicionais?pageNumber={pageNumber}&pageSize={pageSize}");
+            var response = await _httpClient.GetAsync($"/api/analise/listaradicionais?pageNumber={pageNumber}&pageSize={pageSize}");
 
             Console.WriteLine($"Status da resposta: {response.StatusCode}");
 
@@ -85,34 +85,20 @@ namespace ODP.Web.UI.Services.DueDiligence
             return await DeserializarObjetoResponse<AnaliseCadastroViewModel>(response);
         }
 
-        public async Task<AnaliseCadastroViewModel> Alterar(AnaliseCadastroViewModel analiseCadastroViewModel, Guid id)
+        public async Task<AnaliseCadastroViewModel> Alterar(Guid id, AnaliseCadastroViewModel analiseCadastroViewModel)
         {
-
             var analiseContent = ObterConteudo(analiseCadastroViewModel);
-
-            var response = await _httpClient.PutAsync("/api/analise/alterar", analiseContent);
-
-            if (TratarErrosResponse(response))
-            {
-                return null;
-
-            }
-            return await DeserializarObjetoResponse<AnaliseCadastroViewModel>(response);
-
-        }
-
-
-        public async Task<AnaliseCadastroViewModel> Deletar(Guid id)
-        {
-            var response = await _httpClient.DeleteAsync($"api/analise/excluir/{id}");
+            var response = await _httpClient.PostAsync($"/api/analise/alterar/{id}", analiseContent);
             TratarErrosResponse(response);
-
-            if (TratarErrosResponse(response))
-            {
-                return null;
-            }
-            return null;
+            return await DeserializarObjetoResponse<AnaliseCadastroViewModel>(response);
         }
+
+        public async Task<bool> Deletar(Guid id)
+        {
+            var response = await _httpClient.DeleteAsync($"/api/analise/excluir/{id}");
+            return TratarErrosResponse(response);
+        }
+
 
 
     }

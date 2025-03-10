@@ -146,7 +146,7 @@ namespace ODP.Web.UI.Controllers.DueDiligence
                 return View(model);
             }
 
-            var resultado = await _analiseService.Alterar(model, id);
+            var resultado = await _analiseService.Alterar(id, model);
             if (resultado == null)
             {
                 ModelState.AddModelError("", "Erro ao atualizar a análise.");
@@ -173,19 +173,27 @@ namespace ODP.Web.UI.Controllers.DueDiligence
         }
 
 
-        [HttpDelete]
-        public async Task<IActionResult> DeletarConfirmado(Guid id)
+        [HttpPost, ActionName("Excluir")]
+        public async Task<IActionResult> ConfirmarExclusao(Guid id)
         {
-            var resultado = await _analiseService.Deletar(id);
-            if (resultado == null)
-            {
-                TempData["ErrorMessage"] = "Erro ao excluir a análise.";
-                return RedirectToAction("ListarDadosAdicionais");
-            }
-
-            TempData["SuccessMessage"] = "Análise excluída com sucesso!";
-            return RedirectToAction("ListarDadosAdicionais");
+            await _analiseService.Deletar(id);
+            return RedirectToAction(nameof(ListarDadosAdicionais));
         }
+
+
+        //[HttpPost, ActionName("Excluir")]
+        //public async Task<IActionResult> DeletarConfirmado(Guid id)
+        //{
+        //    var resultado = await _analiseService.Deletar(id);
+        //    if (resultado == null)
+        //    {
+        //        TempData["ErrorMessage"] = "Erro ao excluir a análise.";
+        //        return RedirectToAction("ListarDadosAdicionais");
+        //    }
+
+        //    TempData["SuccessMessage"] = "Análise excluída com sucesso!";
+        //    return RedirectToAction("ListarDadosAdicionais");
+        //}
 
 
     }
