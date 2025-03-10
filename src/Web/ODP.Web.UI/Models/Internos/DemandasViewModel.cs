@@ -4,7 +4,7 @@ using System;
 
 namespace ODP.Web.UI.Models.Internos
 {
-    public class DemandaViewModel
+    public class DemandasViewModel
     {
 
         public Guid Id { get; set; }

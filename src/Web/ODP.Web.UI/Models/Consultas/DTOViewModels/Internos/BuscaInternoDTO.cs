@@ -9,7 +9,7 @@ namespace ODP.Web.UI.Models.Consultas.DTOViewModels.Internos
     public class BuscaInternoDTO
     {
         public List<DueDiligenceViewModel> DueDiligence { get; set; }
-        public List<DemandaViewModel> Demanda { get; set; }
+        public List<DemandasViewModel> Demanda { get; set; }
         public List<FuncionarioViewModel> Funcionario { get; set; }
         public List<DependenteViewModel> Dependente { get; set; }
 

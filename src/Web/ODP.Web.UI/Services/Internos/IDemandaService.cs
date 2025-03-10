@@ -11,14 +11,14 @@ namespace ODP.Web.UI.Services.Internos
     public interface IDemandaService
     {
 
-        Task<PagedResult<DemandaViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string termo = null);
-        Task<DemandaViewModel> ObterId(Guid id);
-        Task<DemandaViewModel> Adicionar(DemandaViewModel demandaViewModel);
-        Task<DemandaViewModel> Alterar(Guid id,DemandaViewModel demandaViewModel);
+        Task<PagedResult<DemandasViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string termo = null);
+        Task<DemandasViewModel> ObterId(Guid id);
+        Task<DemandasViewModel> Adicionar(DemandasViewModel demandaViewModel);
+        Task<DemandasViewModel> Alterar(Guid id,DemandasViewModel demandaViewModel);
         Task<bool> Deletar(Guid id);
 
-        Task<List<DemandaViewModel>> BuscarCNPJ(string cnpj);
-        Task<List<DemandaViewModel>> BuscarCPF(string cpf);
+        Task<List<DemandasViewModel>> BuscarCNPJ(string cnpj);
+        Task<List<DemandasViewModel>> BuscarCPF(string cpf);
 
     }
 }

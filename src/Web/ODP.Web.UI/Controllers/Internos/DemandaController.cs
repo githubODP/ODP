@@ -43,7 +43,7 @@ namespace ODP.Web.UI.Controllers.Internos
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(DemandaViewModel demandaViewModel)
+        public async Task<IActionResult> Create(DemandasViewModel demandaViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace ODP.Web.UI.Controllers.Internos
 
 
         [HttpPost]
-        public async Task<IActionResult> Editar(Guid id, DemandaViewModel demandaViewModel)
+        public async Task<IActionResult> Editar(Guid id, DemandasViewModel demandaViewModel)
         {
             if (id != demandaViewModel.Id)
             {

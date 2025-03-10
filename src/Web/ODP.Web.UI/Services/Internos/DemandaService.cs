@@ -26,7 +26,7 @@ namespace ODP.Web.UI.Services.Internos
         }
 
 
-        public async Task<PagedResult<DemandaViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string termo = null)
+        public async Task<PagedResult<DemandasViewModel>> Listar(int pageNumber = 1, int pageSize = 5, string termo = null)
         {
             var queryParams = new List<string>
             {
@@ -44,36 +44,36 @@ namespace ODP.Web.UI.Services.Internos
 
             var response = await _httpClient.GetAsync($"/api/demanda/listar?{queryString}");
             TratarErrosResponse(response);
-            return await DeserializarObjetoResponse<PagedResult<DemandaViewModel>>(response);
+            return await DeserializarObjetoResponse<PagedResult<DemandasViewModel>>(response);
         }
 
 
 
-        public async Task<DemandaViewModel> ObterId(Guid id)
+        public async Task<DemandasViewModel> ObterId(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/demanda/obterid/{id}");
 
             TratarErrosResponse(response);
 
-            return await DeserializarObjetoResponse<DemandaViewModel>(response);
+            return await DeserializarObjetoResponse<DemandasViewModel>(response);
         }
 
-        public async Task<DemandaViewModel> Adicionar(DemandaViewModel demandaViewModel)
+        public async Task<DemandasViewModel> Adicionar(DemandasViewModel demandaViewModel)
         {
             var demandaContent = ObterConteudo(demandaViewModel);
 
             var response = await _httpClient.PostAsync("/api/demanda/adicionar", demandaContent);
 
-            return await DeserializarObjetoResponse<DemandaViewModel>(response);
+            return await DeserializarObjetoResponse<DemandasViewModel>(response);
 
         }
 
-        public async Task<DemandaViewModel> Alterar(Guid id, DemandaViewModel demandaViewModel)
+        public async Task<DemandasViewModel> Alterar(Guid id, DemandasViewModel demandaViewModel)
         {
             var demandaContent = ObterConteudo(demandaViewModel);
             var response = await _httpClient.PostAsync($"/api/demanda/alterar/{id}", demandaContent);
             TratarErrosResponse(response);
-            return await DeserializarObjetoResponse<DemandaViewModel>(response);
+            return await DeserializarObjetoResponse<DemandasViewModel>(response);
         }
 
         public async Task<bool> Deletar(Guid id)
@@ -84,7 +84,7 @@ namespace ODP.Web.UI.Services.Internos
 
 
 
-        public async Task<List<DemandaViewModel>> BuscarCNPJ(string cnpj)
+        public async Task<List<DemandasViewModel>> BuscarCNPJ(string cnpj)
         {
             try
             {
@@ -94,19 +94,19 @@ namespace ODP.Web.UI.Services.Internos
                 // Verificar se a resposta contém conteúdo
                 if (response.Content == null || response.Content.Headers.ContentLength == 0)
                 {
-                    return new List<DemandaViewModel>(); // Retorna um modelo vazio
+                    return new List<DemandasViewModel>(); // Retorna um modelo vazio
                 }
 
-                var demanda = await DeserializarObjetoResponse<List<DemandaViewModel>>(response);
+                var demanda = await DeserializarObjetoResponse<List<DemandasViewModel>>(response);
                 return demanda;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 // Retornar um modelo vazio se a demanda não for encontrado (404)
-                return new List<DemandaViewModel>();
+                return new List<DemandasViewModel>();
             }
         }
-        public async Task<List<DemandaViewModel>> BuscarCPF(string cpf)
+        public async Task<List<DemandasViewModel>> BuscarCPF(string cpf)
         {
             try
             {
@@ -116,16 +116,16 @@ namespace ODP.Web.UI.Services.Internos
                 // Verificar se a resposta contém conteúdo
                 if (response.Content == null || response.Content.Headers.ContentLength == 0)
                 {
-                    return new List<DemandaViewModel>(); // Retorna um modelo vazio
+                    return new List<DemandasViewModel>(); // Retorna um modelo vazio
                 }
 
-                var demanda = await DeserializarObjetoResponse<List<DemandaViewModel>>(response);
+                var demanda = await DeserializarObjetoResponse<List<DemandasViewModel>>(response);
                 return demanda;
             }
             catch (CustomHttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 // Retornar um modelo vazio se a demanda não for encontrado (404)
-                return new List<DemandaViewModel>();
+                return new List<DemandasViewModel>();
             }
         }
     }
