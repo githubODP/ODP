@@ -54,7 +54,7 @@
                         {
                             <tr>
                                 <td style="width: 15%;">@Html.DisplayFor(modelItem => item.NroProtocolo)</td>
-                                <td>@Html.DisplayFor(modelItem => item.DataAnalise)</td>
+                                <td>@item.DataAnalise.ToString("dd/MM/yyyy")</td>
                                 <td style="width: 30%; font-size:12px;">@Html.DisplayFor(modelItem => item.Nome)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Risco)</td>
                                 <td style="width: 20%;">@Html.DisplayFor(modelItem => item.CPF)</td>
