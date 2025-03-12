@@ -10,11 +10,11 @@ namespace ODP.Web.UI.Services.Consultas.Repositories.Due
     public class InternoServicos : IInternosServicos
     {
         private readonly IDueService _dueService;
-        private readonly IDemandaService _demandaService;
+        private readonly IDemandasService _demandaService;
         private readonly IFuncionarioService _funcionarioService;
         private readonly IDependenteService _dependenteService;
 
-        public InternoServicos(IDueService dueService, IDemandaService demandaService, IDependenteService dependenteService, IFuncionarioService funcionarioService)
+        public InternoServicos(IDueService dueService, IDemandasService demandaService, IDependenteService dependenteService, IFuncionarioService funcionarioService)
         {
             _dueService = dueService;
             _demandaService = demandaService;

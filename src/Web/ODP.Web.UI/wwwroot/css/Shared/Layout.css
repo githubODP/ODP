@@ -65,10 +65,9 @@ nav.navbar {
     z-index: 100; /* Garantir que o navbar fique sobre o conteúdo */
 }
 
-
-
-
-
+.sidebar-nav a i {
+   width: 2em;
+}
 
 
 
@@ -100,5 +99,8 @@ nav.navbar {
      footer a {
         display: none; 
     }
+
+
+     /* Ajuste para todos os ícones do menu */
 
 }

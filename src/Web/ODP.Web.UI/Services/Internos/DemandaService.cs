@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services.Internos
 {
-    public class DemandaService : Service, IDemandaService
+    public class DemandaService : Service, IDemandasService
     {
         private readonly HttpClient _httpClient;
 
