@@ -1,5 +1,4 @@
-
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using ODP.Web.UI.Extensions;
 using ODP.Web.UI.Models.Internos;
 using System;
@@ -9,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace ODP.Web.UI.Services.Internos
 {
-    public class DemandaService : Service, IDemandasService
+    public class DemandasService : Service, IDemandasService
     {
         private readonly HttpClient _httpClient;
 
-        public DemandaService(HttpClient httpClient,
+        public DemandasService(HttpClient httpClient,
 
             IOptions<AppSettings> settings)
         {
 
-       
+
 
             httpClient.BaseAddress = new Uri(settings.Value.ModulosUrl);
 
@@ -129,6 +128,5 @@ namespace ODP.Web.UI.Services.Internos
             }
         }
     }
-
 }
 

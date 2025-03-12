@@ -12,18 +12,22 @@
     <Compile Remove="Controllers\Library\**" />
     <Compile Remove="Mappers\**" />
     <Compile Remove="Services\Library\**" />
+    <Compile Remove="wwwroot\Videos\**" />
     <Content Remove="Controllers\Detran\**" />
     <Content Remove="Controllers\Library\**" />
     <Content Remove="Mappers\**" />
     <Content Remove="Services\Library\**" />
+    <Content Remove="wwwroot\Videos\**" />
     <EmbeddedResource Remove="Controllers\Detran\**" />
     <EmbeddedResource Remove="Controllers\Library\**" />
     <EmbeddedResource Remove="Mappers\**" />
     <EmbeddedResource Remove="Services\Library\**" />
+    <EmbeddedResource Remove="wwwroot\Videos\**" />
     <None Remove="Controllers\Detran\**" />
     <None Remove="Controllers\Library\**" />
     <None Remove="Mappers\**" />
     <None Remove="Services\Library\**" />
+    <None Remove="wwwroot\Videos\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,7 +58,6 @@
   <ItemGroup>
     <Folder Include="Models\Interfaces\Library\" />
     <Folder Include="Models\ViewModels\Library\" />
-    <Folder Include="wwwroot\Videos\" />
   </ItemGroup>
 
 </Project>
